@@ -4,89 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AdminPanel - {{ config('app.name') }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
-    <div class="flex h-screen overflow-hidden">
-        <!-- Sidebar -->
-        <div id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-gray-800 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
-            <!-- Logo -->
-            <div class="flex items-center justify-center h-16 bg-gray-900">
-                <span class="text-white text-xl font-semibold">Admin Panel</span>
-            </div>
-
-            <!-- Navigation -->
-            <nav class="mt-5 px-2">
-                <a href="{{ route('admin.dashboard') }}" class="group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-300 hover:bg-gray-700 hover:text-white">
-                    <i class="fas fa-home mr-4 text-gray-400 group-hover:text-gray-300"></i>
-                    Dashboard
-                </a>
-                <a href="{{ route('admin.vendors.index') }}" class="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-300 hover:bg-gray-700 hover:text-white">
-                    <i class="fas fa-users mr-4 text-gray-400 group-hover:text-gray-300"></i>
-                    Vendedores
-                </a>
-                <a href="{{ route('admin.establishments.index') }}" class="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-300 hover:bg-gray-700 hover:text-white">
-                    <i class="fas fa-store mr-4 text-gray-400 group-hover:text-gray-300"></i>
-                    Estabelecimentos
-                </a>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{{ route('admin.dashboard') }}">
+                                <i class="fas fa-home"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.vendors.index') }}">
+                                <i class="fas fa-users"></i>
+                                Vendedores
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.establishments.index') }}">
+                                <i class="fas fa-store"></i>
+                                Estabelecimentos
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </nav>
-        </div>
 
-        <!-- Overlay -->
-        <div
-            data-overlay
-            class="fixed inset-0 z-30 bg-gray-900 bg-opacity-50 hidden md:hidden transition-opacity duration-300 ease-in-out"
-        ></div>
+            <!-- Main content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <!-- Top Navigation -->
+                    <div class="btn-toolbar mb-2">
+                        <!-- Mobile menu button -->
+                        <button
+                            data-mobile-menu
+                            class="btn btn-sm btn-outline-secondary"
+                        >
+                            <i class="fas fa-bars"></i>
+                        </button>
 
-        <!-- Main content -->
-        <div class="flex-1 flex flex-col overflow-hidden md:pl-64">
-            <!-- Top Navigation -->
-            <header class="bg-white shadow-sm">
-                <div class="flex items-center justify-between h-16 px-4">
-                    <!-- Mobile menu button -->
-                    <button
-                        data-mobile-menu
-                        class="md:hidden text-gray-500 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
-                        <i class="fas fa-bars"></i>
-                    </button>
-
-                    <!-- Search -->
-                    <div class="flex-1 px-4 ml-4">
-                        <div class="max-w-md w-full relative">
-                            <input type="text" placeholder="Search..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-search text-gray-400"></i>
-                            </div>
+                        <!-- Search -->
+                        <div class="ms-3">
+                            <input type="text" placeholder="Search..." class="form-control">
                         </div>
-                    </div>
 
-                    <!-- User menu -->
-                    <div class="ml-4 flex items-center">
-                        <div class="relative">
-                            <button class="flex items-center space-x-2 text-gray-700 hover:text-gray-900 focus:outline-none">
-                                <span>John Doe</span>
-                                <i class="fas fa-chevron-down text-xs"></i>
-                            </button>
+                        <!-- User menu -->
+                        <div class="ms-3">
+                            <span>John Doe</span>
+                            <i class="fas fa-chevron-down"></i>
+                            <form method="POST" action="{{ route('admin.logout') }}" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </button>
+                            </form>
                         </div>
-                        <form method="POST" action="{{ route('admin.logout') }}" class="ml-4">
-                            @csrf
-                            <button type="submit" class="text-gray-500 hover:text-gray-700">
-                                <i class="fas fa-sign-out-alt"></i>
-                            </button>
-                        </form>
                     </div>
                 </div>
-            </header>
 
-            <!-- Page Content -->
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+                <!-- Page Content -->
                 @yield('content')
             </main>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
         // Mobile menu toggle
         const sidebar = document.getElementById('sidebar');
