@@ -1,32 +1,39 @@
-@extends('layouts.admin')
+@extends('admin.layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-6">
-    <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Novo Estabelecimento</h1>
-        <a href="{{ route('admin.establishments.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
-            Voltar
-        </a>
-    </div>
+<div class="bg-white shadow rounded-lg">
+    <div class="p-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Novo Estabelecimento</h2>
 
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <form action="{{ route('admin.establishments.store') }}" method="POST">
+    <form action="{{ route('admin.establishments.store') }}" method="POST">
             @csrf
 
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="vendor_id">
-                    Vendedor
-                </label>
-                <select name="vendor_id" id="vendor_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('vendor_id') border-red-500 @enderror" required>
-                    <option value="">Selecione um vendedor</option>
-                    @foreach($vendors as $vendor)
-                        <option value="{{ $vendor->id }}" {{ old('vendor_id') == $vendor->id ? 'selected' : '' }}>
-                            {{ $vendor->name }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('vendor_id')
-                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+            @if($errors->any())
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                    <ul class="list-disc list-inside">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="vendor_id" class="block text-sm font-medium text-gray-700 mb-2">Vendedor</label>
+                    <select name="vendor_id" id="vendor_id" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition duration-150 ease-in-out text-gray-700" required>
+                        <option value="">Selecione um vendedor</option>
+                        @foreach($vendors as $vendor)
+                            <option value="{{ $vendor->id }}" {{ old('vendor_id') == $vendor->id ? 'selected' : '' }}>
+                                {{ $vendor->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('vendor_id')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -93,11 +100,11 @@
             </div>
 
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="descricao">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="observacoes">
                     Descrição
                 </label>
-                <textarea name="descricao" id="descricao" rows="3" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('descricao') border-red-500 @enderror">{{ old('descricao') }}</textarea>
-                @error('descricao')
+                <textarea name="observacoes" id="observacoes" rows="3" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('observacoes') border-red-500 @enderror">{{ old('observacoes') }}</textarea>
+                @error('observacoes')
                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                 @enderror
             </div>
@@ -109,10 +116,9 @@
                 </label>
             </div>
 
-            <div class="flex items-center justify-end">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    Salvar Estabelecimento
-                </button>
+            <div class="mt-6 flex items-center justify-end space-x-3">
+                <a href="{{ route('admin.establishments.index') }}" class="bg-gray-200 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Cancelar</a>
+                <button type="submit" class="bg-indigo-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Criar Estabelecimento</button>
             </div>
         </form>
     </div>

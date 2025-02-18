@@ -21,18 +21,18 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
+                    <label for="nome" class="block text-sm font-medium text-gray-700">Nome</label>
+                    <input type="text" name="nome" id="nome" value="{{ old('nome', $establishment->nome) }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                </div>
+
+                <div>
                     <label for="vendor_id" class="block text-sm font-medium text-gray-700">Vendedor</label>
-                    <select name="vendor_id" id="vendor_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <select name="vendor_id" id="vendor_id" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
                         <option value="">Selecione um vendedor</option>
                         @foreach($vendors as $vendor)
                             <option value="{{ $vendor->id }}" {{ old('vendor_id', $establishment->vendor_id) == $vendor->id ? 'selected' : '' }}>{{ $vendor->name }}</option>
                         @endforeach
                     </select>
-                </div>
-
-                <div>
-                    <label for="nome" class="block text-sm font-medium text-gray-700">Nome</label>
-                    <input type="text" name="nome" id="nome" value="{{ old('nome', $establishment->nome) }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
                 </div>
 
                 <div>
@@ -47,31 +47,30 @@
 
                 <div>
                     <label for="estado" class="block text-sm font-medium text-gray-700">Estado</label>
-                    <input type="text" name="estado" id="estado" value="{{ old('estado', $establishment->estado) }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" maxlength="2" required>
+                    <input type="text" name="estado" id="estado" value="{{ old('estado', $establishment->estado) }}" maxlength="2" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
                 </div>
 
                 <div>
-                    <label for="telefone" class="block text-sm font-medium text-gray-700">Telefone</label>
-                    <input type="text" name="telefone" id="telefone" value="{{ old('telefone', $establishment->telefone) }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                    <label for="cep" class="block text-sm font-medium text-gray-700">CEP</label>
+                    <input type="text" name="cep" id="cep" value="{{ old('cep', $establishment->cep) }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
                 </div>
 
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700">E-mail</label>
-                    <input type="email" name="email" id="email" value="{{ old('email', $establishment->email) }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                <div class="col-span-2">
+                    <label for="observacoes" class="block text-sm font-medium text-gray-700">Observações</label>
+                    <textarea name="observacoes" id="observacoes" rows="3" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">{{ old('observacoes', $establishment->observacoes) }}</textarea>
                 </div>
 
-                <div>
-                    <label for="ativo" class="block text-sm font-medium text-gray-700">Status</label>
-                    <select name="ativo" id="ativo" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option value="1" {{ old('ativo', $establishment->ativo) == 1 ? 'selected' : '' }}>Ativo</option>
-                        <option value="0" {{ old('ativo', $establishment->ativo) === 0 ? 'selected' : '' }}>Inativo</option>
-                    </select>
+                <div class="col-span-2">
+                    <div class="flex items-center">
+                        <input type="checkbox" name="ativo" id="ativo" value="1" {{ old('ativo', $establishment->ativo) ? 'checked' : '' }} class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                        <label for="ativo" class="ml-2 block text-sm text-gray-900">Ativo</label>
+                    </div>
                 </div>
             </div>
 
-            <div class="mt-6">
-                <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Salvar</button>
-                <a href="{{ route('admin.establishments.index') }}" class="ml-2 text-gray-600 hover:text-gray-800">Cancelar</a>
+            <div class="mt-6 flex items-center justify-end space-x-3">
+                <a href="{{ route('admin.establishments.index') }}" class="bg-gray-200 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Cancelar</a>
+                <button type="submit" class="bg-indigo-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Salvar Alterações</button>
             </div>
         </form>
     </div>

@@ -1,58 +1,81 @@
 @extends('admin.layouts.app')
 
 @section('content')
-<div class="bg-white shadow rounded-lg">
-    <div class="p-6">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-semibold text-gray-800">Vendedores</h2>
-            <a href="{{ route('admin.vendors.create') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Novo Vendedor</a>
+<div class="container mx-auto px-4 py-8 max-w-7xl">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Vendedores</h1>
+            <p class="text-gray-600">Gerencie todos os vendedores cadastrados</p>
         </div>
+        <a href="{{ route('admin.vendors.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-150 ease-in-out flex items-center gap-2 shadow-sm">
+            <i class="fas fa-plus-circle"></i>
+            <span>Novo Vendedor</span>
+        </a>
+    </div>
 
-        @if(session('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-                <span class="block sm:inline">{{ session('success') }}</span>
+    @if(session('success'))
+        <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-8 rounded-r-lg shadow-sm transition duration-500 ease-in-out" role="alert">
+            <div class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                <span class="text-green-800">{{ session('success') }}</span>
             </div>
-        @endif
+        </div>
+    @endif
 
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden border border-gray-100">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Telefone</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                <thead>
+                    <tr class="bg-gray-50">
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Telefone</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach($vendors as $vendor)
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $vendor->nome }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $vendor->email }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $vendor->telefone }}</td>
+                        <tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $vendor->nome }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ $vendor->email }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ $vendor->telefone }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $vendor->ativo ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                <span class="{{ $vendor->ativo ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }} px-3 py-1 rounded-full text-xs font-semibold inline-flex items-center">
+                                    <span class="{{ $vendor->ativo ? 'bg-green-400' : 'bg-red-400' }} rounded-full h-2 w-2 mr-2"></span>
                                     {{ $vendor->ativo ? 'Ativo' : 'Inativo' }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                <a href="{{ route('admin.vendors.edit', $vendor) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Editar</a>
-                                <form action="{{ route('admin.vendors.destroy', $vendor) }}" method="POST" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Tem certeza que deseja excluir este vendedor?')">Excluir</button>
-                                </form>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm">
+                                <div class="flex items-center justify-center space-x-3">
+                                    <a href="{{ route('admin.vendors.edit', $vendor) }}" class="text-indigo-600 hover:text-indigo-900 transition duration-150 ease-in-out group">
+                                        <span class="flex items-center">
+                                            <i class="fas fa-edit mr-1.5 group-hover:transform group-hover:scale-110 transition-transform"></i>
+                                            <span>Editar</span>
+                                        </span>
+                                    </a>
+                                    <form action="{{ route('admin.vendors.destroy', $vendor) }}" method="POST" class="inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:text-red-900 transition duration-150 ease-in-out group"
+                                                onclick="return confirm('Tem certeza que deseja excluir este vendedor?')">
+                                            <span class="flex items-center">
+                                                <i class="fas fa-trash mr-1.5 group-hover:transform group-hover:scale-110 transition-transform"></i>
+                                                <span>Excluir</span>
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-
-            <div class="mt-4">
-                {{ $vendors->links() }}
-            </div>
         </div>
+    </div>
+
+    <div class="mt-6">
+        {{ $vendors->links() }}
     </div>
 </div>
 @endsection
