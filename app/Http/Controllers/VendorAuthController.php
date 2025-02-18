@@ -8,15 +8,20 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Routing\Controller;
 
-class VendorAuthController extends BaseController
+class VendorAuthController extends Controller
 {
     use AuthorizesRequests, ValidatesRequests;
     public function __construct()
     {
         $this->middleware('guest:vendor')->except(['profile', 'updateProfile', 'logout']);
         $this->middleware('auth:vendor')->only(['profile', 'updateProfile', 'logout']);
+    }
+
+    protected function redirectTo()
+    {
+        return route('vendor.dashboard');
     }
 
     public function showLoginForm()
@@ -33,7 +38,7 @@ class VendorAuthController extends BaseController
 
         if (Auth::guard('vendor')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended(route('vendor.profile'));
+            return redirect()->route('vendor.profile');
         }
 
         return back()->withErrors([
@@ -49,7 +54,7 @@ class VendorAuthController extends BaseController
 
     public function updateProfile(Request $request)
     {
-        $vendor = Auth::guard('vendor')->user();
+        $vendor = Vendor::find(Auth::guard('vendor')->id());
 
         $validated = $request->validate([
             'telefone' => 'required',

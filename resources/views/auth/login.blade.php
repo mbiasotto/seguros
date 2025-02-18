@@ -27,7 +27,7 @@
 </head>
 <body>
     <main class="form-signin text-center">
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('admin.login.submit') }}">
             @csrf
             <h1 class="h3 mb-3 fw-normal">Painel Administrativo</h1>
 

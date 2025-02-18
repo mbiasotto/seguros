@@ -20,12 +20,12 @@ class VendorController extends BaseController
     public function index()
     {
         $vendors = Vendor::orderBy('nome')->paginate(10);
-        return view('vendors.index', compact('vendors'));
+        return view('admin.vendors.index', compact('vendors'));
     }
 
     public function create()
     {
-        return view('vendors.create');
+        return view('admin.vendors.create');
     }
 
     public function store(Request $request)
@@ -46,13 +46,13 @@ class VendorController extends BaseController
         $validated['password'] = Hash::make($request->password);
         Vendor::create($validated);
 
-        return redirect()->route('vendors.index')
+        return redirect()->route('admin.vendors.index')
             ->with('success', 'Vendedor cadastrado com sucesso!');
     }
 
     public function edit(Vendor $vendor)
     {
-        return view('vendors.edit', compact('vendor'));
+        return view('admin.vendors.edit', compact('vendor'));
     }
 
     public function update(Request $request, Vendor $vendor)
@@ -70,14 +70,14 @@ class VendorController extends BaseController
         ]);
 
         $vendor->update($validated);
-        return redirect()->route('vendors.index')
+        return redirect()->route('admin.vendors.index')
             ->with('success', 'Vendedor atualizado com sucesso!');
     }
 
     public function destroy(Vendor $vendor)
     {
         $vendor->delete();
-        return redirect()->route('vendors.index')
+        return redirect()->route('admin.vendors.index')
             ->with('success', 'Vendedor removido com sucesso!');
     }
 }

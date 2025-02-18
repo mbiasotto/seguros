@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123456'),
         ]);
 
+        // Call EstablishmentSeeder after creating vendors
+        $this->call(EstablishmentSeeder::class);
+
         // Create sample vendors
         $vendors = [
             [
