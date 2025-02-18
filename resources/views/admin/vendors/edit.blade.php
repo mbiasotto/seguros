@@ -1,88 +1,165 @@
 @extends('admin.layouts.app')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
+@endpush
+
 @section('content')
-<div class="bg-white shadow rounded-lg">
-    <div class="p-6">
-        <h2 class="text-xl font-semibold text-gray-800 mb-4">Editar Vendedor</h2>
-
-        <form action="{{ route('admin.vendors.update', $vendor) }}" method="POST">
-            @csrf
-            @method('PUT')
-
-            @if($errors->any())
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-                    <ul class="list-disc list-inside">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label for="nome" class="block text-sm font-medium text-gray-700">Nome</label>
-                    <input type="text" name="nome" id="nome" value="{{ old('nome', $vendor->nome) }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
-                </div>
-
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700">E-mail</label>
-                    <input type="email" name="email" id="email" value="{{ old('email', $vendor->email) }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
-                </div>
-
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700">Nova Senha (opcional)</label>
-                    <input type="password" name="password" id="password" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-
-                <div>
-                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirmar Nova Senha</label>
-                    <input type="password" name="password_confirmation" id="password_confirmation" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-
-                <div>
-                    <label for="telefone" class="block text-sm font-medium text-gray-700">Telefone</label>
-                    <input type="text" name="telefone" id="telefone" value="{{ old('telefone', $vendor->telefone) }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
-                </div>
-
-                <div>
-                    <label for="endereco" class="block text-sm font-medium text-gray-700">Endereço</label>
-                    <input type="text" name="endereco" id="endereco" value="{{ old('endereco', $vendor->endereco) }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-
-                <div>
-                    <label for="cidade" class="block text-sm font-medium text-gray-700">Cidade</label>
-                    <input type="text" name="cidade" id="cidade" value="{{ old('cidade', $vendor->cidade) }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-
-                <div>
-                    <label for="estado" class="block text-sm font-medium text-gray-700">Estado</label>
-                    <input type="text" name="estado" id="estado" value="{{ old('estado', $vendor->estado) }}" maxlength="2" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-
-                <div>
-                    <label for="cep" class="block text-sm font-medium text-gray-700">CEP</label>
-                    <input type="text" name="cep" id="cep" value="{{ old('cep', $vendor->cep) }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-
-                <div class="col-span-2">
-                    <label for="observacoes" class="block text-sm font-medium text-gray-700">Observações</label>
-                    <textarea name="observacoes" id="observacoes" rows="3" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">{{ old('observacoes', $vendor->observacoes) }}</textarea>
-                </div>
-
-                <div class="col-span-2">
-                    <div class="flex items-center">
-                        <input type="checkbox" name="ativo" id="ativo" value="1" {{ old('ativo', $vendor->ativo) ? 'checked' : '' }} class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                        <label for="ativo" class="ml-2 block text-sm text-gray-900">Ativo</label>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h1 class="h3 mb-0">Editar Vendedor</h1>
+                        <a href="{{ route('admin.vendors.index') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Voltar
+                        </a>
                     </div>
                 </div>
-            </div>
+                <div class="card-body p-4">
+                    <form action="{{ route('admin.vendors.update', $vendor) }}" method="POST" class="needs-validation" novalidate>
+                        @csrf
+                        @method('PUT')
 
-            <div class="mt-6 flex items-center justify-end space-x-3">
-                <a href="{{ route('admin.vendors.index') }}" class="bg-gray-200 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Cancelar</a>
-                <button type="submit" class="bg-indigo-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Salvar Alterações</button>
+                        @if($errors->any())
+                            <div class="alert alert-danger" role="alert">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-exclamation-circle me-2"></i>
+                                    <ul class="mb-0">
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        @endif
+
+                        <div class="row g-4">
+                            <!-- Informações Pessoais -->
+                            <div class="col-12">
+                                <h5 class="mb-3">Informações Pessoais</h5>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control @error('nome') is-invalid @enderror" 
+                                           id="nome" name="nome" value="{{ old('nome', $vendor->nome) }}" 
+                                           placeholder="Digite o nome" required>
+                                    <label for="nome">Nome</label>
+                                    @error('nome')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" 
+                                           id="email" name="email" value="{{ old('email', $vendor->email) }}" 
+                                           placeholder="Digite o email" required>
+                                    <label for="email">E-mail</label>
+                                    @error('email')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror" 
+                                           id="password" name="password" 
+                                           placeholder="Digite a senha">
+                                    <label for="password">Nova Senha (opcional)</label>
+                                    @error('password')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" 
+                                           id="password_confirmation" name="password_confirmation" 
+                                           placeholder="Confirme a senha">
+                                    <label for="password_confirmation">Confirmar Nova Senha</label>
+                                </div>
+                            </div>
+
+                            <!-- Informações de Contato -->
+                            <div class="col-12">
+                                <h5 class="mb-3">Informações de Contato</h5>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control @error('telefone') is-invalid @enderror" 
+                                           id="telefone" name="telefone" value="{{ old('telefone', $vendor->telefone) }}" 
+                                           placeholder="Digite o telefone" required>
+                                    <label for="telefone">Telefone</label>
+                                    @error('telefone')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control @error('cep') is-invalid @enderror" 
+                                           id="cep" name="cep" value="{{ old('cep', $vendor->cep) }}" 
+                                           placeholder="Digite o CEP" required>
+                                    <label for="cep">CEP</label>
+                                    @error('cep')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control @error('cidade') is-invalid @enderror" 
+                                           id="cidade" name="cidade" value="{{ old('cidade', $vendor->cidade) }}" 
+                                           placeholder="Digite a cidade" required>
+                                    <label for="cidade">Cidade</label>
+                                    @error('cidade')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <select class="form-select @error('estado') is-invalid @enderror" 
+                                            id="estado" name="estado" required>
+                                        <option value="">Selecione o estado</option>
+                                        <option value="AC" {{ old('estado', $vendor->estado) == 'AC' ? 'selected' : '' }}>Acre</option>
+                                        <option value="AL" {{ old('estado', $vendor->estado) == 'AL' ? 'selected' : '' }}>Alagoas</option>
+                                        <!-- Add other states -->
+                                    </select>
+                                    <label for="estado">Estado</label>
+                                    @error('estado')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="ativo" name="ativo" value="1" {{ old('ativo', $vendor->ativo) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="ativo">Ativo</label>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>Salvar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 @endsection

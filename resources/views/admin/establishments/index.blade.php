@@ -4,13 +4,18 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h1>Estabelecimentos</h1>
-            <p class="text-muted">Gerencie todos os estabelecimentos cadastrados</p>
+            <h1 class="h3 mb-0">Estabelecimentos</h1>
         </div>
-        <a href="{{ route('admin.establishments.create') }}" class="btn btn-primary">
-            <i class="fas fa-plus-circle"></i>
-            <span>Novo Estabelecimento</span>
-        </a>
+        <div class="d-flex gap-3 align-items-center">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="form-control search-input" placeholder="Buscar estabelecimento...">
+            </div>
+            <a href="{{ route('admin.establishments.create') }}" class="btn btn-primary d-flex align-items-center gap-2">
+                <i class="fas fa-plus"></i>
+                <span>Novo Estabelecimento</span>
+            </a>
+        </div>
     </div>
 
     @if(session('success'))

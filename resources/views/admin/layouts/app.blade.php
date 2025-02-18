@@ -57,7 +57,7 @@
             <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar">
                 <div class="brand">
                     <i class="fas fa-layer-group"></i>
-                    <span>Rubick</span>
+                    <span>PAINEL</span>
                 </div>
                 <div class="position-sticky">
                     <ul class="nav flex-column">
