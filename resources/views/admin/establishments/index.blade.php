@@ -1,19 +1,19 @@
 @extends('admin.layouts.app')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
+@endpush
+
 @section('content')
-<div class="container">
+<div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h1 class="h3 mb-0">Estabelecimentos</h1>
         </div>
         <div class="d-flex gap-3 align-items-center">
-            <div class="search-container">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" class="form-control search-input" placeholder="Buscar estabelecimento...">
-            </div>
             <a href="{{ route('admin.establishments.create') }}" class="btn btn-primary d-flex align-items-center gap-2">
                 <i class="fas fa-plus"></i>
-                <span>Novo Estabelecimento</span>
+                <span>Novo</span>
             </a>
         </div>
     </div>
@@ -27,57 +27,58 @@
         </div>
     @endif
 
-    <div class="card shadow-sm">
-        <div class="table-responsive">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Vendedor</th>
-                        <th>Cidade</th>
-                        <th>Estado</th>
-                        <th>Status</th>
-                        <th class="text-center">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($establishments as $establishment)
-                        <tr>
-                            <td>{{ $establishment->nome }}</td>
-                            <td class="text-muted">{{ $establishment->vendor->name }}</td>
-                            <td class="text-muted">{{ $establishment->cidade }}</td>
-                            <td class="text-muted">{{ $establishment->estado }}</td>
-                            <td>
-                                <span class="badge {{ $establishment->ativo ? 'bg-success' : 'bg-danger' }}">
-                                    {{ $establishment->ativo ? 'Ativo' : 'Inativo' }}
-                                </span>
-                            </td>
-                            <td class="text-center">
-                                <div class="d-flex justify-content-center">
-                                    <a href="{{ route('admin.establishments.edit', $establishment) }}" class="btn btn-sm btn-outline-info me-2">
-                                        <i class="fas fa-edit"></i>
-                                        <span>Editar</span>
-                                    </a>
-                                    <form action="{{ route('admin.establishments.destroy', $establishment) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                onclick="return confirm('Tem certeza que deseja excluir este estabelecimento?')">
-                                            <i class="fas fa-trash"></i>
-                                            <span>Excluir</span>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+    @if($establishments->isEmpty())
+        <div class="card shadow-sm">
+            <div class="card-body text-center py-5">
+                <i class="fas fa-store text-muted" style="font-size: 3rem;"></i>
+                <h4 class="mt-3">Nenhum estabelecimento cadastrado</h4>
+                <p class="text-muted">Clique no botão "Novo" para começar.</p>
+            </div>
         </div>
-    </div>
-
-    <div class="mt-4">
-        {{ $establishments->links() }}
-    </div>
+    @else
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Vendedor</th>
+                            <th>Cidade/Estado</th>
+                            <th>Status</th>
+                            <th class="text-end">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($establishments as $establishment)
+                            <tr>
+                                <td class="fw-medium">{{ $establishment->nome }}</td>
+                                <td>{{ $establishment->vendor->nome }}</td>
+                                <td class="text-muted">{{ $establishment->cidade }}/{{ $establishment->estado }}</td>
+                                <td>
+                                    <span class="badge bg-{{ $establishment->ativo ? 'success' : 'danger' }} rounded-pill px-3 py-2">
+                                        {{ $establishment->ativo ? 'Ativo' : 'Inativo' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="{{ route('admin.establishments.edit', $establishment) }}" class="btn btn-sm btn-outline-primary me-2 d-inline-flex align-items-center gap-2">
+                                            <i class="fas fa-pencil"></i> Editar
+                                        </a>
+                                        <form action="{{ route('admin.establishments.destroy', $establishment) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Tem certeza que deseja excluir este estabelecimento?')">
+                                                <i class="fas fa-trash"></i> Excluir
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endif
 </div>
 @endsection

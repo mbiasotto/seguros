@@ -5,7 +5,7 @@
 @endpush
 
 @section('content')
-<div class="container py-4">
+<div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h1 class="h3 mb-0">Vendedores</h1>
@@ -54,16 +54,16 @@
                             <tr>
                                 <td class="fw-medium">{{ $vendor->nome }}</td>
                                 <td>{{ $vendor->email }}</td>
-                                <td>{{ $vendor->telefone }}</td>
-                                <td>{{ $vendor->cidade }}/{{ $vendor->estado }}</td>
+                                <td class="text-muted">{{ $vendor->telefone }}</td>
+                                <td class="text-muted">{{ $vendor->cidade }}/{{ $vendor->estado }}</td>
                                 <td>
-                                    <span class="badge bg-{{ $vendor->ativo ? 'success' : 'danger' }} rounded-pill">
+                                    <span class="badge bg-{{ $vendor->ativo ? 'success' : 'danger' }} rounded-pill px-3 py-2">
                                         {{ $vendor->ativo ? 'Ativo' : 'Inativo' }}
                                     </span>
                                 </td>
                                 <td>
                                     <div class="action-buttons">
-                                        <a href="{{ route('admin.vendors.edit', $vendor) }}" class="btn btn-sm btn-outline-primary">
+                                        <a href="{{ route('admin.vendors.edit', $vendor) }}" class="btn btn-sm btn-outline-primary me-2 d-inline-flex align-items-center gap-2">
                                             <i class="bi bi-pencil-square"></i> Editar
                                         </a>
                                         <form action="{{ route('admin.vendors.destroy', $vendor) }}" method="POST" class="d-inline">
