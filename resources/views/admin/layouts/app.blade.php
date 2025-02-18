@@ -16,6 +16,21 @@
             background: linear-gradient(180deg, #1D40AE 0%, #2A48A7 100%);
             min-height: 100vh;
             padding-top: 2rem;
+            transition: transform 0.3s ease;
+        }
+        @media (max-width: 767.98px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                max-width: 250px;
+                z-index: 1000;
+                transform: translateX(-100%);
+            }
+            .sidebar.show {
+                transform: translateX(0);
+            }
         }
         .sidebar .nav-link {
             color: rgba(255, 255, 255, 0.8);
@@ -48,9 +63,33 @@
             align-items: center;
             gap: 0.75rem;
         }
+        .navbar-toggler {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            display: none;
+            padding: 0.5rem;
+            background-color: #1D40AE;
+            border: none;
+            border-radius: 4px;
+            color: white;
+        }
+        @media (max-width: 767.98px) {
+            .navbar-toggler {
+                display: block;
+            }
+            main {
+                margin-left: 0 !important;
+                padding-top: 4rem !important;
+            }
+        }
     </style>
 </head>
 <body>
+    <button class="navbar-toggler" type="button" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+    </button>
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
@@ -92,5 +131,19 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('show');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const toggler = document.getElementById('sidebarToggle');
+            if (window.innerWidth < 768 && !sidebar.contains(event.target) && !toggler.contains(event.target)) {
+                sidebar.classList.remove('show');
+            }
+        });
+    </script>
 </body>
 </html>
