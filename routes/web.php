@@ -19,9 +19,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // Protected Admin Routes
     Route::middleware(['auth'])->group(function () {
-        Route::get('/dashboard', function () {
-            return redirect()->route('admin.vendors.index');
-        })->name('dashboard');
+        Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
         // Vendor Management Routes
         Route::resource('vendors', VendorController::class);
