@@ -4,12 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AdminPanel - {{ config('app.name') }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .sidebar {
+            background: linear-gradient(180deg, #1D40AE 0%, #2A48A7 100%);
+            min-height: 100vh;
+            padding-top: 2rem;
+        }
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .sidebar .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+        .sidebar .nav-item + .nav-item {
+            margin-top: 0.25rem;
+        }
+        .brand {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
     </style>
 </head>
@@ -17,25 +54,29 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar">
+                <div class="brand">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Rubick</span>
+                </div>
                 <div class="position-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{ route('admin.dashboard') }}">
                                 <i class="fas fa-home"></i>
-                                Dashboard
+                                <span>Dashboard</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.vendors.index') }}">
                                 <i class="fas fa-users"></i>
-                                Vendedores
+                                <span>Vendedores</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.establishments.index') }}">
                                 <i class="fas fa-store"></i>
-                                Estabelecimentos
+                                <span>Estabelecimentos</span>
                             </a>
                         </li>
                     </ul>
@@ -44,64 +85,12 @@
 
             <!-- Main content -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <!-- Top Navigation -->
-                    <div class="btn-toolbar mb-2">
-                        <!-- Mobile menu button -->
-                        <button
-                            data-mobile-menu
-                            class="btn btn-sm btn-outline-secondary"
-                        >
-                            <i class="fas fa-bars"></i>
-                        </button>
-
-                        <!-- Search -->
-                        <div class="ms-3">
-                            <input type="text" placeholder="Search..." class="form-control">
-                        </div>
-
-                        <!-- User menu -->
-                        <div class="ms-3">
-                            <span>John Doe</span>
-                            <i class="fas fa-chevron-down"></i>
-                            <form method="POST" action="{{ route('admin.logout') }}" class="d-inline">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                    <i class="fas fa-sign-out-alt"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Page Content -->
                 @yield('content')
             </main>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script>
-        // Mobile menu toggle
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.querySelector('[data-overlay]');
-        const mobileMenuBtn = document.querySelector('[data-mobile-menu]');
-
-        function toggleMobileMenu() {
-            sidebar.classList.toggle('-translate-x-full');
-            overlay.classList.toggle('hidden');
-        }
-
-        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-        overlay.addEventListener('click', toggleMobileMenu);
-
-        // Close mobile menu on window resize if screen becomes larger
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 768 && !sidebar.classList.contains('md:translate-x-0')) {
-                sidebar.classList.add('-translate-x-full');
-                overlay.classList.add('hidden');
-            }
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
