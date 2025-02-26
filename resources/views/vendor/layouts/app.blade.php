@@ -3,34 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Admin') - {{ config('app.name') }}</title>
+    <title>@yield('title') - {{ config('app.name') }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/vendor.css') }}">
     @stack('styles')
 </head>
 <body>
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="px-4 py-3 mb-4">
-            <h5 class="text-white mb-0">Painel Administrativo</h5>
+            <h5 class="text-white mb-0">Painel do Vendedor</h5>
         </div>
         <nav class="nav flex-column">
-            <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+            <a href="{{ route('vendor.dashboard') }}" class="nav-link {{ request()->routeIs('vendor.dashboard') ? 'active' : '' }}">
                 <i class="fas fa-home"></i>
                 <span>Dashboard</span>
             </a>
-            <a href="{{ route('admin.vendors.index') }}" class="nav-link {{ request()->routeIs('admin.vendors*') ? 'active' : '' }}">
-                <i class="fas fa-users"></i>
-                <span>Vendedores</span>
+            <a href="{{ route('vendor.profile') }}" class="nav-link {{ request()->routeIs('vendor.profile') ? 'active' : '' }}">
+                <i class="fas fa-user"></i>
+                <span>Meu Perfil</span>
             </a>
-            <a href="{{ route('admin.establishments.index') }}" class="nav-link {{ request()->routeIs('admin.establishments*') ? 'active' : '' }}">
+            <a href="{{ route('vendor.establishments.index') }}" class="nav-link {{ request()->routeIs('vendor.establishments*') ? 'active' : '' }}">
                 <i class="fas fa-store"></i>
                 <span>Estabelecimentos</span>
             </a>
         </nav>
-        <form action="{{ route('admin.logout') }}" method="POST" class="mt-auto px-3">
+        <form action="{{ route('vendor.logout') }}" method="POST" class="mt-auto px-3">
             @csrf
             <button type="submit" class="btn btn-outline-light btn-sm w-100">
                 <i class="fas fa-sign-out-alt me-2"></i>Sair
