@@ -2,6 +2,10 @@
 
 @section('title', 'Editar Estabelecimento')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
+@endpush
+
 @section('content')
 <div class="container-fluid px-0">
     <div class="row mb-4">
@@ -22,6 +26,19 @@
                     <form action="{{ route('admin.establishments.update', $establishment) }}" method="POST" class="needs-validation" novalidate>
                         @csrf
                         @method('PUT')
+                        
+                        @if($errors->any())
+                            <div class="alert alert-danger" role="alert">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-exclamation-circle me-2"></i>
+                                    <ul class="mb-0">
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        @endif
                         
                         <div class="row">
                             <div class="col-md-8">

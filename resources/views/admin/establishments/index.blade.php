@@ -2,6 +2,10 @@
 
 @section('title', 'Estabelecimentos')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
+@endpush
+
 @section('content')
 <div class="data-list-header">
     <h1 class="h3 mb-0">Estabelecimentos</h1>
@@ -13,10 +17,13 @@
 
 @if($establishments->isEmpty())
     <div class="card shadow-sm">
-        <div class="card-body empty-state">
-            <i class="fas fa-store text-muted"></i>
+        <div class="card-body empty-state text-center py-5">
+            <i class="fas fa-store text-muted fa-3x mb-3"></i>
             <h4 class="mt-3">Nenhum estabelecimento cadastrado</h4>
-            <p class="text-muted">Clique no botão "Novo Estabelecimento" para começar.</p>
+            <p class="text-muted mb-4">Clique no botão "Novo Estabelecimento" para começar.</p>
+            <a href="{{ route('admin.establishments.create') }}" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>Novo Estabelecimento
+            </a>
         </div>
     </div>
 @else
@@ -27,6 +34,7 @@
                     <tr>
                         <th>Nome</th>
                         <th>Vendedor</th>
+                        <th>Email</th>
                         <th>Cidade/Estado</th>
                         <th>Status</th>
                         <th width="120">Ações</th>
@@ -35,8 +43,9 @@
                 <tbody>
                     @foreach($establishments as $establishment)
                         <tr>
-                            <td>{{ $establishment->nome }}</td>
+                            <td class="fw-medium">{{ $establishment->nome }}</td>
                             <td>{{ $establishment->vendor->nome }}</td>
+                            <td>{{ $establishment->email }}</td>
                             <td>{{ $establishment->cidade }}/{{ $establishment->estado }}</td>
                             <td>
                                 @if($establishment->ativo)

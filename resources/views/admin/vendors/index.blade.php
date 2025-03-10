@@ -13,10 +13,13 @@
 
 @if($vendors->isEmpty())
     <div class="card shadow-sm">
-        <div class="card-body empty-state">
-            <i class="fas fa-users text-muted"></i>
+        <div class="card-body empty-state text-center py-5">
+            <i class="fas fa-users text-muted fa-3x mb-3"></i>
             <h4 class="mt-3">Nenhum vendedor cadastrado</h4>
-            <p class="text-muted">Clique no botão "Novo Vendedor" para começar.</p>
+            <p class="text-muted mb-4">Clique no botão "Novo Vendedor" para começar.</p>
+            <a href="{{ route('admin.vendors.create') }}" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>Novo Vendedor
+            </a>
         </div>
     </div>
 @else

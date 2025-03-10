@@ -5,18 +5,21 @@
 @endpush
 
 @section('content')
-<div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card shadow-sm">
-                <div class="card-header bg-white py-3">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h1 class="h3 mb-0">Editar Vendedor</h1>
-                        <a href="{{ route('admin.vendors.index') }}" class="btn btn-outline-secondary">
-                            <i class="fas fa-arrow-left me-2"></i>Voltar
-                        </a>
-                    </div>
-                </div>
+<div class="container-fluid px-0">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-0 fw-bold">Editar Vendedor</h2>
+                <a href="{{ route('admin.vendors.index') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i> Voltar para a lista
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
                 <div class="card-body p-4">
                     <form action="{{ route('admin.vendors.update', $vendor) }}" method="POST" class="needs-validation" novalidate>
                         @csrf
@@ -42,11 +45,10 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control @error('nome') is-invalid @enderror" 
-                                           id="nome" name="nome" value="{{ old('nome', $vendor->nome) }}" 
-                                           placeholder="Digite o nome" required>
-                                    <label for="nome">Nome</label>
+                                <div class="mb-3">
+                                    <label for="nome" class="form-label fw-semibold">Nome <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control form-control-lg @error('nome') is-invalid @enderror" 
+                                           id="nome" name="nome" value="{{ old('nome', $vendor->nome) }}" required>
                                     @error('nome')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -54,11 +56,10 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror" 
-                                           id="email" name="email" value="{{ old('email', $vendor->email) }}" 
-                                           placeholder="Digite o email" required>
-                                    <label for="email">E-mail</label>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label fw-semibold">E-mail <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" 
+                                           id="email" name="email" value="{{ old('email', $vendor->email) }}" required>
                                     @error('email')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -66,11 +67,10 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="password" class="form-control @error('password') is-invalid @enderror" 
-                                           id="password" name="password" 
-                                           placeholder="Digite a senha">
-                                    <label for="password">Nova Senha (opcional)</label>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label fw-semibold">Nova Senha (opcional)</label>
+                                    <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" 
+                                           id="password" name="password">
                                     @error('password')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -78,11 +78,10 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="password" class="form-control" 
-                                           id="password_confirmation" name="password_confirmation" 
-                                           placeholder="Confirme a senha">
-                                    <label for="password_confirmation">Confirmar Nova Senha</label>
+                                <div class="mb-3">
+                                    <label for="password_confirmation" class="form-label fw-semibold">Confirmar Nova Senha</label>
+                                    <input type="password" class="form-control form-control-lg" 
+                                           id="password_confirmation" name="password_confirmation">
                                 </div>
                             </div>
 
@@ -150,10 +149,13 @@
                                 </div>
                             </div>
 
-                            <div class="col-12 mt-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save me-2"></i>Salvar
-                                </button>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-end mt-4">
+                                    <a href="{{ route('admin.vendors.index') }}" class="btn btn-outline-secondary btn-lg me-2">Cancelar</a>
+                                    <button type="submit" class="btn btn-primary btn-lg px-4">
+                                        <i class="fas fa-save me-2"></i> Salvar Alterações
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </form>

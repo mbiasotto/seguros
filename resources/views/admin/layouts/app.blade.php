@@ -29,6 +29,10 @@
                 <i class="fas fa-store"></i>
                 <span>Estabelecimentos</span>
             </a>
+            <a href="{{ route('admin.qr-codes.index') }}" class="nav-link {{ request()->routeIs('admin.qr-codes*') ? 'active' : '' }}">
+                <i class="fas fa-qrcode"></i>
+                <span>QR Codes</span>
+            </a>
         </nav>
         <form action="{{ route('admin.logout') }}" method="POST" class="mt-auto px-3">
             @csrf

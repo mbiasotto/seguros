@@ -9,12 +9,12 @@ use App\Http\Controllers\Admin\AdminEstablishmentController;
 use App\Http\Controllers\Admin\QrCodeController;
 use App\Http\Controllers\QrCodeRedirectController;
 
-// QR Code Redirect Route
-Route::get('/qr-code/{id}', [QrCodeRedirectController::class, 'redirect'])->name('qr-code.redirect');
-
 Route::get('/', function () {
     return view('welcome');
 });
+
+// QR Code Redirect Route
+Route::get('/qr-code/{id}', [QrCodeRedirectController::class, 'redirect'])->name('qr-code.redirect');
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -31,10 +31,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Establishment Management Routes
         Route::resource('establishments', AdminEstablishmentController::class);
-
+        
         // QR Code Management Routes
         Route::resource('qr-codes', QrCodeController::class);
-        Route::get('qr-codes/{qrCode}/download', [QrCodeController::class, 'download'])->name('qr-codes.download');
     });
 });
 
@@ -57,11 +56,5 @@ Route::prefix('vendor')->name('vendor.')->group(function () {
         Route::get('dashboard', function () {
             return redirect()->route('vendor.profile');
         })->name('dashboard');
-
-        Route::get('profile', [VendorAuthController::class, 'profile'])->name('profile');
-        Route::put('profile', [VendorAuthController::class, 'updateProfile'])->name('profile.update');
-
-        // Establishment Management Routes
-        Route::resource('establishments', EstablishmentController::class);
     });
 });
