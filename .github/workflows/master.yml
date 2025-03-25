@@ -1,0 +1,31 @@
+on:
+  push:
+    branches:
+      - main
+name: 🚀 Deploy website on push
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v3
+
+    - name: 📂 Sync Laravel files (except public)
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ftp.seguraessa.app
+        username: seguraessa
+        password: cMg$2024$
+        server-dir: laravel/
+        exclude: |
+          public/**
+
+    - name: 📂 Sync public files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ftp.seguraessa.app
+        username: seguraessa
+        password: cMg$2024$
+        server-dir: public_html/
+        local-dir: ./public/
