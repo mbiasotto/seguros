@@ -13,22 +13,21 @@ use Illuminate\Routing\Controller;
 class VendorAuthController extends Controller
 {
     use AuthorizesRequests, ValidatesRequests;
-    public function __construct()
-    {
-        $this->middleware('guest:vendor')->except(['profile', 'updateProfile', 'logout']);
-        $this->middleware('auth:vendor')->only(['profile', 'updateProfile', 'logout']);
-    }
 
-    protected function redirectTo()
-    {
-        return route('vendor.dashboard');
-    }
-
+    /**
+     * Mostrar o formulário de login para vendedores
+     */
     public function showLoginForm()
     {
+        if (Auth::guard('vendor')->check()) {
+            return redirect()->route('vendor.profile');
+        }
         return view('vendor.auth.login');
     }
 
+    /**
+     * Processar a tentativa de login para vendedores
+     */
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -46,14 +45,28 @@ class VendorAuthController extends Controller
         ])->onlyInput('email');
     }
 
+    /**
+     * Mostrar perfil do vendedor
+     */
     public function profile()
     {
+        if (!Auth::guard('vendor')->check()) {
+            return redirect()->route('vendor.login');
+        }
+        
         $vendor = Auth::guard('vendor')->user();
         return view('vendor.profile', compact('vendor'));
     }
 
+    /**
+     * Atualizar perfil do vendedor
+     */
     public function updateProfile(Request $request)
     {
+        if (!Auth::guard('vendor')->check()) {
+            return redirect()->route('vendor.login');
+        }
+        
         $vendor = Vendor::find(Auth::guard('vendor')->id());
 
         $validated = $request->validate([
@@ -78,6 +91,9 @@ class VendorAuthController extends Controller
             ->with('success', 'Perfil atualizado com sucesso!');
     }
 
+    /**
+     * Processar logout do vendedor
+     */
     public function logout(Request $request)
     {
         Auth::guard('vendor')->logout();

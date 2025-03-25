@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seja um Vendedor | Câmara & Garutti - Ganhe comissões em dois níveis</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Google Fonts - Fontes modernas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <style>
+      :root {
+          --primary-green: #4CAF50;
+          --dark-green: #006400;
+          --light-green: #8BC34A;
+          --white: #ffffff;
+          --gray-100: #f8f9fa;
+          --gray-200: #e9ecef;
+          --gray-300: #dee2e6;
+          --gray-800: #343a40;
+      }
+
+      body {
+          font-family: 'DM Sans', sans-serif;
+          overflow-x: hidden;
+          color: #333;
+          line-height: 1.6;
+      }
+
+      h1, h2, h3, h4, h5, h6, .navbar-brand {
+          font-family: 'Outfit', sans-serif;
+          font-weight: 700;
+      }
+
+      p {
+          font-size: 1.05rem;
+      }
+
+      .bg-primary-green {
+          background-color: var(--primary-green);
+      }
+
+      .bg-dark-green {
+          background-color: var(--dark-green);
+      }
+
+      .text-dark-green {
+          color: var(--dark-green);
+      }
+
+      .hero-section {
+          background: linear-gradient(135deg, var(--dark-green) 0%, var(--primary-green) 100%);
+          position: relative;
+          overflow: hidden;
+          padding: 120px 0;
+      }
+
+      .hero-text {
+          color: white;
+          position: relative;
+          z-index: 2;
+      }
+
+      .hero-title {
+          font-size: 3.5rem;
+          font-weight: 800;
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+          letter-spacing: -1px;
+          line-height: 1.2;
+      }
+
+      .hero-subtitle {
+          font-size: 1.8rem;
+          font-weight: 600;
+          letter-spacing: 0.5px;
+          margin-top: 1rem;
+          margin-bottom: 1.5rem;
+      }
+
+      .hero-image {
+          position: relative;
+          z-index: 2;
+      }
+
+      .wave-shape {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          overflow: hidden;
+          line-height: 0;
+      }
+
+      .wave-shape svg {
+          position: relative;
+          display: block;
+          width: calc(100% + 1.3px);
+          height: 150px;
+      }
+
+      .wave-shape .shape-fill {
+          fill: #FFFFFF;
+      }
+
+      .btn-cta {
+          background-color: var(--white);
+          color: var(--dark-green);
+          padding: 15px 35px;
+          font-weight: 600;
+          border: none;
+          border-radius: 50px;
+          font-size: 1.1rem;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+          text-transform: uppercase;
+          letter-spacing: 1px;
+      }
+
+      .btn-cta:hover {
+          background-color: var(--gray-100);
+          transform: translateY(-3px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+          color: var(--dark-green);
+      }
+
+      .btn-outline-cta {
+          color: var(--white);
+          border: 2px solid var(--white);
+          background-color: transparent;
+          padding: 14px 34px;
+          font-weight: 600;
+          border-radius: 50px;
+          font-size: 1.1rem;
+          transition: all 0.3s ease;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+      }
+
+      .btn-outline-cta:hover {
+          background-color: var(--white);
+          color: var(--dark-green);
+          transform: translateY(-3px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-green {
+          background-color: var(--primary-green);
+          color: white;
+          padding: 15px 35px;
+          font-weight: 600;
+          border: none;
+          border-radius: 50px;
+          font-size: 1.1rem;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+          text-transform: uppercase;
+          letter-spacing: 1px;
+      }
+
+      .btn-green:hover {
+          background-color: var(--dark-green);
+          transform: translateY(-3px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+          color: white;
+      }
+
+      .section-title {
+          font-size: 2.5rem;
+          margin-bottom: 1.5rem;
+          position: relative;
+          display: inline-block;
+      }
+
+      .section-title:after {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          left: 0;
+          width: 80px;
+          height: 4px;
+          background-color: var(--primary-green);
+      }
+
+      .text-center .section-title:after {
+          left: 50%;
+          transform: translateX(-50%);
+      }
+
+      .how-it-works-section {
+          padding: 100px 0;
+          background-color: var(--white);
+      }
+
+      .step-card {
+          background-color: var(--gray-100);
+          border-radius: 15px;
+          padding: 40px 30px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+          height: 100%;
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+          border-bottom: 4px solid transparent;
+      }
+
+      .step-card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+          border-bottom: 4px solid var(--primary-green);
+      }
+
+      .step-number {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          font-size: 5rem;
+          font-weight: 800;
+          color: rgba(76, 175, 80, 0.1);
+          line-height: 1;
+      }
+
+      .step-icon {
+          width: 80px;
+          height: 80px;
+          background-color: rgba(76, 175, 80, 0.1);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 25px;
+          font-size: 2.5rem;
+          color: var(--primary-green);
+          transition: all 0.3s ease;
+      }
+
+      .step-card:hover .step-icon {
+          background-color: var(--primary-green);
+          color: white;
+          transform: scale(1.1);
+      }
+
+      .step-card h3 {
+          font-size: 1.8rem;
+          margin-bottom: 20px;
+          color: var(--gray-800);
+      }
+
+      .commission-section {
+          padding: 100px 0;
+          background-color: var(--gray-100);
+          position: relative;
+      }
+
+      .commission-card {
+          background-color: white;
+          border-radius: 15px;
+          padding: 40px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+          height: 100%;
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+      }
+
+      .commission-card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .commission-card:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 5px;
+          height: 0;
+          background-color: var(--primary-green);
+          transition: height 0.4s ease;
+      }
+
+      .commission-card:hover:before {
+          height: 100%;
+      }
+
+      .commission-value {
+          font-size: 3.5rem;
+          font-weight: 800;
+          color: var(--primary-green);
+          margin-bottom: 20px;
+          line-height: 1;
+      }
+
+      .commission-title {
+          font-size: 1.8rem;
+          margin-bottom: 20px;
+          color: var(--gray-800);
+      }
+
+      .commission-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+      }
+
+      .commission-list li {
+          display: flex;
+          align-items: center;
+          margin-bottom: 15px;
+      }
+
+      .commission-list li i {
+          color: var(--primary-green);
+          margin-right: 15px;
+          font-size: 1.2rem;
+      }
+
+      .benefits-section {
+          padding: 100px 0;
+          background: linear-gradient(to right, #f8f9fa, #e9ecef);
+          position: relative;
+      }
+
+      .benefit-card {
+          background-color: white;
+          border-radius: 15px;
+          padding: 30px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+          height: 100%;
+          transition: all 0.3s ease;
+          border-bottom: 4px solid transparent;
+      }
+
+      .benefit-card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+          border-bottom: 4px solid var(--primary-green);
+      }
+
+      .benefit-icon {
+          width: 70px;
+          height: 70px;
+          background-color: rgba(76, 175, 80, 0.1);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 20px;
+          font-size: 2rem;
+          color: var(--primary-green);
+          transition: all 0.3s ease;
+      }
+
+      .benefit-card:hover .benefit-icon {
+          background-color: var(--primary-green);
+          color: white;
+          transform: scale(1.1);
+      }
+
+      .benefit-card h3 {
+          font-size: 1.5rem;
+          margin-bottom: 15px;
+          color: var(--gray-800);
+      }
+
+      .calculator-section {
+          padding: 100px 0;
+          background: linear-gradient(135deg, var(--dark-green) 0%, var(--primary-green) 100%);
+          color: white;
+          position: relative;
+      }
+
+      .calculator-card {
+          background-color: white;
+          border-radius: 15px;
+          padding: 40px;
+          box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+          color: #333;
+      }
+
+      .calculator-card h3 {
+          font-size: 1.8rem;
+          margin-bottom: 30px;
+          color: var(--gray-800);
+          text-align: center;
+          position: relative;
+          padding-bottom: 15px;
+      }
+
+      .calculator-card h3:after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 60px;
+          height: 3px;
+          background-color: var(--primary-green);
+      }
+
+      .result-box {
+          background-color: rgba(76, 175, 80, 0.1);
+          border-radius: 10px;
+          padding: 20px;
+          margin-top: 30px;
+          text-align: center;
+          border-left: 4px solid var(--primary-green);
+      }
+
+      .result-value {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: var(--primary-green);
+          margin-bottom: 10px;
+      }
+
+      .tools-section {
+          padding: 100px 0;
+          background-color: var(--white);
+      }
+
+      .tool-card {
+          background-color: var(--gray-100);
+          border-radius: 15px;
+          padding: 30px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+          height: 100%;
+          transition: all 0.3s ease;
+          text-align: center;
+      }
+
+      .tool-card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .tool-icon {
+          width: 80px;
+          height: 80px;
+          background-color: rgba(76, 175, 80, 0.1);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 20px;
+          font-size: 2.5rem;
+          color: var(--primary-green);
+          transition: all 0.3s ease;
+      }
+
+      .tool-card:hover .tool-icon {
+          background-color: var(--primary-green);
+          color: white;
+          transform: scale(1.1);
+      }
+
+      .tool-card h3 {
+          font-size: 1.5rem;
+          margin-bottom: 15px;
+          color: var(--gray-800);
+      }
+
+      .profile-section {
+          padding: 100px 0;
+          background-color: var(--gray-100);
+      }
+
+      .profile-card {
+          background-color: white;
+          border-radius: 15px;
+          padding: 40px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+          height: 100%;
+          transition: all 0.3s ease;
+      }
+
+      .profile-card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .profile-icon {
+          width: 100px;
+          height: 100px;
+          background-color: rgba(76, 175, 80, 0.1);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 30px;
+          font-size: 3rem;
+          color: var(--primary-green);
+      }
+
+      .profile-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+      }
+
+      .profile-list li {
+          display: flex;
+          align-items: center;
+          margin-bottom: 15px;
+          padding-left: 15px;
+          border-left: 3px solid var(--primary-green);
+      }
+
+      .testimonial-section {
+          padding: 100px 0;
+          background: linear-gradient(to right, #f8f9fa, #e9ecef);
+      }
+
+      .testimonial-card {
+          background-color: white;
+          border-radius: 15px;
+          padding: 30px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+          margin-bottom: 30px;
+          position: relative;
+          transition: all 0.3s ease;
+      }
+
+      .testimonial-card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .testimonial-card:before {
+          content: '\201C';
+          font-family: Georgia, serif;
+          position: absolute;
+          top: 20px;
+          left: 20px;
+          font-size: 5rem;
+          color: rgba(76, 175, 80, 0.1);
+          line-height: 1;
+      }
+
+      .testimonial-text {
+          font-style: italic;
+          margin-bottom: 20px;
+          position: relative;
+          z-index: 1;
+          padding-left: 20px;
+      }
+
+      .testimonial-author {
+          display: flex;
+          align-items: center;
+      }
+
+      .testimonial-author img {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          margin-right: 20px;
+          object-fit: cover;
+      }
+
+      .testimonial-author-info strong {
+          display: block;
+          color: var(--gray-800);
+          font-weight: 600;
+          font-size: 1.1rem;
+      }
+
+      .testimonial-author-info span {
+          color: var(--primary-green);
+          font-size: 0.9rem;
+      }
+
+      .earnings-highlight {
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: var(--primary-green);
+      }
+
+      .faq-section {
+          padding: 100px 0;
+          background-color: white;
+      }
+
+      .accordion-item {
+          border: none;
+          margin-bottom: 15px;
+          border-radius: 10px;
+          overflow: hidden;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .accordion-button {
+          padding: 20px 25px;
+          font-weight: 600;
+          font-size: 1.1rem;
+          color: var(--gray-800);
+          background-color: white;
+      }
+
+      .accordion-button:not(.collapsed) {
+          color: var(--primary-green);
+          background-color: rgba(76, 175, 80, 0.05);
+      }
+
+      .accordion-button:focus {
+          box-shadow: none;
+          border-color: rgba(76, 175, 80, 0.1);
+      }
+
+      .accordion-button::after {
+          background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%234CAF50'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+      }
+
+      .accordion-body {
+          padding: 20px 25px;
+          background-color: white;
+      }
+
+      .cta-section {
+          padding: 100px 0;
+          background: linear-gradient(135deg, var(--dark-green) 0%, var(--primary-green) 100%);
+          position: relative;
+          overflow: hidden;
+      }
+
+      .cta-form {
+          background-color: white;
+          padding: 40px;
+          border-radius: 15px;
+          box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+      }
+
+      .cta-form h3 {
+          font-size: 1.8rem;
+          margin-bottom: 30px;
+          text-align: center;
+          position: relative;
+          padding-bottom: 15px;
+      }
+
+      .cta-form h3:after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 60px;
+          height: 3px;
+          background-color: var(--primary-green);
+      }
+
+      .floating-elements {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          overflow: hidden;
+          z-index: 1;
+      }
+
+      .floating-element {
+          position: absolute;
+          background-color: rgba(255, 255, 255, 0.1);
+          border-radius: 50%;
+      }
+
+      footer {
+          background-color: var(--dark-green);
+          color: white;
+          padding: 50px 0 20px;
+      }
+
+      .footer-links a {
+          color: rgba(255, 255, 255, 0.8);
+          text-decoration: none;
+          transition: color 0.3s ease;
+      }
+
+      .footer-links a:hover {
+          color: white;
+      }
+
+      .social-icons a {
+          color: white;
+          font-size: 1.5rem;
+          margin-right: 15px;
+          transition: transform 0.3s ease;
+      }
+
+      .social-icons a:hover {
+          transform: translateY(-5px);
+      }
+
+      /* Animação de entrada para o título principal */
+      .animate-title {
+          animation: fadeInUp 1.5s ease-out;
+      }
+
+      @keyframes fadeInUp {
+          from {
+              opacity: 0;
+              transform: translateY(30px);
+          }
+          to {
+              opacity: 1;
+              transform: translateY(0);
+          }
+      }
+
+      /* Responsividade */
+      @media (max-width: 768px) {
+          .hero-title {
+              font-size: 2.5rem;
+          }
+
+          .hero-subtitle {
+              font-size: 1.5rem;
+          }
+
+          .section-title {
+              font-size: 2rem;
+          }
+
+          .step-card, .benefit-card, .commission-card, .calculator-card, .cta-form {
+              padding: 25px;
+          }
+
+          .commission-value {
+              font-size: 2.5rem;
+          }
+      }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark-green sticky-top">
+      <div class="container">
+          <a class="navbar-brand d-flex align-items-center" href="index.html">
+              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Prancheta%201-f9YwBot3lw7qHyEzeokuVE3dPOSDLe.png" alt="Câmara & Garutti Logo" height="40" class="me-2">
+              <span>Câmara & Garutti</span>
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                      <a class="nav-link" href="#como-funciona">Como Funciona</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#comissoes">Comissões</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#beneficios">Benefícios</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#ferramentas">Ferramentas</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#depoimentos">Depoimentos</a>
+                  </li>
+                  <li class="nav-item ms-lg-3">
+                      <a class="btn btn-light" href="#cadastro">Seja Vendedor</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+      <div class="container position-relative">
+          <div class="row align-items-center">
+              <div class="col-lg-6 hero-text" data-aos="fade-right">
+                  <h1 class="hero-title animate-title">Ganhe em dobro como nosso vendedor parceiro</h1>
+                  <h2 class="hero-subtitle">Comissões por cada estabelecimento cadastrado + percentual sobre todas as vendas geradas</h2>
+                  <p class="lead mb-4">Seja um representante Câmara & Garutti e construa uma rede de parceiros que gera renda passiva para você todos os meses.</p>
+                  <div class="d-flex flex-wrap gap-3">
+                      <a href="#cadastro" class="btn btn-cta">Quero ser vendedor</a>
+                      <a href="#como-funciona" class="btn btn-outline-cta">Saiba mais</a>
+                  </div>
+              </div>
+              <div class="col-lg-6 hero-image" data-aos="fade-left">
+                  <img src="/placeholder.svg?height=400&width=500" alt="Vendedor Câmara & Garutti" class="img-fluid">
+              </div>
+          </div>
+      </div>
+      <div class="wave-shape">
+          <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+              <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+          </svg>
+      </div>
+  </section>
+
+  <!-- Como Funciona Section -->
+  <section class="how-it-works-section" id="como-funciona">
+      <div class="container">
+          <div class="row mb-5">
+              <div class="col-lg-8 mx-auto text-center">
+                  <h2 class="section-title display-4 fw-bold text-dark-green" data-aos="fade-up">Como Funciona</h2>
+                  <p class="lead" data-aos="fade-up" data-aos-delay="100">Entenda como você pode se tornar um vendedor parceiro e começar a ganhar comissões em dois níveis</p>
+              </div>
+          </div>
+          <div class="row g-4">
+              <div class="col-md-4" data-aos="fade-up">
+                  <div class="step-card">
+                      <div class="step-number">1</div>
+                      <div class="step-icon">
+                          <i class="fas fa-user-plus"></i>
+                      </div>
+                      <h3>Cadastre-se</h3>
+                      <p>Preencha o formulário de cadastro com seus dados. Nossa equipe analisará seu perfil e entrará em contato para uma entrevista inicial.</p>
+                  </div>
+              </div>
+              <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                  <div class="step-card">
+                      <div class="step-number">2</div>
+                      <div class="step-icon">
+                          <i class="fas fa-graduation-cap"></i>
+                      </div>
+                      <h3>Treinamento</h3>
+                      <p>Após aprovação, você receberá treinamento completo sobre nossos produtos, técnicas de vendas e como cadastrar estabelecimentos parceiros.</p>
+                  </div>
+              </div>
+              <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                  <div class="step-card">
+                      <div class="step-number">3</div>
+                      <div class="step-icon">
+                          <i class="fas fa-store"></i>
+                      </div>
+                      <h3>Visite Estabelecimentos</h3>
+                      <p>Com todo material necessário em mãos, você visitará estabelecimentos comerciais para apresentar nosso programa de parceria.</p>
+                  </div>
+              </div>
+              <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+                  <div class="step-card">
+                      <div class="step-number">4</div>
+                      <div class="step-icon">
+                          <i class="fas fa-handshake"></i>
+                      </div>
+                      <h3>Cadastre Parceiros</h3>
+                      <p>Para cada estabelecimento que aceitar se tornar parceiro, você recebe uma comissão imediata. Estes parceiros formam sua rede de indicações.</p>
+                  </div>
+              </div>
+              <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
+                  <div class="step-card">
+                      <div class="step-number">5</div>
+                      <div class="step-icon">
+                          <i class="fas fa-money-bill-wave"></i>
+                      </div>
+                      <h3>Ganhe em Dois Níveis</h3>
+                      <p>Além da comissão pelo cadastro, você recebe um percentual sobre todas as vendas geradas pelos estabelecimentos que você cadastrou, criando uma renda recorrente.</p>
+                  </div>
+              </div>
+          </div>
+          <div class="row mt-5">
+              <div class="col-12 text-center" data-aos="fade-up">
+                  <a href="#cadastro" class="btn btn-green">Quero começar agora</a>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Comissões Section -->
+  <section class="commission-section" id="comissoes">
+      <div class="container">
+          <div class="row mb-5">
+              <div class="col-lg-8 mx-auto text-center">
+                  <h2 class="section-title display-4 fw-bold text-dark-green" data-aos="fade-up">Comissões em Dois Níveis</h2>
+                  <p class="lead" data-aos="fade-up" data-aos-delay="100">Ganhe tanto pelo cadastro de estabelecimentos quanto pelas vendas geradas por eles</p>
+              </div>
+          </div>
+          <div class="row g-4">
+              <div class="col-md-6" data-aos="fade-up">
+                  <div class="commission-card">
+                      <div class="commission-value">R$ 200</div>
+                      <h3 class="commission-title">Por Estabelecimento Cadastrado</h3>
+                      <ul class="commission-list">
+                          <li><i class="fas fa-check-circle"></i> Comissão imediata por cada novo parceiro</li>
+                          <li><i class="fas fa-check-circle"></i> Pagamento após a validação do cadastro</li>
+                          <li><i class="fas fa-check-circle"></i> Bônus adicional para parceiros premium</li>
+                          <li><i class="fas fa-check-circle"></i> Sem limite de cadastros mensais</li>
+                      </ul>
+                      <p class="mt-4">Exemplo: Cadastrando 10 estabelecimentos por mês, você ganha R$ 2.000 em comissões diretas.</p>
+                  </div>
+              </div>
+              <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                  <div class="commission-card">
+                      <div class="commission-value">2% a 5%</div>
+                      <h3 class="commission-title">Das Vendas Geradas</h3>
+                      <ul class="commission-list">
+                          <li><i class="fas fa-check-circle"></i> Comissão sobre todas as vendas dos seus parceiros</li>
+                          <li><i class="fas fa-check-circle"></i> Renda recorrente mensal</li>
+                          <li><i class="fas fa-check-circle"></i> Percentual varia conforme o produto</li>
+                          <li><i class="fas fa-check-circle"></i> Pagamento mensal automático</li>
+                      </ul>
+                      <p class="mt-4">Exemplo: Com 20 estabelecimentos gerando R$ 2.000 em vendas cada, você recebe entre R$ 800 e R$ 2.000 por mês em comissões recorrentes.</p>
+                  </div>
+              </div>
+          </div>
+          <div class="row mt-5">
+              <div class="col-lg-10 mx-auto">
+                  <div class="commission-card" data-aos="fade-up">
+                      <h3 class="commission-title text-center">Potencial de Ganhos Mensais</h3>
+                      <div class="table-responsive">
+                          <table class="table table-bordered">
+                              <thead class="bg-light">
+                                  <tr>
+                                      <th>Número de Parceiros</th>
+                                      <th>Comissão por Cadastros (mensal)</th>
+                                      <th>Comissão por Vendas (mensal)</th>
+                                      <th>Total Mensal</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr>
+                                      <td>5 novos + 10 ativos</td>
+                                      <td>R$ 1.000</td>
+                                      <td>R$ 500 - R$ 1.250</td>
+                                      <td>R$ 1.500 - R$ 2.250</td>
+                                  </tr>
+                                  <tr>
+                                      <td>10 novos + 30 ativos</td>
+                                      <td>R$ 2.000</td>
+                                      <td>R$ 1.500 - R$ 3.750</td>
+                                      <td>R$ 3.500 - R$ 5.750</td>
+                                  </tr>
+                                  <tr>
+                                      <td>15 novos + 50 ativos</td>
+                                      <td>R$ 3.000</td>
+                                      <td>R$ 2.500 - R$ 6.250</td>
+                                      <td>R$ 5.500 - R$ 9.250</td>
+                                  </tr>
+                                  <tr>
+                                      <td>20 novos + 100 ativos</td>
+                                      <td>R$ 4.000</td>
+                                      <td>R$ 5.000 - R$ 12.500</td>
+                                      <td>R$ 9.000 - R$ 16.500</td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                      <p class="mt-3 text-center">*Valores estimados considerando uma média de R$ 2.500 em vendas por estabelecimento parceiro.</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Calculadora Section -->
+  <section class="calculator-section">
+      <div class="floating-elements">
+          <div class="floating-element" style="width: 100px; height: 100px; top: 10%; left: 5%;"></div>
+          <div class="floating-element" style="width: 150px; height: 150px; top: 50%; left: 15%;"></div>
+          <div class="floating-element" style="width: 80px; height: 80px; top: 30%; right: 10%;"></div>
+          <div class="floating-element" style="width: 120px; height: 120px; bottom: 20%; right: 5%;"></div>
+      </div>
+      <div class="container position-relative" style="z-index: 2;">
+          <div class="row">
+              <div class="col-lg-8 mx-auto">
+                  <div class="calculator-card" data-aos="fade-up">
+                      <h3>Calcule seu Potencial de Ganhos</h3>
+                      <form id="commission-calculator">
+                          <div class="row">
+                              <div class="col-md-6 mb-4">
+                                  <label for="new-partners" class="form-label">Novos parceiros por mês</label>
+                                  <input type="number" class="form-control" id="new-partners" value="10">
+                              </div>
+                              <div class="col-md-6 mb-4">
+                                  <label for="active-partners" class="form-label">Parceiros ativos na sua rede</label>
+                                  <input type="number" class="form-control" id="active-partners" value="20">
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-6 mb-4">
+                                  <label for="avg-sales" class="form-label">Média de vendas por parceiro (R$)</label>
+                                  <input type="number" class="form-control" id="avg-sales" value="2000">
+                              </div>
+                              <div class="col-md-6 mb-4">
+                                  <label for="commission-rate" class="form-label">Taxa de comissão sobre vendas (%)</label>
+                                  <select class="form-select" id="commission-rate">
+                                      <option value="2">2% (Produtos Básicos)</option>
+                                      <option value="3.5" selected>3.5% (Média)</option>
+                                      <option value="5">5% (Produtos Premium)</option>
+                                  </select>
+                              </div>
+                          </div>
+                          <div class="d-grid">
+                              <button type="button" class="btn btn-green" id="calculate-btn">Calcular Ganhos</button>
+                          </div>
+                          <div class="result-box" id="result-box">
+                              <h4>Seu Potencial de Ganhos Mensais</h4>
+                              <div class="row">
+                                  <div class="col-md-4">
+                                      <div class="result-value" id="signup-result">R$ 2.000,00</div>
+                                      <p>Comissão por cadastros</p>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="result-value" id="sales-result">R$ 1.400,00</div>
+                                      <p>Comissão por vendas</p>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="result-value" id="total-result">R$ 3.400,00</div>
+                                      <p>Total mensal</p>
+                                  </div>
+                              </div>
+                              <div class="mt-3">
+                                  <div class="result-value" id="yearly-result">R$ 40.800,00</div>
+                                  <p>Projeção anual</p>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Benefícios Section -->
+  <section class="benefits-section" id="beneficios">
+      <div class="container">
+          <div class="row mb-5">
+              <div class="col-lg-8 mx-auto text-center">
+                  <h2 class="section-title display-4 fw-bold text-dark-green" data-aos="fade-up">Benefícios Exclusivos</h2>
+                  <p class="lead" data-aos="fade-up" data-aos-delay="100">Como vendedor parceiro, você tem acesso a vantagens que potencializam seus resultados</p>
+              </div>
+          </div>
+          <div class="row g-4">
+              <div class="col-md-4" data-aos="fade-up">
+                  <div class="benefit-card">
+                      <div class="benefit-icon">
+                          <i class="fas fa-chart-line"></i>
+                      </div>
+                      <h3>Renda Crescente</h3>
+                      <p>Quanto mais parceiros você cadastra, maior sua rede e sua renda recorrente. Seu potencial de ganhos cresce exponencialmente.</p>
+                  </div>
+              </div>
+              <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                  <div class="benefit-card">
+                      <div class="benefit-icon">
+                          <i class="fas fa-calendar-alt"></i>
+                      </div>
+                      <h3>Flexibilidade de Horário</h3>
+                      <p>Trabalhe nos dias e horários que preferir. Você define sua agenda e organiza suas visitas conforme sua disponibilidade.</p>
+                  </div>
+              </div>
+              <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                  <div class="benefit-card">
+                      <div class="benefit-icon">
+                          <i class="fas fa-graduation-cap"></i>
+                      </div>
+                      <h3>Treinamentos Contínuos</h3>
+                      <p>Acesso a treinamentos regulares sobre vendas, negociação, produtos e técnicas de abordagem para maximizar seus resultados.</p>
+                  </div>
+              </div>
+              <div class="col-md-4" data-aos="fade-up">
+                  <div class="benefit-card">
+                      <div class="benefit-icon">
+                          <i class="fas fa-trophy"></i>
+                      </div>
+                      <h3>Programa de Incentivos</h3>
+                      <p>Participe de campanhas com premiações especiais, viagens e bônus adicionais ao atingir metas de cadastros e vendas.</p>
+                  </div>
+              </div>
+              <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                  <div class="benefit-card">
+                      <div class="benefit-icon">
+                          <i class="fas fa-users"></i>
+                      </div>
+                      <h3>Suporte de Equipe</h3>
+                      <p>Conte com o apoio de uma equipe dedicada para tirar dúvidas, resolver problemas e ajudar no fechamento de parcerias.</p>
+                  </div>
+              </div>
+              <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                  <div class="benefit-card">
+                      <div class="benefit-icon">
+                          <i class="fas fa-rocket"></i>
+                      </div>
+                      <h3>Plano de Carreira</h3>
+                      <p>Possibilidade de crescimento para posições de liderança, coordenando equipes de vendedores e aumentando ainda mais seus ganhos.</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Ferramentas Section -->
+  <section class="tools-section" id="ferramentas">
+      <div class="container">
+          <div class="row mb-5">
+              <div class="col-lg-8 mx-auto text-center">
+                  <h2 class="section-title display-4 fw-bold text-dark-green" data-aos="fade-up">Ferramentas e Suporte</h2>
+                  <p class="lead" data-aos="fade-up" data-aos-delay="100">Fornecemos tudo o que você precisa para ter sucesso como vendedor parceiro</p>
+              </div>
+          </div>
+          <div class="row g-4">
+              <div class="col-md-3" data-aos="fade-up">
+                  <div class="tool-card">
+                      <div class="tool-icon">
+                          <i class="fas fa-tablet-alt"></i>
+                      </div>
+                      <h3>App Exclusivo</h3>
+                      <p>Aplicativo para cadastro de parceiros, acompanhamento de comissões e gestão da sua rede em tempo real.</p>
+                  </div>
+              </div>
+              <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                  <div class="tool-card">
+                      <div class="tool-icon">
+                          <i class="fas fa-file-contract"></i>
+                      </div>
+                      <h3>Material de Vendas</h3>
+                      <p>Apresentações profissionais, folhetos, contratos e todo material necessário para suas abordagens.</p>
+                  </div>
+              </div>
+              <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                  <div class="tool-card">
+                      <div class="tool-icon">
+                          <i class="fas fa-id-card"></i>
+                      </div>
+                      <h3>Credencial Oficial</h3>
+                      <p>Identificação oficial da Câmara & Garutti que transmite credibilidade nas suas visitas aos estabelecimentos.</p>
+                  </div>
+              </div>
+              <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                  <div class="tool-card">
+                      <div class="tool-icon">
+                          <i class="fas fa-headset"></i>
+                      </div>
+                      <h3>Suporte Dedicado</h3>
+                      <p>Canal exclusivo para vendedores com atendimento prioritário para resolver qualquer situação.</p>
+                  </div>
+              </div>
+          </div>
+          <div class="row mt-5">
+              <div class="col-lg-10 mx-auto">
+                  <div class="tool-card" data-aos="fade-up">
+                      <div class="row align-items-center">
+                          <div class="col-md-6">
+                              <img src="/placeholder.svg?height=300&width=400" alt="App Câmara & Garutti" class="img-fluid rounded">
+                          </div>
+                          <div class="col-md-6">
+                              <h3 class="mb-4">App Exclusivo para Vendedores</h3>
+                              <ul class="list-unstyled">
+                                  <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i> Cadastro de novos parceiros em tempo real</li>
+                                  <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i> Acompanhamento de comissões e pagamentos</li>
+                                  <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i> Relatórios de desempenho da sua rede</li>
+                                  <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i> Mapa de estabelecimentos potenciais na sua região</li>
+                                  <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i> Materiais de treinamento e vendas</li>
+                                  <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i> Chat direto com suporte técnico</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Perfil Section -->
+  <section class="profile-section" id="perfil">
+      <div class="container">
+          <div class="row mb-5">
+              <div class="col-lg-8 mx-auto text-center">
+                  <h2 class="section-title display-4 fw-bold text-dark-green" data-aos="fade-up">Perfil Ideal</h2>
+                  <p class="lead" data-aos="fade-up" data-aos-delay="100">Características que buscamos em nossos vendedores parceiros</p>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-lg-6" data-aos="fade-right">
+                  <div class="profile-card">
+                      <div class="profile-icon">
+                          <i class="fas fa-user-tie"></i>
+                      </div>
+                      <h3 class="text-center mb-4">Quem Pode Se Tornar um Vendedor Parceiro?</h3>
+                      <ul class="profile-list">
+                          <li class="mb-4">Profissionais com experiência em vendas externas ou captação de clientes</li>
+                          <li class="mb-4">Pessoas comunicativas com facilidade para criar relacionamentos</li>
+                          <li class="mb-4">Empreendedores que buscam uma oportunidade de negócio sem investimento inicial</li>
+                          <li class="mb-4">Profissionais do mercado de seguros e financiamentos que desejam ampliar sua atuação</li>
+                          <li class="mb-4">Representantes comerciais que queiram complementar sua carteira de produtos</li>
+                      </ul>
+                  </div>
+              </div>
+              <div class="col-lg-6" data-aos="fade-left">
+                  <div class="profile-card">
+                      <h3 class="mb-4">Requisitos</h3>
+                      <div class="mb-4">
+                          <h4><i class="fas fa-check-circle text-success me-2"></i> Disponibilidade</h4>
+                          <p>Dedicação mínima de 20 horas semanais para visitas e prospecção de estabelecimentos.</p>
+                      </div>
+                      <div class="mb-4">
+                          <h4><i class="fas fa-check-circle text-success me-2"></i> Mobilidade</h4>
+                          <p>Possuir meio de transporte próprio para realizar visitas aos estabelecimentos na região de atuação.</p>
+                      </div>
+                      <div class="mb-4">
+                          <h4><i class="fas fa-check-circle text-success me-2"></i> Equipamento</h4>
+                          <p>Smartphone com acesso à internet para utilizar o aplicativo de cadastro e acompanhamento.</p>
+                      </div>
+                      <div class="mb-4">
+                          <h4><i class="fas fa-check-circle text-success me-2"></i> Documentação</h4>
+                          <p>Documentos pessoais em dia e comprovante de residência para formalização do contrato.</p>
+                      </div>
+                      <div>
+                          <h4><i class="fas fa-check-circle text-success me-2"></i> Atitude</h4>
+                          <p>Proatividade, organização e foco em resultados são características essenciais para o sucesso.</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Depoimentos Section -->
+  <section class="testimonial-section" id="depoimentos">
+      <div class="container">
+          <div class="row mb-5">
+              <div class="col-lg-8 mx-auto text-center">
+                  <h2 class="section-title display-4 fw-bold text-dark-green" data-aos="fade-up">Histórias de Sucesso</h2>
+                  <p class="lead" data-aos="fade-up" data-aos-delay="100">Conheça quem já está transformando sua vida como vendedor parceiro</p>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-4" data-aos="fade-up">
+                  <div class="testimonial-card">
+                      <p class="testimonial-text">"Comecei como vendedor parceiro há 8 meses e já tenho uma rede com mais de 40 estabelecimentos. Minha renda mensal ultrapassou R$ 8.000 e continua crescendo à medida que minha rede gera mais vendas."</p>
+                      <div class="testimonial-author">
+                          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos Mendes">
+                          <div class="testimonial-author-info">
+                              <strong>Carlos Mendes</strong>
+                              <span>Ex-vendedor de seguros</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                  <div class="testimonial-card">
+                      <p class="testimonial-text">"A melhor decisão que tomei foi me tornar vendedora parceira. Trabalho em horários flexíveis, o que me permite conciliar com meus estudos. Minha rede já tem 25 estabelecimentos e ganho em média <span class="earnings-highlight">R$ 5.500 por mês</span>."</p>
+                      <div class="testimonial-author">
+                          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Mariana Costa">
+                          <div class="testimonial-author-info">
+                              <strong>Mariana Costa</strong>
+                              <span>Estudante universitária</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                  <div class="testimonial-card">
+                      <p class="testimonial-text">"Após 15 anos como representante comercial, encontrei na Câmara & Garutti a melhor oportunidade da minha carreira. Em apenas 1 ano, construí uma rede com mais de 80 parceiros ativos que me geram <span class="earnings-highlight">mais de R$ 15.000 mensais</span>."</p>
+                      <div class="testimonial-author">
+                          <img src="https://randomuser.me/api/portraits/men/52.jpg" alt="Roberto Almeida">
+                          <div class="testimonial-author-info">
+                              <strong>Roberto Almeida</strong>
+                              <span>Representante comercial</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section" id="faq">
+      <div class="container">
+          <div class="row mb-5">
+              <div class="col-lg-8 mx-auto text-center">
+                  <h2 class="section-title display-4 fw-bold text-dark-green" data-aos="fade-up">Perguntas Frequentes</h2>
+                  <p class="lead" data-aos="fade-up" data-aos-delay="100">Tire suas dúvidas sobre o programa de vendedores parceiros</p>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-lg-10 mx-auto">
+                  <div class="accordion" id="faqAccordion">
+                      <div class="accordion-item" data-aos="fade-up">
+                          <h2 class="accordion-header" id="headingOne">
+                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                  Preciso ter experiência prévia em vendas?
+                              </button>
+                          </h2>
+                          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                              <div class="accordion-body">
+                                  Embora a experiência prévia em vendas seja valorizada, não é um requisito obrigatório. Oferecemos treinamento completo para todos os vendedores parceiros. O mais importante é ter boa comunicação, proatividade e determinação para construir sua rede de parceiros.
+                              </div>
+                          </div>
+                      </div>
+                      <div class="accordion-item" data-aos="fade-up" data-aos-delay="100">
+                          <h2 class="accordion-header" id="headingTwo">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                  Como são pagas as comissões?
+                              </button>
+                          </h2>
+                          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                              <div class="accordion-body  data-bs-parent="#faqAccordion">
+                              <div class="accordion-body">
+                                  As comissões são pagas de duas formas: a comissão pelo cadastro de estabelecimentos é paga quinzenalmente, após a validação do cadastro. Já as comissões sobre as vendas geradas pelos seus parceiros são pagas mensalmente, até o dia 10 do mês subsequente. Todos os pagamentos são feitos via transferência bancária ou PIX, conforme sua preferência.
+                              </div>
+                          </div>
+                      </div>
+                      <div class="accordion-item" data-aos="fade-up" data-aos-delay="200">
+                          <h2 class="accordion-header" id="headingThree">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                  Existe exclusividade territorial?
+                              </button>
+                          </h2>
+                          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                              <div class="accordion-body">
+                                  Sim, trabalhamos com exclusividade territorial para garantir que não haja concorrência entre nossos vendedores parceiros. Ao se cadastrar, você receberá uma região específica para atuar, baseada no seu endereço e disponibilidade. O tamanho da região varia conforme a densidade comercial da área.
+                              </div>
+                          </div>
+                      </div>
+                      <div class="accordion-item" data-aos="fade-up" data-aos-delay="300">
+                          <h2 class="accordion-header" id="headingFour">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                  Qual é o vínculo de trabalho?
+                              </button>
+                          </h2>
+                          <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                              <div class="accordion-body">
+                                  Os vendedores parceiros atuam como representantes comerciais autônomos, sem vínculo empregatício. É necessário emitir nota fiscal como MEI (Microempreendedor Individual) ou pessoa jurídica para receber as comissões. Caso você ainda não seja MEI, podemos orientar sobre o processo de formalização, que é simples e de baixo custo.
+                              </div>
+                          </div>
+                      </div>
+                      <div class="accordion-item" data-aos="fade-up" data-aos-delay="400">
+                          <h2 class="accordion-header" id="headingFive">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                  Posso trabalhar em tempo parcial?
+                              </button>
+                          </h2>
+                          <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
+                              <div class="accordion-body">
+                                  Sim, você pode trabalhar em tempo parcial como vendedor parceiro. Exigimos apenas uma dedicação mínima de 20 horas semanais para garantir resultados satisfatórios. A flexibilidade é uma das grandes vantagens deste modelo de trabalho, permitindo que você concilie com outras atividades profissionais ou pessoais.
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section" id="cadastro">
+      <div class="floating-elements">
+          <div class="floating-element" style="width: 100px; height: 100px; top: 10%; left: 5%;"></div>
+          <div class="floating-element" style="width: 150px; height: 150px; top: 50%; left: 15%;"></div>
+          <div class="floating-element" style="width: 80px; height: 80px; top: 30%; right: 10%;"></div>
+          <div class="floating-element" style="width: 120px; height: 120px; bottom: 20%; right: 5%;"></div>
+      </div>
+      <div class="container position-relative" style="z-index: 2;">
+          <div class="row">
+              <div class="col-lg-6 text-white mb-5 mb-lg-0" data-aos="fade-right">
+                  <h2 class="display-4 fw-bold mb-4">Comece a construir sua rede hoje mesmo!</h2>
+                  <p class="lead mb-4">Preencha o formulário ao lado para se candidatar a uma vaga de vendedor parceiro. Nossa equipe entrará em contato em até 48 horas para dar continuidade ao processo.</p>
+
+                  <div class="mt-5">
+                      <h3 class="mb-4">Por que se tornar um vendedor parceiro?</h3>
+                      <div class="d-flex align-items-center mb-4">
+                          <div class="me-3">
+                              <i class="fas fa-check-circle fa-2x text-white"></i>
+                          </div>
+                          <div>
+                              <h4 class="mb-0">Ganhos em dois níveis: cadastro + vendas</h4>
+                          </div>
+                      </div>
+                      <div class="d-flex align-items-center mb-4">
+                          <div class="me-3">
+                              <i class="fas fa-check-circle fa-2x text-white"></i>
+                          </div>
+                          <div>
+                              <h4 class="mb-0">Renda recorrente e crescente</h4>
+                          </div>
+                      </div>
+                      <div class="d-flex align-items-center mb-4">
+                          <div class="me-3">
+                              <i class="fas fa-check-circle fa-2x text-white"></i>
+                          </div>
+                          <div>
+                              <h4 class="mb-0">Flexibilidade de horários</h4>
+                          </div>
+                      </div>
+                      <div class="d-flex align-items-center">
+                          <div class="me-3">
+                              <i class="fas fa-check-circle fa-2x text-white"></i>
+                          </div>
+                          <div>
+                              <h4 class="mb-0">Treinamento e suporte completos</h4>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-lg-6" data-aos="fade-left">
+                  <div class="cta-form">
+                      <h3>Cadastre-se como Vendedor Parceiro</h3>
+                      <form>
+                          <div class="mb-3">
+                              <label for="name" class="form-label">Nome Completo</label>
+                              <input type="text" class="form-control" id="name" required>
+                          </div>
+                          <div class="mb-3">
+                              <label for="email" class="form-label">E-mail</label>
+                              <input type="email" class="form-control" id="email" required>
+                          </div>
+                          <div class="mb-3">
+                              <label for="phone" class="form-label">Telefone</label>
+                              <input type="tel" class="form-control" id="phone" required>
+                          </div>
+                          <div class="mb-3">
+                              <label for="city" class="form-label">Cidade/Estado</label>
+                              <input type="text" class="form-control" id="city" required>
+                          </div>
+                          <div class="mb-3">
+                              <label for="experience" class="form-label">Experiência Profissional</label>
+                              <select class="form-select" id="experience" required>
+                                  <option value="" selected disabled>Selecione sua experiência</option>
+                                  <option value="sales">Vendas Externas</option>
+                                  <option value="insurance">Mercado de Seguros</option>
+                                  <option value="finance">Mercado Financeiro</option>
+                                  <option value="commercial">Representação Comercial</option>
+                                  <option value="other">Outra Área</option>
+                                  <option value="none">Sem Experiência Prévia</option>
+                              </select>
+                          </div>
+                          <div class="mb-3">
+                              <label for="availability" class="form-label">Disponibilidade Semanal</label>
+                              <select class="form-select" id="availability" required>
+                                  <option value="" selected disabled>Selecione sua disponibilidade</option>
+                                  <option value="20h">20 a 30 horas</option>
+                                  <option value="30h">30 a 40 horas</option>
+                                  <option value="40h">Mais de 40 horas</option>
+                              </select>
+                          </div>
+                          <div class="mb-3">
+                              <label for="transport" class="form-label">Possui Transporte Próprio?</label>
+                              <select class="form-select" id="transport" required>
+                                  <option value="" selected disabled>Selecione uma opção</option>
+                                  <option value="yes">Sim</option>
+                                  <option value="no">Não</option>
+                              </select>
+                          </div>
+                          <div class="mb-3">
+                              <label for="message" class="form-label">Por que deseja se tornar um vendedor parceiro?</label>
+                              <textarea class="form-control" id="message" rows="3" required></textarea>
+                          </div>
+                          <div class="form-check mb-4">
+                              <input class="form-check-input" type="checkbox" id="terms" required>
+                              <label class="form-check-label" for="terms">
+                                  Concordo com os <a href="#" class="text-success">termos e condições</a> do programa de vendedores parceiros
+                              </label>
+                          </div>
+                          <div class="d-grid">
+                              <button type="submit" class="btn btn-green">Enviar Cadastro</button>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-4 mb-4 mb-lg-0">
+                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Prancheta%201-f9YwBot3lw7qHyEzeokuVE3dPOSDLe.png" alt="Câmara & Garutti Logo" height="60" class="mb-3">
+                  <p>A Câmara & Garutti é uma corretora de seguros com mais de 20 anos de experiência no mercado, oferecendo as melhores soluções em seguros e financiamentos.</p>
+                  <div class="social-icons mt-3">
+                      <a href="#"><i class="fab fa-facebook"></i></a>
+                      <a href="#"><i class="fab fa-instagram"></i></a>
+                      <a href="#"><i class="fab fa-linkedin"></i></a>
+                      <a href="#"><i class="fab fa-whatsapp"></i></a>
+                  </div>
+              </div>
+              <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                  <h5 class="mb-4">Programa</h5>
+                  <ul class="list-unstyled footer-links">
+                      <li class="mb-2"><a href="#como-funciona">Como Funciona</a></li>
+                      <li class="mb-2"><a href="#comissoes">Comissões</a></li>
+                      <li class="mb-2"><a href="#beneficios">Benefícios</a></li>
+                      <li class="mb-2"><a href="#ferramentas">Ferramentas</a></li>
+                      <li><a href="#faq">Dúvidas Frequentes</a></li>
+                  </ul>
+              </div>
+              <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                  <h5 class="mb-4">Links</h5>
+                  <ul class="list-unstyled footer-links">
+                      <li class="mb-2"><a href="index.html">Página Principal</a></li>
+                      <li class="mb-2"><a href="parceiros.html">Programa de Parceiros</a></li>
+                      <li class="mb-2"><a href="index.html#seguros">Seguros</a></li>
+                      <li><a href="index.html#financiamentos">Financiamentos</a></li>
+                  </ul>
+              </div>
+              <div class="col-lg-4 col-md-4">
+                  <h5 class="mb-4">Contato</h5>
+                  <ul class="list-unstyled footer-links">
+                      <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Av. Principal, 1234, Centro</li>
+                      <li class="mb-2"><i class="fas fa-phone me-2"></i> (11) 1234-5678</li>
+                      <li class="mb-2"><i class="fas fa-envelope me-2"></i> vendedores@camaraegarutti.com.br</li>
+                      <li><i class="fas fa-clock me-2"></i> Seg-Sex: 9h às 18h</li>
+                  </ul>
+              </div>
+          </div>
+          <hr class="mt-4 mb-4" style="border-color: rgba(255,255,255,0.1);">
+          <div class="row">
+              <div class="col-md-6 text-center text-md-start">
+                  <p class="mb-0">&copy; 2023 Câmara & Garutti. Todos os direitos reservados.</p>
+              </div>
+              <div class="col-md-6 text-center text-md-end">
+                  <p class="mb-0">Desenvolvido com <i class="fas fa-heart text-danger"></i> por Vercel</p>
+              </div>
+          </div>
+      </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- AOS Animation Library -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- Custom JS -->
+  <script>
+      // Inicializar AOS Animation
+      AOS.init({
+          duration: 800,
+          once: true
+      });
+
+      // Calculadora de Comissões
+      document.getElementById('calculate-btn').addEventListener('click', function() {
+          const newPartners = parseInt(document.getElementById('new-partners').value);
+          const activePartners = parseInt(document.getElementById('active-partners').value);
+          const avgSales = parseFloat(document.getElementById('avg-sales').value);
+          const commissionRate = parseFloat(document.getElementById('commission-rate').value);
+
+          const signupCommission = newPartners * 200; // R$ 200 por cadastro
+          const salesCommission = activePartners * avgSales * (commissionRate / 100);
+          const totalMonthly = signupCommission + salesCommission;
+          const yearlyProjection = totalMonthly * 12;
+
+          document.getElementById('signup-result').textContent = 'R$ ' + signupCommission.toFixed(2).replace('.', ',');
+          document.getElementById('sales-result').textContent = 'R$ ' + salesCommission.toFixed(2).replace('.', ',');
+          document.getElementById('total-result').textContent = 'R$ ' + totalMonthly.toFixed(2).replace('.', ',');
+          document.getElementById('yearly-result').textContent = 'R$ ' + yearlyProjection.toFixed(2).replace('.', ',');
+
+          document.getElementById('result-box').style.display = 'block';
+      });
+
+      // Smooth scroll para links de navegação
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+              e.preventDefault();
+
+              document.querySelector(this.getAttribute('href')).scrollIntoView({
+                  behavior: 'smooth'
+              });
+          });
+      });
+  </script>
+</body>
+</html>
+

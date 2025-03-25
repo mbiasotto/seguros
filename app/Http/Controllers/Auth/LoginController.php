@@ -3,16 +3,27 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Controller as BaseController;
 
-class LoginController extends Controller
+class LoginController extends BaseController
 {
+    use AuthorizesRequests, ValidatesRequests;
+
+    /**
+     * Mostrar o formulário de login
+     */
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
+    /**
+     * Processar a tentativa de login
+     */
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -22,7 +33,9 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('admin/dashboard');
+
+            // Redirecionar para a rota pretendida ou dashboard
+            return redirect()->intended(route('admin.dashboard'));
         }
 
         return back()->withErrors([
@@ -30,11 +43,15 @@ class LoginController extends Controller
         ])->onlyInput('email');
     }
 
+    /**
+     * Processar logout do usuário
+     */
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+        
+        return redirect('/admin/login');
     }
 }

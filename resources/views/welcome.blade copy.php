@@ -10,10 +10,10 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Google Fonts -->
+    <!-- Google Fonts - Novas fontes mais elegantes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-green: #4CAF50;
@@ -27,14 +27,25 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             color: #333;
+            line-height: 1.7;
+            font-weight: 400;
         }
 
         h1, h2, h3, h4, h5, h6, .navbar-brand {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Playfair Display', serif;
             font-weight: 700;
+        }
+
+        p {
+            font-size: 1.05rem;
+        }
+
+        .lead {
+            font-weight: 400;
+            font-size: 1.2rem;
         }
 
         .bg-primary-green {
@@ -63,14 +74,14 @@
         }
 
         .hero-title {
-            font-size: 4rem;
+            font-size: 4.2rem;
             font-weight: 800;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             letter-spacing: -1px;
         }
 
         .hero-subtitle {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 600;
             letter-spacing: 1px;
         }
@@ -118,7 +129,7 @@
         }
 
         .services-section h2 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 1.5rem;
             position: relative;
             display: inline-block;
@@ -191,7 +202,7 @@
         }
 
         .service-card h3 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 600;
             margin-bottom: 1rem;
             color: var(--gray-800);
@@ -199,7 +210,7 @@
 
         .service-card p {
             color: #6c757d;
-            font-size: 0.95rem;
+            font-size: 1rem;
             line-height: 1.6;
             margin-bottom: 1.5rem;
         }
@@ -222,6 +233,132 @@
         .service-card .btn-outline-success:hover {
             background-color: var(--primary-green);
             color: white;
+        }
+
+        /* Parceiros Section */
+        .partners-section {
+            padding: 100px 0;
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .partners-section:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background-color: rgba(76, 175, 80, 0.05);
+            border-radius: 50%;
+            transform: translate(150px, -150px);
+        }
+
+        .partners-section:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200px;
+            height: 200px;
+            background-color: rgba(76, 175, 80, 0.05);
+            border-radius: 50%;
+            transform: translate(-100px, 100px);
+        }
+
+        .partners-section h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .partners-section h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-green);
+        }
+
+        .partner-card {
+            background-color: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            height: 100%;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .partner-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .partner-icon {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(76, 175, 80, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            font-size: 2.5rem;
+            color: var(--primary-green);
+        }
+
+        .partner-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--gray-800);
+        }
+
+        .partner-card p {
+            margin-bottom: 25px;
+            color: #6c757d;
+        }
+
+        .partner-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .partner-feature i {
+            color: var(--primary-green);
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        .partner-cta {
+            margin-top: 30px;
+        }
+
+        .commission-box {
+            background-color: rgba(76, 175, 80, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            border-left: 4px solid var(--primary-green);
+        }
+
+        .commission-box h4 {
+            color: var(--dark-green);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .commission-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 10px;
         }
 
         .cta-section {
@@ -445,7 +582,7 @@
             font-weight: bold;
             color: var(--primary-green);
             margin-bottom: 15px;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Playfair Display', serif;
         }
 
         .counter-text {
@@ -605,460 +742,14 @@
             .cta-form {
                 padding: 25px;
             }
+
+            .partner-card {
+                padding: 25px;
+            }
         }
-
-/* Animação de pulso para o badge de desconto */
-.pulse-animation {
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1) rotate(15deg);
-    }
-    50% {
-        transform: scale(1.05) rotate(15deg);
-    }
-    100% {
-        transform: scale(1) rotate(15deg);
-    }
-}
-
-/* Banner de urgência */
-.urgency-banner {
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-/* Estilos para o botão de WhatsApp flutuante */
-.whatsapp-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 999;
-}
-
-.btn-whatsapp {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: #25D366;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.8rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-}
-
-.btn-whatsapp:hover {
-    transform: scale(1.1);
-    background-color: #22c55e;
-    color: white;
-}
-
-/* Widget de chat */
-.chat-widget {
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    width: 320px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-    z-index: 998;
-    overflow: hidden;
-    display: none;
-}
-
-.chat-header {
-    background-color: var(--dark-green);
-    color: white;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.chat-avatar img {
-    width: 40px;
-    height: 40px;
-}
-
-.chat-close-btn {
-    margin-left: auto;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-.chat-body {
-    height: 250px;
-    padding: 15px;
-    overflow-y: auto;
-    background-color: #f5f5f5;
-}
-
-.chat-message {
-    margin-bottom: 10px;
-    max-width: 80%;
-}
-
-.chat-message p {
-    padding: 10px;
-    border-radius: 10px;
-    margin: 0;
-}
-
-.chat-message.incoming {
-    margin-right: auto;
-}
-
-.chat-message.incoming p {
-    background-color: white;
-    border: 1px solid #e0e0e0;
-}
-
-.chat-message.outgoing {
-    margin-left: auto;
-}
-
-.chat-message.outgoing p {
-    background-color: var(--primary-green);
-    color: white;
-}
-
-.chat-footer {
-    padding: 10px;
-    display: flex;
-    border-top: 1px solid #e0e0e0;
-}
-
-.chat-input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #e0e0e0;
-    border-radius: 20px;
-    outline: none;
-}
-
-.chat-send-btn {
-    background-color: var(--primary-green);
-    color: white;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-left: 10px;
-    cursor: pointer;
-}
-
-.chat-trigger {
-    position: fixed;
-    bottom: 20px;
-    right: 90px;
-    z-index: 997;
-}
-
-.btn-chat {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: var(--primary-green);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.8rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-}
-
-.btn-chat:hover {
-    transform: scale(1.1);
-    background-color: var(--dark-green);
-    color: white;
-}
-
-/* Logos de parceiros */
-.partner-logos {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-}
-
-.partner-logo {
-    filter: grayscale(100%);
-    opacity: 0.7;
-    transition: all 0.3s ease;
-    padding: 10px;
-}
-
-.partner-logo:hover {
-    filter: grayscale(0%);
-    opacity: 1;
-}
-
-/* Melhorias nos botões CTA */
-.btn-cta {
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-}
-
-.btn-cta:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.2);
-    transition: all 0.5s ease;
-    z-index: -1;
-}
-
-.btn-cta:hover:before {
-    left: 100%;
-}
-
-/* Melhorias nos cards de serviço */
-.service-card {
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.service-card:hover {
-    transform: translateY(-15px) scale(1.03);
-}
-
-/* Melhorias nos formulários */
-.form-control, .form-select {
-    transition: all 0.3s ease;
-}
-
-.form-control:focus, .form-select:focus {
-    transform: translateY(-2px);
-}
-
-/* Melhorias na responsividade */
-@media (max-width: 768px) {
-    .chat-widget {
-        width: 300px;
-        bottom: 80px;
-    }
-
-    .whatsapp-button, .chat-trigger {
-        bottom: 10px;
-    }
-
-    .chat-trigger {
-        right: 90px;
-    }
-}
-
-.testimonial-carousel {
-    display: flex;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    position: relative;
-    padding: 20px 0;
-}
-
-.testimonial-card {
-    min-width: 100%;
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    padding: 30px;
-}
-
-.testimonial-content {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.testimonial-image img {
-    width: 80px;
-    height: 80px;
-    border: 3px solid var(--primary-green);
-}
-
-.testimonial-nav {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 30px;
-}
-
-.testimonial-prev, .testimonial-next {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: white;
-    border: 1px solid var(--gray-300);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.testimonial-prev:hover, .testimonial-next:hover {
-    background-color: var(--primary-green);
-    color: white;
-    border-color: var(--primary-green);
-}
-
-.newsletter-popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    animation: fadeIn 0.3s ease;
-}
-
-.newsletter-content {
-    background-color: white;
-    border-radius: 10px;
-    max-width: 800px;
-    width: 90%;
-    display: flex;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-.newsletter-close {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 1;
-    color: #333;
-}
-
-.newsletter-image {
-    width: 40%;
-    background-color: var(--primary-green);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-.newsletter-text {
-    width: 60%;
-    padding: 40px;
-}
-
-.newsletter-text h3 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-    color: var(--dark-green);
-}
-
-.newsletter-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.newsletter-form input {
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-@media (max-width: 768px) {
-    .newsletter-content {
-        flex-direction: column;
-    }
-
-    .newsletter-image, .newsletter-text {
-        width: 100%;
-    }
-
-    .newsletter-text {
-        padding: 30px;
-    }
-}
-
-.chat-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: #FF5722;
-    color: white;
-    font-size: 0.7rem;
-    padding: 2px 6px;
-    border-radius: 10px;
-    font-weight: bold;
-}
-
-.typing-indicator {
-    background-color: transparent !important;
-}
-
-.typing-indicator p {
-    background-color: #f1f1f1 !important;
-    padding: 8px 15px !important;
-    display: inline-block;
-    border-radius: 15px;
-}
-
-.typing-dot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: #888;
-    margin-right: 4px;
-    animation: typingAnimation 1s infinite;
-}
-
-.typing-dot:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.typing-dot:nth-child(3) {
-    animation-delay: 0.4s;
-    margin-right: 0;
-}
-
-@keyframes typingAnimation {
-    0% { opacity: 0.3; }
-    50% { opacity: 1; }
-    100% { opacity: 0.3; }
-}
     </style>
 </head>
 <body>
-    <!-- Adicionar logo após a abertura do body, antes da navbar -->
-    <div class="bg-dark-green text-white text-center py-2 urgency-banner">
-        <div class="container">
-            <div class="d-flex justify-content-center align-items-center">
-                <i class="fas fa-clock me-2"></i>
-                <p class="mb-0">Atendimento digital em até 2 minutos! Oferta por tempo limitado: Descontos de até 30% válidos até <span id="countdown-date">23/03/2025</span> - <span id="countdown">00:00:00</span></p>
-            </div>
-        </div>
-    </div>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark-green sticky-top">
         <div class="container">
@@ -1081,6 +772,9 @@
                         <a class="nav-link" href="#beneficios">Benefícios</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#parceiros">Seja Parceiro</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#contato">Contato</a>
                     </li>
                     <li class="nav-item ms-lg-3">
@@ -1097,28 +791,16 @@
         <div class="container position-relative">
             <div class="row align-items-center">
                 <div class="col-lg-6 hero-text" data-aos="fade-right">
-                    <span class="badge bg-white text-dark-green mb-3 py-2 px-3 fw-bold">ECONOMIZE ATÉ 30% HOJE</span>
-                    <h1 class="hero-title animate-title">Proteção que cabe no seu bolso</h1>
-                    <h2 class="hero-subtitle mb-4">SEGUROS E FINANCIAMENTOS PERSONALIZADOS</h2>
-                    <p class="lead mb-4">Soluções completas com <span class="text-white fw-bold">descontos exclusivos</span> e atendimento digital <span class="text-white fw-bold">em minutos</span>.</p>
-                    <div class="d-flex flex-wrap gap-3">
-                        <a href="#contato" class="btn btn-light btn-lg">Solicitar Cotação <i class="fas fa-arrow-right ms-2"></i></a>
-                        <a href="#chat-trigger" class="btn btn-outline-light btn-lg">Atendimento Imediato</a>
-                    </div>
-                    <div class="mt-4 d-flex align-items-center">
-                        <div class="d-flex me-3">
-                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cliente" class="rounded-circle" width="40" height="40">
-                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Cliente" class="rounded-circle" width="40" height="40" style="margin-left: -10px">
-                            <img src="https://randomuser.me/api/portraits/men/68.jpg" alt="Cliente" class="rounded-circle" width="40" height="40" style="margin-left: -10px">
-                        </div>
-                        <p class="mb-0 text-white"><strong>+15.000</strong> clientes satisfeitos</p>
-                    </div>
+                    <h1 class="hero-title animate-title">Segura essa!</h1>
+                    <h2 class="hero-subtitle mb-4">MUITOS BENEFÍCIOS PARA VOCÊ</h2>
+                    <p class="lead mb-4">Descontos, Super-Brindes, Promoções.</p>
+                    <a href="#contato" class="btn btn-cta">Quero Aproveitar</a>
                 </div>
                 <div class="col-lg-6 hero-image" data-aos="fade-left">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Prancheta%201-f9YwBot3lw7qHyEzeokuVE3dPOSDLe.png" alt="Promoção Câmara & Garutti" class="img-fluid">
                 </div>
             </div>
-            <div class="discount-badge pulse-animation" data-aos="zoom-in" data-aos-delay="300">
+            <div class="discount-badge" data-aos="zoom-in" data-aos-delay="300">
                 <span>ATÉ</span>
                 <span style="font-size: 2rem;">30%</span>
                 <span>DESCONTO</span>
@@ -1288,6 +970,108 @@
         </div>
     </section>
 
+    <!-- Nova Seção de Parceiros -->
+    <section class="partners-section" id="parceiros">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="section-title display-4 fw-bold text-dark-green" data-aos="fade-up">Programa de Parceiros</h2>
+                    <p class="lead" data-aos="fade-up" data-aos-delay="100">Torne-se um parceiro da Câmara & Garutti e ganhe comissões por cada cliente indicado</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="partner-card">
+                        <div class="partner-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Como Funciona</h3>
+                        <p>Nosso programa de parceria é simples e lucrativo. Você recebe um QR code exclusivo para colocar em seu estabelecimento, e ganha comissões por cada cliente que contratar nossos serviços através da sua indicação.</p>
+
+                        <div class="partner-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Receba um QR code personalizado para seu estabelecimento</span>
+                        </div>
+                        <div class="partner-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Sistema de rastreamento identifica todas as suas indicações</span>
+                        </div>
+                        <div class="partner-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Ganhe comissões por cada venda realizada</span>
+                        </div>
+                        <div class="partner-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Receba relatórios mensais de desempenho</span>
+                        </div>
+
+                        <div class="commission-box">
+                            <h4>Comissões Atrativas</h4>
+                            <div class="commission-value">5% a 15%</div>
+                            <p>Dependendo do produto contratado, você pode ganhar entre 5% e 15% de comissão sobre cada venda realizada através da sua indicação.</p>
+                        </div>
+
+                        <div class="partner-cta">
+                            <a href="#contato" class="btn btn-cta">Quero Ser Parceiro</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="partner-card">
+                        <div class="partner-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <h3>Benefícios para Parceiros</h3>
+                        <p>Além das comissões, nossos parceiros têm acesso a diversos benefícios exclusivos:</p>
+
+                        <div class="partner-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Renda extra sem investimento inicial</span>
+                        </div>
+                        <div class="partner-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Materiais de divulgação gratuitos</span>
+                        </div>
+                        <div class="partner-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Treinamento e suporte contínuo</span>
+                        </div>
+                        <div class="partner-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Descontos exclusivos em nossos produtos</span>
+                        </div>
+                        <div class="partner-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Programa de bonificação por metas atingidas</span>
+                        </div>
+                        <div class="partner-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Acesso a eventos e treinamentos exclusivos</span>
+                        </div>
+
+                        <div class="mt-4">
+                            <h4>Quem pode ser parceiro?</h4>
+                            <p>Nosso programa é ideal para:</p>
+                            <ul>
+                                <li>Comércios locais</li>
+                                <li>Profissionais liberais</li>
+                                <li>Escritórios e consultórios</li>
+                                <li>Academias e salões de beleza</li>
+                                <li>Restaurantes e lanchonetes</li>
+                                <li>E muito mais!</li>
+                            </ul>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.camaraegarutti.com.br/parceiros" alt="QR Code Parceiros" class="img-fluid mb-3">
+                            <p>Escaneie o QR code para mais informações</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Benefícios Section -->
     <section class="benefits-section" id="beneficios">
         <div class="container">
@@ -1356,15 +1140,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <div>
-                        <h4>Atendimento Digital Imediato</h4>
-                        <p>Respostas em segundos e cotações em minutos, sem burocracia.</p>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -1410,118 +1185,48 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12" data-aos="fade-up">
-                    <div class="testimonial-carousel">
-                        <div class="testimonial-card">
-                            <div class="testimonial-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <div class="testimonial-content">
-                                <div class="testimonial-image">
-                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos Silva" class="rounded-circle">
-                                </div>
-                                <p class="testimonial-text">"Contratei o seguro residencial e fiquei impressionado com o atendimento e as condições. Economizei mais de 25% em relação à minha apólice anterior!"</p>
-                            </div>
-                            <div class="testimonial-author">
-                                <strong>Carlos Silva</strong> - Cliente desde 2019
-                            </div>
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
                         </div>
-                        <div class="testimonial-card">
-                            <div class="testimonial-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <div class="testimonial-content">
-                                <div class="testimonial-image">
-                                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana Oliveira" class="rounded-circle">
-                                </div>
-                                <p class="testimonial-text">"O financiamento do meu carro foi aprovado em tempo recorde e com uma taxa excelente. O processo foi todo digital e muito simples. Super recomendo!"</p>
-                            </div>
-                            <div class="testimonial-author">
-                                <strong>Ana Oliveira</strong> - Cliente desde 2021
-                            </div>
-                        </div>
-                        <div class="testimonial-card">
-                            <div class="testimonial-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                            <div class="testimonial-content">
-                                <div class="testimonial-image">
-                                    <img src="https://randomuser.me/api/portraits/men/68.jpg" alt="Marcos Santos" class="rounded-circle">
-                                </div>
-                                <p class="testimonial-text">"O plano de saúde que contratei tem uma ótima cobertura e o preço cabe no meu orçamento. O atendimento foi personalizado e recebi todas as informações que precisava!"</p>
-                            </div>
-                            <div class="testimonial-author">
-                                <strong>Marcos Santos</strong> - Cliente desde 2020
-                            </div>
-                        </div>
-                        <div class="testimonial-card">
-                            <div class="testimonial-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <div class="testimonial-content">
-                                <div class="testimonial-image">
-                                    <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Juliana Mendes" class="rounded-circle">
-                                </div>
-                                <p class="testimonial-text">"Consegui um desconto incrível no seguro do meu carro. O consultor me explicou todas as coberturas e me ajudou a escolher a melhor opção para mim. Excelente serviço!"</p>
-                            </div>
-                            <div class="testimonial-author">
-                                <strong>Juliana Mendes</strong> - Cliente desde 2022
-                            </div>
+                        <p class="testimonial-text">"Contratei o seguro residencial e fiquei impressionado com o atendimento e as condições. Recomendo a todos!"</p>
+                        <div class="testimonial-author">
+                            <strong>Carlos Silva</strong> - Cliente desde 2019
                         </div>
                     </div>
-                    <div class="testimonial-nav">
-                        <button class="testimonial-prev"><i class="fas fa-chevron-left"></i></button>
-                        <button class="testimonial-next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"O financiamento do meu carro foi aprovado em tempo recorde e com uma taxa excelente. Estou muito satisfeita!"</p>
+                        <div class="testimonial-author">
+                            <strong>Ana Oliveira</strong> - Cliente desde 2021
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-5 bg-white">
-        <div class="container">
-            <div class="row mb-4">
-                <div class="col-lg-6 mx-auto text-center">
-                    <h2 class="fw-bold text-dark-green" data-aos="fade-up">Parceiros de Confiança</h2>
-                    <p class="text-muted" data-aos="fade-up" data-aos-delay="100">Trabalhamos com as melhores seguradoras e instituições financeiras do mercado</p>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <div class="partner-logos" data-aos="fade-up">
-                        <div class="partner-logo">
-                            <img src="https://placeholder.svg?height=60&width=120" alt="Porto Seguro" class="img-fluid">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
                         </div>
-                        <div class="partner-logo">
-                            <img src="https://placeholder.svg?height=60&width=120" alt="Bradesco Seguros" class="img-fluid">
-                        </div>
-                        <div class="partner-logo">
-                            <img src="https://placeholder.svg?height=60&width=120" alt="Itaú Seguros" class="img-fluid">
-                        </div>
-                        <div class="partner-logo">
-                            <img src="https://placeholder.svg?height=60&width=120" alt="Liberty Seguros" class="img-fluid">
-                        </div>
-                        <div class="partner-logo">
-                            <img src="https://placeholder.svg?height=60&width=120" alt="Allianz" class="img-fluid">
-                        </div>
-                        <div class="partner-logo">
-                            <img src="https://placeholder.svg?height=60&width=120" alt="Santander" class="img-fluid">
+                        <p class="testimonial-text">"O plano de saúde que contratei tem uma ótima cobertura e o preço cabe no meu orçamento. Excelente empresa!"</p>
+                        <div class="testimonial-author">
+                            <strong>Marcos Santos</strong> - Cliente desde 2020
                         </div>
                     </div>
                 </div>
@@ -1572,14 +1277,14 @@
         <div class="container position-relative" style="z-index: 2;">
             <div class="row">
                 <div class="col-lg-6 text-white mb-5 mb-lg-0" data-aos="fade-right">
-                    <h2 class="display-4 fw-bold mb-4">Resolva tudo em minutos!</h2>
-                    <p class="lead mb-4">Nosso atendimento digital fornece cotações e informações em tempo recorde. Preencha o formulário ou inicie um chat agora mesmo.</p>
+                    <h2 class="display-4 fw-bold mb-4">Aproveite agora!</h2>
+                    <p class="lead mb-4">Preencha o formulário ao lado e um de nossos consultores entrará em contato para oferecer as melhores condições para você.</p>
                     <div class="d-flex align-items-center mb-4">
                         <div class="me-3">
-                            <i class="fas fa-bolt fa-2x text-white"></i>
+                            <i class="fas fa-check-circle fa-2x text-white"></i>
                         </div>
                         <div>
-                            <h4 class="mb-0">Respostas em Segundos</h4>
+                            <h4 class="mb-0">Atendimento Personalizado</h4>
                         </div>
                     </div>
                     <div class="d-flex align-items-center mb-4">
@@ -1587,74 +1292,54 @@
                             <i class="fas fa-check-circle fa-2x text-white"></i>
                         </div>
                         <div>
-                            <h4 class="mb-0">Cotações em Minutos</h4>
+                            <h4 class="mb-0">Melhores Condições do Mercado</h4>
                         </div>
                     </div>
                     <div class="d-flex align-items-center">
                         <div class="me-3">
-                            <i class="fas fa-shield-alt fa-2x text-white"></i>
+                            <i class="fas fa-check-circle fa-2x text-white"></i>
                         </div>
                         <div>
-                            <h4 class="mb-0">Contratação 100% Digital</h4>
+                            <h4 class="mb-0">Descontos Exclusivos</h4>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6" data-aos="fade-left">
                     <div class="cta-form">
                         <h3 class="text-center mb-4 text-dark-green">Solicite uma Cotação</h3>
-                        <form id="contact-form" class="needs-validation" novalidate>
+                        <form>
                             <div class="mb-3">
-                                <input type="text" class="form-control form-control-lg" placeholder="Nome Completo" required>
-                                <div class="invalid-feedback">Por favor, informe seu nome.</div>
+                                <input type="text" class="form-control" placeholder="Nome Completo" required>
                             </div>
                             <div class="mb-3">
-                                <input type="email" class="form-control form-control-lg" placeholder="E-mail" required>
-                                <div class="invalid-feedback">Por favor, informe um e-mail válido.</div>
+                                <input type="email" class="form-control" placeholder="E-mail" required>
                             </div>
                             <div class="mb-3">
-                                <input type="tel" class="form-control form-control-lg" placeholder="WhatsApp" required>
-                                <div class="invalid-feedback">Por favor, informe seu número de WhatsApp.</div>
+                                <input type="tel" class="form-control" placeholder="Telefone" required>
                             </div>
                             <div class="mb-3">
-                                <select class="form-select form-select-lg" required>
-                                    <option value="" selected disabled>O que você precisa?</option>
-                                    <optgroup label="Seguros">
-                                        <option value="seguro_residencial">Seguro Residencial</option>
-                                        <option value="seguro_empresarial">Seguro Empresarial</option>
-                                        <option value="seguro_veiculos">Seguro Veículos</option>
-                                        <option value="seguro_viagem">Seguro Viagem</option>
-                                        <option value="seguro_vida">Seguro Vida</option>
-                                        <option value="seguro_maquinas">Seguro Máquinas</option>
-                                    </optgroup>
-                                    <optgroup label="Financiamentos">
-                                        <option value="financiamento_caminhao">Financiamento Caminhão</option>
-                                        <option value="financiamento_automovel">Financiamento Automóvel</option>
-                                        <option value="financiamento_moto">Financiamento Moto</option>
-                                        <option value="cartao_credito">Cartão de Crédito</option>
-                                        <option value="plano_saude">Plano de Saúde</option>
-                                    </optgroup>
+                                <select class="form-select" required>
+                                    <option value="" selected disabled>Selecione o Serviço</option>
+                                    <option value="seguro_residencial">Seguro Residencial</option>
+                                    <option value="seguro_empresarial">Seguro Empresarial</option>
+                                    <option value="seguro_veiculos">Seguro Veículos</option>
+                                    <option value="seguro_viagem">Seguro Viagem</option>
+                                    <option value="seguro_vida">Seguro Vida</option>
+                                    <option value="seguro_maquinas">Seguro Máquinas</option>
+                                    <option value="financiamento_caminhao">Financiamento Caminhão</option>
+                                    <option value="financiamento_automovel">Financiamento Automóvel</option>
+                                    <option value="financiamento_moto">Financiamento Moto</option>
+                                    <option value="cartao_credito">Cartão de Crédito</option>
+                                    <option value="plano_saude">Plano de Saúde</option>
+                                    <option value="parceria">Quero ser Parceiro</option>
                                 </select>
-                                <div class="invalid-feedback">Por favor, selecione um serviço.</div>
                             </div>
                             <div class="mb-3">
-                                <textarea class="form-control" rows="3" placeholder="Como podemos te ajudar? (opcional)"></textarea>
-                            </div>
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="checkbox" id="privacy-check" required>
-                                <label class="form-check-label small" for="privacy-check">
-                                    Concordo com a <a href="#" class="text-success">Política de Privacidade</a> e em receber comunicações.
-                                </label>
-                                <div class="invalid-feedback">Você precisa concordar antes de enviar.</div>
+                                <textarea class="form-control" rows="3" placeholder="Mensagem (opcional)"></textarea>
                             </div>
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-cta btn-lg">
-                                    <span>SOLICITAR COTAÇÃO GRATUITA</span>
-                                    <i class="fas fa-chevron-right ms-2"></i>
-                                </button>
+                                <button type="submit" class="btn btn-cta">Solicitar Cotação</button>
                             </div>
-                            <p class="text-center mt-3 small text-muted">
-                                <i class="fas fa-shield-alt me-1"></i> Seus dados estão protegidos e não serão compartilhados.
-                            </p>
                         </form>
                     </div>
                 </div>
@@ -1719,63 +1404,6 @@
         </div>
     </footer>
 
-    <div class="whatsapp-button">
-        <a href="https://wa.me/5511912345678" target="_blank" class="btn btn-whatsapp">
-            <i class="fab fa-whatsapp"></i>
-        </a>
-    </div>
-
-    <div class="chat-widget">
-        <div class="chat-header">
-            <div class="chat-avatar">
-                <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Atendente" class="rounded-circle">
-            </div>
-            <div>
-                <h6 class="mb-0">Atendimento Digital</h6>
-                <small class="text-success"><i class="fas fa-circle me-1"></i>Resposta em segundos</small>
-            </div>
-            <button class="chat-close-btn"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="chat-body">
-            <div class="chat-message incoming">
-                <p>Olá! Estou aqui para te atender imediatamente. Como posso ajudar?</p>
-            </div>
-            <div class="chat-message incoming">
-                <p>Posso fornecer cotações e informações sobre seguros e financiamentos em poucos minutos!</p>
-            </div>
-        </div>
-        <div class="chat-footer">
-            <input type="text" class="chat-input" placeholder="Digite sua mensagem...">
-            <button class="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    </div>
-
-    <div class="chat-trigger" id="chat-trigger">
-        <button class="btn btn-chat">
-            <i class="fas fa-comment-dots"></i>
-            <span class="chat-badge">2min</span>
-        </button>
-    </div>
-
-    <div class="newsletter-popup" id="newsletter-popup">
-        <div class="newsletter-content">
-            <button class="newsletter-close">&times;</button>
-            <div class="newsletter-image">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Prancheta%201-f9YwBot3lw7qHyEzeokuVE3dPOSDLe.png" alt="Newsletter" class="img-fluid">
-            </div>
-            <div class="newsletter-text">
-                <h3>Economize até 30% em seus seguros!</h3>
-                <p>Cadastre-se para receber ofertas exclusivas e dicas de economia.</p>
-                <form class="newsletter-form">
-                    <input type="text" placeholder="Seu nome" required>
-                    <input type="email" placeholder="Seu e-mail" required>
-                    <button type="submit" class="btn btn-cta">QUERO ECONOMIZAR</button>
-                </form>
-                <p class="small text-muted mt-2">Prometemos não enviar spam. Você pode cancelar a qualquer momento.</p>
-            </div>
-        </div>
-    </div>
-
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- AOS Animation Library -->
@@ -1836,353 +1464,7 @@
                 });
             });
         });
-
-        // Contador regressivo
-        function updateCountdown() {
-            const targetDate = new Date(document.getElementById('countdown-date').textContent);
-            const now = new Date();
-            const diff = targetDate - now;
-
-            if (diff <= 0) {
-                document.getElementById('countdown').textContent = "OFERTA ENCERRADA";
-                return;
-            }
-
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-            document.getElementById('countdown').textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        }
-
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-
-        // Validação de formulário
-        (function() {
-            'use strict';
-
-            const forms = document.querySelectorAll('.needs-validation');
-
-            Array.from(forms).forEach(form => {
-                form.addEventListener('submit', event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    } else {
-                        event.preventDefault();
-                        // Simulação de envio
-                        const submitBtn = form.querySelector('button[type="submit"]');
-                        const originalText = submitBtn.innerHTML;
-                        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Enviando...';
-                        submitBtn.disabled = true;
-
-                        setTimeout(() => {
-                            form.innerHTML = `
-                                <div class="text-center py-5">
-                                    <div class="mb-4">
-                                        <i class="fas fa-check-circle text-success" style="font-size: 5rem;"></i>
-                                    </div>
-                                    <h3 class="mb-3">Solicitação enviada com sucesso!</h3>
-                                    <p class="mb-4">Um de nossos consultores entrará em contato em breve.</p>
-                                    <p class="small text-muted">Verifique também sua caixa de spam e lixeira.</p>
-                                </div>
-                            `;
-                        }, 2000);
-                    }
-
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        })();
-
-        // Chat widget
-        document.querySelector('.chat-trigger').addEventListener('click', function() {
-            document.querySelector('.chat-widget').style.display = 'block';
-            this.style.display = 'none';
-        });
-
-        document.querySelector('.chat-close-btn').addEventListener('click', function() {
-            document.querySelector('.chat-widget').style.display = 'none';
-            document.querySelector('.chat-trigger').style.display = 'block';
-        });
-
-        document.querySelector('.chat-send-btn').addEventListener('click', function() {
-            const input = document.querySelector('.chat-input');
-            const message = input.value.trim();
-
-            if (message) {
-                const chatBody = document.querySelector('.chat-body');
-
-                // Adicionar mensagem do usuário
-                chatBody.innerHTML += `
-                    <div class="chat-message outgoing">
-                        <p>${message}</p>
-                    </div>
-                `;
-
-                input.value = '';
-                chatBody.scrollTop = chatBody.scrollHeight;
-
-                // Mostrar indicador de digitação
-                chatBody.innerHTML += `
-                    <div class="chat-message incoming typing-indicator" id="typing-indicator">
-                        <p><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></p>
-                    </div>
-                `;
-                chatBody.scrollTop = chatBody.scrollHeight;
-
-                // Simular resposta após 1 segundo
-                setTimeout(() => {
-            // Remover indicador de digitação
-            document.getElementById('typing-indicator').remove();
-
-            // Adicionar resposta
-            chatBody.innerHTML += `
-                <div class="chat-message incoming">
-                    <p>Entendi! Posso te ajudar com isso imediatamente. Qual seria o melhor horário para receber sua cotação personalizada?</p>
-                </div>
-            `;
-            chatBody.scrollTop = chatBody.scrollHeight;
-        }, 800); // Resposta rápida em menos de 1 segundo
-    }
-});
-
-        document.querySelector('.chat-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.querySelector('.chat-send-btn').click();
-            }
-        });
-
-        // Efeito de scroll suave para todos os links internos
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Navbar fixa com mudança de cor ao rolar
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('navbar-scrolled');
-            } else {
-                navbar.classList.remove('navbar-scrolled');
-            }
-        });
-
-        // Adicionar classe para navbar quando scrollada
-        document.head.insertAdjacentHTML('beforeend', `
-            <style>
-                .navbar-scrolled {
-                    background-color: rgba(0, 100, 0, 0.95) !important;
-                    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-                    padding: 10px 0;
-                }
-            </style>
-        `);
-
-        // Popup de saída
-        let showExitPopup = true;
-
-        document.addEventListener('mouseleave', function(e) {
-            if (e.clientY < 0 && showExitPopup) {
-                showExitPopup = false;
-
-                // Criar e mostrar popup
-                const exitPopup = document.createElement('div');
-                exitPopup.className = 'exit-popup';
-                exitPopup.innerHTML = `
-                    <div class="exit-popup-content">
-                        <button class="exit-popup-close">&times;</button>
-                        <h3>Espere! Não perca essa oportunidade!</h3>
-                        <p>Aproveite nossos descontos exclusivos de até 30% antes que acabem.</p>
-                        <form class="exit-popup-form">
-                            <input type="email" placeholder="Seu melhor e-mail" required>
-                            <button type="submit" class="btn btn-cta">QUERO APROVEITAR</button>
-                        </form>
-                    </div>
-                `;
-
-                document.body.appendChild(exitPopup);
-
-                // Estilo para o popup
-                document.head.insertAdjacentHTML('beforeend', `
-                    <style>
-                        .exit-popup {
-                            position: fixed;
-                            top: 0;
-                            left: 0;
-                            width: 100%;
-                            height: 100%;
-                            background-color: rgba(0, 0, 0, 0.7);
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            z-index: 9999;
-                            animation: fadeIn 0.3s ease;
-                        }
-
-                        .exit-popup-content {
-                            background-color: white;
-                            padding: 30px;
-                            border-radius: 10px;
-                            max-width: 500px;
-                            width: 90%;
-                            position: relative;
-                            text-align: center;
-                        }
-
-                        .exit-popup-close {
-                            position: absolute;
-                            top: 10px;
-                            right: 15px;
-                            font-size: 24px;
-                            background: none;
-                            border: none;
-                            cursor: pointer;
-                        }
-
-                        .exit-popup-form {
-                            display: flex;
-                            flex-direction: column;
-                            gap: 10px;
-                            margin-top: 20px;
-                        }
-
-                        .exit-popup-form input {
-                            padding: 12px;
-                            border: 1px solid #ddd;
-                            border-radius: 5px;
-                        }
-
-                        @keyframes fadeIn {
-                            from { opacity: 0; }
-                            to { opacity: 1; }
-                        }
-                    </style>
-                `);
-
-                // Fechar popup
-                exitPopup.querySelector('.exit-popup-close').addEventListener('click', function() {
-                    exitPopup.remove();
-                });
-
-                // Submeter formulário
-                exitPopup.querySelector('form').addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    exitPopup.querySelector('.exit-popup-content').innerHTML = `
-                        <h3>Obrigado!</h3>
-                        <p>Em breve entraremos em contato com mais informações.</p>
-                    `;
-
-                    setTimeout(() => {
-                        exitPopup.remove();
-                    }, 3000);
-                });
-            }
-        });
-
-        // Carrossel de depoimentos
-        const testimonialCarousel = document.querySelector('.testimonial-carousel');
-        const testimonialCards = document.querySelectorAll('.testimonial-card');
-        const testimonialPrev = document.querySelector('.testimonial-prev');
-        const testimonialNext = document.querySelector('.testimonial-next');
-        let currentTestimonial = 0;
-
-        function showTestimonial(index) {
-            if (index < 0) index = testimonialCards.length - 1;
-            if (index >= testimonialCards.length) index = 0;
-
-            currentTestimonial = index;
-            testimonialCarousel.scrollLeft = testimonialCards[index].offsetLeft;
-        }
-
-        testimonialPrev.addEventListener('click', () => {
-            showTestimonial(currentTestimonial - 1);
-        });
-
-        testimonialNext.addEventListener('click', () => {
-            showTestimonial(currentTestimonial + 1);
-        });
-
-        // Auto-play do carrossel
-        setInterval(() => {
-            showTestimonial(currentTestimonial + 1);
-        }, 5000);
-
-        // Pop-up de newsletter
-        setTimeout(() => {
-            document.getElementById('newsletter-popup').style.display = 'flex';
-        }, 30000); // Mostrar após 30 segundos
-
-        document.querySelector('.newsletter-close').addEventListener('click', function() {
-            document.getElementById('newsletter-popup').style.display = 'none';
-        });
-
-        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const newsletterContent = document.querySelector('.newsletter-content');
-            const originalContent = newsletterContent.innerHTML;
-
-            newsletterContent.innerHTML = `
-                <div style="padding: 40px; text-align: center;">
-                    <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
-                    <h3 class="mt-4">Obrigado por se inscrever!</h3>
-                    <p>Em breve você receberá nossas ofertas exclusivas.</p>
-                </div>
-            `;
-
-            setTimeout(() => {
-                document.getElementById('newsletter-popup').style.display = 'none';
-                // Restaurar conteúdo original após fechar
-                setTimeout(() => {
-                    newsletterContent.innerHTML = originalContent;
-
-                    // Reativar o evento de fechar
-                    document.querySelector('.newsletter-close').addEventListener('click', function() {
-                        document.getElementById('newsletter-popup').style.display = 'none';
-                    });
-                }, 500);
-            }, 3000);
-        });
     </script>
-
-    <div class="py-4 bg-light">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <div class="p-3 rounded bg-white shadow-sm">
-                        <h3 class="text-primary-green"><i class="fas fa-bolt me-2"></i> 2 min</h3>
-                        <p class="mb-0">Tempo médio de resposta</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <div class="p-3 rounded bg-white shadow-sm">
-                        <h3 class="text-primary-green"><i class="fas fa-clock me-2"></i> 15 min</h3>
-                        <p class="mb-0">Para cotações completas</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="p-3 rounded bg-white shadow-sm">
-                        <h3 class="text-primary-green"><i class="fas fa-calendar-check me-2"></i> 24/7</h3>
-                        <p class="mb-0">Disponibilidade de atendimento</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </body>
 </html>
 

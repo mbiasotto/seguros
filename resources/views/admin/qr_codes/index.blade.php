@@ -9,10 +9,15 @@
 @section('content')
 <div class="data-list-header">
     <h1 class="h3 mb-0">QR Codes</h1>
-    <a href="{{ route('admin.qr-codes.create') }}" class="btn btn-primary d-flex align-items-center gap-2">
-        <i class="fas fa-plus"></i>
-        <span>Novo QR Code</span>
-    </a>
+    <div>
+        <a href="{{ route('admin.qr-codes.pdf') }}" class="btn btn-success me-2">
+            <i class="fas fa-file-pdf me-2"></i>Gerar PDF para Impressão
+        </a>
+        <a href="{{ route('admin.qr-codes.create') }}" class="btn btn-primary d-flex align-items-center gap-2">
+            <i class="fas fa-plus"></i>
+            <span>Novo QR Code</span>
+        </a>
+    </div>
 </div>
 
 @if($qrCodes->isEmpty())

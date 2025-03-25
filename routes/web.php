@@ -7,6 +7,7 @@ use App\Http\Controllers\VendorAuthController;
 use App\Http\Controllers\EstablishmentController;
 use App\Http\Controllers\Admin\AdminEstablishmentController;
 use App\Http\Controllers\Admin\QrCodeController;
+use App\Http\Controllers\Admin\QrCodePdfController;
 use App\Http\Controllers\QrCodeRedirectController;
 
 // QR Code Redirect Route
@@ -35,6 +36,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // QR Code Management Routes
         Route::resource('qr-codes', QrCodeController::class);
         Route::get('qr-codes/{qrCode}/download', [QrCodeController::class, 'download'])->name('qr-codes.download');
+        Route::get('/qr-codes-pdf', [QrCodePdfController::class, 'generatePdf'])->name('qr-codes.pdf');
     });
 });
 
