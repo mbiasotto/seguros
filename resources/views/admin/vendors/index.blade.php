@@ -2,6 +2,11 @@
 
 @section('title', 'Vendedores')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
+<link rel="stylesheet" href="{{ asset('css/empty-state.css') }}">
+@endpush
+
 @section('content')
 <div class="data-list-header">
     <h1 class="h3 mb-0">Vendedores</h1>
@@ -12,18 +17,23 @@
 </div>
 
 @if($vendors->isEmpty())
-    <div class="card shadow-sm">
+    <div class="card border-0 shadow-sm">
         <div class="card-body empty-state text-center py-5">
-            <i class="fas fa-users text-muted fa-3x mb-3"></i>
-            <h4 class="mt-3">Nenhum vendedor cadastrado</h4>
-            <p class="text-muted mb-4">Clique no botão "Novo Vendedor" para começar.</p>
-            <a href="{{ route('admin.vendors.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus me-2"></i>Novo Vendedor
-            </a>
+            <div class="empty-state-icon mb-4 bg-light rounded-circle p-4 d-inline-flex justify-content-center align-items-center" style="width: 120px; height: 120px;">
+                <i class="fas fa-users text-primary fa-3x"></i>
+            </div>
+            <h3 class="fw-bold mb-3">Nenhum vendedor cadastrado</h3>
+            <p class="text-muted mb-4 col-md-8 mx-auto">Você ainda não possui vendedores cadastrados no sistema. Adicione seu primeiro vendedor para começar a gerenciar sua equipe de vendas.</p>
+            <div class="mt-4">
+                <a href="{{ route('admin.vendors.create') }}" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">
+                    <i class="fas fa-plus me-2"></i>
+                    <span>Adicionar Vendedor</span>
+                </a>
+            </div>
         </div>
     </div>
 @else
-    <div class="card shadow-sm">
+    <div class="card border-0 shadow-sm">
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
                 <thead>

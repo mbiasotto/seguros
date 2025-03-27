@@ -34,7 +34,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
         Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
     });
-    
+
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
     // Protected Admin Routes
@@ -74,9 +74,7 @@ Route::prefix('vendor')->name('vendor.')->group(function () {
 
     // Protected Vendor Routes
     Route::middleware(['auth:vendor'])->group(function () {
-        Route::get('dashboard', function () {
-            return redirect()->route('vendor.profile');
-        })->name('dashboard');
+        Route::get('dashboard', [\App\Http\Controllers\Vendor\DashboardController::class, 'index'])->name('dashboard');
 
         Route::get('profile', [VendorAuthController::class, 'profile'])->name('profile');
         Route::put('profile', [VendorAuthController::class, 'updateProfile'])->name('profile.update');
