@@ -3,18 +3,46 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vendor;
+use App\Services\Email\EmailServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class VendorController extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
-    public function __construct()
+
+    /**
+     * Serviço de e-mail
+     */
+    private EmailServiceInterface $emailService;
+
+    public function __construct(EmailServiceInterface $emailService)
     {
         $this->middleware('auth');
+        $this->emailService = $emailService;
+    }
+
+    /**
+     * Envia e-mail de boas-vindas para o novo vendedor
+     */
+    private function sendWelcomeEmail(Vendor $vendor)
+    {
+        try {
+            // Utiliza o serviço de e-mail para enviar o template
+            return $this->emailService->sendTemplate(
+                $vendor->email,
+                $vendor->nome,
+                'Bem-vindo ao SeguraEssa.app - Informações de Acesso',
+                'emails.vendor-welcome',
+                ['vendor' => $vendor]
+            );
+        } catch (\Exception $e) {
+            throw new \Exception('Erro ao enviar e-mail: ' . $e->getMessage());
+        }
     }
 
     public function index()
@@ -44,7 +72,15 @@ class VendorController extends BaseController
         ]);
 
         $validated['password'] = Hash::make($request->password);
-        Vendor::create($validated);
+        $vendor = Vendor::create($validated);
+
+        // Enviar e-mail de boas-vindas
+        try {
+            $this->sendWelcomeEmail($vendor);
+        } catch (\Exception $e) {
+            // Log do erro, mas não impede o cadastro
+            Log::error('Erro ao enviar e-mail de boas-vindas: ' . $e->getMessage());
+        }
 
         return redirect()->route('admin.vendors.index')
             ->with('success', 'Vendedor cadastrado com sucesso!');

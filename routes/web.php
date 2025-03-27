@@ -84,6 +84,12 @@ Route::prefix('vendor')->name('vendor.')->group(function () {
     });
 });
 
+// Rotas de teste temporárias
+Route::prefix('test')->name('test.')->group(function () {
+    Route::get('/email', [\App\Http\Controllers\TestController::class, 'testEmail'])->name('email');
+    Route::get('/email-template', [\App\Http\Controllers\TestController::class, 'testEmailTemplate'])->name('email-template');
+});
+
 // Fallback route - captura todas as rotas não definidas
 Route::fallback(function () {
     return redirect()->route('site.index');
