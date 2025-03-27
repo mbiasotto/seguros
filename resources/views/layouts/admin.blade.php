@@ -8,7 +8,7 @@
     <title>{{ config('app.name', 'Laravel') }} - Admin</title>
 
     <!-- Scripts and Styles -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body class="font-sans antialiased bg-gray-100">
@@ -96,6 +96,7 @@
             if (mobileMenu) {
                 mobileMenu.classList.toggle('hidden');
             }
+        }
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
