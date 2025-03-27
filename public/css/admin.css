@@ -139,6 +139,7 @@ body {
 }
 
 .btn-sm {
+    margin-bottom: 35px;
     padding: 0.25rem 0.75rem;
     font-size: 0.875rem;
     border-radius: 0.2rem;

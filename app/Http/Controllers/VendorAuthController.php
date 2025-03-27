@@ -20,7 +20,7 @@ class VendorAuthController extends Controller
     public function showLoginForm()
     {
         if (Auth::guard('vendor')->check()) {
-            return redirect()->route('vendor.profile');
+            return redirect()->route('vendor.dashboard');
         }
         return view('vendor.auth.login');
     }
@@ -37,7 +37,7 @@ class VendorAuthController extends Controller
 
         if (Auth::guard('vendor')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('vendor.profile');
+            return redirect()->route('vendor.dashboard');
         }
 
         return back()->withErrors([
@@ -53,7 +53,7 @@ class VendorAuthController extends Controller
         if (!Auth::guard('vendor')->check()) {
             return redirect()->route('vendor.login');
         }
-        
+
         $vendor = Auth::guard('vendor')->user();
         return view('vendor.profile', compact('vendor'));
     }
@@ -66,7 +66,7 @@ class VendorAuthController extends Controller
         if (!Auth::guard('vendor')->check()) {
             return redirect()->route('vendor.login');
         }
-        
+
         $vendor = Vendor::find(Auth::guard('vendor')->id());
 
         $validated = $request->validate([
