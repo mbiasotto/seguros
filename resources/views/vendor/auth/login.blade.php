@@ -30,6 +30,15 @@
             <div class="card-body p-4">
                 <h3 class="text-center mb-4">Área do Vendedor</h3>
 
+                @if(session('message'))
+                    <div class="alert alert-info">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <span>{{ session('message') }}</span>
+                        </div>
+                    </div>
+                @endif
+
                 @if($errors->any())
                     <div class="alert alert-danger">
                         <div class="d-flex align-items-center">
