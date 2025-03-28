@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vendor;
+use App\Models\VendorAccessLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -37,6 +38,15 @@ class VendorAuthController extends Controller
 
         if (Auth::guard('vendor')->attempt($credentials)) {
             $request->session()->regenerate();
+
+            // Registrar log de acesso
+            $vendor = Auth::guard('vendor')->user();
+            VendorAccessLog::create([
+                'vendor_id' => $vendor->id,
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent()
+            ]);
+
             return redirect()->route('vendor.dashboard');
         }
 

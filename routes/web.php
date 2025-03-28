@@ -43,6 +43,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Vendor Management Routes
         Route::resource('vendors', VendorController::class);
+        Route::get('vendors/{vendor}/access-logs', [VendorController::class, 'accessLogs'])->name('vendors.access-logs');
 
         // Establishment Management Routes
         Route::resource('establishments', AdminEstablishmentController::class);

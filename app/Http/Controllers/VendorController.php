@@ -116,4 +116,13 @@ class VendorController extends BaseController
         return redirect()->route('admin.vendors.index')
             ->with('success', 'Vendedor removido com sucesso!');
     }
+
+    /**
+     * Exibe o histórico de acessos do vendedor
+     */
+    public function accessLogs(Vendor $vendor)
+    {
+        $accessLogs = $vendor->accessLogs()->orderBy('created_at', 'desc')->paginate(15);
+        return view('admin.vendors.access-logs', compact('vendor', 'accessLogs'));
+    }
 }

@@ -36,4 +36,20 @@ class Vendor extends Authenticatable
     {
         return $this->hasMany(Establishment::class);
     }
+
+    /**
+     * Relacionamento com os logs de acesso
+     */
+    public function accessLogs(): HasMany
+    {
+        return $this->hasMany(VendorAccessLog::class);
+    }
+
+    /**
+     * Obtém o último log de acesso do vendedor
+     */
+    public function lastAccess()
+    {
+        return $this->accessLogs()->latest()->first();
+    }
 }

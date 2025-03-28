@@ -43,7 +43,8 @@
                         <th>Telefone</th>
                         <th>Cidade/Estado</th>
                         <th>Status</th>
-                        <th width="120">Ações</th>
+                        <th>Último Acesso</th>
+                        <th width="160">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,9 +62,19 @@
                                 @endif
                             </td>
                             <td>
+                                @if($vendor->lastAccess())
+                                    {{ $vendor->lastAccess()->created_at->format('d/m/Y H:i') }}
+                                @else
+                                    <span class="text-muted">Nunca acessou</span>
+                                @endif
+                            </td>
+                            <td>
                                 <div class="action-buttons">
                                     <a href="{{ route('admin.vendors.edit', $vendor) }}" class="btn btn-sm btn-primary" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                    <a href="{{ route('admin.vendors.access-logs', $vendor) }}" class="btn btn-sm btn-info" title="Histórico de Acessos">
+                                        <i class="fas fa-history"></i>
                                     </a>
                                     <form action="{{ route('admin.vendors.destroy', $vendor) }}" method="POST" class="d-inline">
                                         @csrf
