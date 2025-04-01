@@ -24,6 +24,9 @@ class DatabaseSeeder extends Seeder
         // Call EstablishmentSeeder after creating vendors
         $this->call(EstablishmentSeeder::class);
 
+        // Call QrCodeSeeder to create 100 QR codes
+        $this->call(QrCodeSeeder::class);
+
         // Create sample vendors
         $vendors = [
             [

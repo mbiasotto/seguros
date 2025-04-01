@@ -25,9 +25,13 @@
                 <i class="fas fa-users"></i>
                 <span>Vendedores</span>
             </a>
-            <a href="{{ route('admin.establishments.index') }}" class="nav-link {{ request()->routeIs('admin.establishments*') ? 'active' : '' }}">
+            <a href="{{ route('admin.establishments.index') }}" class="nav-link {{ request()->routeIs('admin.establishments*') && !request()->routeIs('admin.establishments.documents*') ? 'active' : '' }}">
                 <i class="fas fa-store"></i>
                 <span>Estabelecimentos</span>
+            </a>
+            <a href="{{ route('admin.establishments.documents.pending') }}" class="nav-link {{ request()->routeIs('admin.establishments.documents.*') ? 'active' : '' }}">
+                <i class="fas fa-file-alt"></i>
+                <span>Documentos Pendentes</span>
             </a>
             <a href="{{ route('admin.qr-codes.index') }}" class="nav-link {{ request()->routeIs('admin.qr-codes*') ? 'active' : '' }}">
                 <i class="fas fa-qrcode"></i>
@@ -50,7 +54,7 @@
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
-            
+
             <!-- Page Content -->
             <main class="p-4">
                 @if(session('success'))

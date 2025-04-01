@@ -18,7 +18,8 @@ class AdminEstablishmentController extends Controller
     public function create()
     {
         $vendors = Vendor::where('ativo', true)->get();
-        return view('admin.establishments.create', compact('vendors'));
+        $qrCodes = \App\Models\QrCode::where('active', true)->get();
+        return view('admin.establishments.create', compact('vendors', 'qrCodes'));
     }
 
     public function store(Request $request)
@@ -31,10 +32,22 @@ class AdminEstablishmentController extends Controller
             'estado' => 'required|string|max:2',
             'telefone' => 'required|string|max:20',
             'email' => 'required|email|max:255',
-            'ativo' => 'boolean'
+            'ativo' => 'boolean',
+            'qr_codes' => 'nullable|array',
+            'qr_codes.*' => 'exists:qr_codes,id'
         ]);
 
-        Establishment::create($validated);
+        $qrCodes = $request->input('qr_codes', []);
+
+        // Remove qr_codes do array de dados validados antes de criar o estabelecimento
+        unset($validated['qr_codes']);
+
+        $establishment = Establishment::create($validated);
+
+        // Vincula os QR codes selecionados ao estabelecimento
+        if (!empty($qrCodes)) {
+            $establishment->qrCodes()->attach($qrCodes);
+        }
 
         return redirect()->route('admin.establishments.index')
             ->with('success', 'Estabelecimento criado com sucesso!');
@@ -43,7 +56,16 @@ class AdminEstablishmentController extends Controller
     public function edit(Establishment $establishment)
     {
         $vendors = Vendor::where('ativo', true)->get();
-        return view('admin.establishments.edit', compact('establishment', 'vendors'));
+
+        // Busca todos os QR codes ativos ou que já estejam vinculados a este estabelecimento
+        // Implementando paginação para lidar com grande quantidade de QR codes
+        $qrCodes = \App\Models\QrCode::where('active', true)
+            ->orWhereHas('establishments', function($query) use ($establishment) {
+                $query->where('establishments.id', $establishment->id);
+            })
+            ->paginate(20); // Paginação com 20 itens por página
+
+        return view('admin.establishments.edit', compact('establishment', 'vendors', 'qrCodes'));
     }
 
     public function update(Request $request, Establishment $establishment)
@@ -56,10 +78,21 @@ class AdminEstablishmentController extends Controller
             'estado' => 'required|string|max:2',
             'telefone' => 'required|string|max:20',
             'email' => 'required|email|max:255',
-            'ativo' => 'boolean'
+            'ativo' => 'boolean',
+            'qr_codes' => 'nullable|array',
+            'qr_codes.*' => 'exists:qr_codes,id'
         ]);
 
+        $qrCodes = $request->input('qr_codes', []);
+
+        // Remove qr_codes do array de dados validados antes de atualizar o estabelecimento
+        unset($validated['qr_codes']);
+
         $establishment->update($validated);
+
+        // Sincroniza os QR codes selecionados com o estabelecimento
+        // O método sync substitui todos os relacionamentos existentes
+        $establishment->qrCodes()->sync($qrCodes);
 
         return redirect()->route('admin.establishments.index')
             ->with('success', 'Estabelecimento atualizado com sucesso!');

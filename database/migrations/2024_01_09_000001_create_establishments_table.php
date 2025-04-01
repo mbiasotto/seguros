@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('estado', 2);
             $table->string('cep');
             $table->string('telefone');
+            $table->string('email')->nullable();
             $table->text('descricao')->nullable();
             $table->boolean('ativo')->default(true);
             $table->timestamps();

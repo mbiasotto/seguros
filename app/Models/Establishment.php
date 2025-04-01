@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Establishment extends Model
 {
@@ -15,6 +17,7 @@ class Establishment extends Model
         'estado',
         'cep',
         'telefone',
+        'email',
         'descricao',
         'ativo'
     ];
@@ -26,5 +29,21 @@ class Establishment extends Model
     public function vendor(): BelongsTo
     {
         return $this->belongsTo(Vendor::class);
+    }
+
+    /**
+     * Relacionamento com o onboarding do estabelecimento
+     */
+    public function onboarding(): HasOne
+    {
+        return $this->hasOne(EstablishmentOnboarding::class);
+    }
+
+    /**
+     * Relacionamento com QR codes
+     */
+    public function qrCodes(): BelongsToMany
+    {
+        return $this->belongsToMany(QrCode::class, 'establishment_qr_code');
     }
 }

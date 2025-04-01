@@ -45,6 +45,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('vendors', VendorController::class);
         Route::get('vendors/{vendor}/access-logs', [VendorController::class, 'accessLogs'])->name('vendors.access-logs');
 
+        // Establishment Documents Routes (Moved Before Resource Route)
+        Route::prefix('establishments/documents')->name('establishments.documents.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'index'])->name('index');
+            Route::get('/pending', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'pending'])->name('pending');
+            Route::get('/approved', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'approved'])->name('approved');
+            Route::get('/rejected', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'rejected'])->name('rejected');
+            Route::get('/{onboarding}', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'show'])->name('show');
+            Route::get('/{onboarding}/view', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'viewDocument'])->name('view');
+            Route::post('/{onboarding}/approve', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'approve'])->name('approve');
+            Route::post('/{onboarding}/reject', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'reject'])->name('reject');
+        });
+
         // Establishment Management Routes
         Route::resource('establishments', AdminEstablishmentController::class);
 
@@ -82,6 +94,16 @@ Route::prefix('vendor')->name('vendor.')->group(function () {
 
         // Establishment Management Routes
         Route::resource('establishments', EstablishmentController::class);
+
+        // Establishment Documents Routes
+        Route::prefix('establishments/documents')->name('establishments.documents')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Vendor\EstablishmentDocumentController::class, 'index'])->name('');
+            Route::get('/pending', [\App\Http\Controllers\Vendor\EstablishmentDocumentController::class, 'pending'])->name('.pending');
+            Route::get('/approved', [\App\Http\Controllers\Vendor\EstablishmentDocumentController::class, 'approved'])->name('.approved');
+            Route::get('/rejected', [\App\Http\Controllers\Vendor\EstablishmentDocumentController::class, 'rejected'])->name('.rejected');
+            Route::get('/{onboarding}', [\App\Http\Controllers\Vendor\EstablishmentDocumentController::class, 'show'])->name('.show');
+            Route::get('/{onboarding}/view', [\App\Http\Controllers\Vendor\EstablishmentDocumentController::class, 'viewDocument'])->name('.view');
+        });
     });
 });
 
@@ -89,6 +111,13 @@ Route::prefix('vendor')->name('vendor.')->group(function () {
 Route::prefix('test')->name('test.')->group(function () {
     Route::get('/email', [\App\Http\Controllers\TestController::class, 'testEmail'])->name('email');
     Route::get('/email-template', [\App\Http\Controllers\TestController::class, 'testEmailTemplate'])->name('email-template');
+});
+
+// Rotas de onboarding para estabelecimentos
+Route::prefix('establishment')->name('establishment.')->group(function () {
+    Route::get('/onboarding/{token}', [\App\Http\Controllers\EstablishmentOnboardingController::class, 'show'])->name('onboarding');
+    Route::post('/onboarding/{token}', [\App\Http\Controllers\EstablishmentOnboardingController::class, 'process'])->name('onboarding.process');
+    Route::get('/onboarding/{token}/success', [\App\Http\Controllers\EstablishmentOnboardingController::class, 'success'])->name('onboarding.success');
 });
 
 // Fallback route - captura todas as rotas não definidas

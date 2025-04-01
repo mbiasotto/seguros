@@ -31,10 +31,15 @@ class EstablishmentController extends Controller
             'estado' => 'required|string|size:2',
             'telefone' => 'required|string|max:20',
             'email' => 'required|email|max:255',
-            'ativo' => 'boolean'
+            'ativo' => 'boolean',
+            'qr_codes' => 'array'
         ]);
 
-        Establishment::create($validated);
+        $establishment = Establishment::create($validated);
+
+        if ($request->has('qr_codes')) {
+            $establishment->qrCodes()->sync($request->qr_codes);
+        }
 
         return redirect()->route('admin.establishments.index')
             ->with('success', 'Estabelecimento criado com sucesso!');
@@ -56,10 +61,17 @@ class EstablishmentController extends Controller
             'estado' => 'required|string|size:2',
             'telefone' => 'required|string|max:20',
             'email' => 'required|email|max:255',
-            'ativo' => 'boolean'
+            'ativo' => 'boolean',
+            'qr_codes' => 'array'
         ]);
 
         $establishment->update($validated);
+
+        if ($request->has('qr_codes')) {
+            $establishment->qrCodes()->sync($request->qr_codes);
+        } else {
+            $establishment->qrCodes()->detach();
+        }
 
         return redirect()->route('admin.establishments.index')
             ->with('success', 'Estabelecimento atualizado com sucesso!');

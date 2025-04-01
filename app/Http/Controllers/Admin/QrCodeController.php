@@ -10,9 +10,39 @@ use Illuminate\Support\Str;
 
 class QrCodeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $qrCodes = QrCode::paginate(10);
+        // Aumentando o número de itens por página para 20
+        // e adicionando filtros para melhorar a usabilidade
+        $query = QrCode::query();
+
+        // Filtro por status (ativo/inativo)
+        if ($request->has('status')) {
+            if ($request->status === 'active') {
+                $query->where('active', true);
+            } elseif ($request->status === 'inactive') {
+                $query->where('active', false);
+            }
+        }
+
+        // Busca por título, ID ou link
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('id', 'like', "%{$search}%")
+                  ->orWhere('link', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        // Ordenação
+        $orderBy = $request->order_by ?? 'id';
+        $orderDir = $request->order_dir ?? 'asc';
+        $query->orderBy($orderBy, $orderDir);
+
+        // Aumentando para 25 itens por página para melhor visualização
+        $qrCodes = $query->paginate(25)->withQueryString();
         return view('admin.qr_codes.index', compact('qrCodes'));
     }
 
@@ -48,17 +78,17 @@ class QrCodeController extends Controller
         // Create a larger image to accommodate the QR code and the ID text below the logo
         $qrSize = 300; // Original QR code size
         $padding = 30; // Extra space for the ID text
-        
+
         // Create a new image with extra space at the bottom
         $newImage = imagecreatetruecolor($qrSize, $qrSize + $padding);
         $white = imagecolorallocate($newImage, 255, 255, 255);
         imagefill($newImage, 0, 0, $white);
-        
+
         // Add QR Code to the new image
         $image = imagecreatefromstring($qrCodeImage);
         imagecopy($newImage, $image, 0, 0, 0, 0, $qrSize, $qrSize);
         imagedestroy($image);
-        
+
         // Add QR Code ID to the image below the logo
         $black = imagecolorallocate($newImage, 0, 0, 0);
         $fontSize = 5;
@@ -68,7 +98,7 @@ class QrCodeController extends Controller
         // Position the text below the QR code
         $y = $qrSize + 10; // 10 pixels below the QR code
         imagestring($newImage, $fontSize, $x, $y, $text, $black);
-        
+
         ob_start();
         imagepng($newImage);
         $qrCodeImage = ob_get_contents();
@@ -117,17 +147,17 @@ class QrCodeController extends Controller
         // Create a larger image to accommodate the QR code and the ID text below the logo
         $qrSize = 300; // Original QR code size
         $padding = 30; // Extra space for the ID text
-        
+
         // Create a new image with extra space at the bottom
         $newImage = imagecreatetruecolor($qrSize, $qrSize + $padding);
         $white = imagecolorallocate($newImage, 255, 255, 255);
         imagefill($newImage, 0, 0, $white);
-        
+
         // Add QR Code to the new image
         $image = imagecreatefromstring($qrCodeImage);
         imagecopy($newImage, $image, 0, 0, 0, 0, $qrSize, $qrSize);
         imagedestroy($image);
-        
+
         // Add QR Code ID to the image below the logo
         $black = imagecolorallocate($newImage, 0, 0, 0);
         $fontSize = 5;
@@ -137,7 +167,7 @@ class QrCodeController extends Controller
         // Position the text below the QR code
         $y = $qrSize + 10; // 10 pixels below the QR code
         imagestring($newImage, $fontSize, $x, $y, $text, $black);
-        
+
         ob_start();
         imagepng($newImage);
         $qrCodeImage = ob_get_contents();

@@ -25,9 +25,13 @@
                 <i class="fas fa-user"></i>
                 <span>Meu Perfil</span>
             </a>
-            <a href="{{ route('vendor.establishments.index') }}" class="nav-link {{ request()->routeIs('vendor.establishments*') ? 'active' : '' }}">
+            <a href="{{ route('vendor.establishments.index') }}" class="nav-link {{ request()->routeIs('vendor.establishments*') && !request()->routeIs('vendor.establishments.documents*') ? 'active' : '' }}">
                 <i class="fas fa-store"></i>
                 <span>Estabelecimentos</span>
+            </a>
+            <a href="{{ route('vendor.establishments.documents') }}" class="nav-link {{ request()->routeIs('vendor.establishments.documents*') ? 'active' : '' }}">
+                <i class="fas fa-file-alt"></i>
+                <span>Documentos</span>
             </a>
         </nav>
         <form action="{{ route('vendor.logout') }}" method="POST" class="mt-auto px-3">
@@ -46,7 +50,7 @@
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
-            
+
             <!-- Page Content -->
             <main class="p-4">
                 @if(session('success'))
