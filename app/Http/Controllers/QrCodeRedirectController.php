@@ -26,7 +26,7 @@ class QrCodeRedirectController extends Controller
         $phoneNumber = "5515998260188";
 
         // Pre-defined message with the QR code ID as discount code
-        $message = "Olá! Gostaria de fazer uma cotação de seguro e aproveitar meu desconto exclusivo. Meu código promocional é {$id}. Poderia me ajudar?";
+        $message = "Olá! Gostaria de fazer uma cotação de seguro e aproveitar meu desconto exclusivo. Meu código promocional é #{$id}. Poderia me ajudar?";
 
         // Create WhatsApp URL
         $whatsappUrl = "https://api.whatsapp.com/send?phone={$phoneNumber}&text=" . urlencode($message);
