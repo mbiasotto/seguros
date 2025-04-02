@@ -29,10 +29,10 @@
                 <i class="fas fa-store"></i>
                 <span>Estabelecimentos</span>
             </a>
-            <a href="{{ route('vendor.establishments.documents') }}" class="nav-link {{ request()->routeIs('vendor.establishments.documents*') ? 'active' : '' }}">
+            {{-- <a href="{{ route('vendor.establishments.documents') }}" class="nav-link {{ request()->routeIs('vendor.establishments.documents*') ? 'active' : '' }}">
                 <i class="fas fa-file-alt"></i>
                 <span>Documentos</span>
-            </a>
+            </a> --}}
         </nav>
         <form action="{{ route('vendor.logout') }}" method="POST" class="mt-auto px-3">
             @csrf

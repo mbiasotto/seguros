@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-12">
             <div class="card border-0 shadow-sm">
@@ -46,7 +46,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="nome" class="form-label fw-semibold">Nome <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg @error('nome') is-invalid @enderror" 
+                                    <input type="text" class="form-control form-control-lg @error('nome') is-invalid @enderror"
                                            id="nome" name="nome" value="{{ old('nome') }}" required>
                                     @error('nome')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -57,7 +57,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="email" class="form-label fw-semibold">E-mail <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" 
+                                    <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror"
                                            id="email" name="email" value="{{ old('email') }}" required>
                                     @error('email')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -68,7 +68,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="password" class="form-label fw-semibold">Senha <span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" 
+                                    <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror"
                                            id="password" name="password" required>
                                     @error('password')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -79,7 +79,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="password_confirmation" class="form-label fw-semibold">Confirmar Senha <span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control form-control-lg" 
+                                    <input type="password" class="form-control form-control-lg"
                                            id="password_confirmation" name="password_confirmation" required>
                                 </div>
                             </div>
@@ -92,8 +92,8 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="telefone" class="form-label fw-semibold">Telefone <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg @error('telefone') is-invalid @enderror" 
-                                           id="telefone" name="telefone" value="{{ old('telefone') }}" 
+                                    <input type="text" class="form-control form-control-lg @error('telefone') is-invalid @enderror"
+                                           id="telefone" name="telefone" value="{{ old('telefone') }}"
                                            placeholder="(00) 00000-0000" required>
                                     @error('telefone')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -101,22 +101,12 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="cep" class="form-label fw-semibold">CEP <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg @error('cep') is-invalid @enderror" 
-                                           id="cep" name="cep" value="{{ old('cep') }}" 
-                                           placeholder="00000-000" required>
-                                    @error('cep')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
+
 
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="cidade" class="form-label fw-semibold">Cidade <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg @error('cidade') is-invalid @enderror" 
+                                    <input type="text" class="form-control form-control-lg @error('cidade') is-invalid @enderror"
                                            id="cidade" name="cidade" value="{{ old('cidade') }}" required>
                                     @error('cidade')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -124,11 +114,16 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="estado" class="form-label fw-semibold">Estado <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg @error('estado') is-invalid @enderror" 
-                                           id="estado" name="estado" maxlength="2" value="{{ old('estado') }}" required>
+                                    <select class="form-select form-select-lg @error('estado') is-invalid @enderror"
+                                           id="estado" name="estado" required>
+                                        <option value="">Selecione o estado</option>
+                                        @foreach(\App\Models\Estado::orderBy('nome')->get() as $estado)
+                                            <option value="{{ $estado->sigla }}" {{ old('estado') == $estado->sigla ? 'selected' : '' }}>{{ $estado->nome }}</option>
+                                        @endforeach
+                                    </select>
                                     @error('estado')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -158,3 +153,9 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script src="{{ asset('js/form-utils.js') }}"></script>
+@endpush

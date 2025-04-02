@@ -13,6 +13,7 @@ class Establishment extends Model
         'vendor_id',
         'nome',
         'endereco',
+        'numero',
         'cidade',
         'estado',
         'cep',

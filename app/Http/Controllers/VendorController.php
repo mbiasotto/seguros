@@ -63,10 +63,8 @@ class VendorController extends BaseController
             'email' => 'required|email|unique:vendors',
             'password' => 'required|min:6|confirmed',
             'telefone' => 'required',
-            'endereco' => 'nullable|max:255',
             'cidade' => 'nullable|max:255',
             'estado' => 'nullable|max:2',
-            'cep' => 'nullable|max:9',
             'observacoes' => 'nullable',
             'ativo' => 'boolean'
         ]);
@@ -97,10 +95,8 @@ class VendorController extends BaseController
             'nome' => 'required|max:255',
             'email' => 'required|email|unique:vendors,email,' . $vendor->id,
             'telefone' => 'required',
-            'endereco' => 'nullable|max:255',
             'cidade' => 'nullable|max:255',
             'estado' => 'nullable|max:2',
-            'cep' => 'nullable|max:9',
             'observacoes' => 'nullable',
             'ativo' => 'boolean'
         ]);

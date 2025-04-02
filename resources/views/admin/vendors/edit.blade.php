@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-12">
             <div class="card border-0 shadow-sm">
@@ -47,7 +47,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="nome" class="form-label fw-semibold">Nome <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg @error('nome') is-invalid @enderror" 
+                                    <input type="text" class="form-control form-control-lg @error('nome') is-invalid @enderror"
                                            id="nome" name="nome" value="{{ old('nome', $vendor->nome) }}" required>
                                     @error('nome')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -58,7 +58,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="email" class="form-label fw-semibold">E-mail <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" 
+                                    <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror"
                                            id="email" name="email" value="{{ old('email', $vendor->email) }}" required>
                                     @error('email')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -69,7 +69,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="password" class="form-label fw-semibold">Nova Senha (opcional)</label>
-                                    <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" 
+                                    <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror"
                                            id="password" name="password">
                                     @error('password')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -80,7 +80,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="password_confirmation" class="form-label fw-semibold">Confirmar Nova Senha</label>
-                                    <input type="password" class="form-control form-control-lg" 
+                                    <input type="password" class="form-control form-control-lg"
                                            id="password_confirmation" name="password_confirmation">
                                 </div>
                             </div>
@@ -92,8 +92,8 @@
 
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control @error('telefone') is-invalid @enderror" 
-                                           id="telefone" name="telefone" value="{{ old('telefone', $vendor->telefone) }}" 
+                                    <input type="text" class="form-control @error('telefone') is-invalid @enderror"
+                                           id="telefone" name="telefone" value="{{ old('telefone', $vendor->telefone) }}"
                                            placeholder="Digite o telefone" required>
                                     <label for="telefone">Telefone</label>
                                     @error('telefone')
@@ -104,20 +104,8 @@
 
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control @error('cep') is-invalid @enderror" 
-                                           id="cep" name="cep" value="{{ old('cep', $vendor->cep) }}" 
-                                           placeholder="Digite o CEP" required>
-                                    <label for="cep">CEP</label>
-                                    @error('cep')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control @error('cidade') is-invalid @enderror" 
-                                           id="cidade" name="cidade" value="{{ old('cidade', $vendor->cidade) }}" 
+                                    <input type="text" class="form-control @error('cidade') is-invalid @enderror"
+                                           id="cidade" name="cidade" value="{{ old('cidade', $vendor->cidade) }}"
                                            placeholder="Digite a cidade" required>
                                     <label for="cidade">Cidade</label>
                                     @error('cidade')
@@ -128,12 +116,12 @@
 
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <select class="form-select @error('estado') is-invalid @enderror" 
+                                    <select class="form-select @error('estado') is-invalid @enderror"
                                             id="estado" name="estado" required>
                                         <option value="">Selecione o estado</option>
-                                        <option value="AC" {{ old('estado', $vendor->estado) == 'AC' ? 'selected' : '' }}>Acre</option>
-                                        <option value="AL" {{ old('estado', $vendor->estado) == 'AL' ? 'selected' : '' }}>Alagoas</option>
-                                        <!-- Add other states -->
+                                        @foreach(\App\Models\Estado::orderBy('nome')->get() as $estado)
+                                            <option value="{{ $estado->sigla }}" {{ old('estado', $vendor->estado) == $estado->sigla ? 'selected' : '' }}>{{ $estado->nome }}</option>
+                                        @endforeach
                                     </select>
                                     <label for="estado">Estado</label>
                                     @error('estado')
@@ -165,3 +153,9 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script src="{{ asset('js/form-utils.js') }}"></script>
+@endpush

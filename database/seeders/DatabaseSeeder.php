@@ -21,11 +21,11 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123456'),
         ]);
 
-        // Call EstablishmentSeeder after creating vendors
-        $this->call(EstablishmentSeeder::class);
-
-        // Call QrCodeSeeder to create 100 QR codes
-        $this->call(QrCodeSeeder::class);
+        $this->call([
+            EstadoSeeder::class,
+            EstablishmentSeeder::class,
+            QrCodeSeeder::class,
+        ]);
 
         // Create sample vendors
         $vendors = [

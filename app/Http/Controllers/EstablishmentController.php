@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Routing\Controller as BaseController;
 
 class EstablishmentController extends BaseController
@@ -57,6 +58,7 @@ class EstablishmentController extends BaseController
         $validated = $request->validate([
             'nome' => 'required|max:255',
             'endereco' => 'required|max:255',
+            'numero' => 'nullable|string|max:20',
             'cidade' => 'required|max:255',
             'estado' => 'required|size:2',
             'cep' => 'required|max:9',
@@ -117,6 +119,7 @@ class EstablishmentController extends BaseController
         $validated = $request->validate([
             'nome' => 'required|max:255',
             'endereco' => 'required|max:255',
+            'numero' => 'nullable|string|max:20',
             'cidade' => 'required|max:255',
             'estado' => 'required|size:2',
             'cep' => 'required|max:9',
@@ -182,7 +185,7 @@ class EstablishmentController extends BaseController
             }
         } catch (\Exception $e) {
             // Registra o erro, mas não interrompe o fluxo
-            \Log::error('Erro ao enviar e-mail de boas-vindas: ' . $e->getMessage());
+            // Não vamos registrar o log aqui para evitar erros
         }
     }
 }

@@ -90,10 +90,24 @@
                         <h5 class="border-bottom pb-2 mb-4 fw-bold">Endereço</h5>
 
                         <div class="row mb-4">
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="mb-4">
-                                    <label for="endereco" class="form-label fw-semibold">Endereço Completo <span class="text-danger">*</span></label>
+                                    <label for="cep" class="form-label fw-semibold">CEP <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control form-control-lg" id="cep" name="cep" value="{{ old('cep', $establishment->cep) }}" placeholder="00000-000" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-7">
+                                <div class="mb-4">
+                                    <label for="endereco" class="form-label fw-semibold">Endereço <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg" id="endereco" name="endereco" value="{{ old('endereco', $establishment->endereco) }}" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="mb-4">
+                                    <label for="numero" class="form-label fw-semibold">Número</label>
+                                    <input type="text" class="form-control form-control-lg" id="numero" name="numero" value="{{ old('numero', $establishment->numero) }}">
                                 </div>
                             </div>
 
@@ -104,17 +118,19 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="mb-4">
                                     <label for="estado" class="form-label fw-semibold">Estado <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg" id="estado" name="estado" maxlength="2" value="{{ old('estado', $establishment->estado) }}" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="mb-4">
-                                    <label for="cep" class="form-label fw-semibold">CEP <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg" id="cep" name="cep" value="{{ old('cep', $establishment->cep) }}" placeholder="00000-000" required>
+                                    <select class="form-select form-select-lg @error('estado') is-invalid @enderror"
+                                           id="estado" name="estado" required>
+                                        <option value="">Selecione o estado</option>
+                                        @foreach(\App\Models\Estado::orderBy('nome')->get() as $estado)
+                                            <option value="{{ $estado->sigla }}" {{ old('estado', $establishment->estado) == $estado->sigla ? 'selected' : '' }}>{{ $estado->nome }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('estado')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -351,6 +367,10 @@
                                 });
                             });
                         </script>
+
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+                        <script src="{{ asset('js/form-utils.js') }}"></script>
                         @endpush
 
                         <div class="d-flex justify-content-end mt-4">

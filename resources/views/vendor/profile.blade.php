@@ -24,12 +24,6 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4">
                     <h5 class="border-bottom pb-2 mb-4 fw-bold">Informações Pessoais</h5>
-                    @if(session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
-                        </div>
-                    @endif
 
                     @if($errors->any())
                         <div class="alert alert-danger" role="alert">
@@ -64,7 +58,26 @@
                                 </div>
                             </div>
 
-                            <!-- Informações de Contato -->
+                            <!-- Informações de Localização (Não editáveis) -->
+                            <div class="col-12">
+                                <h5 class="mb-3 fw-bold">Informações de Localização</h5>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="cidade_display" class="form-label fw-semibold">Cidade</label>
+                                    <input type="text" class="form-control form-control-lg" id="cidade_display" value="{{ $vendor->cidade }}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="estado_display" class="form-label fw-semibold">Estado</label>
+                                    <input type="text" class="form-control form-control-lg" id="estado_display" value="{{ $vendor->estado }}" disabled>
+                                </div>
+                            </div>
+
+                            <!-- Informações Editáveis -->
                             <div class="col-12">
                                 <h5 class="mb-3 fw-bold">Informações de Contato</h5>
                             </div>
@@ -79,51 +92,13 @@
                                 </div>
                             </div>
 
-                            <div class="col-12">
-                                <div class="mb-3">
-                                    <label for="endereco" class="form-label fw-semibold">Endereço</label>
-                                    <input type="text" class="form-control form-control-lg @error('endereco') is-invalid @enderror" id="endereco" name="endereco" value="{{ old('endereco', $vendor->endereco) }}">
-                                    @error('endereco')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
 
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="cidade" class="form-label fw-semibold">Cidade</label>
-                                    <input type="text" class="form-control form-control-lg @error('cidade') is-invalid @enderror" id="cidade" name="cidade" value="{{ old('cidade', $vendor->cidade) }}">
-                                    @error('cidade')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="mb-3">
-                                    <label for="estado" class="form-label fw-semibold">Estado</label>
-                                    <input type="text" class="form-control form-control-lg @error('estado') is-invalid @enderror" id="estado" name="estado" maxlength="2" value="{{ old('estado', $vendor->estado) }}">
-                                    @error('estado')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    <label for="cep" class="form-label fw-semibold">CEP</label>
-                                    <input type="text" class="form-control form-control-lg @error('cep') is-invalid @enderror" id="cep" name="cep" value="{{ old('cep', $vendor->cep) }}">
-                                    @error('cep')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
 
                             <!-- Alterar Senha -->
                             <div class="col-12">
                                 <hr class="my-4">
                                 <h5 class="mb-3 fw-bold">Alterar Senha</h5>
-                                <p class="text-muted small mb-3">Preencha apenas se desejar alterar sua senha</p>
+                                <p class="text-muted small">Preencha apenas se desejar alterar sua senha</p>
                             </div>
 
                             <div class="col-md-6">
@@ -157,3 +132,9 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script src="{{ asset('js/form-utils.js') }}"></script>
+@endpush

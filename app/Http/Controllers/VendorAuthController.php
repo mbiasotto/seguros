@@ -70,6 +70,7 @@ class VendorAuthController extends Controller
 
     /**
      * Atualizar perfil do vendedor
+     * Permite a alteração da senha e do telefone
      */
     public function updateProfile(Request $request)
     {
@@ -78,27 +79,35 @@ class VendorAuthController extends Controller
         }
 
         $vendor = Vendor::find(Auth::guard('vendor')->id());
+        $updated = false;
 
-        $validated = $request->validate([
-            'telefone' => 'required',
-            'endereco' => 'nullable|max:255',
-            'cidade' => 'nullable|max:255',
-            'estado' => 'nullable|max:2',
-            'cep' => 'nullable|max:9',
+        // Validar os dados do formulário
+        $validatedData = $request->validate([
+            'telefone' => 'required|string|max:20',
+            'password' => 'nullable|min:6|confirmed'
         ]);
 
-        $vendor->update($validated);
+        // Atualizar telefone
+        if ($request->filled('telefone') && $vendor->telefone !== $request->telefone) {
+            $vendor->telefone = $request->telefone;
+            $updated = true;
+        }
 
+        // Atualizar senha se fornecida
         if ($request->filled('password')) {
-            $request->validate([
-                'password' => 'required|min:6|confirmed'
-            ]);
             $vendor->password = Hash::make($request->password);
+            $updated = true;
+        }
+
+        // Salvar alterações se houver
+        if ($updated) {
             $vendor->save();
+            return redirect()->route('vendor.profile')
+                ->with('success', 'Perfil atualizado com sucesso!');
         }
 
         return redirect()->route('vendor.profile')
-            ->with('success', 'Perfil atualizado com sucesso!');
+            ->with('info', 'Nenhuma alteração foi realizada.');
     }
 
     /**

@@ -15,10 +15,8 @@ class Vendor extends Authenticatable
         'email',
         'password',
         'telefone',
-        'endereco',
         'cidade',
         'estado',
-        'cep',
         'observacoes',
         'ativo'
     ];
