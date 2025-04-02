@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class QrCodeRedirectController extends Controller
 {
     /**
-     * Redirect to the URL associated with the QR code
+     * Redirect to WhatsApp with a pre-defined message including the QR code ID
      *
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
@@ -16,18 +16,21 @@ class QrCodeRedirectController extends Controller
     public function redirect($id)
     {
         $qrCode = QrCode::findOrFail($id);
-        
+
         // Only redirect if the QR code is active
         if (!$qrCode->active) {
             abort(404);
         }
-        
-        // Ensure the link has a proper URL scheme
-        $link = $qrCode->link;
-        if (!preg_match("~^(?:f|ht)tps?://~i", $link)) {
-            $link = "http://" . $link;
-        }
-        
-        return redirect($link);
+
+        // WhatsApp number
+        $phoneNumber = "5515998260188";
+
+        // Pre-defined message with the QR code ID as discount code
+        $message = "Olá! Gostaria de fazer uma cotação de seguro e aproveitar meu desconto exclusivo. Meu código promocional é {$id}. Poderia me ajudar?";
+
+        // Create WhatsApp URL
+        $whatsappUrl = "https://api.whatsapp.com/send?phone={$phoneNumber}&text=" . urlencode($message);
+
+        return redirect($whatsappUrl);
     }
 }
