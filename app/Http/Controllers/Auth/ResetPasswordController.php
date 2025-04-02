@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\DB;
 
 class ResetPasswordController extends Controller
 {
@@ -60,23 +59,13 @@ class ResetPasswordController extends Controller
     {
         // Verificar se o token é válido antes de exibir o formulário
         if ($token) {
-            try {
-                $email = $request->email ?: '';
+            $email = $request->email ?: '';
 
-                // Verificar se o token existe e é válido diretamente no banco de dados
-                $tokenData = DB::table('password_reset_tokens')
-                    ->where('token', hash('sha256', $token))
-                    ->where('created_at', '>=', now()->subMinutes(config('auth.passwords.users.expire', 60)))
-                    ->first();
+            // Verificar se o token é válido usando o broker
+            $tokenValid = $this->broker()->tokenExists(null, $token);
 
-                if (!$tokenData) {
-                    // Token inválido ou expirado, redirecionar para a página de solicitação de redefinição
-                    return redirect()->route('admin.password.request')
-                        ->withErrors(['email' => __('passwords.token')]);
-                }
-            } catch (\Exception $e) {
-                // Se ocorrer algum erro, tratar como token inválido
-                report($e);
+            if (!$tokenValid) {
+                // Token inválido ou expirado, redirecionar para a página de solicitação de redefinição
                 return redirect()->route('admin.password.request')
                     ->withErrors(['email' => __('passwords.token')]);
             }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Vendor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
@@ -53,37 +52,10 @@ class ResetPasswordController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  string|null  $token
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Contracts\View\View
      */
     public function showResetForm(Request $request, $token = null)
     {
-        // Verificar se o token é válido antes de exibir o formulário
-        if ($token) {
-            try {
-                // Verificar se o token existe e é válido
-                $isTokenValid = false;
-
-                // Usar o DB diretamente para verificar o token
-                $tokenData = DB::table('password_reset_tokens')
-                    ->where('token', hash('sha256', $token))
-                    ->where('created_at', '>=', now()->subMinutes(config('auth.passwords.vendors.expire', 60)))
-                    ->first();
-
-                $isTokenValid = !empty($tokenData);
-
-                if (!$isTokenValid) {
-                    // Token inválido ou expirado, redirecionar para a página de solicitação de redefinição
-                    return redirect()->route('vendor.password.request')
-                        ->withErrors(['email' => __('passwords.token')]);
-                }
-            } catch (\Exception $e) {
-                // Se ocorrer algum erro, tratar como token inválido
-                report($e);
-                return redirect()->route('vendor.password.request')
-                    ->withErrors(['email' => __('passwords.token')]);
-            }
-        }
-
         return view('vendor.auth.passwords.reset')->with(
             ['token' => $token, 'email' => $request->email]
         );
@@ -165,34 +137,18 @@ class ResetPasswordController extends Controller
     /**
      * Reset the given user's password.
      *
-     * @param  mixed  $user
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
      * @param  string  $password
      * @return void
      */
     protected function resetPassword($user, $password)
     {
-        // Atualizar a senha de forma segura
-        if (method_exists($user, 'update')) {
-            $user->update([
-                'password' => Hash::make($password),
-                'remember_token' => Str::random(60),
-            ]);
-        } else {
-            // Fallback manual para diferentes implementações de model
-            $user->password = Hash::make($password);
-            $user->remember_token = Str::random(60);
+        $user->forceFill([
+            'password' => Hash::make($password),
+            'remember_token' => Str::random(60),
+        ])->save();
 
-            if (method_exists($user, 'save')) {
-                $user->save();
-            }
-        }
-
-        // Fazer login se o guard suportar isso
-        $guard = $this->guard();
-        if ($guard && method_exists($guard, 'login')) {
-            // @phpstan-ignore-next-line (para ignorar erros de tipo do linter)
-            $guard->login($user);
-        }
+        $this->guard()->login($user);
     }
 
     /**

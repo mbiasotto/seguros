@@ -81,8 +81,8 @@
             <h3 class="fw-bold mb-3">Nenhum estabelecimento cadastrado</h3>
             <p class="text-muted mb-4 col-md-8 mx-auto">Você ainda não possui estabelecimentos cadastrados no sistema. Adicione seu primeiro estabelecimento para começar a gerenciar seus negócios.</p>
             <div class="mt-4">
-                <a href="{{ route('admin.establishments.create') }}" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">
-                    <i class="fas fa-plus me-2"></i>
+                <a href="{{ route('admin.establishments.create') }}" class="btn btn-primary d-flex align-items-center gap-2 mx-auto" style="width: fit-content;">
+                    <i class="fas fa-plus"></i>
                     <span>Adicionar Estabelecimento</span>
                 </a>
             </div>

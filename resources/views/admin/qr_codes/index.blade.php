@@ -27,9 +27,10 @@
 @section('content')
 <div class="data-list-header">
     <h1 class="h3 mb-0">QR Codes</h1>
-    <div>
-        <a href="{{ route('admin.qr-codes.pdf') }}" class="btn btn-success me-2">
-            <i class="fas fa-file-pdf me-2"></i>Gerar PDF para Impressão
+    <div class="d-flex gap-2">
+        <a href="{{ route('admin.qr-codes.pdf') }}" class="btn btn-success d-flex align-items-center gap-2">
+            <i class="fas fa-file-pdf"></i>
+            <span>Gerar PDF para Impressão</span>
         </a>
         <a href="{{ route('admin.qr-codes.create') }}" class="btn btn-primary d-flex align-items-center gap-2">
             <i class="fas fa-plus"></i>
@@ -73,8 +74,9 @@
             <i class="fas fa-qrcode text-muted fa-3x mb-3"></i>
             <h4 class="mt-3">Nenhum QR Code cadastrado</h4>
             <p class="text-muted mb-4">Clique no botão "Novo QR Code" para começar.</p>
-            <a href="{{ route('admin.qr-codes.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus me-2"></i>Novo QR Code
+            <a href="{{ route('admin.qr-codes.create') }}" class="btn btn-primary d-flex align-items-center gap-2 mx-auto" style="width: fit-content;">
+                <i class="fas fa-plus"></i>
+                <span>Novo QR Code</span>
             </a>
         </div>
     </div>

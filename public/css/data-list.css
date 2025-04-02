@@ -6,6 +6,20 @@
     margin-bottom: 1.5rem;
 }
 
+.data-list-header .btn-primary {
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.data-list-header .btn-primary i {
+    font-size: 0.9rem;
+}
+
 .search-container {
     position: relative;
     width: 300px;
@@ -127,4 +141,20 @@
 .empty-state p {
     color: #6c757d;
     margin-bottom: 0;
+}
+
+.empty-state .btn-primary {
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.empty-state .btn-primary i {
+    font-size: 0.9rem;
 }
