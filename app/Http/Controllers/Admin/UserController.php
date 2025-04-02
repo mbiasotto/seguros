@@ -89,7 +89,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+        $isMainAdmin = ($user->id === 1);
+        return view('admin.users.edit', compact('user', 'isMainAdmin'));
     }
 
     /**
@@ -121,6 +122,12 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        // Impedir que o admin com ID 1 seja excluído
+        if ($user->id === 1) {
+            return redirect()->route('admin.users.index')
+                ->with('error', 'O administrador principal não pode ser excluído.');
+        }
+
         // Evitar que o último administrador seja excluído
         if (User::count() <= 1) {
             return redirect()->route('admin.users.index')

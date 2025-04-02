@@ -78,7 +78,6 @@
                 <table class="table table-hover mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th scope="col" class="ps-4">ID</th>
                             <th scope="col">Nome</th>
                             <th scope="col">E-mail</th>
                             <th scope="col">Data de Cadastro</th>
@@ -88,7 +87,6 @@
                     <tbody>
                         @foreach($users as $user)
                             <tr>
-                                <td class="ps-4">{{ $user->id }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->created_at->format('d/m/Y H:i') }}</td>
@@ -98,7 +96,7 @@
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
 
-                                        @if(Auth::id() !== $user->id && \App\Models\User::count() > 1)
+                                        @if($user->id !== 1 && Auth::id() !== $user->id && \App\Models\User::count() > 1)
                                             <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')

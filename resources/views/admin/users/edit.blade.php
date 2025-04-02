@@ -40,6 +40,15 @@
                             </div>
                         @endif
 
+                        @if(isset($isMainAdmin) && $isMainAdmin)
+                            <div class="alert alert-info" role="alert">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    <span>Este é o administrador principal do sistema e não pode ser excluído.</span>
+                                </div>
+                            </div>
+                        @endif
+
                         <div class="row g-4">
                             <!-- Informações Pessoais -->
                             <div class="col-12">
