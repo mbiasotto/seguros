@@ -5,6 +5,24 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
 <link rel="stylesheet" href="{{ asset('css/empty-state.css') }}">
+<style>
+    .filter-container {
+        background-color: #f8f9fa;
+        border-radius: 0.25rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    .filter-container .form-label {
+        font-weight: 500;
+    }
+    .table-container {
+        overflow-x: auto;
+    }
+    .pagination-info {
+        font-size: 0.875rem;
+        color: #6c757d;
+    }
+</style>
 @endpush
 
 @section('content')
@@ -14,6 +32,44 @@
         <i class="fas fa-plus"></i>
         <span>Novo Estabelecimento</span>
     </a>
+</div>
+
+<!-- Filtros -->
+<div class="filter-container shadow-sm">
+    <form action="{{ route('admin.establishments.index') }}" method="GET" class="row g-3">
+        <div class="col-md-4">
+            <label for="search" class="form-label">Buscar</label>
+            <input type="text" class="form-control" id="search" name="search" placeholder="Nome, email ou cidade..." value="{{ request('search') }}">
+        </div>
+        <div class="col-md-3">
+            <label for="vendor_id" class="form-label">Vendedor</label>
+            <select class="form-select" id="vendor_id" name="vendor_id">
+                <option value="">Todos os vendedores</option>
+                @foreach($vendors as $vendor)
+                    <option value="{{ $vendor->id }}" {{ request('vendor_id') == $vendor->id ? 'selected' : '' }}>{{ $vendor->nome }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-select" id="status" name="status">
+                <option value="" {{ request('status') == '' ? 'selected' : '' }}>Todos</option>
+                <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Ativos</option>
+                <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Inativos</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label for="order_by" class="form-label">Ordenar por</label>
+            <select class="form-select" id="order_by" name="order_by">
+                <option value="id" {{ request('order_by') == 'id' || !request('order_by') ? 'selected' : '' }}>ID</option>
+                <option value="nome" {{ request('order_by') == 'nome' ? 'selected' : '' }}>Nome</option>
+                <option value="cidade" {{ request('order_by') == 'cidade' ? 'selected' : '' }}>Cidade</option>
+            </select>
+        </div>
+        <div class="col-md-1 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+        </div>
+    </form>
 </div>
 
 @if($establishments->isEmpty())

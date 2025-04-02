@@ -45,10 +45,46 @@ class VendorController extends BaseController
         }
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $vendors = Vendor::orderBy('nome')->paginate(10);
-        return view('admin.vendors.index', compact('vendors'));
+        $query = Vendor::query();
+
+        // Filtro por status (ativo/inativo)
+        if ($request->has('status')) {
+            if ($request->status === 'active') {
+                $query->where('ativo', true);
+            } elseif ($request->status === 'inactive') {
+                $query->where('ativo', false);
+            }
+        }
+
+        // Busca por nome, email ou cidade
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nome', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('cidade', 'like', "%{$search}%")
+                  ->orWhere('telefone', 'like', "%{$search}%");
+            });
+        }
+
+        // Filtragem por estado
+        if ($request->has('estado') && !empty($request->estado)) {
+            $query->where('estado', $request->estado);
+        }
+
+        // Ordenação
+        $orderBy = $request->order_by ?? 'nome';
+        $orderDir = $request->order_dir ?? 'asc';
+        $query->orderBy($orderBy, $orderDir);
+
+        $vendors = $query->paginate(10);
+
+        // Buscar estados únicos para o filtro
+        $estados = Vendor::select('estado')->distinct()->whereNotNull('estado')->pluck('estado');
+
+        return view('admin.vendors.index', compact('vendors', 'estados'));
     }
 
     public function create()

@@ -9,10 +9,43 @@ use Illuminate\Http\Request;
 
 class AdminEstablishmentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $establishments = Establishment::with('vendor')->paginate(10);
-        return view('admin.establishments.index', compact('establishments'));
+        $query = Establishment::with('vendor');
+
+        // Filtro por status (ativo/inativo)
+        if ($request->has('status')) {
+            if ($request->status === 'active') {
+                $query->where('ativo', true);
+            } elseif ($request->status === 'inactive') {
+                $query->where('ativo', false);
+            }
+        }
+
+        // Filtro por vendedor
+        if ($request->has('vendor_id') && !empty($request->vendor_id)) {
+            $query->where('vendor_id', $request->vendor_id);
+        }
+
+        // Busca por nome, email ou cidade
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nome', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('cidade', 'like', "%{$search}%");
+            });
+        }
+
+        // Ordenação
+        $orderBy = $request->order_by ?? 'id';
+        $orderDir = $request->order_dir ?? 'asc';
+        $query->orderBy($orderBy, $orderDir);
+
+        $establishments = $query->paginate(10);
+        $vendors = Vendor::where('ativo', true)->orderBy('nome')->get();
+
+        return view('admin.establishments.index', compact('establishments', 'vendors'));
     }
 
     public function create()
