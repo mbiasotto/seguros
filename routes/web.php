@@ -62,9 +62,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+    // Password Reset Routes
+    Route::get('password/reset', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('password/email', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('password/reset/{token}', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('password/reset', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');
+
     // Protected Admin Routes
     Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+
+        // User Management Routes
+        Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
 
         // Vendor Management Routes
         Route::resource('vendors', VendorController::class);
@@ -113,6 +122,12 @@ Route::prefix('vendor')->name('vendor.')->group(function () {
     Route::post('login', [VendorAuthController::class, 'login'])->name('login.submit');
 
     Route::match(['get', 'post'], 'logout', [VendorAuthController::class, 'logout'])->name('logout');
+
+    // Password Reset Routes
+    Route::get('password/reset', [\App\Http\Controllers\Vendor\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('password/email', [\App\Http\Controllers\Vendor\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('password/reset/{token}', [\App\Http\Controllers\Vendor\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('password/reset', [\App\Http\Controllers\Vendor\ResetPasswordController::class, 'reset'])->name('password.update');
 
     // Protected Vendor Routes
     Route::middleware(['auth:vendor'])->group(function () {

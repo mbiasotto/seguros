@@ -17,9 +17,11 @@ jobs:
         server: ftp.seguraessa.app
         username: seguraessa
         password: cMg$2024$
-        server-dir: laravel/
+        server-dir: /domains/seguraessa.app/laravel/
+        local-dir: ./
         exclude: |
           public/**
+          .git/**
 
     - name: 📂 Sync public files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -27,5 +29,5 @@ jobs:
         server: ftp.seguraessa.app
         username: seguraessa
         password: cMg$2024$
-        server-dir: public_html/
+        server-dir: /domains/seguraessa.app/public_html/
         local-dir: ./public/

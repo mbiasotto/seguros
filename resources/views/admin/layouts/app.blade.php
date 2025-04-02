@@ -21,6 +21,10 @@
                 <i class="fas fa-home"></i>
                 <span>Dashboard</span>
             </a>
+            <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
+                <i class="fas fa-user-shield"></i>
+                <span>Administradores</span>
+            </a>
             <a href="{{ route('admin.vendors.index') }}" class="nav-link {{ request()->routeIs('admin.vendors*') ? 'active' : '' }}">
                 <i class="fas fa-users"></i>
                 <span>Vendedores</span>
@@ -56,7 +60,7 @@
             <main class="p-4">
                 @if(session('success'))
                 <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-                    {{ session('success') }}
+                    {!! session('success') !!}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
                 </div>
                 @endif
