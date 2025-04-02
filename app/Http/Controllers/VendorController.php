@@ -38,7 +38,7 @@ class VendorController extends BaseController
                 $vendor->nome,
                 'Bem-vindo ao SeguraEssa.app - Informações de Acesso',
                 'emails.vendor-welcome',
-                ['vendor' => $vendor]
+                ['vendor' => $vendor, 'plainPassword' => session('plain_password', 'Senha definida no cadastro')]
             );
         } catch (\Exception $e) {
             throw new \Exception('Erro ao enviar e-mail: ' . $e->getMessage());
@@ -105,6 +105,10 @@ class VendorController extends BaseController
             'ativo' => 'boolean'
         ]);
 
+        // Guarda a senha não criptografada para o email
+        $plainPassword = $request->password;
+        session(['plain_password' => $plainPassword]);
+
         $validated['password'] = Hash::make($request->password);
         $vendor = Vendor::create($validated);
 
@@ -115,6 +119,9 @@ class VendorController extends BaseController
             // Log do erro, mas não impede o cadastro
             Log::error('Erro ao enviar e-mail de boas-vindas: ' . $e->getMessage());
         }
+
+        // Limpa a senha da sessão após o envio
+        session()->forget('plain_password');
 
         return redirect()->route('admin.vendors.index')
             ->with('success', 'Vendedor cadastrado com sucesso!');

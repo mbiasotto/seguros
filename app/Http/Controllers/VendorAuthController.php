@@ -20,9 +20,13 @@ class VendorAuthController extends Controller
      */
     public function showLoginForm()
     {
+        // Redirect to dashboard if already authenticated as vendor
         if (Auth::guard('vendor')->check()) {
             return redirect()->route('vendor.dashboard');
         }
+
+        // DO NOT redirect admin users - let them view the vendor login form
+
         return view('vendor.auth.login');
     }
 
@@ -47,7 +51,7 @@ class VendorAuthController extends Controller
                 'user_agent' => $request->userAgent()
             ]);
 
-            return redirect()->route('vendor.dashboard');
+            return redirect()->intended(route('vendor.dashboard'));
         }
 
         return back()->withErrors([

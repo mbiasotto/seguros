@@ -18,6 +18,10 @@ class LoginController extends BaseController
      */
     public function showLoginForm()
     {
+        // Redirect to dashboard if already authenticated
+        if (Auth::check()) {
+            return redirect()->route('admin.dashboard');
+        }
         return view('auth.login');
     }
 
@@ -51,7 +55,7 @@ class LoginController extends BaseController
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        
+
         return redirect('/admin/login');
     }
 }

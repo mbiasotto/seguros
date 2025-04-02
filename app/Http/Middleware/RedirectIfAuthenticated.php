@@ -23,18 +23,26 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                // Se o usuário já está autenticado e tenta acessar uma rota de login
+                // Verificar qual guarda está sendo usado para determinar o redirecionamento
+
+                // Se for o guarda vendor, apenas redirecionar para vendor dashboard
                 if ($guard === 'vendor') {
-                    // Se for um vendedor autenticado
-                    return redirect()->route('vendor.dashboard');
+                    // Verificar se estamos em uma rota vendor
+                    if (strpos($request->path(), 'vendor') === 0) {
+                        return redirect()->route('vendor.dashboard');
+                    }
                 }
 
-                // Se for um admin autenticado
-                return redirect()->route('admin.dashboard');
+                // Se for o guarda web/admin, apenas redirecionar para admin dashboard
+                if ($guard === 'web' || $guard === null) {
+                    // Verificar se estamos em uma rota admin
+                    if (strpos($request->path(), 'admin') === 0) {
+                        return redirect()->route('admin.dashboard');
+                    }
+                }
             }
         }
 
-        // Se o usuário não está autenticado, continua o fluxo normal
         return $next($request);
     }
 }

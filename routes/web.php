@@ -11,6 +11,23 @@ use App\Http\Controllers\Admin\QrCodeController;
 use App\Http\Controllers\Admin\QrCodePdfController;
 use App\Http\Controllers\QrCodeRedirectController;
 
+// Direct access to login routes when authenticated - must be before other routes
+Route::get('/admin/login', function () {
+    // Only check admin auth for admin login
+    if (Auth::guard('web')->check()) {
+        return redirect()->route('admin.dashboard');
+    }
+    return app()->make(LoginController::class)->showLoginForm();
+});
+
+Route::get('/vendor/login', function () {
+    // Only check vendor auth for vendor login
+    if (Auth::guard('vendor')->check()) {
+        return redirect()->route('vendor.dashboard');
+    }
+    return app()->make(VendorAuthController::class)->showLoginForm();
+});
+
 // QR Code Redirect Route
 Route::get('/qr-code/{id}', [QrCodeRedirectController::class, 'redirect'])->name('qr-code.redirect');
 
@@ -30,10 +47,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
     // Rotas de autenticação para admin
-    Route::middleware('guest')->group(function () {
-        Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-        Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
-    });
+    Route::get('/login', function() {
+        // Only check admin auth for admin login
+        if (Auth::guard('web')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+        return app()->make(LoginController::class)->showLoginForm();
+    })->name('login');
+    Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
@@ -78,10 +99,14 @@ Route::prefix('vendor')->name('vendor.')->group(function () {
     });
 
     // Guest Vendor Routes
-    Route::middleware('guest:vendor')->group(function () {
-        Route::get('login', [VendorAuthController::class, 'showLoginForm'])->name('login');
-        Route::post('login', [VendorAuthController::class, 'login'])->name('login.submit');
-    });
+    Route::get('login', function() {
+        // Only check vendor auth for vendor login
+        if (Auth::guard('vendor')->check()) {
+            return redirect()->route('vendor.dashboard');
+        }
+        return app()->make(VendorAuthController::class)->showLoginForm();
+    })->name('login');
+    Route::post('login', [VendorAuthController::class, 'login'])->name('login.submit');
 
     Route::post('logout', [VendorAuthController::class, 'logout'])->name('logout');
 
@@ -122,5 +147,16 @@ Route::prefix('establishment')->name('establishment.')->group(function () {
 
 // Fallback route - captura todas as rotas não definidas
 Route::fallback(function () {
+    // Check if user is logged in as admin
+    if (Auth::check()) {
+        return redirect()->route('admin.dashboard');
+    }
+
+    // Check if user is logged in as vendor
+    if (Auth::guard('vendor')->check()) {
+        return redirect()->route('vendor.dashboard');
+    }
+
+    // If not authenticated, redirect to site index
     return redirect()->route('site.index');
 });
