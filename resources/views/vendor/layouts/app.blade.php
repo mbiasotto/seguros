@@ -34,12 +34,9 @@
                 <span>Documentos</span>
             </a> --}}
         </nav>
-        <form action="{{ route('vendor.logout') }}" method="POST" class="mt-auto px-3">
-            @csrf
-            <button type="submit" class="btn btn-outline-light btn-sm w-100">
-                <i class="fas fa-sign-out-alt me-2"></i>Sair
-            </button>
-        </form>
+        <a href="/vendor/logout" class="btn btn-outline-light btn-sm w-100 mt-auto d-flex align-items-center justify-content-center">
+            <i class="fas fa-sign-out-alt me-2"></i>Sair
+        </a>
     </div>
 
     <!-- Main Content -->

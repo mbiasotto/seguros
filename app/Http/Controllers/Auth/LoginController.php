@@ -52,8 +52,11 @@ class LoginController extends BaseController
      */
     public function logout(Request $request)
     {
-        Auth::logout();
-        $request->session()->invalidate();
+        // Only logout from web guard, do not affect vendor guard
+        Auth::guard('web')->logout();
+
+        // Do NOT invalidate the session as it would log out the vendor too
+        // Only regenerate the CSRF token
         $request->session()->regenerateToken();
 
         return redirect('/admin/login');

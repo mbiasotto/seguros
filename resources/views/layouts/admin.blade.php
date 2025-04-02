@@ -56,13 +56,10 @@
 
                         <!-- Right side navigation items -->
                         <div class="flex items-center">
-                            <form method="POST" action="{{ route('admin.logout') }}">
-                                @csrf
-                                <button type="submit" class="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none">
-                                    <i class="fas fa-sign-out-alt w-5 h-5 mr-2"></i>
-                                    <span>Logout</span>
-                                </button>
-                            </form>
+                            <a href="/admin/logout" class="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none">
+                                <i class="fas fa-sign-out-alt w-5 h-5 mr-2"></i>
+                                <span>Logout</span>
+                            </a>
                         </div>
                     </div>
                 </div>

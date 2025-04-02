@@ -119,9 +119,13 @@ class VendorAuthController extends Controller
      */
     public function logout(Request $request)
     {
+        // Only logout from vendor guard, not default web guard
         Auth::guard('vendor')->logout();
-        $request->session()->invalidate();
+
+        // We don't want to invalidate the entire session as it would affect admin auth
+        // Instead, regenerate only the CSRF token
         $request->session()->regenerateToken();
+
         return redirect()->route('vendor.login');
     }
 }

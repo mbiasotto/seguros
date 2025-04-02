@@ -28,6 +28,10 @@ Route::get('/vendor/login', function () {
     return app()->make(VendorAuthController::class)->showLoginForm();
 });
 
+// Direct logout routes to avoid CSRF issues
+Route::match(['get', 'post'], '/admin/logout', [LoginController::class, 'logout']);
+Route::match(['get', 'post'], '/vendor/logout', [VendorAuthController::class, 'logout']);
+
 // QR Code Redirect Route
 Route::get('/qr-code/{id}', [QrCodeRedirectController::class, 'redirect'])->name('qr-code.redirect');
 
@@ -108,7 +112,7 @@ Route::prefix('vendor')->name('vendor.')->group(function () {
     })->name('login');
     Route::post('login', [VendorAuthController::class, 'login'])->name('login.submit');
 
-    Route::post('logout', [VendorAuthController::class, 'logout'])->name('logout');
+    Route::match(['get', 'post'], 'logout', [VendorAuthController::class, 'logout'])->name('logout');
 
     // Protected Vendor Routes
     Route::middleware(['auth:vendor'])->group(function () {
