@@ -96,7 +96,7 @@
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
 
-                                        @if($user->id !== 1 && Auth::id() !== $user->id && \App\Models\User::count() > 1)
+                                        @if($user->id !== 1 && (Auth::id() === 1 || Auth::id() !== $user->id) && \App\Models\User::count() > 1)
                                             <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')

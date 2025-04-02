@@ -67,13 +67,13 @@
                     @csrf
                     <div class="mb-3">
                         <label for="email" class="form-label">E-mail</label>
-                        <input type="email" class="form-control" id="email" name="email" value="joao.silva@email.com" required autofocus>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required autofocus>
                     </div>
 
                     <div class="mb-3">
                         <label for="password" class="form-label">Senha</label>
                         <div class="password-wrapper">
-                            <input type="password" class="form-control" id="password" name="password" value="123456" required>
+                            <input type="password" class="form-control" id="password" name="password" required>
                             <i class="fas fa-eye password-toggle-icon" id="togglePassword"></i>
                         </div>
                     </div>
@@ -86,6 +86,10 @@
                         <i class="fas fa-sign-in-alt me-2"></i> Entrar
                     </button>
                 </form>
+
+                <div class="mt-3 small text-center text-muted">
+                    <p>Use o e-mail e senha fornecidos pelo administrador<br>para acessar o sistema.</p>
+                </div>
             </div>
         </div>
     </main>
