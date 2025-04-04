@@ -1,0 +1,83 @@
+/*
+ * Components - Buttons
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+/* Button Styles */
+.btn-primary {
+    background-color: #6c8cce;
+    border-color: #6c8cce;
+}
+
+.btn-primary:hover {
+    background-color: #5a7dbe;
+    border-color: #5a7dbe;
+}
+
+.btn-outline-info {
+    color: #7bc9e0;
+    border-color: #7bc9e0;
+}
+
+.btn-outline-info:hover {
+    background-color: #7bc9e0;
+    color: #fff;
+}
+
+.btn-outline-danger {
+    color: #e17a85;
+    border-color: #e17a85;
+}
+
+.btn-outline-danger:hover {
+    background-color: #e17a85;
+    color: #fff;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+    border-radius: 0.2rem;
+}
+
+/* Botões de ação em tabelas e listas */
+.action-buttons {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+}
+
+.action-buttons .btn {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border-radius: 4px;
+}
+
+.action-buttons .btn i {
+    font-size: 0.875rem;
+}
+
+/* Botão com ícone */
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Botão de adicionar no cabeçalho de listas */
+.data-list-header .btn-primary {
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.data-list-header .btn-primary i {
+    font-size: 0.9rem;
+}

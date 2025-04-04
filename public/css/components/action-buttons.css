@@ -1,0 +1,99 @@
+/**
+ * Action Buttons Component
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ * Estilos modernos e suaves para botões de ação em tabelas
+ */
+
+/* Container dos botões de ação */
+.action-buttons {
+    display: flex !important;
+    gap: 0.5rem !important;
+    justify-content: flex-end !important;
+}
+
+/* Estilo base para todos os botões de ação */
+.action-buttons .btn {
+    width: 35px !important;
+    height: 35px !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08) !important;
+    background-color: #f5f7fa !important;
+    color: #3a4048 !important;
+}
+
+/* Efeito hover para todos os botões */
+.action-buttons .btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12) !important;
+}
+
+.action-buttons .btn i {
+    font-size: 0.875rem !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Botão de editar (azul) */
+.action-buttons .btn-edit {
+    background-color: #f5f7fa !important;
+    color: #3a4048 !important;
+}
+
+.action-buttons .btn-edit:hover {
+    background-color: #e2e9f3 !important;
+    color: #4e73df !important;
+}
+
+/* Botão de informações (azul info) */
+.action-buttons .btn-info {
+    background-color: #f5f7fa !important;
+    color: #3a4048 !important;
+}
+
+.action-buttons .btn-info:hover {
+    background-color: #dff0ff !important;
+    color: #0d6efd !important;
+}
+
+/* Botão de excluir (vermelho) */
+.action-buttons .btn-danger {
+    background-color: #f5f7fa !important;
+    color: #3a4048 !important;
+}
+
+.action-buttons .btn-danger:hover {
+    background-color: #ffe0e3 !important;
+    color: #dc3545 !important;
+}
+
+/* Tooltip para os botões de ação */
+.action-buttons .btn[title]::after {
+    content: attr(title) !important;
+    position: absolute !important;
+    bottom: -30px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    padding: 4px 8px !important;
+    background-color: rgba(33, 37, 41, 0.85) !important;
+    color: white !important;
+    border-radius: 4px !important;
+    font-size: 0.75rem !important;
+    white-space: nowrap !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: all 0.2s ease !important;
+    z-index: 10 !important;
+}
+
+.action-buttons .btn[title]:hover::after {
+    opacity: 1 !important;
+    visibility: visible !important;
+    bottom: -25px !important;
+}

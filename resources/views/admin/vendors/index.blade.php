@@ -30,7 +30,7 @@
     <h1 class="h3 mb-0">Vendedores</h1>
     <a href="{{ route('admin.vendors.create') }}" class="btn btn-primary d-flex align-items-center gap-2">
         <i class="fas fa-plus"></i>
-        <span>Novo Vendedor</span>
+        <span>Novo</span>
     </a>
 </div>
 
@@ -83,7 +83,7 @@
             <div class="mt-4">
                 <a href="{{ route('admin.vendors.create') }}" class="btn btn-primary d-flex align-items-center gap-2 mx-auto" style="width: fit-content;">
                     <i class="fas fa-plus"></i>
-                    <span>Adicionar Vendedor</span>
+                    <span>Novo</span>
                 </a>
             </div>
         </div>
@@ -126,16 +126,16 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="{{ route('admin.vendors.edit', $vendor) }}" class="btn btn-sm btn-primary" title="Editar">
+                                    <a href="{{ route('admin.vendors.edit', $vendor) }}" class="btn btn-edit" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
-                                    <a href="{{ route('admin.vendors.access-logs', $vendor) }}" class="btn btn-sm btn-info" title="Histórico de Acessos">
+                                    <a href="{{ route('admin.vendors.access-logs', $vendor) }}" class="btn btn-info" title="Histórico de Acessos">
                                         <i class="fas fa-history"></i>
                                     </a>
                                     <form action="{{ route('admin.vendors.destroy', $vendor) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este vendedor?')" title="Excluir">
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este vendedor?')" title="Excluir">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </form>

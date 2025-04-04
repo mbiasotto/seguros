@@ -7,7 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/vendor.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/vendor.main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/components/action-buttons.css') }}">
     @stack('styles')
 </head>
 <body>
@@ -34,8 +35,8 @@
                 <span>Documentos</span>
             </a> --}}
         </nav>
-        <a href="/vendor/logout" class="btn btn-outline-light btn-sm w-100 mt-auto d-flex align-items-center justify-content-center">
-            <i class="fas fa-sign-out-alt me-2"></i>Sair
+        <a href="/vendor/logout" class="btn btn-logout mt-auto">
+            <i class="fas fa-sign-out-alt"></i>Sair
         </a>
     </div>
 

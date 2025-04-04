@@ -1,0 +1,71 @@
+/*
+ * Components - Data List
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+/* Data List Layout Styles */
+.data-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Cabeçalho de listas com título e botão de adicionar */
+.data-list-header h2 {
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+/* Informações sobre número de registros */
+.entries-info {
+    color: #6c757d;
+    font-size: 0.875rem;
+    margin: 1rem 0;
+}
+
+/* Estilos para imagens de produtos em listas */
+.product-images {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.product-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+/* Estilos para filtros */
+.filter-container {
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+/* Estilos para paginação */
+.pagination {
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+}
+
+.pagination .page-item .page-link {
+    color: #1D40AE;
+    border-color: #dee2e6;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #1D40AE;
+    border-color: #1D40AE;
+    color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+}
+
+.pagination .page-link:focus {
+    box-shadow: 0 0 0 0.2rem rgba(29, 64, 174, 0.25);
+}

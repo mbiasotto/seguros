@@ -163,7 +163,8 @@
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-<script src="{{ asset('js/form-utils.js') }}"></script>
+<script src="{{ asset('js/main.js') }}"></script>
+<script src="{{ asset('js/utils/form-utils.js') }}"></script>
 <script>
     // Gerador de senha simples
     document.getElementById('generatePassword').addEventListener('click', function() {

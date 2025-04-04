@@ -1,0 +1,8 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Evite a duplicação de código sempre que possível, o que significa verificar outras áreas do código que já possam ter código e funcionalidade semelhantes.
+
+Sempre prefira soluções simples.

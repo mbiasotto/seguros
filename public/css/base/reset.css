@@ -1,0 +1,49 @@
+/*
+ * Base Styles - Reset
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+/* Reset de margens e paddings */
+* {
+    box-sizing: border-box;
+}
+
+/* Estilos de texto básicos */
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    font-weight: 600;
+    color: #343a40;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #212529;
+}
+
+a {
+    color: #6c8cce;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #5a7dbe;
+    text-decoration: none;
+}
+
+/* Utilitários de texto */
+.text-muted {
+    color: #6c757d !important;
+}
+
+.entries-info {
+    color: #6c757d;
+    font-size: 0.875rem;
+    margin: 1rem 0;
+}

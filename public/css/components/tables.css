@@ -1,0 +1,64 @@
+/*
+ * Components - Tables
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+/* Table Styles */
+.table {
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    background: #fff;
+}
+
+.table th {
+    font-weight: 600;
+    border-top: none;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 0.875rem 1rem;
+    font-size: 0.875rem;
+    color: #495057;
+}
+
+.table td {
+    vertical-align: middle;
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 0.875rem;
+    color: #212529;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(29, 64, 174, 0.02);
+    transition: all 0.2s ease;
+}
+
+.table tbody tr:hover td {
+    background-color: #f8f9fa;
+}
+
+/* Tabela compacta */
+.table-sm td {
+    padding: 0.4rem 0.5rem;
+}
+
+/* Item de QR code na tabela */
+.qr-code-item:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Paginação */
+.pagination-container .page-link {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Container de filtros */
+.filter-container {
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+}

@@ -30,7 +30,7 @@
     <h1 class="h3 mb-0">Administradores</h1>
     <a href="{{ route('admin.users.create') }}" class="btn btn-primary d-flex align-items-center gap-2">
         <i class="fas fa-plus"></i>
-        <span>Novo Administrador</span>
+        <span>Novo</span>
     </a>
 </div>
 
@@ -92,7 +92,7 @@
                                 <td>{{ $user->created_at->format('d/m/Y H:i') }}</td>
                                 <td class="text-end pe-4">
                                     <div class="action-buttons">
-                                        <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-primary" title="Editar">
+                                        <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-edit" title="Editar">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
 
@@ -100,7 +100,7 @@
                                             <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este administrador?')" title="Excluir">
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este administrador?')" title="Excluir">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
                                             </form>

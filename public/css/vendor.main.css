@@ -1,0 +1,65 @@
+/*
+ * Vendor CSS File
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ * Este arquivo importa os estilos necessários para o painel do vendedor
+ */
+
+/* Importa o arquivo principal com todos os componentes */
+@import url('main.css');
+
+/* Estilos específicos do painel do vendedor */
+.sidebar .nav-link {
+    font-weight: 300;
+}
+
+/* Ajustes específicos para o dashboard do vendedor */
+.vendor-dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.stat-card h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+}
+
+.stat-card p {
+    color: var(--text-muted);
+    margin-bottom: 0;
+}
+
+/* Estilos específicos para o perfil do vendedor */
+.profile-header {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.profile-header h2 {
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+/* Ajustes para formulários do vendedor */
+.vendor-form .form-group {
+    margin-bottom: 1.5rem;
+}

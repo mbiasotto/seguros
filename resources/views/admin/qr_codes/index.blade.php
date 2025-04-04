@@ -34,7 +34,7 @@
         </a>
         <a href="{{ route('admin.qr-codes.create') }}" class="btn btn-primary d-flex align-items-center gap-2">
             <i class="fas fa-plus"></i>
-            <span>Novo QR Code</span>
+            <span>Novo</span>
         </a>
     </div>
 </div>
@@ -110,19 +110,19 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="{{ route('admin.qr-codes.show', $qrCode) }}" class="btn btn-sm btn-info" title="Visualizar QR Code">
+                                    <a href="{{ route('admin.qr-codes.show', $qrCode) }}" class="btn btn-info" title="Visualizar QR Code">
                                         <i class="fas fa-qrcode"></i>
                                     </a>
-                                    <a href="{{ route('admin.qr-codes.download', $qrCode) }}" class="btn btn-sm btn-success" title="Baixar QR Code">
+                                    <a href="{{ route('admin.qr-codes.download', $qrCode) }}" class="btn btn-info" title="Baixar QR Code">
                                         <i class="fas fa-download"></i>
                                     </a>
-                                    <a href="{{ route('admin.qr-codes.edit', $qrCode) }}" class="btn btn-sm btn-primary" title="Editar">
+                                    <a href="{{ route('admin.qr-codes.edit', $qrCode) }}" class="btn btn-edit" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
                                     <form action="{{ route('admin.qr-codes.destroy', $qrCode) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este QR Code?')" title="Excluir">
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este QR Code?')" title="Excluir">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </form>
