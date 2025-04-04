@@ -52,6 +52,34 @@
     background: #fff;
 }
 
+.table th,
+.table td,
+.table th[width],
+.table th[style*="width"],
+th, td {
+    position: static !important;
+    overflow: visible !important;
+    background: transparent !important;
+}
+
+.table th::after,
+.table th::before,
+.table td::after,
+.table td::before,
+.table th[width]::after,
+.table th[width]::before,
+.table th[style*="width"]::after,
+.table th[style*="width"]::before,
+th::after,
+th::before,
+td::after,
+td::before {
+    display: none !important;
+    content: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
 .table th {
     background-color: #f8f9fa;
     border-bottom: 1px solid #dee2e6;
@@ -157,4 +185,26 @@
 
 .empty-state .btn-primary i {
     font-size: 0.9rem;
+}
+
+/* Regra específica para cabeçalhos com a classe no-tooltip (adicionada via JS) */
+.no-tooltip,
+.no-tooltip::after,
+.no-tooltip::before,
+th.no-tooltip,
+th.no-tooltip::after,
+th.no-tooltip::before {
+    position: static !important;
+    overflow: visible !important;
+    background: transparent !important;
+}
+
+.no-tooltip::after,
+.no-tooltip::before,
+th.no-tooltip::after,
+th.no-tooltip::before {
+    display: none !important;
+    content: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
 }

@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{ asset('css/components/modern-buttons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/components/action-buttons.css') }}">
     @stack('styles')
+    <!-- Script para desativar tooltips não desejados -->
+    <script src="{{ asset('js/disable-tooltips.js') }}"></script>
 </head>
 <body>
     <!-- Sidebar -->

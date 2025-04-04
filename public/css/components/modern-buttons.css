@@ -4,6 +4,51 @@
  * Estilos modernos para botões de ação e navegação
  */
 
+/* Estilos base comuns para todos os botões do sistema */
+.btn {
+    position: relative !important;
+    overflow: hidden !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.01em !important;
+    z-index: 1 !important;
+}
+
+/* Efeito de preenchimento animado para todos os botões */
+.btn::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, rgba(255,255,255,0.2), rgba(255,255,255,0)) !important;
+    transition: all 0.5s ease !important;
+    z-index: -1 !important;
+}
+
+.btn:hover::before {
+    left: 100% !important;
+}
+
+/* Efeito de preenchimento horizontal (mais moderno) para todos os botões */
+.btn::after {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 0% !important;
+    height: 100% !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    transition: width 0.3s ease !important;
+    z-index: -1 !important;
+}
+
+.btn:hover::after {
+    width: 100% !important;
+}
+
 /* Botão de Sair - Versão Moderna */
 .sidebar .btn-logout {
     width: auto !important;
@@ -111,27 +156,477 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Tooltip para os botões de ação */
+/* Tooltip para os botões de ação - DESATIVADO COMPLETAMENTE */
 .action-buttons .btn[title]::after {
-    content: attr(title) !important;
-    position: absolute !important;
-    bottom: -30px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    padding: 4px 8px !important;
-    background-color: rgba(0, 0, 0, 0.8) !important;
-    color: white !important;
-    border-radius: 4px !important;
-    font-size: 0.75rem !important;
-    white-space: nowrap !important;
+    display: none !important;
+    content: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
-    transition: all 0.2s ease !important;
-    z-index: 10 !important;
 }
 
 .action-buttons .btn[title]:hover::after {
-    opacity: 1 !important;
-    visibility: visible !important;
-    bottom: -25px !important;
+    display: none !important;
+    content: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Remover efeitos ::after de todos os elementos de tabela que não sejam botões */
+table th,
+table td {
+    position: static !important;
+    overflow: visible !important;
+}
+
+table th::after,
+table td::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* Corrigir especificamente cabeçalhos com larguras típicas da coluna de ações */
+th[width="120"],
+th[width="160"],
+th[style*="width: 120px"] {
+    position: static !important;
+    background: transparent !important;
+    overflow: visible !important;
+}
+
+th[width="120"]::after,
+th[width="160"]::after,
+th[style*="width: 120px"]::after {
+    display: none !important;
+    content: none !important;
+    visibility: hidden !important;
+}
+
+/* Estilos gerais para botões principais (Novo e Filtrar) */
+.btn-novo,
+.btn-filtrar {
+    border-radius: 8px !important;
+    padding: 0.6rem 1.2rem !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+}
+
+/* Efeito de onda ao clicar */
+.btn-novo::after,
+.btn-filtrar::after {
+    content: "" !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 5px !important;
+    height: 5px !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+    opacity: 0 !important;
+    border-radius: 100% !important;
+    transform: scale(1, 1) translate(-50%, -50%) !important;
+    transform-origin: 50% 50% !important;
+}
+
+.btn-novo:active::after,
+.btn-filtrar:active::after {
+    animation: ripple 0.6s ease-out !important;
+}
+
+/* Estilos específicos para o botão Novo (Azul) */
+.btn-novo {
+    background-color: #4361ee !important; /* Mantém a cor original azul */
+    border-color: #4361ee !important;
+    color: white !important;
+}
+
+.btn-novo:hover {
+    background-color: #3b55d9 !important;
+    box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3) !important;
+    transform: translateY(-1px) !important;
+}
+
+.btn-novo:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 4px rgba(67, 97, 238, 0.2) !important;
+}
+
+.btn-novo i {
+    font-size: 0.875rem !important;
+}
+
+/* Estilos específicos para o botão Filtrar (Cinza) */
+.btn-filtrar {
+    background-color: #8d99ae !important; /* Mantém a cor original cinza */
+    border-color: #8d99ae !important;
+    color: white !important;
+}
+
+.btn-filtrar:hover {
+    background-color: #7d8a9e !important;
+    box-shadow: 0 4px 8px rgba(141, 153, 174, 0.3) !important;
+    transform: translateY(-1px) !important;
+}
+
+.btn-filtrar:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 4px rgba(141, 153, 174, 0.2) !important;
+}
+
+/* Animação de ondulação quando clicado */
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.8;
+    }
+    20% {
+        transform: scale(25, 25);
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(40, 40);
+    }
+}
+
+/* Aplicando estilos aos botões existentes - Seletores específicos baseados nos templates */
+/* Botão "Novo" nas páginas de listagem */
+.data-list-header .btn-primary {
+    border-radius: 8px !important;
+    padding: 0.6rem 1.2rem !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    background-color: #4361ee !important;
+    border-color: #4361ee !important;
+    color: white !important;
+}
+
+.data-list-header .btn-primary:hover {
+    background-color: #3b55d9 !important;
+    box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3) !important;
+    transform: translateY(-1px) !important;
+}
+
+.data-list-header .btn-primary:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 4px rgba(67, 97, 238, 0.2) !important;
+}
+
+.data-list-header .btn-primary::after {
+    content: "" !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 5px !important;
+    height: 5px !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+    opacity: 0 !important;
+    border-radius: 100% !important;
+    transform: scale(1, 1) translate(-50%, -50%) !important;
+    transform-origin: 50% 50% !important;
+}
+
+.data-list-header .btn-primary:active::after {
+    animation: ripple 0.6s ease-out !important;
+}
+
+/* Botão "Filtrar" nos formulários de filtro */
+.filter-container button[type="submit"],
+button[type="submit"].btn-primary.w-100 {
+    border-radius: 8px !important;
+    padding: 0.6rem 1.2rem !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    background-color: #8d99ae !important;
+    border-color: #8d99ae !important;
+    color: white !important;
+}
+
+.filter-container button[type="submit"]:hover,
+button[type="submit"].btn-primary.w-100:hover {
+    background-color: #7d8a9e !important;
+    box-shadow: 0 4px 8px rgba(141, 153, 174, 0.3) !important;
+    transform: translateY(-1px) !important;
+}
+
+.filter-container button[type="submit"]:active,
+button[type="submit"].btn-primary.w-100:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 4px rgba(141, 153, 174, 0.2) !important;
+}
+
+.filter-container button[type="submit"]::after,
+button[type="submit"].btn-primary.w-100::after {
+    content: "" !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 5px !important;
+    height: 5px !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+    opacity: 0 !important;
+    border-radius: 100% !important;
+    transform: scale(1, 1) translate(-50%, -50%) !important;
+    transform-origin: 50% 50% !important;
+}
+
+.filter-container button[type="submit"]:active::after,
+button[type="submit"].btn-primary.w-100:active::after {
+    animation: ripple 0.6s ease-out !important;
+}
+
+/* Botões de Formulários (Cancelar e Salvar/Cadastrar) */
+.d-flex.justify-content-end button[type="submit"].btn-primary,
+.d-flex.justify-content-end .btn-primary {
+    border-radius: 8px !important;
+    padding: 0.6rem 1.5rem !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    background-color: #4361ee !important;
+    border-color: #4361ee !important;
+    color: white !important;
+}
+
+.d-flex.justify-content-end button[type="submit"].btn-primary:hover,
+.d-flex.justify-content-end .btn-primary:hover {
+    background-color: #3b55d9 !important;
+    box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3) !important;
+    transform: translateY(-2px) !important;
+}
+
+.d-flex.justify-content-end button[type="submit"].btn-primary:active,
+.d-flex.justify-content-end .btn-primary:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 4px rgba(67, 97, 238, 0.2) !important;
+}
+
+/* Efeito de preenchimento especial para botões de submit */
+.d-flex.justify-content-end button[type="submit"].btn-primary::before,
+.d-flex.justify-content-end .btn-primary::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 0% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1)) !important;
+    transition: width 0.5s ease !important;
+    z-index: 0 !important;
+}
+
+.d-flex.justify-content-end button[type="submit"].btn-primary:hover::before,
+.d-flex.justify-content-end .btn-primary:hover::before {
+    width: 100% !important;
+}
+
+/* Botão Cancelar nos formulários (específico para a estrutura vista na tela) */
+a.btn-outline-secondary.me-2 {
+    border-radius: 8px !important;
+    padding: 0.7rem 1.5rem !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    background-color: transparent !important;
+    border: 1px solid #ced4da !important;
+    color: #6c757d !important;
+}
+
+a.btn-outline-secondary.me-2:hover {
+    background-color: #f5f5f5 !important;
+    border-color: #adb5bd !important;
+    color: #495057 !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08) !important;
+    transform: translateY(-1px) !important;
+}
+
+a.btn-outline-secondary.me-2:active {
+    background-color: #e9ecef !important;
+    transform: translateY(0) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Efeito de preenchimento para botões de cancelar */
+a.btn-outline-secondary.me-2::after {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 0% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, rgba(173,181,189,0.1), rgba(173,181,189,0.05)) !important;
+    transition: width 0.4s ease !important;
+    z-index: -1 !important;
+}
+
+a.btn-outline-secondary.me-2:hover::after {
+    width: 100% !important;
+}
+
+/* Garantir que os ícones sempre fiquem visíveis */
+.btn i {
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+/* Botão "Voltar para a lista" (como visto na imagem) */
+.btn-voltar {
+    border-radius: 8px !important;
+    padding: 0.6rem 1.2rem !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    background-color: #f8f9fa !important;
+    border: 1px solid #dee2e6 !important;
+    color: #212529 !important;
+}
+
+.btn-voltar:hover {
+    background-color: #e9ecef !important;
+    border-color: #ced4da !important;
+    color: #000 !important;
+    transform: translateY(-1px) !important;
+}
+
+.btn-voltar:active {
+    transform: translateY(0) !important;
+}
+
+/* Aplicando ao seletor correto para o botão "Voltar para a lista" */
+a[href*="lista"].btn,
+a.btn[href*="lista"] {
+    border-radius: 8px !important;
+    padding: 0.6rem 1.2rem !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    background-color: #f8f9fa !important;
+    border: 1px solid #dee2e6 !important;
+    color: #212529 !important;
+}
+
+/* Botão "Cadastrar" (como visto na segunda imagem) */
+.btn-cadastrar,
+button[type="submit"].btn-primary:not(.w-100) {
+    border-radius: 8px !important;
+    padding: 0.7rem 1.5rem !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 5px rgba(108, 140, 206, 0.25) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    letter-spacing: 0.01em !important;
+    background-color: #4361ee !important;
+    border-color: #4361ee !important;
+    color: white !important;
+    z-index: 1 !important;
+}
+
+.btn-cadastrar:hover,
+button[type="submit"].btn-primary:not(.w-100):hover {
+    background-color: #3b55d9 !important;
+    border-color: #3b55d9 !important;
+    box-shadow: 0 4px 10px rgba(108, 140, 206, 0.35) !important;
+    transform: translateY(-2px) !important;
+}
+
+.btn-cadastrar:active,
+button[type="submit"].btn-primary:not(.w-100):active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 4px rgba(108, 140, 206, 0.2) !important;
+}
+
+/* Efeito de preenchimento mais intenso para o botão Cadastrar */
+.btn-cadastrar::after,
+button[type="submit"].btn-primary:not(.w-100)::after {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 0% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, rgba(255,255,255,0.25), rgba(255,255,255,0)) !important;
+    transition: width 0.4s ease !important;
+    z-index: -1 !important;
+}
+
+.btn-cadastrar:hover::after,
+button[type="submit"].btn-primary:not(.w-100):hover::after {
+    width: 100% !important;
+}
+
+/* Regras diretas para a coluna AÇÕES */
+th:nth-last-child(1)::after,
+th:nth-last-child(1)::before {
+    display: none !important;
+    content: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+th:nth-last-child(1) {
+    position: static !important;
+    overflow: visible !important;
+    background: none !important;
 }

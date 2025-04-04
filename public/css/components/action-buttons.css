@@ -73,27 +73,17 @@
     color: #dc3545 !important;
 }
 
-/* Tooltip para os botões de ação */
+/* Tooltip para os botões de ação - DESATIVADO COMPLETAMENTE */
 .action-buttons .btn[title]::after {
-    content: attr(title) !important;
-    position: absolute !important;
-    bottom: -30px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    padding: 4px 8px !important;
-    background-color: rgba(33, 37, 41, 0.85) !important;
-    color: white !important;
-    border-radius: 4px !important;
-    font-size: 0.75rem !important;
-    white-space: nowrap !important;
+    display: none !important;
+    content: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
-    transition: all 0.2s ease !important;
-    z-index: 10 !important;
 }
 
 .action-buttons .btn[title]:hover::after {
-    opacity: 1 !important;
-    visibility: visible !important;
-    bottom: -25px !important;
+    display: none !important;
+    content: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
 }
