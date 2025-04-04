@@ -8,6 +8,7 @@
 @import url('base/reset.css');
 @import url('base/typography.css');
 @import url('base/layout.css');
+@import url('base/variables.css');
 
 /* Components */
 @import url('components/cards.css');
@@ -18,7 +19,13 @@
 @import url('components/data-list.css');
 @import url('components/empty-state.css');
 @import url('components/action-buttons.css');
-@import url('components/action-primary-buttons.css');
+@import url('components/charts.css');
+@import url('components/sidebar.css');
+@import url('components/modals.css');
+@import url('components/badges.css');
+@import url('components/floating-elements.css');
+@import url('components/login.css');
+@import url('components/dashboard.css');
 
 /* Variáveis CSS globais */
 :root {

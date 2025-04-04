@@ -1,0 +1,76 @@
+/*
+ * Sidebar Component
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 250px;
+    background-color: var(--dark);
+    color: #fff;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    padding: var(--spacing-md) 0;
+}
+
+.sidebar .px-4 {
+    padding-left: var(--spacing-lg) !important;
+    padding-right: var(--spacing-lg) !important;
+}
+
+.sidebar h5 {
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-lg);
+}
+
+.sidebar .nav {
+    margin-bottom: var(--spacing-xl);
+}
+
+.sidebar .btn-logout {
+    margin: var(--spacing-md) var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    transition: var(--transition);
+}
+
+.sidebar .btn-logout:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar .btn-logout i {
+    margin-right: var(--spacing-sm);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 767.98px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+    }
+}
+
+/* Main content positioning */
+.main-content {
+    margin-left: 250px;
+    min-height: 100vh;
+    background-color: #f5f7fa;
+    transition: margin-left 0.3s ease;
+}

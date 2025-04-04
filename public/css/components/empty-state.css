@@ -6,22 +6,22 @@
 /* Empty State Styling */
 .empty-state {
     text-align: center;
-    padding: 3rem 1rem;
+    padding: var(--spacing-xl) var(--spacing-md);
 }
 
 .empty-state i {
     font-size: 3rem;
-    color: #6c757d;
-    margin-bottom: 1rem;
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-md);
 }
 
 .empty-state h4 {
-    color: #343a40;
-    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
 }
 
 .empty-state p {
-    color: #6c757d;
+    color: var(--text-muted);
     margin-bottom: 0;
 }
 
@@ -33,35 +33,35 @@
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background-color: #f8f9fa;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
+    background-color: var(--bg-light);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
 }
 
 .empty-state-icon i {
-    color: #6c757d;
-    transition: all 0.3s ease;
+    color: var(--text-muted);
+    transition: var(--transition);
 }
 
 /* Efeitos de hover */
 .empty-state .btn {
-    padding: 0.5rem 1.5rem;
-    font-weight: 500;
-    border-radius: 4px;
-    transition: all 0.2s ease;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--border-radius);
+    transition: var(--transition-fast);
 }
 
 .empty-state .btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow);
 }
 
 .empty-state-icon:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
 }
 
 .empty-state-icon:hover i {
-    color: #495057;
+    color: var(--text-primary);
 }

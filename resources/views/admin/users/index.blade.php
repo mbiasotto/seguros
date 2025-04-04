@@ -4,7 +4,6 @@
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
-<link rel="stylesheet" href="{{ asset('css/empty-state.css') }}">
 <style>
     .filter-container {
         background-color: #f8f9fa;
