@@ -52,10 +52,21 @@ class ResetPasswordController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  string|null  $token
-     * @return \Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function showResetForm(Request $request, $token = null)
     {
+        // Verificar se o token é válido antes de exibir o formulário
+        if ($token) {
+            $email = $request->email ?: '';
+
+            // Se não tiver email na requisição, redireciona para a página de solicitação
+            if (empty($email)) {
+                return redirect()->route('vendor.password.request')
+                    ->withErrors(['email' => 'É necessário informar o email para redefinir a senha.']);
+            }
+        }
+
         return view('vendor.auth.passwords.reset')->with(
             ['token' => $token, 'email' => $request->email]
         );

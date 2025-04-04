@@ -61,13 +61,10 @@ class ResetPasswordController extends Controller
         if ($token) {
             $email = $request->email ?: '';
 
-            // Verificar se o token é válido usando o broker
-            $tokenValid = $this->broker()->tokenExists(null, $token);
-
-            if (!$tokenValid) {
-                // Token inválido ou expirado, redirecionar para a página de solicitação de redefinição
+            // Se não tiver email na requisição, redireciona para a página de solicitação
+            if (empty($email)) {
                 return redirect()->route('admin.password.request')
-                    ->withErrors(['email' => __('passwords.token')]);
+                    ->withErrors(['email' => 'É necessário informar o email para redefinir a senha.']);
             }
         }
 
