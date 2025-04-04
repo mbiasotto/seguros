@@ -1,0 +1,300 @@
+/*
+ * Authentication Components (Login, Register, Password Reset)
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+/* Layout geral */
+.auth-container {
+    display: flex;
+    min-height: 100vh;
+    height: 100vh;
+    width: 100%;
+}
+
+/* Container da imagem lateral */
+.auth-image-container {
+    width: 50%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(rgba(29, 64, 174, 0.85), rgba(42, 72, 167, 0.95)), url('../../img/login-bg.jpg') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Conteúdo da imagem lateral */
+.auth-image-content {
+    text-align: center;
+    color: white;
+    padding: 2rem;
+    max-width: 80%;
+    z-index: 2;
+}
+
+.auth-image-content h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Container do formulário */
+.auth-form-container {
+    width: 50%;
+    height: 100vh;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    padding: 3rem;
+    overflow-y: auto;
+}
+
+.auth-form-wrapper {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+/* Logo e cabeçalho */
+.auth-logo {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.auth-logo h1 {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.auth-logo p {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.auth-header h2 {
+    font-weight: 600;
+    font-size: 1.75rem;
+    color: var(--text-color);
+    margin-bottom: 0.75rem;
+}
+
+.auth-header p {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+/* Campos de formulário */
+.auth-form .form-control {
+    padding: 0.9rem 1rem;
+    font-size: 1rem;
+    height: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-light);
+    transition: all 0.2s ease;
+}
+
+.auth-form .form-control:focus {
+    border-color: var(--primary);
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(29, 64, 174, 0.1);
+}
+
+.auth-form .form-control:disabled,
+.auth-form .form-control[readonly] {
+    background-color: #e9ecef;
+    opacity: 0.7;
+}
+
+.auth-form .input-group-text {
+    background-color: var(--bg-light);
+    border-color: var(--border-color);
+    color: var(--text-muted);
+}
+
+.auth-form .form-label {
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.auth-form .form-text {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+/* Campo de senha */
+.auth-form .password-wrapper {
+    position: relative;
+}
+
+.auth-form .password-toggle-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--text-muted);
+    z-index: 10;
+}
+
+/* Botão de ação principal */
+.auth-form .btn-auth {
+    width: 100%;
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    font-weight: 500;
+    padding: 0.6rem 1.25rem;
+    border-radius: 0.25rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.auth-form .btn-auth:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+    box-shadow: 0 4px 10px rgba(29, 64, 174, 0.15);
+}
+
+/* Botão secundário */
+.auth-form .btn-secondary {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+    color: white;
+    font-weight: 500;
+    padding: 0.6rem 1.25rem;
+    border-radius: 0.25rem;
+    transition: all 0.2s;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.auth-form .btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Links */
+.auth-form .auth-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.auth-form .auth-link:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+/* Alertas */
+.auth-form .alert {
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    border: none;
+}
+
+/* Requisitos de senha */
+.auth-form .password-requirements {
+    margin-top: 0.5rem;
+}
+
+.auth-form .password-requirements ul {
+    padding-left: 1.5rem;
+    margin-bottom: 0;
+    margin-top: 0.25rem;
+}
+
+.auth-form .password-requirements li.valid {
+    color: var(--success);
+}
+
+/* Espaçamento de elementos formulário */
+.auth-form .mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.auth-form .d-grid {
+    display: grid !important;
+}
+
+.auth-form .gap-3 {
+    gap: 1rem !important;
+}
+
+/* Responsividade */
+@media (max-width: 991.98px) {
+    .auth-container {
+        flex-direction: column;
+    }
+
+    .auth-image-container,
+    .auth-form-container {
+        width: 100%;
+    }
+
+    .auth-image-container {
+        height: 300px;
+        min-height: 300px;
+    }
+
+    .auth-form-container {
+        min-height: auto;
+        max-height: none;
+        height: auto;
+        padding: 2rem 1.5rem;
+        overflow-y: visible;
+    }
+
+    .auth-form-wrapper {
+        padding: 0;
+    }
+
+    .auth-image-content h1 {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .auth-image-container {
+        height: 240px;
+    }
+
+    .auth-form-container {
+        padding: 1.5rem 1.25rem;
+    }
+
+    .auth-image-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .auth-logo h1 {
+        font-size: 1.75rem;
+    }
+
+    .auth-header h2 {
+        font-size: 1.5rem;
+    }
+}
