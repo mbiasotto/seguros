@@ -13,21 +13,24 @@
 }
 
 .table th {
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     border-top: none;
     background-color: #f8f9fa;
     border-bottom: 1px solid #dee2e6;
     padding: 0.875rem 1rem;
-    font-size: 0.875rem;
-    color: #495057;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wide);
 }
 
 .table td {
     vertical-align: middle;
     padding: 1.25rem 1rem;
     border-bottom: 1px solid #e9ecef;
-    font-size: 0.875rem;
-    color: #212529;
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    line-height: var(--line-height-normal);
 }
 
 .table tbody tr:hover {
@@ -40,8 +43,14 @@
 }
 
 /* Tabela compacta */
+.table-sm th {
+    padding: 0.5rem 0.5rem;
+    font-size: var(--font-size-xs);
+}
+
 .table-sm td {
     padding: 0.4rem 0.5rem;
+    font-size: var(--font-size-xs);
 }
 
 /* Item de QR code na tabela */
@@ -52,7 +61,13 @@
 /* Paginação */
 .pagination-container .page-link {
     padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.pagination-container .page-item.active .page-link {
+    background-color: var(--primary);
+    border-color: var(--primary);
 }
 
 /* Container de filtros */

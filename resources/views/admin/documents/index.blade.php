@@ -12,7 +12,7 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
-                <h2 class="mb-0 fw-bold">Documentos dos Estabelecimentos</h2>
+                <h1 class="h3 mb-0">Documentos dos Estabelecimentos</h1>
             </div>
         </div>
     </div>
@@ -52,7 +52,7 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div>
-                                                <h6 class="mb-0">{{ $document->establishment->nome }}</h6>
+                                                <h6 class="fw-bold mb-0">{{ $document->establishment->nome }}</h6>
                                                 <small class="text-muted">{{ $document->establishment->cidade }}/{{ $document->establishment->estado }}</small>
                                             </div>
                                         </div>
@@ -87,7 +87,7 @@
                     <div class="empty-state-icon">
                         <i class="fas fa-file-alt"></i>
                     </div>
-                    <h3>Nenhum documento encontrado</h3>
+                    <h3 class="fw-bold">Nenhum documento encontrado</h3>
                     <p class="text-muted">Não há documentos de estabelecimentos no momento.</p>
                 </div>
             @endif

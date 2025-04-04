@@ -28,7 +28,7 @@
 @section('content')
 <div class="data-list-header">
     <h1 class="h3 mb-0">Meus Estabelecimentos</h1>
-    <a href="{{ route('vendor.establishments.create') }}" class="btn btn-primary d-flex align-items-center gap-2">
+    <a href="{{ route('vendor.establishments.create') }}" class="btn btn-primary d-flex align-items-center justify-content-center gap-2">
         <i class="fas fa-plus"></i>
         <span>Novo</span>
     </a>
@@ -67,7 +67,7 @@
             </select>
         </div>
         <div class="col-md-1 d-flex align-items-end">
-            <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+            <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center w-100">Filtrar</button>
         </div>
     </form>
 </div>
@@ -81,7 +81,7 @@
             <h3 class="fw-bold mb-3">Nenhum estabelecimento cadastrado</h3>
             <p class="text-muted mb-4 col-md-8 mx-auto">Você ainda não possui estabelecimentos cadastrados no sistema. Adicione seu primeiro estabelecimento para começar a gerenciar seus negócios.</p>
             <div class="mt-4">
-                <a href="{{ route('vendor.establishments.create') }}" class="btn btn-primary d-flex align-items-center gap-2 mx-auto" style="width: fit-content;">
+                <a href="{{ route('vendor.establishments.create') }}" class="btn btn-primary d-flex align-items-center justify-content-center gap-2 mx-auto" style="width: fit-content;">
                     <i class="fas fa-plus"></i>
                     <span>Adicionar Estabelecimento</span>
                 </a>

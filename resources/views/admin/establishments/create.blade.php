@@ -11,8 +11,8 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
-                <h2 class="mb-0 fw-bold">Novo Estabelecimento</h2>
-                <a href="{{ route('admin.establishments.index') }}" class="btn btn-outline-secondary">
+                <h1 class="h3 mb-0">Novo Estabelecimento</h1>
+                <a href="{{ route('admin.establishments.index') }}" class="btn btn-outline-secondary font-medium">
                     <i class="fas fa-arrow-left me-2"></i> Voltar para a lista
                 </a>
             </div>
@@ -42,7 +42,7 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="mb-4">
-                                    <label for="vendor_id" class="form-label fw-semibold">Vendedor Responsável <span class="text-danger">*</span></label>
+                                    <label for="vendor_id" class="form-label">Vendedor Responsável <span class="text-danger">*</span></label>
                                     <select class="form-select form-select-lg" id="vendor_id" name="vendor_id" required>
                                         <option value="">Selecione um vendedor</option>
                                         @foreach($vendors as $vendor)
@@ -51,7 +51,7 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                    <div class="form-text">Selecione o vendedor responsável por este estabelecimento</div>
+                                    <div class="form-text text-sm">Selecione o vendedor responsável por este estabelecimento</div>
                                 </div>
                             </div>
 
@@ -65,65 +65,65 @@
                             </div>
                         </div>
 
-                        <h5 class="border-bottom pb-2 mb-4">Informações Principais</h5>
+                        <h2 class="font-semibold text-lg border-bottom pb-2 mb-4">Informações Principais</h2>
 
                         <div class="row mb-4">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="nome" class="form-label fw-semibold">Nome do Estabelecimento <span class="text-danger">*</span></label>
+                                    <label for="nome" class="form-label">Nome do Estabelecimento <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg" id="nome" name="nome" value="{{ old('nome') }}" required>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="email" class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
+                                    <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
                                     <input type="email" class="form-control form-control-lg" id="email" name="email" value="{{ old('email') }}" required>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="telefone" class="form-label fw-semibold">Telefone <span class="text-danger">*</span></label>
+                                    <label for="telefone" class="form-label">Telefone <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg" id="telefone" name="telefone" value="{{ old('telefone') }}" placeholder="(00) 00000-0000" required>
                                 </div>
                             </div>
                         </div>
 
-                        <h5 class="border-bottom pb-2 mb-4">Endereço</h5>
+                        <h2 class="font-semibold text-lg border-bottom pb-2 mb-4">Endereço</h2>
 
                         <div class="row mb-4">
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <label for="cep" class="form-label fw-semibold">CEP <span class="text-danger">*</span></label>
+                                    <label for="cep" class="form-label">CEP <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg" id="cep" name="cep" value="{{ old('cep') }}" placeholder="00000-000" required>
                                 </div>
                             </div>
 
                             <div class="col-md-7">
                                 <div class="mb-3">
-                                    <label for="endereco" class="form-label fw-semibold">Endereço <span class="text-danger">*</span></label>
+                                    <label for="endereco" class="form-label">Endereço <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg" id="endereco" name="endereco" value="{{ old('endereco') }}" required>
                                 </div>
                             </div>
 
                             <div class="col-md-2">
                                 <div class="mb-3">
-                                    <label for="numero" class="form-label fw-semibold">Número</label>
+                                    <label for="numero" class="form-label">Número</label>
                                     <input type="text" class="form-control form-control-lg" id="numero" name="numero" value="{{ old('numero') }}">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="cidade" class="form-label fw-semibold">Cidade <span class="text-danger">*</span></label>
+                                    <label for="cidade" class="form-label">Cidade <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg" id="cidade" name="cidade" value="{{ old('cidade') }}" required>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="estado" class="form-label fw-semibold">Estado <span class="text-danger">*</span></label>
+                                    <label for="estado" class="form-label">Estado <span class="text-danger">*</span></label>
                                     <select class="form-select form-select-lg @error('estado') is-invalid @enderror"
                                            id="estado" name="estado" required>
                                         <option value="">Selecione o estado</option>
@@ -138,12 +138,12 @@
                             </div>
                         </div>
 
-                        <h5 class="border-bottom pb-2 mb-4">QR Codes</h5>
+                        <h2 class="font-semibold text-lg border-bottom pb-2 mb-4">QR Codes</h2>
 
                         <div class="row mb-4">
                             <div class="col-12">
                                 <div class="mb-3">
-                                    <label class="form-label fw-semibold">Selecione os QR Codes para este estabelecimento</label>
+                                    <label class="form-label">Selecione os QR Codes para este estabelecimento</label>
 
                                     <!-- Seleção de QR Codes disponíveis -->
                                     <div class="row mb-4">
@@ -160,16 +160,16 @@
                                             </select>
                                         </div>
                                         <div class="col-md-4">
-                                            <button type="button" class="btn btn-primary w-100" id="add-qrcode-btn">
+                                            <button type="button" class="btn btn-primary w-100 font-medium" id="add-qrcode-btn">
                                                 <i class="fas fa-plus me-2"></i> Adicionar QR Code
                                             </button>
                                         </div>
                                     </div>
 
                                     <!-- Lista de QR Codes vinculados -->
-                                    <div class="card border">
+                                    <div class="card border-0 shadow-sm">
                                         <div class="card-header bg-light">
-                                            <h6 class="mb-0">QR Codes vinculados a este estabelecimento</h6>
+                                            <h6 class="font-medium mb-0">QR Codes vinculados a este estabelecimento</h6>
                                         </div>
                                         <div class="card-body p-0">
                                             <ul class="list-group list-group-flush" id="linked-qrcodes-list">
@@ -186,9 +186,11 @@
                         </div>
 
                         <div class="d-flex justify-content-end mt-4">
-                            <a href="{{ route('admin.establishments.index') }}" class="btn btn-outline-secondary btn-lg me-2">Cancelar</a>
-                            <button type="submit" class="btn btn-primary btn-lg px-4">
-                                <i class="fas fa-save me-2"></i> Salvar Estabelecimento
+                            <a href="{{ route('admin.establishments.index') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center me-2">
+                                <i class="fas fa-times me-2"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center">
+                                <i class="fas fa-save me-2"></i> Cadastrar
                             </button>
                         </div>
                     </form>

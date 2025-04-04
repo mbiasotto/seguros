@@ -11,9 +11,9 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
-                <h2 class="mb-0 fw-bold">Detalhes do Documento</h2>
+                <h1 class="h3 mb-0">Detalhes do Documento</h1>
                 <div>
-                    <a href="{{ url()->previous() }}" class="btn btn-outline-secondary">
+                    <a href="{{ url()->previous() }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center">
                         <i class="fas fa-arrow-left me-2"></i> Voltar
                     </a>
                 </div>
@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-md-4 mb-4">
             <div class="card border-0 shadow-sm h-100">
-                <div class="card-header bg-white py-3">
+                <div class="card-header bg-light py-3">
                     <h5 class="mb-0">Informações do Estabelecimento</h5>
                 </div>
                 <div class="card-body">
@@ -42,7 +42,7 @@
 
         <div class="col-md-8 mb-4">
             <div class="card border-0 shadow-sm h-100">
-                <div class="card-header bg-white py-3">
+                <div class="card-header bg-light py-3">
                     <h5 class="mb-0">Documento</h5>
                 </div>
                 <div class="card-body">
@@ -66,7 +66,7 @@
                             @endif
                         </div>
                         <div>
-                            <a href="{{ route('admin.establishments.documents.view', $onboarding) }}" class="btn btn-primary" target="_blank">
+                            <a href="{{ route('admin.establishments.documents.view', $onboarding) }}" class="btn btn-primary d-flex align-items-center justify-content-center" target="_blank">
                                 <i class="fas fa-file-pdf me-2"></i> Visualizar Documento
                             </a>
                         </div>
@@ -82,7 +82,7 @@
                                             <label for="approve-notes" class="form-label">Observações (opcional)</label>
                                             <textarea class="form-control" id="approve-notes" name="notes" rows="3"></textarea>
                                         </div>
-                                        <button type="submit" class="btn btn-success w-100">
+                                        <button type="submit" class="btn btn-success w-100 d-flex align-items-center justify-content-center">
                                             <i class="fas fa-check me-2"></i> Aprovar Documento
                                         </button>
                                     </form>
@@ -97,7 +97,7 @@
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <button type="submit" class="btn btn-danger w-100">
+                                        <button type="submit" class="btn btn-danger w-100 d-flex align-items-center justify-content-center">
                                             <i class="fas fa-times me-2"></i> Rejeitar Documento
                                         </button>
                                     </form>

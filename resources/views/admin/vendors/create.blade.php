@@ -9,7 +9,7 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
-                <h2 class="mb-0 fw-bold">Novo Vendedor</h2>
+                <h1 class="h3 mb-0">Novo Vendedor</h1>
                 <a href="{{ route('admin.vendors.index') }}" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left me-2"></i> Voltar para a lista
                 </a>
@@ -40,12 +40,12 @@
                         <div class="row g-4">
                             <!-- Informações Pessoais -->
                             <div class="col-12">
-                                <h5 class="mb-3">Informações Pessoais</h5>
+                                <h5 class="fw-bold text-lg border-bottom pb-2 mb-4">Informações Pessoais</h5>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="nome" class="form-label fw-semibold">Nome <span class="text-danger">*</span></label>
+                                    <label for="nome" class="form-label">Nome <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg @error('nome') is-invalid @enderror"
                                            id="nome" name="nome" value="{{ old('nome') }}" required>
                                     @error('nome')
@@ -56,7 +56,7 @@
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="email" class="form-label fw-semibold">E-mail <span class="text-danger">*</span></label>
+                                    <label for="email" class="form-label">E-mail <span class="text-danger">*</span></label>
                                     <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror"
                                            id="email" name="email" value="{{ old('email') }}" required>
                                     @error('email')
@@ -67,7 +67,7 @@
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="password" class="form-label fw-semibold">Senha <span class="text-danger">*</span></label>
+                                    <label for="password" class="form-label">Senha <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror"
                                                id="password" name="password" required>
@@ -75,7 +75,7 @@
                                             <i class="fas fa-magic me-1"></i> Gerar
                                         </button>
                                     </div>
-                                    <small class="form-text text-muted">Mínimo de 6 caracteres.</small>
+                                    <small class="form-text text-muted text-sm">Mínimo de 6 caracteres.</small>
                                     @error('password')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -84,7 +84,7 @@
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="password_confirmation" class="form-label fw-semibold">Confirmar Senha <span class="text-danger">*</span></label>
+                                    <label for="password_confirmation" class="form-label">Confirmar Senha <span class="text-danger">*</span></label>
                                     <input type="password" class="form-control form-control-lg"
                                            id="password_confirmation" name="password_confirmation" required>
                                 </div>
@@ -92,12 +92,12 @@
 
                             <!-- Informações de Contato -->
                             <div class="col-12">
-                                <h5 class="border-bottom pb-2 mb-4">Informações de Contato</h5>
+                                <h5 class="fw-bold text-lg border-bottom pb-2 mb-4">Informações de Contato</h5>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="telefone" class="form-label fw-semibold">Telefone <span class="text-danger">*</span></label>
+                                    <label for="telefone" class="form-label">Telefone <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg @error('telefone') is-invalid @enderror"
                                            id="telefone" name="telefone" value="{{ old('telefone') }}"
                                            placeholder="(00) 00000-0000" required>
@@ -107,11 +107,9 @@
                                 </div>
                             </div>
 
-
-
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="cidade" class="form-label fw-semibold">Cidade <span class="text-danger">*</span></label>
+                                    <label for="cidade" class="form-label">Cidade <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg @error('cidade') is-invalid @enderror"
                                            id="cidade" name="cidade" value="{{ old('cidade') }}" required>
                                     @error('cidade')
@@ -122,7 +120,7 @@
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="estado" class="form-label fw-semibold">Estado <span class="text-danger">*</span></label>
+                                    <label for="estado" class="form-label">Estado <span class="text-danger">*</span></label>
                                     <select class="form-select form-select-lg @error('estado') is-invalid @enderror"
                                            id="estado" name="estado" required>
                                         <option value="">Selecione o estado</option>
@@ -145,9 +143,11 @@
 
                             <div class="col-12">
                                 <div class="d-flex justify-content-end mt-4">
-                                    <a href="{{ route('admin.vendors.index') }}" class="btn btn-outline-secondary btn-lg me-2">Cancelar</a>
-                                    <button type="submit" class="btn btn-primary btn-lg px-4">
-                                        <i class="fas fa-save me-2"></i> Salvar Vendedor
+                                    <a href="{{ route('admin.vendors.index') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center me-2">
+                                        <i class="fas fa-times me-2"></i> Cancelar
+                                    </a>
+                                    <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center">
+                                        <i class="fas fa-save me-2"></i> Cadastrar
                                     </button>
                                 </div>
                             </div>

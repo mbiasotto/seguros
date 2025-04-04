@@ -7,19 +7,21 @@
 <style>
     .filter-container {
         background-color: #f8f9fa;
-        border-radius: 0.25rem;
+        border-radius: var(--border-radius);
         padding: 1rem;
         margin-bottom: 1rem;
     }
     .filter-container .form-label {
-        font-weight: 500;
+        font-weight: var(--font-weight-medium);
+        font-size: var(--font-size-sm);
+        color: var(--text-secondary);
     }
     .table-container {
         overflow-x: auto;
     }
     .pagination-info {
-        font-size: 0.875rem;
-        color: #6c757d;
+        font-size: var(--font-size-sm);
+        color: var(--text-muted);
     }
 </style>
 @endpush
@@ -30,11 +32,11 @@
     <div class="d-flex gap-2">
         <a href="{{ route('admin.qr-codes.pdf') }}" class="btn btn-success d-flex align-items-center gap-2">
             <i class="fas fa-file-pdf"></i>
-            <span>Gerar PDF para Impressão</span>
+            <span class="font-medium">Gerar PDF para Impressão</span>
         </a>
         <a href="{{ route('admin.qr-codes.create') }}" class="btn btn-primary d-flex align-items-center gap-2">
             <i class="fas fa-plus"></i>
-            <span>Novo</span>
+            <span class="font-medium">Novo</span>
         </a>
     </div>
 </div>
@@ -63,25 +65,25 @@
             </select>
         </div>
         <div class="col-md-1 d-flex align-items-end">
-            <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+            <button type="submit" class="btn btn-primary w-100 font-medium">Filtrar</button>
         </div>
     </form>
 </div>
 
 @if($qrCodes->isEmpty())
-    <div class="card shadow-sm">
+    <div class="card border-0 shadow-sm">
         <div class="card-body empty-state text-center py-5">
             <i class="fas fa-qrcode text-muted fa-3x mb-3"></i>
-            <h4 class="mt-3">Nenhum QR Code cadastrado</h4>
+            <h3 class="font-semibold mt-3">Nenhum QR Code cadastrado</h3>
             <p class="text-muted mb-4">Clique no botão "Novo QR Code" para começar.</p>
             <a href="{{ route('admin.qr-codes.create') }}" class="btn btn-primary d-flex align-items-center gap-2 mx-auto" style="width: fit-content;">
                 <i class="fas fa-plus"></i>
-                <span>Novo QR Code</span>
+                <span class="font-medium">Novo QR Code</span>
             </a>
         </div>
     </div>
 @else
-    <div class="card shadow-sm">
+    <div class="card border-0 shadow-sm">
         <div class="table-container">
             <table class="table table-sm table-hover align-middle mb-0">
                 <thead>
@@ -97,9 +99,9 @@
                     @foreach($qrCodes as $qrCode)
                         <tr>
                             <td class="text-muted">#{{ $qrCode->id }}</td>
-                            <td class="fw-medium">{{ $qrCode->title ?: 'Sem título' }}</td>
+                            <td class="font-medium">{{ $qrCode->title ?: 'Sem título' }}</td>
                             <td class="text-truncate" style="max-width: 250px;">
-                                <small>{{ Str::limit($qrCode->link, 50) }}</small>
+                                <small class="text-sm">{{ Str::limit($qrCode->link, 50) }}</small>
                             </td>
                             <td>
                                 @if($qrCode->active)

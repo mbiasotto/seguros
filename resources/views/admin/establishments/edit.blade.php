@@ -18,11 +18,11 @@
     }
     .pagination-container .page-link {
         padding: 0.25rem 0.5rem;
-        font-size: 0.875rem;
+        font-size: var(--font-size-sm);
     }
     .filter-container {
         background-color: #f8f9fa;
-        border-radius: 0.25rem;
+        border-radius: var(--border-radius);
         padding: 0.75rem;
         margin-bottom: 1rem;
     }
@@ -32,8 +32,8 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
-                <h2 class="mb-0 fw-bold">Editar Estabelecimento</h2>
-                <a href="{{ route('admin.establishments.index') }}" class="btn btn-outline-secondary">
+                <h1 class="h3 mb-0">Editar Estabelecimento</h1>
+                <a href="{{ route('admin.establishments.index') }}" class="btn btn-outline-secondary font-medium">
                     <i class="fas fa-arrow-left me-2"></i> Voltar para a lista
                 </a>
             </div>
@@ -64,7 +64,7 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="mb-4">
-                                    <label for="vendor_id" class="form-label fw-semibold">Vendedor Responsável <span class="text-danger">*</span></label>
+                                    <label for="vendor_id" class="form-label">Vendedor Responsável <span class="text-danger">*</span></label>
                                     <select class="form-select form-select-lg" id="vendor_id" name="vendor_id" required>
                                         <option value="">Selecione um vendedor</option>
                                         @foreach($vendors as $vendor)
@@ -73,7 +73,7 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                    <div class="form-text">Selecione o vendedor responsável por este estabelecimento</div>
+                                    <div class="form-text text-sm">Selecione o vendedor responsável por este estabelecimento</div>
                                 </div>
                             </div>
 
@@ -87,65 +87,65 @@
                             </div>
                         </div>
 
-                        <h5 class="border-bottom pb-2 mb-4">Informações Principais</h5>
+                        <h2 class="font-semibold text-lg border-bottom pb-2 mb-4">Informações Principais</h2>
 
                         <div class="row mb-4">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="nome" class="form-label fw-semibold">Nome do Estabelecimento <span class="text-danger">*</span></label>
+                                    <label for="nome" class="form-label">Nome do Estabelecimento <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg" id="nome" name="nome" value="{{ old('nome', $establishment->nome) }}" required>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="email" class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
+                                    <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
                                     <input type="email" class="form-control form-control-lg" id="email" name="email" value="{{ old('email', $establishment->email) }}" required>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="telefone" class="form-label fw-semibold">Telefone <span class="text-danger">*</span></label>
+                                    <label for="telefone" class="form-label">Telefone <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg" id="telefone" name="telefone" value="{{ old('telefone', $establishment->telefone) }}" placeholder="(00) 00000-0000" required>
                                 </div>
                             </div>
                         </div>
 
-                        <h5 class="border-bottom pb-2 mb-4">Endereço</h5>
+                        <h2 class="font-semibold text-lg border-bottom pb-2 mb-4">Endereço</h2>
 
                         <div class="row mb-4">
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <label for="cep" class="form-label fw-semibold">CEP <span class="text-danger">*</span></label>
+                                    <label for="cep" class="form-label">CEP <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg" id="cep" name="cep" value="{{ old('cep', $establishment->cep) }}" placeholder="00000-000" required>
                                 </div>
                             </div>
 
                             <div class="col-md-7">
                                 <div class="mb-3">
-                                    <label for="endereco" class="form-label fw-semibold">Endereço <span class="text-danger">*</span></label>
+                                    <label for="endereco" class="form-label">Endereço <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg" id="endereco" name="endereco" value="{{ old('endereco', $establishment->endereco) }}" required>
                                 </div>
                             </div>
 
                             <div class="col-md-2">
                                 <div class="mb-3">
-                                    <label for="numero" class="form-label fw-semibold">Número</label>
+                                    <label for="numero" class="form-label">Número</label>
                                     <input type="text" class="form-control form-control-lg" id="numero" name="numero" value="{{ old('numero', $establishment->numero) }}">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="cidade" class="form-label fw-semibold">Cidade <span class="text-danger">*</span></label>
+                                    <label for="cidade" class="form-label">Cidade <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg" id="cidade" name="cidade" value="{{ old('cidade', $establishment->cidade) }}" required>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="estado" class="form-label fw-semibold">Estado <span class="text-danger">*</span></label>
+                                    <label for="estado" class="form-label">Estado <span class="text-danger">*</span></label>
                                     <select class="form-select form-select-lg @error('estado') is-invalid @enderror"
                                            id="estado" name="estado" required>
                                         <option value="">Selecione o estado</option>
@@ -160,12 +160,12 @@
                             </div>
                         </div>
 
-                        <h5 class="border-bottom pb-2 mb-4">QR Codes</h5>
+                        <h2 class="font-semibold text-lg border-bottom pb-2 mb-4">QR Codes</h2>
 
                         <div class="row mb-4">
                             <div class="col-12">
                                 <div class="mb-3">
-                                    <label class="form-label fw-semibold">Selecione os QR Codes para este estabelecimento</label>
+                                    <label class="form-label">Selecione os QR Codes para este estabelecimento</label>
 
                                     <!-- Seleção de QR Codes disponíveis -->
                                     <div class="row mb-4">
@@ -182,16 +182,16 @@
                                             </select>
                                         </div>
                                         <div class="col-md-4">
-                                            <button type="button" class="btn btn-primary w-100" id="add-qrcode-btn">
+                                            <button type="button" class="btn btn-primary w-100 font-medium" id="add-qrcode-btn">
                                                 <i class="fas fa-plus me-2"></i> Adicionar QR Code
                                             </button>
                                         </div>
                                     </div>
 
                                     <!-- Lista de QR Codes vinculados -->
-                                    <div class="card border">
+                                    <div class="card border-0 shadow-sm">
                                         <div class="card-header bg-light">
-                                            <h6 class="mb-0">QR Codes vinculados a este estabelecimento</h6>
+                                            <h6 class="font-medium mb-0">QR Codes vinculados a este estabelecimento</h6>
                                         </div>
                                         <div class="card-body p-0">
                                             <ul class="list-group list-group-flush" id="linked-qrcodes-list">
@@ -200,8 +200,8 @@
                                                         <li class="list-group-item d-flex justify-content-between align-items-center" id="linked-qrcode-{{ $qrCode->id }}">
                                                             <div>
                                                                 <input type="hidden" name="qr_codes[]" value="{{ $qrCode->id }}">
-                                                                <strong>#{{ $qrCode->id }} - {{ $qrCode->title ?: 'QR Code #' . $qrCode->id }}</strong>
-                                                                <small class="text-muted d-block">{{ $qrCode->description ?: $qrCode->link }}</small>
+                                                                <strong class="font-medium">#{{ $qrCode->id }} - {{ $qrCode->title ?: 'QR Code #' . $qrCode->id }}</strong>
+                                                                <small class="text-muted text-sm d-block">{{ $qrCode->description ?: $qrCode->link }}</small>
                                                             </div>
                                                             <button type="button" class="btn btn-sm btn-outline-danger remove-qrcode" data-id="{{ $qrCode->id }}" data-title="{{ $qrCode->title ?: 'QR Code #' . $qrCode->id }}" data-description="{{ $qrCode->description ?: $qrCode->link }}">
                                                                 <i class="fas fa-times"></i>
@@ -223,9 +223,11 @@
                         </div>
 
                         <div class="d-flex justify-content-end mt-4">
-                            <a href="{{ route('admin.establishments.index') }}" class="btn btn-outline-secondary btn-lg me-2">Cancelar</a>
-                            <button type="submit" class="btn btn-primary btn-lg px-4">
-                                <i class="fas fa-save me-2"></i> Salvar Alterações
+                            <a href="{{ route('admin.establishments.index') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center me-2">
+                                <i class="fas fa-times me-2"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center">
+                                <i class="fas fa-save me-2"></i> Salvar
                             </button>
                         </div>
                     </form>
@@ -250,100 +252,91 @@
                 return;
             }
 
-            // Remove a mensagem de "nenhum QR Code vinculado" se existir
+            // Remove a mensagem de nenhum QR Code se existir
             if (noQrcodesMessage) {
                 noQrcodesMessage.remove();
             }
 
-            const qrcodeId = qrcodeSelect.value;
-            const qrcodeOption = qrcodeSelect.options[qrcodeSelect.selectedIndex];
-            const qrcodeTitle = qrcodeOption.getAttribute('data-title');
-            const qrcodeDescription = qrcodeOption.getAttribute('data-description');
+            // Obtém os dados do QR Code selecionado
+            const qrCodeId = qrcodeSelect.value;
+            const option = qrcodeSelect.options[qrcodeSelect.selectedIndex];
+            const qrCodeTitle = option.dataset.title;
+            const qrCodeDescription = option.dataset.description;
 
-            // Cria o elemento de lista para o QR Code
-            const listItem = document.createElement('li');
-            listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-            listItem.id = `linked-qrcode-${qrcodeId}`;
-
-            // Conteúdo do item
-            listItem.innerHTML = `
+            // Cria o item da lista
+            const li = document.createElement('li');
+            li.className = 'list-group-item d-flex justify-content-between align-items-center';
+            li.id = `linked-qrcode-${qrCodeId}`;
+            li.innerHTML = `
                 <div>
-                    <input type="hidden" name="qr_codes[]" value="${qrcodeId}">
-                    <strong>#${qrcodeId} - ${qrcodeTitle}</strong>
-                    <small class="text-muted d-block">${qrcodeDescription}</small>
+                    <input type="hidden" name="qr_codes[]" value="${qrCodeId}">
+                    <strong class="font-medium">${qrCodeTitle}</strong>
+                    <small class="text-muted text-sm d-block">${qrCodeDescription}</small>
                 </div>
-                <button type="button" class="btn btn-sm btn-outline-danger remove-qrcode" data-id="${qrcodeId}" data-title="${qrcodeTitle}" data-description="${qrcodeDescription}">
+                <button type="button" class="btn btn-sm btn-outline-danger remove-qrcode" data-id="${qrCodeId}" data-title="${qrCodeTitle}" data-description="${qrCodeDescription}">
                     <i class="fas fa-times"></i>
                 </button>
             `;
 
             // Adiciona o item à lista
-            linkedQrcodesList.appendChild(listItem);
+            linkedQrcodesList.appendChild(li);
+
+            // Adiciona o evento de remoção ao botão
+            li.querySelector('.remove-qrcode').addEventListener('click', function() {
+                removeQrCode(this.dataset.id, this.dataset.title, this.dataset.description);
+            });
 
             // Remove a opção do select
-            qrcodeSelect.removeChild(qrcodeOption);
+            qrcodeSelect.remove(qrcodeSelect.selectedIndex);
 
-            // Limpa a seleção
-            qrcodeSelect.value = '';
-
-            // Adiciona evento para remover o QR Code
-            const removeButton = listItem.querySelector('.remove-qrcode');
-            removeButton.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-                const title = this.getAttribute('data-title');
-                const description = this.getAttribute('data-description');
-                removeQrCode(id, title, description);
-            });
+            // Se não houver mais opções, desabilita o select e o botão
+            if (qrcodeSelect.options.length <= 1) {
+                qrcodeSelect.disabled = true;
+                addQrcodeBtn.disabled = true;
+            }
         }
 
         // Função para remover um QR Code da lista de vinculados
-        function removeQrCode(qrcodeId, qrcodeTitle, qrcodeDescription) {
+        function removeQrCode(id, title, description) {
             // Remove o item da lista
-            const listItem = document.getElementById(`linked-qrcode-${qrcodeId}`);
-            if (listItem) {
-                listItem.remove();
-            }
+            document.getElementById(`linked-qrcode-${id}`).remove();
 
             // Adiciona a opção de volta ao select
             const option = document.createElement('option');
-            option.value = qrcodeId;
-            option.setAttribute('data-title', qrcodeTitle);
-            option.setAttribute('data-description', qrcodeDescription);
-            option.textContent = `#${qrcodeId} - ${qrcodeTitle}`;
+            option.value = id;
+            option.dataset.title = title;
+            option.dataset.description = description;
+            option.textContent = `#${id} - ${title}`;
             qrcodeSelect.appendChild(option);
 
-            // Se não houver mais QR Codes vinculados, mostra a mensagem
-            if (linkedQrcodesList.children.length === 0) {
-                const noQrcodesItem = document.createElement('li');
-                noQrcodesItem.className = 'list-group-item text-center py-4';
-                noQrcodesItem.id = 'no-qrcodes-message';
-                noQrcodesItem.innerHTML = `
+            // Habilita o select e o botão
+            qrcodeSelect.disabled = false;
+            addQrcodeBtn.disabled = false;
+
+            // Se não houver mais itens na lista, adiciona a mensagem de nenhum QR Code
+            if (!linkedQrcodesList.querySelector('li:not(#no-qrcodes-message)')) {
+                const li = document.createElement('li');
+                li.className = 'list-group-item text-center py-4';
+                li.id = 'no-qrcodes-message';
+                li.innerHTML = `
                     <div class="text-muted">
                         <i class="fas fa-info-circle me-2"></i> Nenhum QR Code vinculado a este estabelecimento.
                     </div>
                 `;
-                linkedQrcodesList.appendChild(noQrcodesItem);
+                linkedQrcodesList.appendChild(li);
             }
         }
 
-        // Adiciona evento ao botão de adicionar
+        // Adiciona o evento de clique ao botão de adicionar
         addQrcodeBtn.addEventListener('click', addQrCode);
 
-        // Adiciona eventos aos botões de remover existentes
+        // Adiciona o evento de clique aos botões de remover
         document.querySelectorAll('.remove-qrcode').forEach(button => {
             button.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-                const title = this.getAttribute('data-title');
-                const description = this.getAttribute('data-description');
-                removeQrCode(id, title, description);
+                removeQrCode(this.dataset.id, this.dataset.title, this.dataset.description);
             });
         });
     });
 </script>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-<script src="{{ asset('js/form-utils.js') }}"></script>
 @endpush
-
 @endsection

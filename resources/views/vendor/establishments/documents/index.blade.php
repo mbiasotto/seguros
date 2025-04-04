@@ -12,13 +12,13 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
-                <h2 class="mb-0 fw-bold">Documentos dos Estabelecimentos</h2>
+                <h1 class="h3 mb-0">Documentos dos Estabelecimentos</h1>
             </div>
         </div>
     </div>
 
     <div class="card border-0 shadow-sm mb-4">
-        <div class="card-header bg-white py-3">
+        <div class="card-header bg-light py-3">
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('vendor.establishments.documents') && !request()->routeIs('vendor.establishments.documents.*') ? 'active' : '' }}" href="{{ route('vendor.establishments.documents') }}">Todos</a>
@@ -77,10 +77,10 @@
                                     </td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{{ route('vendor.establishments.documents.show', $document) }}" class="btn btn-sm btn-outline-primary">
+                                            <a href="{{ route('vendor.establishments.documents.show', $document) }}" class="btn btn-sm btn-outline-primary d-flex align-items-center justify-content-center">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="{{ route('vendor.establishments.documents.view', $document) }}" class="btn btn-sm btn-outline-secondary" target="_blank">
+                                            <a href="{{ route('vendor.establishments.documents.view', $document) }}" class="btn btn-sm btn-outline-secondary d-flex align-items-center justify-content-center" target="_blank">
                                                 <i class="fas fa-file-pdf"></i>
                                             </a>
                                         </div>

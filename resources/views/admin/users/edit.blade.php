@@ -11,7 +11,7 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
-                <h2 class="mb-0 fw-bold">Editar Administrador</h2>
+                <h1 class="h3 mb-0">Editar Administrador</h1>
                 <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left me-2"></i> Voltar para a lista
                 </a>
@@ -52,12 +52,12 @@
                         <div class="row g-4">
                             <!-- Informações Pessoais -->
                             <div class="col-12">
-                                <h5 class="mb-3">Informações do Administrador</h5>
+                                <h5 class="fw-bold text-lg border-bottom pb-2 mb-4">Informações do Administrador</h5>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="name" class="form-label fw-semibold">Nome <span class="text-danger">*</span></label>
+                                    <label for="name" class="form-label">Nome <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg @error('name') is-invalid @enderror"
                                            id="name" name="name" value="{{ old('name', $user->name) }}" required>
                                     @error('name')
@@ -68,7 +68,7 @@
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="email" class="form-label fw-semibold">E-mail <span class="text-danger">*</span></label>
+                                    <label for="email" class="form-label">E-mail <span class="text-danger">*</span></label>
                                     <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror"
                                            id="email" name="email" value="{{ old('email', $user->email) }}" required>
                                     @error('email')
@@ -78,13 +78,13 @@
                             </div>
 
                             <div class="col-12">
-                                <h5 class="mb-3 border-top pt-4">Alterar Senha (opcional)</h5>
-                                <p class="text-muted">Deixe em branco para manter a senha atual.</p>
+                                <h2 class="fw-bold text-lg mb-3 border-top pt-4">Alterar Senha (opcional)</h2>
+                                <p class="text-muted text-sm mb-3">Deixe em branco para manter a senha atual.</p>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="password" class="form-label fw-semibold">Nova Senha</label>
+                                    <label for="password" class="form-label">Nova Senha</label>
                                     <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror"
                                            id="password" name="password">
                                     @error('password')
@@ -95,7 +95,7 @@
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="password_confirmation" class="form-label fw-semibold">Confirmar Nova Senha</label>
+                                    <label for="password_confirmation" class="form-label">Confirmar Nova Senha</label>
                                     <input type="password" class="form-control form-control-lg"
                                            id="password_confirmation" name="password_confirmation">
                                 </div>
@@ -103,9 +103,11 @@
 
                             <div class="col-12">
                                 <div class="d-flex justify-content-end mt-4">
-                                    <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary btn-lg me-2">Cancelar</a>
-                                    <button type="submit" class="btn btn-primary btn-lg px-4">
-                                        <i class="fas fa-save me-2"></i> Salvar Alterações
+                                    <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center me-2">
+                                        <i class="fas fa-times me-2"></i> Cancelar
+                                    </a>
+                                    <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center">
+                                        <i class="fas fa-save me-2"></i> Salvar
                                     </button>
                                 </div>
                             </div>

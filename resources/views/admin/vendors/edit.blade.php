@@ -9,7 +9,7 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
-                <h2 class="mb-0 fw-bold">Editar Vendedor</h2>
+                <h1 class="h3 mb-0">Editar Vendedor</h1>
                 <a href="{{ route('admin.vendors.index') }}" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left me-2"></i> Voltar para a lista
                 </a>
@@ -41,12 +41,12 @@
                         <div class="row g-4">
                             <!-- Informações Pessoais -->
                             <div class="col-12">
-                                <h5 class="mb-3">Informações Pessoais</h5>
+                                <h5 class="font-semibold text-lg border-bottom pb-2 mb-4">Informações Pessoais</h5>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="nome" class="form-label fw-semibold">Nome <span class="text-danger">*</span></label>
+                                    <label for="nome" class="form-label">Nome <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg @error('nome') is-invalid @enderror"
                                            id="nome" name="nome" value="{{ old('nome', $vendor->nome) }}" required>
                                     @error('nome')
@@ -57,7 +57,7 @@
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="email" class="form-label fw-semibold">E-mail <span class="text-danger">*</span></label>
+                                    <label for="email" class="form-label">E-mail <span class="text-danger">*</span></label>
                                     <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror"
                                            id="email" name="email" value="{{ old('email', $vendor->email) }}" required>
                                     @error('email')
@@ -68,7 +68,7 @@
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="password" class="form-label fw-semibold">Nova Senha (opcional)</label>
+                                    <label for="password" class="form-label">Nova Senha (opcional)</label>
                                     <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror"
                                            id="password" name="password">
                                     @error('password')
@@ -79,7 +79,7 @@
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="password_confirmation" class="form-label fw-semibold">Confirmar Nova Senha</label>
+                                    <label for="password_confirmation" class="form-label">Confirmar Nova Senha</label>
                                     <input type="password" class="form-control form-control-lg"
                                            id="password_confirmation" name="password_confirmation">
                                 </div>
@@ -87,15 +87,15 @@
 
                             <!-- Informações de Contato -->
                             <div class="col-12">
-                                <h5 class="mb-3">Informações de Contato</h5>
+                                <h5 class="font-semibold text-lg border-bottom pb-2 mb-4">Informações de Contato</h5>
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control @error('telefone') is-invalid @enderror"
+                                <div class="mb-3">
+                                    <label for="telefone" class="form-label">Telefone <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control form-control-lg @error('telefone') is-invalid @enderror"
                                            id="telefone" name="telefone" value="{{ old('telefone', $vendor->telefone) }}"
-                                           placeholder="Digite o telefone" required>
-                                    <label for="telefone">Telefone</label>
+                                           placeholder="(00) 00000-0000" required>
                                     @error('telefone')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -103,11 +103,10 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control @error('cidade') is-invalid @enderror"
-                                           id="cidade" name="cidade" value="{{ old('cidade', $vendor->cidade) }}"
-                                           placeholder="Digite a cidade" required>
-                                    <label for="cidade">Cidade</label>
+                                <div class="mb-3">
+                                    <label for="cidade" class="form-label">Cidade <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control form-control-lg @error('cidade') is-invalid @enderror"
+                                           id="cidade" name="cidade" value="{{ old('cidade', $vendor->cidade) }}" required>
                                     @error('cidade')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -115,15 +114,15 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-floating">
-                                    <select class="form-select @error('estado') is-invalid @enderror"
-                                            id="estado" name="estado" required>
+                                <div class="mb-3">
+                                    <label for="estado" class="form-label">Estado <span class="text-danger">*</span></label>
+                                    <select class="form-select form-select-lg @error('estado') is-invalid @enderror"
+                                           id="estado" name="estado" required>
                                         <option value="">Selecione o estado</option>
                                         @foreach(\App\Models\Estado::orderBy('nome')->get() as $estado)
                                             <option value="{{ $estado->sigla }}" {{ old('estado', $vendor->estado) == $estado->sigla ? 'selected' : '' }}>{{ $estado->nome }}</option>
                                         @endforeach
                                     </select>
-                                    <label for="estado">Estado</label>
                                     @error('estado')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -139,9 +138,11 @@
 
                             <div class="col-12">
                                 <div class="d-flex justify-content-end mt-4">
-                                    <a href="{{ route('admin.vendors.index') }}" class="btn btn-outline-secondary btn-lg me-2">Cancelar</a>
-                                    <button type="submit" class="btn btn-primary btn-lg px-4">
-                                        <i class="fas fa-save me-2"></i> Salvar Alterações
+                                    <a href="{{ route('admin.vendors.index') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center me-2">
+                                        <i class="fas fa-times me-2"></i> Cancelar
+                                    </a>
+                                    <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center">
+                                        <i class="fas fa-save me-2"></i> Salvar
                                     </button>
                                 </div>
                             </div>

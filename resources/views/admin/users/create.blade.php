@@ -11,7 +11,7 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
-                <h2 class="mb-0 fw-bold">Novo Administrador</h2>
+                <h1 class="h3 mb-0">Novo Administrador</h1>
                 <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left me-2"></i> Voltar para a lista
                 </a>
@@ -42,12 +42,12 @@
                         <div class="row g-4">
                             <!-- Informações Pessoais -->
                             <div class="col-12">
-                                <h5 class="mb-3">Informações do Administrador</h5>
+                                <h5 class="fw-bold text-lg border-bottom pb-2 mb-4">Informações do Administrador</h5>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="name" class="form-label fw-semibold">Nome <span class="text-danger">*</span></label>
+                                    <label for="name" class="form-label">Nome <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg @error('name') is-invalid @enderror"
                                            id="name" name="name" value="{{ old('name') }}" required>
                                     @error('name')
@@ -58,7 +58,7 @@
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="email" class="form-label fw-semibold">E-mail <span class="text-danger">*</span></label>
+                                    <label for="email" class="form-label">E-mail <span class="text-danger">*</span></label>
                                     <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror"
                                            id="email" name="email" value="{{ old('email') }}" required>
                                     @error('email')
@@ -69,7 +69,7 @@
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="password" class="form-label fw-semibold">Senha <span class="text-danger">*</span></label>
+                                    <label for="password" class="form-label">Senha <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror"
                                                id="password" name="password" required>
@@ -77,7 +77,7 @@
                                             <i class="fas fa-magic me-1"></i> Gerar
                                         </button>
                                     </div>
-                                    <small class="form-text text-muted">Mínimo de 6 caracteres.</small>
+                                    <small class="form-text text-muted text-sm">Mínimo de 6 caracteres.</small>
                                     @error('password')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -86,7 +86,7 @@
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="password_confirmation" class="form-label fw-semibold">Confirmar Senha <span class="text-danger">*</span></label>
+                                    <label for="password_confirmation" class="form-label">Confirmar Senha <span class="text-danger">*</span></label>
                                     <input type="password" class="form-control form-control-lg"
                                            id="password_confirmation" name="password_confirmation" required>
                                 </div>
@@ -94,9 +94,11 @@
 
                             <div class="col-12">
                                 <div class="d-flex justify-content-end mt-4">
-                                    <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary btn-lg me-2">Cancelar</a>
-                                    <button type="submit" class="btn btn-primary btn-lg px-4">
-                                        <i class="fas fa-save me-2"></i> Salvar Administrador
+                                    <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center me-2">
+                                        <i class="fas fa-times me-2"></i> Cancelar
+                                    </a>
+                                    <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center">
+                                        <i class="fas fa-save me-2"></i> Cadastrar
                                     </button>
                                 </div>
                             </div>

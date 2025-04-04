@@ -11,10 +11,10 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
-                <h2 class="mb-0 fw-bold">Detalhes do Documento</h2>
+                <h1 class="h3 mb-0">Detalhes do Documento</h1>
                 <div>
-                    <a href="{{ route('vendor.establishments.documents') }}" class="btn btn-outline-secondary">
-                        <i class="fas fa-arrow-left me-1"></i> Voltar
+                    <a href="{{ route('vendor.establishments.documents') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center">
+                        <i class="fas fa-arrow-left me-2"></i> Voltar
                     </a>
                 </div>
             </div>
@@ -22,8 +22,8 @@
     </div>
 
     <div class="card border-0 shadow-sm mb-4">
-        <div class="card-header bg-white py-3">
-            <h5 class="mb-0 fw-bold">Informações do Documento</h5>
+        <div class="card-header bg-light py-3">
+            <h5 class="mb-0">Informações do Documento</h5>
         </div>
         <div class="card-body">
             <div class="row">
@@ -70,8 +70,8 @@
             <div class="mt-4">
                 <h6 class="fw-bold mb-3">Documento Enviado</h6>
                 <div class="d-flex">
-                    <a href="{{ route('vendor.establishments.documents.view', $onboarding) }}" class="btn btn-primary" target="_blank">
-                        <i class="fas fa-file-pdf me-1"></i> Visualizar Documento
+                    <a href="{{ route('vendor.establishments.documents.view', $onboarding) }}" class="btn btn-primary d-flex align-items-center justify-content-center" target="_blank">
+                        <i class="fas fa-file-pdf me-2"></i> Visualizar Documento
                     </a>
                 </div>
             </div>

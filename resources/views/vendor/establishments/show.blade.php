@@ -11,13 +11,13 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
-                <h2 class="mb-0 fw-bold">Detalhes do Estabelecimento</h2>
+                <h1 class="h3 mb-0">Detalhes do Estabelecimento</h1>
                 <div>
-                    <a href="{{ route('vendor.establishments.edit', $establishment) }}" class="btn btn-primary">
-                        <i class="fas fa-edit me-1"></i> Editar
+                    <a href="{{ route('vendor.establishments.edit', $establishment) }}" class="btn btn-primary d-flex align-items-center justify-content-center">
+                        <i class="fas fa-edit me-2"></i> Editar
                     </a>
-                    <a href="{{ route('vendor.establishments.index') }}" class="btn btn-outline-secondary ms-2">
-                        <i class="fas fa-arrow-left me-1"></i> Voltar
+                    <a href="{{ route('vendor.establishments.index') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center ms-2">
+                        <i class="fas fa-arrow-left me-2"></i> Voltar
                     </a>
                 </div>
             </div>
@@ -25,8 +25,8 @@
     </div>
 
     <div class="card border-0 shadow-sm mb-4">
-        <div class="card-header bg-white py-3">
-            <h5 class="mb-0 fw-bold">Informações do Estabelecimento</h5>
+        <div class="card-header bg-light py-3">
+            <h5 class="mb-0">Informações do Estabelecimento</h5>
         </div>
         <div class="card-body">
             <div class="row">

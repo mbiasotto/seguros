@@ -12,8 +12,8 @@
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
                 <h1 class="h3 mb-0">Meu Perfil</h1>
-                <a href="{{ route('vendor.dashboard') }}" class="btn btn-outline-secondary">
-                    <i class="fas fa-arrow-left me-2"></i> Voltar para o Dashboard
+                <a href="{{ route('vendor.dashboard') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center">
+                    <i class="fas fa-arrow-left me-2"></i> Voltar
                 </a>
             </div>
         </div>
@@ -23,7 +23,7 @@
         <div class="col-12">
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4">
-                    <h5 class="border-bottom pb-2 mb-4 fw-bold">Informações Pessoais</h5>
+                    <h5 class="border-bottom pb-2 mb-4">Informações Pessoais</h5>
 
                     @if($errors->any())
                         <div class="alert alert-danger" role="alert">
@@ -60,7 +60,7 @@
 
                             <!-- Informações de Localização (Não editáveis) -->
                             <div class="col-12">
-                                <h5 class="mb-3 fw-bold">Informações de Localização</h5>
+                                <h5 class="mb-3">Informações de Localização</h5>
                             </div>
 
                             <div class="col-md-6">
@@ -79,7 +79,7 @@
 
                             <!-- Informações Editáveis -->
                             <div class="col-12">
-                                <h5 class="mb-3 fw-bold">Informações de Contato</h5>
+                                <h5 class="mb-3">Informações de Contato</h5>
                             </div>
 
                             <div class="col-md-6">
@@ -97,7 +97,7 @@
                             <!-- Alterar Senha -->
                             <div class="col-12">
                                 <hr class="my-4">
-                                <h5 class="mb-3 fw-bold">Alterar Senha</h5>
+                                <h5 class="mb-3">Alterar Senha</h5>
                                 <p class="text-muted small">Preencha apenas se desejar alterar sua senha</p>
                             </div>
 
@@ -120,9 +120,11 @@
                         </div>
 
                         <div class="d-flex justify-content-end mt-4">
-                            <a href="{{ route('vendor.dashboard') }}" class="btn btn-outline-secondary btn-lg me-2">Cancelar</a>
-                            <button type="submit" class="btn btn-primary btn-lg px-4">
-                                <i class="fas fa-save me-2"></i> Salvar Alterações
+                            <a href="{{ route('vendor.dashboard') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center me-2">
+                                <i class="fas fa-times me-2"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center">
+                                <i class="fas fa-save me-2"></i> Salvar
                             </button>
                         </div>
                     </form>

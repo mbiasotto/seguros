@@ -12,7 +12,7 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
-                <h2 class="mb-0 fw-bold">Histórico de Acessos - {{ $vendor->nome }}</h2>
+                <h1 class="h3 mb-0">Histórico de Acessos - {{ $vendor->nome }}</h1>
                 <a href="{{ route('admin.vendors.index') }}" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left me-2"></i> Voltar para a lista
                 </a>

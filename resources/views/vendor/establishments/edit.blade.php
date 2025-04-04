@@ -374,9 +374,11 @@
                         @endpush
 
                         <div class="d-flex justify-content-end mt-4">
-                            <a href="{{ route('vendor.establishments.index') }}" class="btn btn-outline-secondary btn-lg me-2">Cancelar</a>
-                            <button type="submit" class="btn btn-primary btn-lg px-4">
-                                <i class="fas fa-save me-2"></i> Salvar Alterações
+                            <a href="{{ route('vendor.establishments.index') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center me-2">
+                                <i class="fas fa-times me-2"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center">
+                                <i class="fas fa-save me-2"></i> Salvar
                             </button>
                         </div>
                     </form>

@@ -10,26 +10,30 @@
     <!-- Scripts and Styles -->
     @vite(['resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Base Styles -->
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
 <body class="font-sans antialiased bg-gray-100">
     <div class="min-h-screen flex">
         <!-- Sidebar for desktop -->
         <div id="sidebar" class="lg:block lg:flex-col lg:w-64 bg-white border-r border-gray-200 transition-all duration-300 ease-in-out">
             <div class="p-4 border-b border-gray-200">
-                <a href="{{ route('admin.dashboard') }}" class="text-xl font-bold text-gray-800">Admin Panel</a>
+                <a href="{{ route('admin.dashboard') }}" class="text-2xl font-semibold text-gray-800">Admin Panel</a>
             </div>
             <nav class="flex-1 p-4 space-y-2">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-150">
                     <i class="fas fa-home w-5 h-5 mr-3"></i>
-                    <span>Dashboard</span>
+                    <span class="font-medium">Dashboard</span>
                 </a>
                 <a href="{{ route('admin.vendors.index') }}" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-150">
                     <i class="fas fa-users w-5 h-5 mr-3"></i>
-                    <span>Vendors</span>
+                    <span class="font-medium">Vendors</span>
                 </a>
                 <a href="{{ route('admin.establishments.index') }}" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-150">
                     <i class="fas fa-store w-5 h-5 mr-3"></i>
-                    <span>Establishments</span>
+                    <span class="font-medium">Establishments</span>
                 </a>
             </nav>
         </div>
@@ -58,7 +62,7 @@
                         <div class="flex items-center">
                             <a href="/admin/logout" class="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none">
                                 <i class="fas fa-sign-out-alt w-5 h-5 mr-2"></i>
-                                <span>Logout</span>
+                                <span class="font-medium">Logout</span>
                             </a>
                         </div>
                     </div>
