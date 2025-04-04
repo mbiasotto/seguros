@@ -95,13 +95,18 @@
                                     </a>
 
                                     @if($user->id !== 1 && (Auth::id() === 1 || Auth::id() !== $user->id) && \App\Models\User::count() > 1)
-                                        <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este administrador?')" title="Excluir">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </form>
+                                        <button
+                                            type="button"
+                                            class="btn btn-danger"
+                                            data-delete-url="{{ route('admin.users.destroy', $user) }}"
+                                            data-delete-title="Excluir Administrador"
+                                            data-delete-message="Tem certeza que deseja excluir o administrador '{{ $user->name }}'?"
+                                            data-delete-confirm="Sim, Excluir"
+                                            data-delete-cancel="Cancelar"
+                                            title="Excluir"
+                                        >
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
                                     @endif
                                 </div>
                             </td>

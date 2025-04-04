@@ -14,6 +14,9 @@
     <!-- Base Styles -->
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/data-list.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/components/modal.css') }}" rel="stylesheet">
 </head>
 <body class="font-sans antialiased bg-gray-100">
     <div class="min-h-screen flex">
@@ -105,5 +108,10 @@
             sidebar.classList.toggle('lg:w-20');
         }
     </script>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/admin.js') }}"></script>
+    <script src="{{ asset('js/modal.js') }}"></script>
 </body>
 </html>

@@ -132,13 +132,18 @@
                                     <a href="{{ route('admin.vendors.access-logs', $vendor) }}" class="btn btn-info" title="Histórico de Acessos">
                                         <i class="fas fa-history"></i>
                                     </a>
-                                    <form action="{{ route('admin.vendors.destroy', $vendor) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este vendedor?')" title="Excluir">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
+                                    <button
+                                        type="button"
+                                        class="btn btn-danger"
+                                        data-delete-url="{{ route('admin.vendors.destroy', $vendor) }}"
+                                        data-delete-title="Excluir Vendedor"
+                                        data-delete-message="Tem certeza que deseja excluir o vendedor '{{ $vendor->nome }}'?"
+                                        data-delete-confirm="Sim, Excluir"
+                                        data-delete-cancel="Cancelar"
+                                        title="Excluir"
+                                    >
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
