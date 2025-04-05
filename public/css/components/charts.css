@@ -6,6 +6,7 @@
 .chart-container {
     position: relative;
     height: 400px;
+    width: 100%;
     margin-bottom: var(--spacing-lg);
 }
 
@@ -45,7 +46,7 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 767.98px) {
+@media (max-width: 768px) {
     .chart-container {
         height: 300px;
     }

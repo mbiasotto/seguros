@@ -49,3 +49,40 @@
     --border-radius-sm: 0.2rem;
     --transition: all 0.3s ease;
 }
+
+/* Estilos para filtros e tabelas */
+.filter-container {
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.filter-container .form-label {
+    font-weight: 500;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.pagination-info {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+/* Estilos úteis */
+.auto-width {
+    width: fit-content !important;
+}
+
+/* Botões com tamanho automático */
+.btn-auto {
+    width: fit-content !important;
+}
+
+/* Centralizador de botões */
+.btn-center {
+    margin-left: auto;
+    margin-right: auto;
+}

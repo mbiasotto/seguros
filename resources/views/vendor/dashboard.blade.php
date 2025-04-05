@@ -2,6 +2,10 @@
 
 @section('title', 'Dashboard')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/components/charts.css') }}">
+@endpush
+
 @section('content')
 <div class="container-fluid py-4">
     <div class="row g-4 mb-4">
@@ -47,7 +51,7 @@
                 <div class="card-body">
                     <h5 class="card-title mb-4">Cadastros por Mês/Ano</h5>
 
-                    <div style="position: relative; height: 400px;">
+                    <div class="chart-container">
                         <canvas id="monthlyChart"></canvas>
                     </div>
                 </div>

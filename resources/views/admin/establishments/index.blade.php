@@ -4,25 +4,7 @@
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
-<link rel="stylesheet" href="{{ asset('css/empty-state.css') }}">
-<style>
-    .filter-container {
-        background-color: #f8f9fa;
-        border-radius: 0.25rem;
-        padding: 1rem;
-        margin-bottom: 1rem;
-    }
-    .filter-container .form-label {
-        font-weight: 500;
-    }
-    .table-container {
-        overflow-x: auto;
-    }
-    .pagination-info {
-        font-size: 0.875rem;
-        color: #6c757d;
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('css/components/empty-state.css') }}">
 @endpush
 
 @section('content')

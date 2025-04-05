@@ -4,24 +4,7 @@
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
-<style>
-    .filter-container {
-        background-color: #f8f9fa;
-        border-radius: 0.25rem;
-        padding: 1rem;
-        margin-bottom: 1rem;
-    }
-    .filter-container .form-label {
-        font-weight: 500;
-    }
-    .table-container {
-        overflow-x: auto;
-    }
-    .pagination-info {
-        font-size: 0.875rem;
-        color: #6c757d;
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('css/components/empty-state.css') }}">
 @endpush
 
 @section('content')
@@ -63,7 +46,7 @@
             <h3 class="fw-bold mb-3">Nenhum administrador encontrado</h3>
             <p class="text-muted mb-4 col-md-8 mx-auto">Não existem administradores que correspondam aos critérios de busca.</p>
             <div class="mt-4">
-                <a href="{{ route('admin.users.create') }}" class="btn btn-primary d-flex align-items-center gap-2 mx-auto" style="width: fit-content;">
+                <a href="{{ route('admin.users.create') }}" class="btn btn-primary d-flex align-items-center gap-2 mx-auto btn-auto">
                     <i class="fas fa-plus"></i>
                     <span>Adicionar Administrador</span>
                 </a>
