@@ -1,0 +1,120 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+.onboarding-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+.header {
+    background-color: #1a5276;
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+.header img {
+    max-width: 180px;
+    margin-bottom: 15px;
+}
+.content {
+    padding: 30px;
+}
+.form-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    border-left: 5px solid #2e86de;
+}
+.form-section h3 {
+    color: #1a5276;
+    margin-bottom: 15px;
+}
+.contract-text {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+.btn-primary {
+    background-color: #2e86de;
+    border-color: #2e86de;
+    padding: 10px 20px;
+    font-weight: 600;
+}
+.btn-primary:hover {
+    background-color: #1a5276;
+    border-color: #1a5276;
+}
+.alert {
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #eee;
+    font-size: 14px;
+    color: #777;
+}
+.step-indicator {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    position: relative;
+}
+.step-indicator::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #ddd;
+    z-index: 1;
+}
+.step {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    width: 33.33%;
+}
+.step-circle {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    background: #ddd;
+    color: #fff;
+    margin: 0 auto 10px;
+    font-weight: bold;
+}
+.step.active .step-circle {
+    background: #2e86de;
+}
+.step.completed .step-circle {
+    background: #28a745;
+}
+.step-title {
+    font-size: 14px;
+    color: #777;
+}
+.step.active .step-title {
+    color: #2e86de;
+    font-weight: bold;
+}
+.step.completed .step-title {
+    color: #28a745;
+}

@@ -1,4 +1,4 @@
-@extends('layouts.site')
+@extends('site.layouts.site')
 
 @section('title', 'Seja um Vendedor | Câmara & Garutti - Ganhe comissões em dois níveis')
 

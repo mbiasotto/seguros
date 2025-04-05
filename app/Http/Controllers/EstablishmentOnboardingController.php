@@ -43,7 +43,7 @@ class EstablishmentOnboardingController extends BaseController
         }
 
         // Retorna a view com os dados do onboarding
-        return view('establishment.onboarding', [
+        return view('establishments.onboarding', [
             'onboarding' => $onboarding,
             'establishment' => $onboarding->establishment
         ]);
@@ -134,7 +134,7 @@ class EstablishmentOnboardingController extends BaseController
         }
 
         // Retorna a view de sucesso
-        return view('establishment.success', [
+        return view('establishments.success', [
             'establishment' => $onboarding->establishment
         ]);
     }

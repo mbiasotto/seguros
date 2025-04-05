@@ -1,4 +1,4 @@
-@extends('layouts.site')
+@extends('site.layouts.site')
 
 @section('title', 'Programa de Parceiros | Câmara & Garutti - Multiplique seus ganhos')
 

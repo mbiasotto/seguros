@@ -1,4 +1,4 @@
-@extends('layouts.site')
+@extends('site.layouts.site')
 
 @section('title', 'Câmara & Garutti - Seguros e Financiamentos com até 30% de Desconto')
 

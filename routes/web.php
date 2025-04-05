@@ -98,12 +98,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('qr-codes', QrCodeController::class);
         Route::get('qr-codes/{qrCode}/download', [QrCodeController::class, 'download'])->name('qr-codes.download');
         Route::get('/qr-codes-pdf', [QrCodePdfController::class, 'generatePdf'])->name('qr-codes.pdf');
-
-        // Style Guide Routes
-        Route::prefix('style-guide')->name('style-guide.')->group(function () {
-            Route::get('/typography', [\App\Http\Controllers\Admin\StyleGuideController::class, 'typography'])->name('typography');
-            Route::get('/components', [\App\Http\Controllers\Admin\StyleGuideController::class, 'components'])->name('components');
-        });
     });
 });
 
