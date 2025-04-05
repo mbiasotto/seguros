@@ -17,7 +17,7 @@
     height: 100vh;
     position: relative;
     overflow: hidden;
-    background: linear-gradient(rgba(29, 64, 174, 0.85), rgba(42, 72, 167, 0.95)), url('../../img/login-bg.jpg') no-repeat center center;
+    background: linear-gradient(rgba(29, 64, 174, 0.85), rgba(42, 72, 167, 0.95)), url('../../img/admin/login-bg.jpg') no-repeat center center;
     background-size: cover;
     display: flex;
     align-items: center;
