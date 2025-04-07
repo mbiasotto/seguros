@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class QrCode extends Model
 {
@@ -46,5 +47,13 @@ class QrCode extends Model
 
         return $this->establishments()->count() === 0 ||
                $this->establishments()->where('establishment_id', $establishment->id)->exists();
+    }
+
+    /**
+     * Relacionamento com os logs de acesso
+     */
+    public function accessLogs(): HasMany
+    {
+        return $this->hasMany(QrCodeAccessLog::class);
     }
 }

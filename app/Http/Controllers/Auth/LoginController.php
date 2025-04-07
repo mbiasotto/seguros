@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\UserAccessLog;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
@@ -37,6 +38,14 @@ class LoginController extends BaseController
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
+            // Registrar log de acesso
+            $user = Auth::user();
+            UserAccessLog::create([
+                'user_id' => $user->id,
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent()
+            ]);
 
             // Redirecionar para a rota pretendida ou dashboard
             return redirect()->intended(route('admin.dashboard'));

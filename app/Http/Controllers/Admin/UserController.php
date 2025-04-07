@@ -160,4 +160,13 @@ class UserController extends Controller
             'email' => $user->email
         ]);
     }
+
+    /**
+     * Exibe o histórico de acessos do administrador
+     */
+    public function accessLogs(User $user)
+    {
+        $accessLogs = $user->accessLogs()->orderBy('created_at', 'desc')->paginate(15);
+        return view('admin.users.access-logs', compact('user', 'accessLogs'));
+    }
 }

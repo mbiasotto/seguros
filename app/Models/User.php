@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\AdminResetPasswordNotification;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -56,5 +57,21 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new AdminResetPasswordNotification($token));
+    }
+
+    /**
+     * Relacionamento com os logs de acesso
+     */
+    public function accessLogs(): HasMany
+    {
+        return $this->hasMany(UserAccessLog::class);
+    }
+
+    /**
+     * Obtém o último log de acesso do administrador
+     */
+    public function lastAccess()
+    {
+        return $this->accessLogs()->latest()->first();
     }
 }

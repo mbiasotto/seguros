@@ -30,6 +30,10 @@
 <div class="data-list-header">
     <h1 class="h3 mb-0">QR Codes</h1>
     <div class="d-flex gap-2">
+        <a href="{{ route('admin.qr-codes.statistics.index') }}" class="btn btn-info d-flex align-items-center gap-2">
+            <i class="fas fa-chart-line"></i>
+            <span class="font-medium">Estatísticas</span>
+        </a>
         <a href="{{ route('admin.qr-codes.pdf') }}" class="btn btn-success d-flex align-items-center gap-2">
             <i class="fas fa-file-pdf"></i>
             <span class="font-medium">Gerar PDF para Impressão</span>
@@ -112,6 +116,9 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
+                                    <a href="{{ route('admin.qr-codes.statistics.show', $qrCode->id) }}" class="btn btn-primary" title="Ver Estatísticas">
+                                        <i class="fas fa-chart-line"></i>
+                                    </a>
                                     <a href="{{ route('admin.qr-codes.show', $qrCode) }}" class="btn btn-info" title="Visualizar QR Code">
                                         <i class="fas fa-qrcode"></i>
                                     </a>

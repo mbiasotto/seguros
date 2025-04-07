@@ -59,15 +59,49 @@
 }
 
 /* Paginação */
-.pagination-container .page-link {
-    padding: 0.25rem 0.5rem;
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
-.pagination-container .page-item.active .page-link {
+.pagination .page-item {
+    margin: 0 0.35rem;
+}
+
+.pagination .page-link {
+    border-radius: 0.25rem;
+    padding: 0.5rem 0.85rem;
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-medium);
+    color: var(--primary);
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    min-width: 2.5rem;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.pagination .page-item.active .page-link {
     background-color: var(--primary);
     border-color: var(--primary);
+    color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
+
+.pagination .page-link:hover {
+    z-index: 2;
+    color: var(--primary-dark);
+    text-decoration: none;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
 }
 
 /* Container de filtros */

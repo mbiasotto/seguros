@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AdminEstablishmentController;
 use App\Http\Controllers\Admin\QrCodeController;
 use App\Http\Controllers\Admin\QrCodePdfController;
 use App\Http\Controllers\QrCodeRedirectController;
+use App\Http\Controllers\QrCodeStatisticsController;
 
 // Direct access to login routes when authenticated - must be before other routes
 Route::get('/admin/login', function () {
@@ -74,6 +75,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // User Management Routes
         Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+        Route::get('users/{user}/access-logs', [\App\Http\Controllers\Admin\UserController::class, 'accessLogs'])->name('users.access-logs');
 
         // Vendor Management Routes
         Route::resource('vendors', VendorController::class);
@@ -98,6 +100,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('qr-codes', QrCodeController::class);
         Route::get('qr-codes/{qrCode}/download', [QrCodeController::class, 'download'])->name('qr-codes.download');
         Route::get('/qr-codes-pdf', [QrCodePdfController::class, 'generatePdf'])->name('qr-codes.pdf');
+
+        // QR Code Statistics Routes
+        Route::prefix('qr-codes/statistics')->name('qr-codes.statistics.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\QrCodeStatisticsController::class, 'index'])->name('index');
+            Route::get('/{id}', [\App\Http\Controllers\QrCodeStatisticsController::class, 'show'])->name('show');
+        });
     });
 });
 

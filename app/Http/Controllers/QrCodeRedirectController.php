@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\QrCode;
+use App\Models\QrCodeAccessLog;
 use Illuminate\Http\Request;
 
 class QrCodeRedirectController extends Controller
@@ -10,10 +11,11 @@ class QrCodeRedirectController extends Controller
     /**
      * Redirect to WhatsApp with a pre-defined message including the QR code ID
      *
+     * @param Request $request
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function redirect($id)
+    public function redirect(Request $request, $id)
     {
         $qrCode = QrCode::findOrFail($id);
 
@@ -21,6 +23,9 @@ class QrCodeRedirectController extends Controller
         if (!$qrCode->active) {
             abort(404);
         }
+
+        // Registrar o acesso ao QR code
+        $this->logAccess($request, $qrCode);
 
         // WhatsApp number
         $phoneNumber = "5515998260188";
@@ -32,5 +37,30 @@ class QrCodeRedirectController extends Controller
         $whatsappUrl = "https://api.whatsapp.com/send?phone={$phoneNumber}&text=" . urlencode($message);
 
         return redirect($whatsappUrl);
+    }
+
+    /**
+     * Registra o acesso ao QR Code
+     *
+     * @param Request $request
+     * @param QrCode $qrCode
+     * @return void
+     */
+    private function logAccess(Request $request, QrCode $qrCode): void
+    {
+        QrCodeAccessLog::create([
+            'qr_code_id' => $qrCode->id,
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'referer' => $request->header('referer'),
+            'request_data' => [
+                'query' => $request->query(),
+                'headers' => $request->header(),
+                'method' => $request->method(),
+                'path' => $request->path(),
+                'url' => $request->url(),
+                'date' => now()->toIso8601String(),
+            ],
+        ]);
     }
 }

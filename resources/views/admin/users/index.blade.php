@@ -62,7 +62,8 @@
                         <th>Nome</th>
                         <th>E-mail</th>
                         <th>Data de Cadastro</th>
-                        <th width="160">Ações</th>
+                        <th>Último Acesso</th>
+                        <th width="190">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -72,9 +73,20 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->created_at->format('d/m/Y H:i') }}</td>
                             <td>
+                                @if($user->lastAccess())
+                                    {{ $user->lastAccess()->created_at->format('d/m/Y H:i') }}
+                                @else
+                                    <span class="text-muted">Nunca acessou</span>
+                                @endif
+                            </td>
+                            <td>
                                 <div class="action-buttons">
                                     <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-edit" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>
+                                    </a>
+
+                                    <a href="{{ route('admin.users.access-logs', $user) }}" class="btn btn-info" title="Histórico de Acesso">
+                                        <i class="fas fa-history"></i>
                                     </a>
 
                                     @if($user->id !== 1 && (Auth::id() === 1 || Auth::id() !== $user->id) && \App\Models\User::count() > 1)
