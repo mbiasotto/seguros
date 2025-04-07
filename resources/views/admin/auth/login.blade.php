@@ -38,6 +38,10 @@
                     </div>
                 @endif
 
+                @php
+                    $cookieEmail = Cookie::get('remembered_email');
+                @endphp
+
                 @if($errors->any())
                     <div class="alert alert-danger">
                         <div class="d-flex align-items-center">
@@ -59,7 +63,15 @@
                             <span class="input-group-text border-end-0">
                                 <i class="fas fa-envelope"></i>
                             </span>
-                            <input type="email" class="form-control border-start-0" id="email" name="email" value="{{ old('email') }}" placeholder="seu-email@exemplo.com" required autofocus>
+                            @php
+                                use Illuminate\Support\Facades\Cookie;
+                                $cookieEmail = Cookie::get('remembered_email');
+                                Log::info('Email na view: ' . (old('email', $rememberedEmail ?? $cookieEmail ?? '') ?? 'não encontrado'));
+                                Log::info('Remembered Email na view: ' . ($rememberedEmail ?? 'não encontrado'));
+                                Log::info('Cookie Email na view: ' . ($cookieEmail ?? 'não encontrado'));
+                                Log::info('Old Email na view: ' . (old('email') ?? 'não encontrado'));
+                            @endphp
+                            <input type="email" class="form-control border-start-0" id="email" name="email" value="{{ old('email', $rememberedEmail ?? $cookieEmail ?? '') }}" placeholder="seu-email@exemplo.com" required autofocus>
                         </div>
                     </div>
 
@@ -78,6 +90,13 @@
 
                     <div class="mb-4 text-end">
                         <a href="{{ route('admin.password.request') }}" class="auth-link">Esqueci minha senha</a>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="remember" name="remember" value="1" {{ old('remember') || Cookie::get('remembered_email') ? 'checked' : '' }}>
+                            <label class="form-check-label" for="remember">Lembrar-me</label>
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-auth">

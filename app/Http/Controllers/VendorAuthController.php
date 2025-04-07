@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cookie;
 
 class VendorAuthController extends Controller
 {
@@ -27,7 +29,10 @@ class VendorAuthController extends Controller
 
         // DO NOT redirect admin users - let them view the vendor login form
 
-        return view('vendor.auth.login');
+        // Obter o email armazenado na sessão ou no cookie
+        $rememberedEmail = session('vendor_remembered_email') ?? request()->cookie('vendor_remembered_email');
+
+        return view('vendor.auth.login', compact('rememberedEmail'));
     }
 
     /**
@@ -40,8 +45,23 @@ class VendorAuthController extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::guard('vendor')->attempt($credentials)) {
+        // Verificar se o checkbox "Lembrar-me" está marcado
+        $remember = $request->has('remember') && $request->input('remember') == '1';
+
+        if (Auth::guard('vendor')->attempt($credentials, $remember)) {
             $request->session()->regenerate();
+
+            // Armazenar o email na sessão e no cookie se "lembrar-me" estiver marcado
+            if ($remember) {
+                $request->session()->put('vendor_remembered_email', $request->email);
+
+                // Criar o cookie com mais opções
+                $cookie = cookie('vendor_remembered_email', $request->email, 43200, '/', null, false, true);
+                Cookie::queue($cookie);
+            } else {
+                $request->session()->forget('vendor_remembered_email');
+                Cookie::queue(Cookie::forget('vendor_remembered_email'));
+            }
 
             // Registrar log de acesso
             $vendor = Auth::guard('vendor')->user();
@@ -119,6 +139,20 @@ class VendorAuthController extends Controller
      */
     public function logout(Request $request)
     {
+        // Verificar se o usuário marcou "Lembrar-me"
+        $rememberedEmail = Cookie::get('vendor_remembered_email');
+        $rememberMe = $rememberedEmail !== null;
+
+        // Limpar o email armazenado na sessão
+        $request->session()->forget('vendor_remembered_email');
+
+        // Só remover o cookie se o usuário não marcou "Lembrar-me"
+        if (!$rememberMe) {
+            // Criar um cookie com expiração no passado para removê-lo
+            $cookie = cookie('vendor_remembered_email', '', -1, '/', null, false, true);
+            Cookie::queue($cookie);
+        }
+
         // Only logout from vendor guard, not default web guard
         Auth::guard('vendor')->logout();
 
