@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\QrCodeController;
 use App\Http\Controllers\Admin\QrCodePdfController;
 use App\Http\Controllers\QrCodeRedirectController;
 use App\Http\Controllers\QrCodeStatisticsController;
+use App\Http\Controllers\ProfileController;
 
 // Direct access to login routes when authenticated - must be before other routes
 Route::get('/admin/login', function () {
@@ -96,8 +97,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Establishment Management Routes
         Route::resource('establishments', AdminEstablishmentController::class);
 
+        // Rotas para Upload de Documento do Estabelecimento (Admin)
+        Route::get('establishments/{establishment}/documents/upload', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'showUploadForm'])
+            ->name('establishments.documents.upload.show');
+        Route::post('establishments/{establishment}/documents/upload', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'handleUpload'])
+            ->name('establishments.documents.upload.store');
+
         // QR Code Management Routes
-        Route::resource('qr-codes', QrCodeController::class);
+        Route::resource('qr-codes', QrCodeController::class)->except([
+            // adicione métodos que não precisam das rotas resource aqui se necessário
+        ]);
         Route::get('qr-codes/{qrCode}/download', [QrCodeController::class, 'download'])->name('qr-codes.download');
         Route::get('/qr-codes-pdf', [QrCodePdfController::class, 'generatePdf'])->name('qr-codes.pdf');
 
@@ -106,6 +115,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/', [\App\Http\Controllers\QrCodeStatisticsController::class, 'index'])->name('index');
             Route::get('/{id}', [\App\Http\Controllers\QrCodeStatisticsController::class, 'show'])->name('show');
         });
+
+        // Rota para gerar QR Codes em lote
+        Route::get('/gerar-qrs/{startId}/{endId}', [QrCodeController::class, 'generateBatch'])
+            ->where(['startId' => '[0-9]+', 'endId' => '[0-9]+'])
+            ->name('qr-codes.generate-batch');
     });
 });
 
@@ -156,6 +170,12 @@ Route::prefix('vendor')->name('vendor.')->group(function () {
             Route::get('/{onboarding}', [\App\Http\Controllers\Vendor\EstablishmentDocumentController::class, 'show'])->name('.show');
             Route::get('/{onboarding}/view', [\App\Http\Controllers\Vendor\EstablishmentDocumentController::class, 'viewDocument'])->name('.view');
         });
+
+        // Rotas para Upload de Documento do Estabelecimento (Vendor)
+        Route::get('establishments/{establishment}/documents/upload', [\App\Http\Controllers\Vendor\EstablishmentDocumentController::class, 'showUploadForm'])
+            ->name('establishments.documents.upload.show');
+        Route::post('establishments/{establishment}/documents/upload', [\App\Http\Controllers\Vendor\EstablishmentDocumentController::class, 'handleUpload'])
+            ->name('establishments.documents.upload.store');
     });
 });
 

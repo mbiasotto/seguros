@@ -8,34 +8,57 @@ use App\Models\Establishment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DocumentApprovalController extends Controller
 {
     /**
      * Exibe a lista de todos os documentos
      */
-    public function index()
+    public function index(Request $request)
     {
-        $allDocuments = EstablishmentOnboarding::where('completed', true)
-            ->where('document_path', '!=', null)
-            ->with('establishment.vendor')
-            ->orderBy('completed_at', 'desc')
-            ->paginate(10);
+        $query = EstablishmentOnboarding::whereNotNull('document_path')
+            ->with('establishment.vendor');
+
+        // Filtro por status
+        if ($request->has('status')) {
+            if ($request->status === 'pending') {
+                $query->where('document_approved', false)
+                      ->whereNull('document_approved_at');
+            } elseif ($request->status === 'approved') {
+                $query->where('document_approved', true);
+            } elseif ($request->status === 'rejected') {
+                $query->where('document_approved', false)
+                      ->whereNotNull('document_approved_at');
+            }
+        }
+
+        // Filtro por nome do estabelecimento
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->whereHas('establishment', function ($q) use ($search) {
+                $q->where('nome', 'like', "%{$search}%");
+            });
+        }
+
+        $allDocuments = $query->orderBy('completed_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
 
         return view('admin.documents.index', compact('allDocuments'));
     }
 
     /**
-     * Exibe a lista de documentos pendentes de aprovação
+     * Exibe a lista de documentos pendentes
      */
     public function pending()
     {
-        $pendingDocuments = EstablishmentOnboarding::where('completed', true)
-            ->where('document_path', '!=', null)
+        $pendingDocuments = EstablishmentOnboarding::whereNotNull('document_path')
             ->where('document_approved', false)
             ->whereNull('document_approved_at')
             ->with('establishment.vendor')
-            ->orderBy('completed_at')
+            ->orderBy('completed_at', 'asc')
             ->paginate(10);
 
         return view('admin.documents.pending', compact('pendingDocuments'));
@@ -46,10 +69,9 @@ class DocumentApprovalController extends Controller
      */
     public function approved()
     {
-        $approvedDocuments = EstablishmentOnboarding::where('completed', true)
-            ->where('document_path', '!=', null)
-            ->where('document_approved', true)
+        $approvedDocuments = EstablishmentOnboarding::where('document_approved', true)
             ->whereNotNull('document_approved_at')
+            ->whereNotNull('document_path')
             ->with(['establishment.vendor', 'approvedByUser'])
             ->orderByDesc('document_approved_at')
             ->paginate(10);
@@ -62,10 +84,9 @@ class DocumentApprovalController extends Controller
      */
     public function rejected()
     {
-        $rejectedDocuments = EstablishmentOnboarding::where('completed', true)
-            ->where('document_path', '!=', null)
-            ->where('document_approved', false)
+        $rejectedDocuments = EstablishmentOnboarding::where('document_approved', false)
             ->whereNotNull('document_approved_at')
+            ->whereNotNull('document_path')
             ->with(['establishment.vendor', 'approvedByUser'])
             ->orderByDesc('document_approved_at')
             ->paginate(10);
@@ -78,19 +99,31 @@ class DocumentApprovalController extends Controller
      */
     public function show(EstablishmentOnboarding $onboarding)
     {
+        if (!$onboarding->document_path) {
+            return redirect()->route('admin.establishments.documents.index')
+                ->with('error', 'Este registro de onboarding não possui documento para visualização.');
+        }
         return view('admin.documents.show', compact('onboarding'));
     }
 
     /**
-     * Visualiza o documento enviado pelo estabelecimento
+     * Visualiza/Baixa o documento enviado pelo estabelecimento
      */
     public function viewDocument(EstablishmentOnboarding $onboarding)
     {
-        if (!$onboarding->document_path) {
-            return redirect()->back()->with('error', 'Este estabelecimento não enviou nenhum documento.');
+        if (!$onboarding->document_path || !Storage::disk('private')->exists($onboarding->document_path)) {
+            return redirect()->back()->with('error', 'Documento não encontrado ou não enviado.');
         }
 
-        return Storage::disk('private')->response($onboarding->document_path);
+        // Retorna o arquivo como download
+        $path = Storage::disk('private')->path($onboarding->document_path);
+        $mimeType = mime_content_type($path) ?: 'application/octet-stream';
+        $filename = basename($onboarding->document_path);
+
+        return response()->file($path, [
+            'Content-Type' => $mimeType,
+            'Content-Disposition' => 'inline; filename="' . $filename . '"'
+        ]);
     }
 
     /**
@@ -104,7 +137,7 @@ class DocumentApprovalController extends Controller
 
         $onboarding->approveDocument(Auth::id(), $validated['notes'] ?? null);
 
-        return redirect()->route('admin.establishments.documents.pending')
+        return redirect()->route('admin.establishments.documents.index')
             ->with('success', 'Documento aprovado com sucesso!');
     }
 
@@ -121,7 +154,68 @@ class DocumentApprovalController extends Controller
 
         $onboarding->rejectDocument(Auth::id(), $validated['notes']);
 
-        return redirect()->route('admin.establishments.documents.pending')
+        return redirect()->route('admin.establishments.documents.index')
             ->with('success', 'Documento rejeitado com sucesso!');
+    }
+
+    /**
+     * Exibe o formulário para upload de documento
+     */
+    public function showUploadForm(Establishment $establishment)
+    {
+        $onboarding = $establishment->onboarding()->first();
+
+        return view('admin.documents.upload', compact('establishment', 'onboarding'));
+    }
+
+    /**
+     * Processa o upload do documento
+     */
+    public function handleUpload(Request $request, Establishment $establishment)
+    {
+        $validator = Validator::make($request->all(), [
+            'document' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
+        ], [
+            'document.required' => 'É necessário enviar um documento.',
+            'document.file' => 'O arquivo enviado é inválido.',
+            'document.mimes' => 'O documento deve ser um arquivo PDF, JPG, JPEG ou PNG.',
+            'document.max' => 'O documento não pode ter mais de 5MB.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $onboarding = $establishment->onboarding()->firstOrCreate(
+            ['establishment_id' => $establishment->id],
+            [
+                'token' => \Illuminate\Support\Str::random(64),
+                'expires_at' => now()->addYear()
+            ]
+        );
+
+        if ($request->hasFile('document') && $request->file('document')->isValid()) {
+            $file = $request->file('document');
+            $fileName = 'establishment_' . $establishment->id . '_doc_' . time() . '.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('documents/establishments', $fileName, 'private');
+
+            if ($onboarding->document_path && Storage::disk('private')->exists($onboarding->document_path)) {
+                Storage::disk('private')->delete($onboarding->document_path);
+            }
+
+            $onboarding->document_path = $filePath;
+            $onboarding->document_approved = false;
+            $onboarding->document_approved_at = null;
+            $onboarding->approved_by_user_id = null;
+            $onboarding->approval_notes = null;
+            $onboarding->save();
+
+            return redirect()->route('admin.establishments.index')
+                ->with('success', 'Documento do estabelecimento ' . $establishment->nome . ' enviado com sucesso! Aguardando aprovação.');
+        }
+
+        return redirect()->back()->with('error', 'Falha ao fazer upload do documento.');
     }
 }

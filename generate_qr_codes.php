@@ -23,7 +23,7 @@ echo "Iniciando geração de QR codes...\n";
 $baseUrl = 'https://seguraessa.app';
 
 // Gerar 100 QR codes
-for ($id = 1; $id <= 100; $id++) {
+for ($id = 101; $id <= 300; $id++) {
     // URL para o QR code
     $url = $baseUrl . '/qr-code/' . $id;
 

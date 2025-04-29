@@ -149,5 +149,34 @@
         });
     </script>
     @stack('scripts')
+
+    <!-- jQuery Mask Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script>
+        // Precisa garantir que o jQuery esteja carregado antes disso
+        // Se não estiver, precisa adicionar a CDN do jQuery também
+        if (typeof jQuery == 'undefined') {
+            console.error('jQuery não está carregado! A máscara de CNPJ pode não funcionar.');
+        } else {
+            $(document).ready(function(){
+                // Aplica a máscara de CNPJ
+                $('.cnpj-mask').mask('00.000.000/0000-00');
+
+                // Aplica a máscara de telefone (se houver)
+                var phoneMaskBehavior = function (val) {
+                    return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+                },
+                phoneOptions = {
+                    onKeyPress: function(val, e, field, options) {
+                        field.mask(phoneMaskBehavior.apply({}, arguments), options);
+                    }
+                };
+                $('input[name="telefone"], input[id="telefone"]').mask(phoneMaskBehavior, phoneOptions);
+
+                // Aplica a máscara de CEP (se houver)
+                $('input[name="cep"], input[id="cep"]').mask('00000-000');
+            });
+        }
+    </script>
 </body>
 </html>

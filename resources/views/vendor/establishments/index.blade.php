@@ -101,6 +101,9 @@
                                     <a href="{{ route('vendor.establishments.edit', $establishment) }}" class="btn btn-edit" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
+                                    <a href="{{ route('vendor.establishments.documents.upload.show', $establishment->id) }}" class="btn btn-info" title="Upload Documento">
+                                        <i class="fas fa-upload"></i>
+                                    </a>
                                     <button
                                         type="button"
                                         class="btn btn-danger"

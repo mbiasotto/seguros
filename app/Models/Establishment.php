@@ -20,7 +20,13 @@ class Establishment extends Model
         'telefone',
         'email',
         'descricao',
-        'ativo'
+        'ativo',
+        'name',
+        'cnpj',
+        'description',
+        'address',
+        'logo',
+        'image',
     ];
 
     protected $casts = [

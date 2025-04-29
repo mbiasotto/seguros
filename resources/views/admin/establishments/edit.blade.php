@@ -96,6 +96,13 @@
                                     <input type="text" class="form-control form-control-lg" id="nome" name="nome" value="{{ old('nome', $establishment->nome) }}" required>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="cnpj" class="form-label">CNPJ</label>
+                                    <input type="text" class="form-control form-control-lg cnpj-mask" id="cnpj" name="cnpj" value="{{ old('cnpj', $establishment->cnpj) }}" placeholder="00.000.000/0000-00">
+                                    <div class="form-text text-sm">Opcional</div>
+                                </div>
+                            </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
@@ -156,6 +163,35 @@
                                     @error('estado')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2 class="font-semibold text-lg border-bottom pb-2 mb-4">Materiais</h2>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="logo" class="form-label">Logo</label>
+                                    <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
+                                    <div class="form-text text-sm mb-2">Opcional. Envie um novo arquivo para substituir o atual.</div>
+                                    @if($establishment->logo)
+                                        <a href="{{ Storage::url($establishment->logo) }}" target="_blank" class="btn btn-sm btn-outline-info">
+                                            <i class="fas fa-eye me-1"></i> Ver Logo Atual
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="image" class="form-label">Imagem de Capa</label>
+                                    <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                                    <div class="form-text text-sm mb-2">Opcional. Envie um novo arquivo para substituir o atual.</div>
+                                     @if($establishment->image)
+                                        <a href="{{ Storage::url($establishment->image) }}" target="_blank" class="btn btn-sm btn-outline-info">
+                                            <i class="fas fa-eye me-1"></i> Ver Imagem Atual
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

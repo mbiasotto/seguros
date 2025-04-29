@@ -19,20 +19,34 @@
 
     <div class="card border-0 shadow-sm mb-4">
         <div class="card-header bg-white py-3">
-            <ul class="nav nav-tabs card-header-tabs">
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.establishments.documents.index') ? 'active' : '' }}" href="{{ route('admin.establishments.documents.index') }}">Todos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.establishments.documents.pending') ? 'active' : '' }}" href="{{ route('admin.establishments.documents.pending') }}">Pendentes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.establishments.documents.approved') ? 'active' : '' }}" href="{{ route('admin.establishments.documents.approved') }}">Aprovados</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.establishments.documents.rejected') ? 'active' : '' }}" href="{{ route('admin.establishments.documents.rejected') }}">Rejeitados</a>
-                </li>
-            </ul>
+            <div class="row d-flex justify-content-between align-items-center mb-3">
+                <div class="col-md-8">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.establishments.documents.index') && !request()->has('status') ? 'active' : '' }}" href="{{ route('admin.establishments.documents.index') }}">Todos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.establishments.documents.pending') || request('status') === 'pending' ? 'active' : '' }}" href="{{ route('admin.establishments.documents.pending') }}">Pendentes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.establishments.documents.approved') || request('status') === 'approved' ? 'active' : '' }}" href="{{ route('admin.establishments.documents.approved') }}">Aprovados</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.establishments.documents.rejected') || request('status') === 'rejected' ? 'active' : '' }}" href="{{ route('admin.establishments.documents.rejected') }}">Rejeitados</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <form action="{{ route('admin.establishments.documents.index') }}" method="GET" class="d-flex">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Buscar por estabelecimento..." name="search" value="{{ request('search') }}">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="card-body p-0">
             @if($allDocuments->count() > 0)
@@ -42,8 +56,9 @@
                             <tr>
                                 <th>Estabelecimento</th>
                                 <th>Enviado em</th>
+                                <th>Vendor</th>
                                 <th>Status</th>
-                                <th>Ações</th>
+                                <th width="200">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,21 +72,63 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>{{ $document->completed_at->format('d/m/Y H:i') }}</td>
+                                    <td>{{ $document->completed_at ? $document->completed_at->format('d/m/Y H:i') : 'N/A' }}</td>
+                                    <td>{{ $document->establishment->vendor->name ?? 'N/A' }}</td>
                                     <td>
-                                        @if($document->document_approved === true)
+                                        @if($document->document_approved && $document->document_approved_at)
                                             <span class="badge bg-success">Aprovado</span>
-                                        @elseif($document->document_approved === false && $document->document_approved_at)
+                                        @elseif(!$document->document_approved && $document->document_approved_at)
                                             <span class="badge bg-danger">Rejeitado</span>
                                         @else
                                             <span class="badge bg-warning text-dark">Pendente</span>
                                         @endif
                                     </td>
                                     <td>
-                                        <div class="btn-group">
-                                            <a href="{{ route('admin.establishments.documents.show', $document) }}" class="btn btn-sm btn-outline-primary">
+                                        <div class="d-flex">
+                                            <a href="{{ route('admin.establishments.documents.view', $document) }}" class="btn btn-sm btn-outline-secondary me-1" target="_blank" title="Visualizar documento">
+                                                <i class="fas fa-file-alt"></i>
+                                            </a>
+                                            <a href="{{ route('admin.establishments.documents.show', $document) }}" class="btn btn-sm btn-primary me-1" title="Detalhes">
                                                 <i class="fas fa-eye"></i>
                                             </a>
+
+                                            @if(!$document->document_approved_at)
+                                                <form action="{{ route('admin.establishments.documents.approve', $document) }}" method="POST" class="d-inline me-1">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Tem certeza que deseja aprovar este documento?')" title="Aprovar">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                </form>
+                                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal{{ $document->id }}" title="Rejeitar">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+
+                                                <!-- Modal de Rejeição -->
+                                                <div class="modal fade" id="rejectModal{{ $document->id }}" tabindex="-1" aria-labelledby="rejectModalLabel{{ $document->id }}" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="rejectModalLabel{{ $document->id }}">Rejeitar Documento</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <form action="{{ route('admin.establishments.documents.reject', $document) }}" method="POST">
+                                                                @csrf
+                                                                <div class="modal-body">
+                                                                    <div class="mb-3">
+                                                                        <label for="notes{{ $document->id }}" class="form-label">Motivo da Rejeição <span class="text-danger">*</span></label>
+                                                                        <textarea class="form-control" id="notes{{ $document->id }}" name="notes" rows="3" required></textarea>
+                                                                        <div class="form-text">Informe o motivo da rejeição do documento.</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                                    <button type="submit" class="btn btn-danger">Rejeitar Documento</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>
@@ -88,7 +145,7 @@
                         <i class="fas fa-file-alt"></i>
                     </div>
                     <h3 class="fw-bold">Nenhum documento encontrado</h3>
-                    <p class="text-muted">Não há documentos de estabelecimentos no momento.</p>
+                    <p class="text-muted">Não foram encontrados documentos com os filtros selecionados.</p>
                 </div>
             @endif
         </div>

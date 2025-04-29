@@ -34,14 +34,51 @@
             <i class="fas fa-chart-line"></i>
             <span class="font-medium">Estatísticas</span>
         </a>
-        <a href="{{ route('admin.qr-codes.pdf') }}" class="btn btn-success d-flex align-items-center gap-2">
+        <!-- Botão para abrir o modal de geração de PDF -->
+        <button type="button" class="btn btn-success d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#pdfRangeModal">
             <i class="fas fa-file-pdf"></i>
-            <span class="font-medium">Gerar PDF para Impressão</span>
-        </a>
+            <span class="font-medium">Gerar PDF</span>
+        </button>
         <a href="{{ route('admin.qr-codes.create') }}" class="btn btn-primary d-flex align-items-center gap-2">
             <i class="fas fa-plus"></i>
             <span class="font-medium">Novo</span>
         </a>
+    </div>
+</div>
+
+<!-- Modal para selecionar o intervalo de QR Codes -->
+<div class="modal fade" id="pdfRangeModal" tabindex="-1" aria-labelledby="pdfRangeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pdfRangeModalLabel">Gerar PDF com intervalo de QR Codes</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <form action="{{ route('admin.qr-codes.pdf') }}" method="GET">
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="start_id" class="form-label">De (ID inicial):</label>
+                            <input type="number" name="start" id="start_id" class="form-control" placeholder="Ex: 101" min="1">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="end_id" class="form-label">Até (ID final):</label>
+                            <input type="number" name="end" id="end_id" class="form-control" placeholder="Ex: 200" min="1">
+                        </div>
+                    </div>
+                    <div class="mt-3 text-muted small">
+                        Deixe os campos vazios para incluir todos os QR Codes.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success d-flex align-items-center gap-2">
+                        <i class="fas fa-file-pdf"></i>
+                        <span class="font-medium">Gerar PDF</span>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

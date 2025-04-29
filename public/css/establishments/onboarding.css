@@ -1,120 +1,291 @@
 body {
-    background-color: #f8f9fa;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
-}
-.onboarding-container {
-    max-width: 800px;
-    margin: 50px auto;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-.header {
-    background-color: #1a5276;
-    color: white;
-    padding: 30px;
-    text-align: center;
-}
-.header img {
-    max-width: 180px;
-    margin-bottom: 15px;
-}
-.content {
-    padding: 30px;
-}
-.form-section {
-    margin-bottom: 30px;
-    padding: 20px;
-    border-radius: 8px;
     background-color: #f8f9fa;
-    border-left: 5px solid #2e86de;
-}
-.form-section h3 {
-    color: #1a5276;
-    margin-bottom: 15px;
-}
-.contract-text {
-    max-height: 300px;
-    overflow-y: auto;
-    padding: 15px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    font-size: 14px;
+    color: #333;
     line-height: 1.6;
 }
-.btn-primary {
-    background-color: #2e86de;
-    border-color: #2e86de;
-    padding: 10px 20px;
-    font-weight: 600;
+
+.onboarding-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
-.btn-primary:hover {
-    background-color: #1a5276;
-    border-color: #1a5276;
-}
-.alert {
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 20px;
-}
-.footer {
+
+.header {
     text-align: center;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-top: 1px solid #eee;
-    font-size: 14px;
-    color: #777;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #e7e7e7;
+    padding-bottom: 1.5rem;
 }
+
+.header img {
+    max-width: 180px;
+    margin-bottom: 1.5rem;
+}
+
+.header h1 {
+    color: #2c3e50;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.content {
+    padding: 1rem 0;
+}
+
+/* Indicador de etapas */
 .step-indicator {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 30px;
+    margin: 2rem 0;
     position: relative;
 }
+
 .step-indicator::before {
     content: '';
     position: absolute;
-    top: 15px;
+    top: 24px;
     left: 0;
-    right: 0;
+    width: 100%;
     height: 2px;
-    background: #ddd;
+    background-color: #e7e7e7;
     z-index: 1;
 }
+
 .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     position: relative;
     z-index: 2;
-    text-align: center;
-    width: 33.33%;
 }
+
 .step-circle {
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    background: #ddd;
-    color: #fff;
-    margin: 0 auto 10px;
+    background-color: white;
+    border: 2px solid #e7e7e7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: bold;
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
 }
-.step.active .step-circle {
-    background: #2e86de;
-}
-.step.completed .step-circle {
-    background: #28a745;
-}
+
 .step-title {
-    font-size: 14px;
-    color: #777;
+    font-size: 0.85rem;
+    color: #6c757d;
+    text-align: center;
 }
-.step.active .step-title {
-    color: #2e86de;
-    font-weight: bold;
+
+.step.completed .step-circle {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: white;
 }
-.step.completed .step-title {
-    color: #28a745;
+
+.step.active .step-circle {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+    box-shadow: 0 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+/* Estilo do formulário */
+.form-section {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid #e7e7e7;
+}
+
+.form-section h3 {
+    border-bottom: 1px solid #e7e7e7;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.25rem;
+    color: #2c3e50;
+    font-size: 1.25rem;
+}
+
+/* Container do vídeo */
+.video-container {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid #e7e7e7;
+}
+
+.video-container h3 {
+    border-bottom: 1px solid #e7e7e7;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.25rem;
+    color: #2c3e50;
+    font-size: 1.25rem;
+}
+
+.ratio-16x9 {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* Estilização do contrato */
+.contract-text {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #e7e7e7;
+    padding: 1.25rem;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-bottom: 1.5rem;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.contract-text::-webkit-scrollbar {
+    width: 8px;
+}
+
+.contract-text::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.contract-text::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.contract-text::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+.contract-text h4 {
+    text-align: center;
+    margin-bottom: 1.25rem;
+    font-size: 1.1rem;
+    color: #2c3e50;
+}
+
+.contract-text h5 {
+    font-size: 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #495057;
+}
+
+.contract-text h6 {
+    font-size: 0.95rem;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #495057;
+}
+
+.contract-text p, .contract-text li {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+}
+
+.contract-text ul, .contract-text ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.contract-text .table {
+    font-size: 0.85rem;
+}
+
+.contract-text .table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+/* Estilo para o checkbox do contrato */
+.form-check {
+    padding-left: 2rem;
+}
+
+.form-check-input {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: 0.15rem;
+    margin-left: -2rem;
+}
+
+.form-check-label {
+    font-weight: 600;
+    color: #495057;
+}
+
+/* Botão de envio */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+    box-shadow: 0 5px 15px rgba(0, 105, 217, 0.3);
+}
+
+/* Rodapé */
+.footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e7e7e7;
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .onboarding-container {
+        padding: 1rem;
+    }
+
+    .step-indicator {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-left: 2rem;
+    }
+
+    .step-indicator::before {
+        height: 100%;
+        width: 2px;
+        left: 25px;
+        top: 0;
+    }
+
+    .step {
+        flex-direction: row;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .step-circle {
+        margin-right: 1rem;
+        margin-bottom: 0;
+    }
+
+    .form-section, .video-container {
+        padding: 1rem;
+    }
+
+    .contract-text {
+        max-height: 250px;
+        padding: 1rem;
+    }
 }

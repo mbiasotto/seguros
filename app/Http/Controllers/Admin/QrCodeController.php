@@ -7,6 +7,7 @@ use App\Models\QrCode;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode as QrCodeGenerator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 class QrCodeController extends Controller
 {
@@ -179,5 +180,99 @@ class QrCodeController extends Controller
         return response($qrCodeImage)
             ->header('Content-Type', 'image/png')
             ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
+    }
+
+    /**
+     * Gera QR Codes em lote com base em um intervalo de IDs.
+     *
+     * @param int $startId
+     * @param int $endId
+     * @return \Illuminate\Http\Response
+     */
+    public function generateBatch(int $startId, int $endId)
+    {
+        // Diretório onde os QR codes serão salvos
+        $outputDir = public_path('qr_codes'); // Usar public_path
+
+        // Criar o diretório se não existir
+        if (!File::isDirectory($outputDir)) {
+            File::makeDirectory($outputDir, 0755, true, true);
+        }
+
+        // Definir o domínio base para os QR codes (pode vir de .env ou config)
+        $baseUrl = config('app.url', 'https://seguraessa.app'); // Usar config('app.url') como padrão
+
+        $generatedFiles = [];
+
+        // Validar se startId é menor ou igual a endId
+        if ($startId > $endId) {
+            return response("O ID inicial ({$startId}) não pode ser maior que o ID final ({$endId}).", 400);
+        }
+
+        // Limitar a geração para evitar sobrecarga (opcional, mas recomendado)
+        $limit = 500; // Exemplo: limitar a 500 QRs por vez
+        if (($endId - $startId + 1) > $limit) {
+             return response("A geração está limitada a {$limit} QR codes por vez. Intervalo solicitado: " . ($endId - $startId + 1), 400);
+        }
+
+
+        for ($id = $startId; $id <= $endId; $id++) {
+            // URL para o QR code
+            $url = rtrim($baseUrl, '/') . '/qr-code/' . $id;
+
+            // Nome do arquivo
+            $filename = $outputDir . '/qr_code_' . $id . '.png';
+
+            // Gerar o QR code com tamanho 750x750 pixels e margem zero
+            $qrCodeImage = QrCodeGenerator::format('png')
+                ->size(750)
+                ->margin(0) // Margem zero
+                ->errorCorrection('H')
+                ->generate($url);
+
+            // Adicionar espaço extra para o ID abaixo do QR code (usando GD)
+            $qrSize = 750; // Tamanho original do QR code
+            $padding = 30; // Espaço extra para o texto do ID
+
+            // Criar uma nova imagem com espaço extra na parte inferior
+            $newImage = imagecreatetruecolor($qrSize, $qrSize + $padding);
+            $white = imagecolorallocate($newImage, 255, 255, 255);
+            $black = imagecolorallocate($newImage, 0, 0, 0);
+            imagefill($newImage, 0, 0, $white);
+
+            // Adicionar o QR Code à nova imagem
+            $sourceImage = imagecreatefromstring($qrCodeImage);
+            if ($sourceImage === false) {
+                 // Log ou tratamento de erro se imagecreatefromstring falhar
+                 continue; // Pular este ID ou retornar erro
+            }
+            imagecopy($newImage, $sourceImage, 0, 0, 0, 0, $qrSize, $qrSize);
+            imagedestroy($sourceImage);
+
+            // Adicionar o ID do QR Code à imagem
+            $fontSize = 5; // GD font size (1-5)
+            $text = "ID: " . $id;
+            $textWidth = imagefontwidth($fontSize) * strlen($text);
+
+            // Posicionar o texto centralizado abaixo do QR code
+            $x = ($qrSize - $textWidth) / 2;
+            $y = $qrSize + ($padding / 2) - (imagefontheight($fontSize) / 2); // Centralizar verticalmente no padding
+            imagestring($newImage, $fontSize, $x, $y, $text, $black);
+
+            // Salvar a imagem como arquivo PNG
+            if (imagepng($newImage, $filename)) {
+                $generatedFiles[] = basename($filename);
+            } else {
+                 // Log ou tratamento de erro se imagepng falhar
+            }
+            imagedestroy($newImage);
+        }
+
+        $message = "Geração de QR codes concluída para IDs de {$startId} a {$endId}.\n";
+        $message .= count($generatedFiles) . " arquivos gerados em: " . $outputDir . "\n";
+        // $message .= "Arquivos: " . implode(', ', $generatedFiles); // Descomente se quiser listar os arquivos
+
+        // Retornar uma resposta simples (pode ser JSON ou view)
+        return response($message)->header('Content-Type', 'text/plain');
     }
 }

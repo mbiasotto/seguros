@@ -39,9 +39,9 @@
                 <i class="fas fa-store"></i>
                 <span>Estabelecimentos</span>
             </a>
-            <a href="{{ route('admin.establishments.documents.pending') }}" class="nav-link {{ request()->routeIs('admin.establishments.documents.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.establishments.documents.pending') }}" class="nav-link {{ request()->routeIs('admin.establishments.documents*') ? 'active' : '' }}">
                 <i class="fas fa-file-alt"></i>
-                <span>Documentos Pendentes</span>
+                <span>Documentos</span>
             </a>
             <a href="{{ route('admin.qr-codes.index') }}" class="nav-link {{ request()->routeIs('admin.qr-codes*') ? 'active' : '' }}">
                 <i class="fas fa-qrcode"></i>
@@ -158,5 +158,28 @@
         });
     </script>
     @stack('scripts')
+
+    <!-- jQuery Mask Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            // Aplica a máscara de CNPJ
+            $('.cnpj-mask').mask('00.000.000/0000-00');
+
+            // Aplica a máscara de telefone (se houver)
+            var phoneMaskBehavior = function (val) {
+                return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+            },
+            phoneOptions = {
+                onKeyPress: function(val, e, field, options) {
+                    field.mask(phoneMaskBehavior.apply({}, arguments), options);
+                }
+            };
+            $('input[name="telefone"], input[id="telefone"]').mask(phoneMaskBehavior, phoneOptions);
+
+            // Aplica a máscara de CEP (se houver)
+            $('input[name="cep"], input[id="cep"]').mask('00000-000');
+        });
+    </script>
 </body>
 </html>

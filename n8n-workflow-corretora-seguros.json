@@ -1,0 +1,508 @@
+{
+  "name": "Corretora de Seguros - Fluxo Completo com IA (Nativo)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "webhook-seguros",
+        "options": {}
+      },
+      "id": "webhook-entry",
+      "name": "Webhook Entrada",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "whatsapp_number",
+              "value": "={{ $json.body.From ? $json.body.From.replace('whatsapp:', '') : ($json.body.sender || $json.body.whatsapp_number || $json.body.phone) }}"
+            },
+            {
+              "name": "message",
+              "value": "={{ $json.body.Body || $json.body.message || $json.body.text || '' }}"
+            }
+          ],
+          "number": [],
+          "boolean": []
+        },
+        "options": {}
+      },
+      "id": "set-initial-data",
+      "name": "Definir Dados Iniciais",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [400, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://{{$node[\"Credentials\"].json[\"supabase_url\"]}}/rest/v1/clientes",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{$node[\"Credentials\"].json[\"supabase_key\"]}}"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$node[\"Credentials\"].json[\"supabase_key\"]}}"
+            }
+          ]
+        },
+        "options": {},
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "whatsapp_number",
+              "value": "=eq.{{$json[\"whatsapp_number\"]}}"
+            },
+            {
+              "name": "select",
+              "value": "*"
+            },
+            {
+              "name": "order",
+              "value": "created_at.desc"
+            },
+            {
+              "name": "limit",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "id": "check-cliente-existente",
+      "name": "Verificar Cliente Existente",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [550, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.body && $json.body.length > 0 }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "client-exists-decision",
+      "name": "Cliente Existente?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [700, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "resposta",
+              "value": "=Olá novamente, {{ $json.body[0].nome || 'cliente' }}! Que bom ver você de volta.\nComo posso ajudar hoje? Vejo que já tem interesse em seguro {{ $json.body[0].tipo_seguro }}.\n1. Continuar com seguro {{ $json.body[0].tipo_seguro }}\n2. Explorar outros\n3. Falar com atendente"
+            },
+            {
+              "name": "tipo_seguro_anterior",
+              "value": "={{ $json.body[0].tipo_seguro }}"
+            }
+          ],
+          "boolean": [
+            {
+              "name": "is_returning",
+              "value": true
+            }
+          ]
+        },
+        "keepOnlySet": false,
+        "options": {}
+      },
+      "id": "set-retorno",
+      "name": "Set Cliente Retorno",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [850, 200]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "resposta",
+              "value": "Olá! Bem-vindo(a) à nossa corretora. Como posso ajudar?\n1. Seguro Auto\n2. Seguro Residencial\n3. Seguro de Vida\n4. Seguro Empresarial\n5. Outros"
+            }
+          ],
+          "boolean": [
+            {
+              "name": "is_returning",
+              "value": false
+            }
+          ]
+        },
+        "keepOnlySet": false,
+        "options": {}
+      },
+      "id": "set-novo",
+      "name": "Set Novo Cliente",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [850, 400]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4-turbo-preview",
+        "jsonOutput": true,
+        "temperature": 0.5,
+        "maxTokens": 300,
+        "messages": [
+          {
+            "role": "system",
+            "content": "Você é um assistente de corretora de seguros. Sua tarefa é analisar a mensagem do cliente e determinar a intenção principal e o tipo de seguro de interesse. Responda em JSON com as seguintes chaves:\n- 'intent': ('saudacao', 'cotacao', 'informacao', 'coleta_dados', 'falar_atendente', 'outro')\n- 'tipo_seguro': ('Auto', 'Residencial', 'Vida', 'Empresarial', 'Outros', 'NaoIdentificado')\n- 'resposta_sugerida': 'Uma resposta inicial curta e apropriada para a intenção, sem pedir dados ainda.'\n- 'proximo_passo': ('enviar_resposta', 'iniciar_coleta', 'transferir', 'esclarecer')\n\nContexto: {{ $json.is_returning ? 'Cliente retornando. Interesse anterior: ' + $json.tipo_seguro_anterior : 'Novo cliente.' }}"
+          },
+          {
+            "role": "user",
+            "content": "={{ $json.message }}"
+          }
+        ]
+      },
+      "id": "ai-analisar-intencao",
+      "name": "AI Analisar Intenção",
+      "type": "n8n-nodes-ai-model.openAiChat",
+      "typeVersion": 1,
+      "position": [1000, 300],
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIALS_ID",
+          "name": "OpenAI Credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.proximo_passo }}",
+              "operation": "equal",
+              "value2": "iniciar_coleta"
+            }
+          ]
+        }
+      },
+      "id": "decision-coleta-dados",
+      "name": "Iniciar Coleta?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [1300, 300]
+    },
+    {
+      "parameters": {
+        "conditions": [
+          {
+            "condition": [
+              {
+                "value1": "={{ $json.tipo_seguro }}",
+                "operation": "equal",
+                "value2": "Auto"
+              }
+            ],
+            "routing": { "output": 1 }
+          },
+          {
+            "condition": [
+              {
+                "value1": "={{ $json.tipo_seguro }}",
+                "operation": "equal",
+                "value2": "Residencial"
+              }
+            ],
+            "routing": { "output": 2 }
+          },
+          {
+            "condition": [
+              {
+                "value1": "={{ $json.tipo_seguro }}",
+                "operation": "equal",
+                "value2": "Vida"
+              }
+            ],
+            "routing": { "output": 3 }
+          },
+          {
+            "condition": [
+              {
+                "value1": "={{ $json.tipo_seguro }}",
+                "operation": "equal",
+                "value2": "Empresarial"
+              }
+            ],
+            "routing": { "output": 4 }
+          }
+        ],
+        "defaultOutput": 0,
+        "multipleValues": false
+      },
+      "id": "switch-tipo-seguro",
+      "name": "Switch Tipo Seguro",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [1450, 200]
+    },
+    {
+      "parameters": { "values": { "string": [{ "name": "mensagemColeta", "value": "Para seguro Auto, preciso de:\n1. Nome Completo:\n2. CPF:\n3. Nascimento:\n4. Telefone:\n5. Email:\n6. Veículo (Marca/Modelo):\n7. Ano:\n8. Uso:" }] }, "options": {} },
+      "id": "set-coleta-auto", "name": "Set Coleta Auto", "type": "n8n-nodes-base.set", "typeVersion": 1, "position": [1600, 100]
+    },
+    {
+      "parameters": { "values": { "string": [{ "name": "mensagemColeta", "value": "Para seguro Residencial, preciso de:\n1. Nome Completo:\n2. CPF:\n3. Nascimento:\n4. Telefone:\n5. Email:\n6. Tipo Imóvel:\n7. Endereço:\n8. Metragem:" }] }, "options": {} },
+      "id": "set-coleta-residencial", "name": "Set Coleta Residencial", "type": "n8n-nodes-base.set", "typeVersion": 1, "position": [1600, 150]
+    },
+    {
+      "parameters": { "values": { "string": [{ "name": "mensagemColeta", "value": "Para seguro Vida, preciso de:\n1. Nome Completo:\n2. CPF:\n3. Nascimento:\n4. Telefone:\n5. Email:\n6. Profissão:\n7. Esportes Radicais?:\n8. Saúde Pré-existente?:" }] }, "options": {} },
+      "id": "set-coleta-vida", "name": "Set Coleta Vida", "type": "n8n-nodes-base.set", "typeVersion": 1, "position": [1600, 200]
+    },
+    {
+      "parameters": { "values": { "string": [{ "name": "mensagemColeta", "value": "Para seguro Empresarial, preciso de:\n1. Responsável:\n2. Empresa:\n3. CNPJ:\n4. Telefone:\n5. Email:\n6. Ramo:\n7. Endereço:\n8. Funcionários:" }] }, "options": {} },
+      "id": "set-coleta-empresarial", "name": "Set Coleta Empresarial", "type": "n8n-nodes-base.set", "typeVersion": 1, "position": [1600, 250]
+    },
+    {
+      "parameters": { "values": { "string": [{ "name": "mensagemColeta", "value": "Para que possamos ajudar, preciso de:\n1. Nome Completo:\n2. CPF/CNPJ:\n3. Telefone:\n4. Email:\n5. Tipo de Seguro desejado:\n6. Detalhes Adicionais:" }] }, "options": {} },
+      "id": "set-coleta-outros", "name": "Set Coleta Outros", "type": "n8n-nodes-base.set", "typeVersion": 1, "position": [1600, 50]
+    },
+    {
+      "parameters": { "mode": "mergeByIndex" },
+      "id": "merge-coleta", "name": "Merge Coleta", "type": "n8n-nodes-base.merge", "typeVersion": 1, "position": [1750, 200]
+    },
+    {
+      "parameters": { "values": { "string": [{ "name": "resposta", "value": "={{ $json.mensagemColeta }}\nResponda com as informações numeradas." }], "string": [{ "name": "status", "value": "aguardando_dados" }] }, "options": {} },
+      "id": "set-final-coleta", "name": "Set Final Coleta", "type": "n8n-nodes-base.set", "typeVersion": 1, "position": [1900, 200]
+    },
+    {
+      "parameters": { "values": { "string": [{ "name": "resposta", "value": "={{ $node['ai-analisar-intencao'].json.resposta_sugerida }}" }], "string": [{ "name": "status", "value": "dialogo_continuo" }] }, "options": {} },
+      "id": "set-resposta-ia", "name": "Set Resposta IA", "type": "n8n-nodes-base.set", "typeVersion": 1, "position": [1450, 400]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4-turbo-preview",
+        "jsonOutput": true,
+        "temperature": 0.3,
+        "maxTokens": 500,
+        "messages": [
+          {
+            "role": "system",
+            "content": "Você é um assistente que extrai dados de uma mensagem de cliente para um formulário de seguro. O cliente deveria responder a esta solicitação:\n\n{{ $json.mensagemColeta }}\n\nAnalise a resposta do cliente e extraia as informações em formato JSON. Use as chaves correspondentes aos campos solicitados (ex: 'Nome Completo', 'CPF', 'Veículo (Marca/Modelo)', etc.). Se um campo não for encontrado, omita-o ou deixe como null. Valide minimamente se os campos essenciais ('Nome Completo', 'Telefone') estão presentes. Retorne um JSON com:\n- 'dados_cliente': { ... dados extraídos ... }\n- 'dados_validos': (true/false baseado na presença de nome e telefone)"
+          },
+          {
+            "role": "user",
+            "content": "={{ $json.message }}"
+          }
+        ]
+      },
+      "id": "ai-extrair-dados",
+      "name": "AI Extrair Dados Cliente",
+      "type": "n8n-nodes-ai-model.openAiChat",
+      "typeVersion": 1,
+      "position": [1900, 400],
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIALS_ID",
+          "name": "OpenAI Credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.dados_validos }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "decision-dados-validos",
+      "name": "Dados Válidos?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [2050, 400]
+    },
+    {
+      "parameters": {
+        "url": "=https://{{$node[\"Credentials\"].json[\"supabase_url\"]}}/rest/v1/clientes",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{$node[\"Credentials\"].json[\"supabase_key\"]}}"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$node[\"Credentials\"].json[\"supabase_key\"]}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Prefer",
+              "value": "return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "whatsapp_number",
+              "value": "={{$json[\"whatsapp_number\"]}}"
+            },
+            {
+              "name": "nome",
+              "value": "={{$json[\"dados_cliente\"][\"Nome Completo\"]}}"
+            },
+            {
+              "name": "telefone",
+              "value": "={{$json[\"dados_cliente\"][\"Telefone\"]}}"
+            },
+            {
+              "name": "email",
+              "value": "={{$json[\"dados_cliente\"][\"Email\"]}}"
+            },
+            {
+              "name": "documento",
+              "value": "={{$json[\"dados_cliente\"][\"CPF\"] || $json[\"dados_cliente\"][\"CNPJ\"]}}"
+            },
+            {
+              "name": "tipo_seguro",
+              "value": "={{$json[\"tipo_seguro\"]}}"
+            },
+            {
+              "name": "dados_especificos",
+              "value": "={{ JSON.stringify($json[\"dados_cliente\"]) }}"
+            },
+            {
+              "name": "created_at",
+              "value": "={{$now}}"
+            },
+            {
+              "name": "status",
+              "value": "lead_qualificado"
+            }
+          ]
+        },
+        "options": {},
+        "method": "POST"
+      },
+      "id": "salvar-dados-supabase",
+      "name": "Salvar Dados no Supabase",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [2200, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "resposta",
+              "value": "=Muito obrigado, {{ $json.dados_cliente['Nome Completo'] || 'cliente' }}!\nSeus dados foram registrados. Um consultor especialista em seguro {{ $json.tipo_seguro }} entrará em contato em breve."
+            },
+            {
+              "name": "status",
+              "value": "finalizado"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-agradecimento",
+      "name": "Set Mensagem Agradecimento",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [2350, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "resposta",
+              "value": "Parece que faltam informações importantes (Nome e Telefone). Poderia fornecer novamente, por favor?"
+            },
+            {
+              "name": "status",
+              "value": "aguardando_correcao"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-correcao",
+      "name": "Set Mensagem Correção",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [2200, 500]
+    },
+    {
+      "parameters": { "mode": "mergeByIndex" },
+      "id": "merge-final-response", "name": "Merge Resposta Final", "type": "n8n-nodes-base.merge", "typeVersion": 1, "position": [2500, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.twilio.com/2010-04-01/Accounts/{{$node[\"Twilio Credentials\"].json[\"account_sid\"]}}/Messages.json",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "formData",
+        "bodyParameters": {
+          "parameters": [
+            { "name": "To", "value": "=whatsapp:{{$json[\"whatsapp_number\"]}}" },
+            { "name": "From", "value": "=whatsapp:{{$node[\"Twilio Credentials\"].json[\"from_number\"]}}" },
+            { "name": "Body", "value": "={{ $json.resposta }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "enviar-resposta-whatsapp",
+      "name": "Enviar Resposta WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [2650, 400]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            { "name": "notificacao", "value": "=Novo Lead ({{ $json.status }}): {{ $json.dados_cliente['Nome Completo'] || 'Desconhecido' }} - {{ $json.tipo_seguro }}. Tel: {{ $json.dados_cliente['Telefone'] || 'N/A' }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-notificacao-equipe",
+      "name": "Set Notificação Equipe",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [2500, 200]
+    }
+  ],
+  "connections": {
+  },
+  "active": false,
+  "settings": {},
+  "versionId": "some-new-version-id",
+  "meta": {
+    "instanceId": "abcdef1234567890abcdef1234567890"
+  },
+  "pinData": {}
+}
