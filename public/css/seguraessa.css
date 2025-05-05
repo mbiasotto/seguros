@@ -23,11 +23,10 @@
 @import 'components/charts.css';        /* Gráficos e visualizações */
 
 /* Estilos específicos por módulo */
-@import 'modules/admin.css';      /* Estilos da área administrativa */
-@import 'modules/establishment.css'; /* Estilos para estabelecimentos */
-@import 'modules/qr-codes.css';   /* Estilos específicos para QR codes */
-@import 'modules/auth.css';       /* Estilos de autenticação */
-@import 'modules/dashboard.css';  /* Estilos do dashboard */
+@import 'modules/auth.css';        /* Estilos de autenticação */
+@import 'modules/dashboard.css';   /* Estilos do dashboard */
+@import 'modules/establishment.css'; /* Estilos de estabelecimentos */
+@import 'modules/qr-codes.css';    /* Estilos de QR codes */
 
 /* Utilitários e helpers */
 @import 'utils/helpers.css';     /* Classes utilitárias */

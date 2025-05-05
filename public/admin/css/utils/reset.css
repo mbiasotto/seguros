@@ -1,0 +1,20 @@
+/*
+ * Base Styles - Reset
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+body {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+/* Reset de margens e paddings */
+* {
+    box-sizing: border-box;
+}
+
+/* Utilitários de texto */
+.entries-info {
+    font-size: 0.875rem;
+    margin: 1rem 0;
+}

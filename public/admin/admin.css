@@ -1,0 +1,54 @@
+/**
+ * Admin - CSS Principal Consolidado
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+/* Importação do CSS do Admin */
+@import url('./css/admin.css');
+
+/* Tema azul customizado - sobrescreve os outros estilos */
+@import url('./css/custom-admin.css');
+
+/* Adiciona !important para garantir sobrescrita */
+.badge-primary {
+    background-color: var(--admin-primary) !important;
+}
+
+.btn-primary {
+    background-color: var(--admin-primary) !important;
+    border-color: var(--admin-primary) !important;
+}
+
+.sidebar {
+    background-color: var(--admin-primary) !important;
+}
+
+/* Correções para botões de ação */
+.action-buttons {
+    display: flex !important;
+    gap: 0.75rem !important;
+    justify-content: flex-end !important;
+}
+
+.action-buttons .btn,
+.action-buttons .action-btn {
+    width: 32px !important;
+    height: 32px !important;
+    padding: 0 !important;
+    border-radius: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.action-buttons .btn[title*="Editar"],
+.action-buttons .action-btn[title*="Editar"] {
+    background-color: rgba(29, 64, 174, 0.1) !important;
+    color: var(--admin-primary) !important;
+}
+
+.action-buttons .btn[title*="Excluir"],
+.action-buttons .action-btn[title*="Excluir"] {
+    background-color: rgba(220, 53, 69, 0.1) !important;
+    color: #dc3545 !important;
+}

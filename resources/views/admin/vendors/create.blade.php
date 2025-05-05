@@ -165,5 +165,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset('js/utils/form-utils.js') }}"></script>
-<script src="{{ asset('js/admin/utils/password-generator.js') }}"></script>
+<script src="{{ asset('admin/js/utils/password-generator.js') }}"></script>
 @endpush

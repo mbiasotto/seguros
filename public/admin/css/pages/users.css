@@ -1,0 +1,91 @@
+/**
+ * Users Page Styles
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+/* Card de usuário */
+.user-card {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.user-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.user-card .card-header {
+    background-color: var(--admin-primary);
+    color: #fff;
+    border: none;
+    padding: 1rem;
+}
+
+.user-card .card-body {
+    padding: 1.5rem;
+}
+
+.user-avatar-lg {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.user-info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user-info-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-info-list li:last-child {
+    border-bottom: none;
+}
+
+.user-info-list .info-label {
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.user-info-list .info-value {
+    font-weight: 400;
+    color: var(--text-primary);
+}
+
+/* Tabela de logs de acesso */
+.access-logs-table th {
+    font-weight: 600;
+    background-color: #f5f6fa;
+}
+
+.access-logs-table td,
+.access-logs-table th {
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
+}
+
+.access-logs-table .log-time {
+    font-family: monospace;
+    font-size: 0.875rem;
+}
+
+.access-logs-table .log-action {
+    font-weight: 500;
+}
+
+.access-logs-table .log-ip {
+    font-family: monospace;
+    font-size: 0.875rem;
+}

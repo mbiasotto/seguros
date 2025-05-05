@@ -1,0 +1,101 @@
+/**
+ * Badges Component - Admin Common Styles
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+/* Estilos base para badges */
+.badge {
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+    font-size: 75%;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    letter-spacing: 0.01em;
+    text-transform: none;
+}
+
+/* Badges com estilo sutil e monocromático */
+.badge.bg-primary {
+    background-color: #f1f2f6 !important;
+    color: #5e6278 !important;
+}
+
+.badge.bg-secondary {
+    background-color: #f1f2f6 !important;
+    color: #5e6278 !important;
+}
+
+.badge.bg-success {
+    background-color: #eaf6ee !important;
+    color: #5e6278 !important;
+}
+
+.badge.bg-info {
+    background-color: #eaeff6 !important;
+    color: #5e6278 !important;
+}
+
+.badge.bg-warning {
+    background-color: #f8f5eb !important;
+    color: #5e6278 !important;
+}
+
+.badge.bg-danger {
+    background-color: #f6eaea !important;
+    color: #5e6278 !important;
+}
+
+.badge.bg-light {
+    background-color: #f9fafb !important;
+    color: #5e6278 !important;
+}
+
+.badge.bg-dark {
+    background-color: #e9eaec !important;
+    color: #5e6278 !important;
+}
+
+/* Badges com borda */
+.badge.badge-outline-primary {
+    background-color: transparent !important;
+    color: #5e6278 !important;
+    border: 1px solid #e4e6ef !important;
+}
+
+.badge.badge-outline-secondary {
+    background-color: transparent !important;
+    color: #5e6278 !important;
+    border: 1px solid #e4e6ef !important;
+}
+
+.badge.badge-outline-success {
+    background-color: transparent !important;
+    color: #5e6278 !important;
+    border: 1px solid #eaf6ee !important;
+}
+
+.badge.badge-outline-info {
+    background-color: transparent !important;
+    color: #5e6278 !important;
+    border: 1px solid #eaeff6 !important;
+}
+
+.badge.badge-outline-warning {
+    background-color: transparent !important;
+    color: #5e6278 !important;
+    border: 1px solid #f8f5eb !important;
+}
+
+.badge.badge-outline-danger {
+    background-color: transparent !important;
+    color: #5e6278 !important;
+    border: 1px solid #f6eaea !important;
+}
+
+/* Badges com ícones */
+.badge i {
+    font-size: 0.75em;
+}

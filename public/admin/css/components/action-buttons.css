@@ -1,0 +1,126 @@
+/**
+ * Action Buttons Component
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ * Estilos modernos e suaves para botões de ação em tabelas
+ */
+
+/* Container dos botões de ação */
+.action-buttons {
+    display: flex !important;
+    gap: 0.5rem !important;
+    justify-content: flex-end !important;
+}
+
+/* Estilo base para todos os botões de ação */
+.action-buttons .btn,
+.action-btn {
+    width: 32px !important;
+    height: 32px !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 6px !important;
+    transition: all 0.2s ease !important;
+    position: relative !important;
+    border: none !important;
+    background-color: #f5f6fa !important;
+    color: #5e6278 !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Efeito hover para todos os botões - mantém a mesma cor, apenas muda sombra e posição */
+.action-buttons .btn:hover,
+.action-btn:hover {
+    background-color: #f0f2f5 !important;
+    color: #3f4254 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Efeito active para todos os botões */
+.action-buttons .btn:active,
+.action-btn:active {
+    background-color: #ebedf3 !important;
+    color: #181c32 !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+}
+
+.action-buttons .btn i,
+.action-btn i {
+    font-size: 0.85rem !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Sobrescrever todas as cores específicas dos botões Bootstrap para usar o mesmo estilo neutro */
+.action-buttons .btn-primary,
+.action-buttons .btn-info,
+.action-buttons .btn-success,
+.action-buttons .btn-warning,
+.action-buttons .btn-danger,
+.action-buttons .btn-secondary,
+.action-buttons .btn-edit,
+.action-buttons .btn-view,
+.action-buttons .btn-delete,
+.action-buttons .btn-reset,
+.action-buttons .btn-history {
+    background-color: #f5f6fa !important;
+    color: #5e6278 !important;
+}
+
+/* Hover universal para todos os botões - sem variação de cor */
+.action-buttons .btn:hover,
+.action-btn:hover {
+    background-color: #f0f2f5 !important;
+    color: #3f4254 !important;
+}
+
+/* Aplicar os mesmos estilos para os botões nas páginas de listagem */
+.data-list .btn,
+.table .btn,
+.list-group .btn {
+    width: 32px !important;
+    height: 32px !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 6px !important;
+    transition: all 0.2s ease !important;
+    position: relative !important;
+    border: none !important;
+    background-color: #f5f6fa !important;
+    color: #5e6278 !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+}
+
+.data-list .btn:hover,
+.table .btn:hover,
+.list-group .btn:hover {
+    background-color: #f0f2f5 !important;
+    color: #3f4254 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+}
+
+.data-list .btn:active,
+.table .btn:active,
+.list-group .btn:active {
+    background-color: #ebedf3 !important;
+    color: #181c32 !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Desativar tooltips */
+.action-buttons .btn[title]::after {
+    display: none !important;
+    content: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+.action-buttons .btn[title]:hover::after {
+    display: none !important;
+    content: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}

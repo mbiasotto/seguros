@@ -4,7 +4,7 @@
 
 @push('styles')
 <!-- CSS específico do dashboard -->
-<link rel="stylesheet" href="{{ asset('css/admin/pages/dashboard.css') }}">
+<link rel="stylesheet" href="{{ asset('admin/css/pages/dashboard.css') }}">
 @endpush
 
 @section('content')
@@ -251,6 +251,7 @@
 @endsection
 
 @push('scripts')
-<!-- Script específico do dashboard -->
-<script src="{{ asset('js/admin/pages/dashboard.js') }}"></script>
+<!-- Chart.js é carregado anteriormente pelo layout principal -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.0/dist/chart.umd.min.js"></script>
+<script src="{{ asset('admin/js/pages/dashboard.js') }}"></script>
 @endpush

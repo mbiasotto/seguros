@@ -1,0 +1,90 @@
+/**
+ * Pagination Component
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+/* Estilo básico de paginação */
+.pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+    margin-bottom: 0;
+}
+
+.page-item:first-child .page-link {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.page-item:last-child .page-link {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.page-item.active .page-link {
+    background-color: var(--admin-primary);
+    border-color: var(--admin-primary);
+    color: #fff;
+}
+
+.page-item.disabled .page-link {
+    color: var(--text-muted);
+    background-color: #f5f6fa;
+    border-color: #e4e6ef;
+    cursor: not-allowed;
+}
+
+.page-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: var(--admin-primary);
+    background-color: #fff;
+    border: 1px solid #e4e6ef;
+    min-width: 36px;
+    min-height: 36px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.page-link:hover {
+    z-index: 2;
+    color: var(--admin-primary-hover);
+    text-decoration: none;
+    background-color: #f5f6fa;
+    border-color: #e4e6ef;
+}
+
+.page-link:focus {
+    z-index: 3;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(29, 64, 174, 0.1);
+}
+
+/* Estilo para paginação numerada */
+.pagination-info {
+    display: flex;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+/* Estilos responsivos para paginação */
+@media (max-width: 767.98px) {
+    .pagination {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .page-link {
+        min-width: 32px;
+        min-height: 32px;
+        font-size: 0.875rem;
+        padding: 0.375rem 0.5rem;
+    }
+}

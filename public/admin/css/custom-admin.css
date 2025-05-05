@@ -1,0 +1,217 @@
+/**
+ * Custom Admin CSS - Tema Azul
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+/* Variáveis de cores para o admin */
+:root {
+    --admin-primary: #1D40AE;
+    --admin-primary-hover: #1735A8;
+    --admin-primary-light: rgba(29, 64, 174, 0.1);
+    --admin-secondary: #5e6278;
+    --admin-text: #212529;
+    --admin-bg-light: #f8f9fa;
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: var(--admin-primary);
+    color: #fff;
+}
+
+.sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.sidebar .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-weight: 500;
+}
+
+/* Botões */
+.btn-primary {
+    background-color: var(--admin-primary) !important;
+    border-color: var(--admin-primary) !important;
+    color: #fff !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--admin-primary-hover) !important;
+    border-color: var(--admin-primary-hover) !important;
+    box-shadow: 0 2px 6px rgba(29, 64, 174, 0.2) !important;
+}
+
+.btn-outline-primary.active {
+    background-color: var(--admin-primary) !important;
+    border-color: var(--admin-primary) !important;
+    color: #fff !important;
+}
+
+/* Cards e estatísticas */
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.icon-primary {
+    color: var(--admin-primary);
+    background-color: var(--admin-primary-light);
+}
+
+/* Itens ativos */
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+    background-color: var(--admin-primary);
+    color: white;
+}
+
+/* Links e âncoras */
+a {
+    color: var(--admin-primary);
+}
+
+a:hover {
+    color: var(--admin-primary-hover);
+}
+
+/* Badges */
+.badge-primary {
+    background-color: var(--admin-primary);
+}
+
+/* Stats e ícones */
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 1.5rem;
+}
+
+.icon-primary {
+    color: var(--admin-primary);
+    background-color: rgba(29, 64, 174, 0.1);
+}
+
+.icon-success {
+    color: #28a745;
+    background-color: rgba(40, 167, 69, 0.1);
+}
+
+.icon-info {
+    color: #17a2b8;
+    background-color: rgba(23, 162, 184, 0.1);
+}
+
+.icon-warning {
+    color: #ffc107;
+    background-color: rgba(255, 193, 7, 0.1);
+}
+
+/* Form controls */
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 0.25rem rgba(29, 64, 174, 0.15);
+}
+
+/* Tabelas */
+.table-hover tbody tr:hover {
+    background-color: rgba(29, 64, 174, 0.05);
+}
+
+/* Data lists */
+.data-list-header h1,
+.data-list-header h2,
+.data-list-header h3 {
+    color: var(--admin-text);
+}
+
+/* Chart colors */
+.chart-container .apexcharts-series path,
+.chart-container .apexcharts-area-series path {
+    stroke: var(--admin-primary) !important;
+}
+
+.chart-container .apexcharts-area-series path.apexcharts-area {
+    fill: var(--admin-primary-light) !important;
+}
+
+/* Dashboard items */
+.dashboard-stats .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-stats .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Action Buttons - custom styling for the theme */
+.action-buttons .action-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    background-color: #e2e6ea;
+    color: #6c757d;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.action-buttons .action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.action-buttons .action-btn[title*="Editar"] {
+    background-color: rgba(29, 64, 174, 0.1);
+    color: var(--admin-primary);
+}
+
+.action-buttons .action-btn[title*="Editar"]:hover {
+    background-color: rgba(29, 64, 174, 0.15);
+    color: var(--admin-primary-hover);
+}
+
+.action-buttons .action-btn[title*="Excluir"] {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.action-buttons .action-btn[title*="Excluir"]:hover {
+    background-color: rgba(220, 53, 69, 0.15);
+    color: #c82333;
+}
+
+.action-buttons .action-btn[title*="Histórico"] {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.action-buttons .action-btn[title*="Histórico"]:hover {
+    background-color: rgba(40, 167, 69, 0.15);
+    color: #218838;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    .btn-primary {
+        padding: 0.4rem 0.8rem !important;
+        font-size: 0.85rem !important;
+    }
+}

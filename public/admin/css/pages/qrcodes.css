@@ -1,0 +1,112 @@
+/**
+ * QR Codes Page Styles
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+/* Card de QR Code */
+.qrcode-card {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.qrcode-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.qrcode-card .card-header {
+    background-color: var(--admin-primary);
+    color: #fff;
+    border: none;
+    padding: 1rem;
+}
+
+.qrcode-card .card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.qrcode-image {
+    width: 180px;
+    height: 180px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e4e6ef;
+    padding: 0.5rem;
+    background-color: #fff;
+}
+
+.qrcode-info {
+    text-align: center;
+    width: 100%;
+}
+
+.qrcode-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.qrcode-location {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.qrcode-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: auto;
+    width: 100%;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 1rem;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--admin-primary);
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.qrcode-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+/* Badge de status */
+.badge-active {
+    background-color: #28a745;
+}
+
+.badge-inactive {
+    background-color: #dc3545;
+}
+
+/* Botões de download */
+.btn-download {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    width: 100%;
+    justify-content: center;
+}

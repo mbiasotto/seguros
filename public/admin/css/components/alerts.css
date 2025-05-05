@@ -1,0 +1,51 @@
+/*
+ * Components - Alerts & Badges
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+/* Alert Styles */
+.alert-success {
+    border-left: 4px solid #198754;
+}
+
+.alert-danger {
+    border-left: 4px solid #dc3545;
+}
+
+/* Badge Styles */
+.badge {
+    padding: 0.35em 0.75em;
+    font-weight: 500;
+    font-size: 0.75rem;
+    border-radius: 20px;
+}
+
+.badge.bg-success {
+    background-color: #198754 !important;
+    color: #fff;
+}
+
+.badge.bg-danger {
+    background-color: #dc3545 !important;
+    color: #fff;
+}
+
+.badge.bg-warning {
+    background-color: #ffc107 !important;
+    color: #212529;
+}
+
+.badge.bg-info {
+    background-color: #0dcaf0 !important;
+    color: #fff;
+}
+
+.badge.bg-primary {
+    background-color: #1D40AE !important;
+    color: #fff;
+}
+
+.badge.bg-secondary {
+    background-color: #6c757d !important;
+    color: #fff;
+}

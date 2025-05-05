@@ -1,0 +1,319 @@
+/*
+ * Components - Buttons
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+/* Estilos base para todos os botões */
+.btn {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    letter-spacing: 0.01em;
+    z-index: 1;
+}
+
+/* Efeito de preenchimento animado para todos os botões */
+.btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+    transition: all 0.5s ease;
+    z-index: -1;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+/* Botão primário */
+.btn-primary {
+    background-color: var(--admin-primary);
+    border-color: var(--admin-primary);
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(29, 64, 174, 0.15);
+}
+
+.btn-primary:hover {
+    background-color: var(--admin-primary-hover);
+    border-color: var(--admin-primary-hover);
+    box-shadow: 0 4px 8px rgba(29, 64, 174, 0.25);
+    transform: translateY(-2px);
+}
+
+.btn-primary:active {
+    background-color: var(--admin-primary-hover);
+    border-color: var(--admin-primary-hover);
+    box-shadow: 0 2px 4px rgba(29, 64, 174, 0.15);
+    transform: translateY(0);
+}
+
+/* Botão secundário */
+.btn-secondary {
+    background-color: #f5f6fa;
+    border-color: #e4e6ef;
+    color: #5e6278;
+}
+
+.btn-secondary:hover {
+    background-color: #f0f2f5;
+    border-color: #dde0ea;
+    color: #3f4254;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.btn-secondary:active {
+    background-color: #ebedf3;
+    border-color: #d1d5e0;
+    color: #181c32;
+    transform: translateY(0);
+}
+
+/* Botão outline */
+.btn-outline-primary {
+    border-color: #e4e6ef;
+    color: #5e6278;
+    background-color: transparent;
+}
+
+.btn-outline-primary:hover {
+    background-color: #f5f6fa;
+    border-color: #dde0ea;
+    color: #3f4254;
+    transform: translateY(-1px);
+}
+
+.btn-outline-primary.active {
+    background-color: var(--admin-primary);
+    border-color: var(--admin-primary);
+    color: #fff;
+}
+
+/* Botão de ação no topo (Novo) */
+.data-list-header .btn-primary {
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(29, 64, 174, 0.1);
+    background-color: var(--admin-primary);
+    border-color: var(--admin-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.data-list-header .btn-primary:hover {
+    background-color: var(--admin-primary-hover);
+    box-shadow: 0 4px 8px rgba(29, 64, 174, 0.3);
+    transform: translateY(-1px);
+}
+
+.data-list-header .btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(29, 64, 174, 0.2);
+}
+
+.data-list-header .btn-primary i {
+    font-size: 0.9rem;
+}
+
+/* Botões de ação em tabelas e listas */
+.action-buttons {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+}
+
+.action-buttons .btn,
+.action-buttons .action-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    background-color: #e2e6ea;
+    color: #6c757d;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.action-buttons .btn::before,
+.action-buttons .action-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(100%);
+    transition: transform 0.2s ease;
+}
+
+.action-buttons .btn:hover::before,
+.action-buttons .action-btn:hover::before {
+    transform: translateY(0);
+}
+
+.action-buttons .btn:hover,
+.action-buttons .action-btn:hover {
+    background-color: #d3d9df;
+    color: #495057;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.action-buttons .btn i,
+.action-buttons .action-btn i {
+    font-size: 0.875rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Estilos específicos por tipo de botão de ação */
+.action-buttons .btn-edit,
+.action-buttons [title*="Edit"] {
+    background-color: #e6f2ff;
+    color: var(--admin-primary);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.action-buttons .btn-edit:hover,
+.action-buttons [title*="Edit"]:hover {
+    background-color: #d6e9ff;
+    color: var(--admin-primary-hover);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.action-buttons .btn-view,
+.action-buttons [title*="View"] {
+    background-color: #e2e6ea;
+    color: #6c757d;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.action-buttons .btn-view:hover,
+.action-buttons [title*="View"]:hover {
+    background-color: #d3d9df;
+    color: #495057;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.action-buttons .btn-delete,
+.action-buttons [title*="Excluir"] {
+    background-color: #f8d7da;
+    color: #dc3545;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.action-buttons .btn-delete:hover,
+.action-buttons [title*="Excluir"]:hover {
+    background-color: #f1c9cd;
+    color: #c82333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+/* Outros botões da lista de ações */
+.action-buttons [title*="Editar"] {
+    background-color: #e6f2ff;
+    color: var(--admin-primary);
+}
+
+.action-buttons [title*="Editar"]:hover {
+    background-color: #d6e9ff;
+    color: var(--admin-primary-hover);
+}
+
+.action-buttons [title*="Histórico"] {
+    background-color: #e2f4ea;
+    color: #28a745;
+}
+
+.action-buttons [title*="Histórico"]:hover {
+    background-color: #d3efe1;
+    color: #218838;
+}
+
+/* Animação de ondulação quando clicado */
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.8;
+    }
+    20% {
+        transform: scale(25, 25);
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(40, 40);
+    }
+}
+
+/* Efeito de ondulação ao clicar */
+.btn-primary:after,
+.action-buttons .btn:after,
+.action-buttons .action-btn:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+
+.btn-primary:active:after,
+.action-buttons .btn:active:after,
+.action-buttons .action-btn:active:after {
+    animation: ripple 0.6s ease-out;
+}
+
+/* Estilos para botões com ícones */
+.btn i {
+    font-size: 0.875rem;
+}
+
+/* Botões de tamanhos diferentes */
+.btn-sm {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+}
+
+.btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+}
+
+/* Botão com ícone */
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}

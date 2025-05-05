@@ -1,0 +1,94 @@
+/*
+ * Login Components
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f7fa;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    padding: var(--spacing-xl);
+    background-color: #fff;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+}
+
+.login-brand {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.login-brand h1 {
+    color: var(--primary);
+    font-weight: var(--font-weight-bold);
+    font-size: 2rem;
+}
+
+.login-brand h2 {
+    font-size: 2.5rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+}
+
+.login-form .form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.login-form label {
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--spacing-xs);
+}
+
+.login-form .btn-login {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    font-weight: var(--font-weight-medium);
+    padding: 0.6rem 1.25rem;
+    border-radius: var(--border-radius);
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.login-form .btn-login:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+.login-form .form-check {
+    margin-bottom: var(--spacing-md);
+}
+
+.login-form .link-primary {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.login-form .link-primary:hover {
+    text-decoration: underline;
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: var(--spacing-lg);
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+/* Password reset components */
+.reset-password-title {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.reset-password-card {
+    width: 100%;
+    max-width: 450px;
+}

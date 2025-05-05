@@ -1,0 +1,121 @@
+/**
+ * Vendors Page Styles
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+/* Filtros */
+.filter-container {
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.filter-container .form-label {
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: #495057;
+}
+
+.filter-container .form-control:focus,
+.filter-container .form-select:focus {
+    border-color: #2a2f3e;
+    box-shadow: 0 0 0 0.2rem rgba(42, 47, 62, 0.15);
+}
+
+.filter-container .btn-primary {
+    background-color: #2a2f3e;
+    border-color: #2a2f3e;
+}
+
+.filter-container .btn-primary:hover {
+    background-color: #22262f;
+    border-color: #22262f;
+}
+
+/* Tabela de dados */
+.table-container {
+    overflow-x: auto;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.pagination-info {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 0.5rem;
+}
+
+/* Células da tabela */
+.table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+    border-top: 0;
+}
+
+.table td {
+    vertical-align: middle;
+    color: #495057;
+}
+
+.table td:last-child {
+    width: 160px;
+}
+
+/* Badges de status */
+.badge.bg-success {
+    background-color: #10b981 !important;
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+}
+
+.badge.bg-danger {
+    background-color: #ef4444 !important;
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+}
+
+/* Botões de ação na tabela */
+.action-buttons {
+    display: flex;
+    gap: 0.35rem;
+    justify-content: flex-end;
+}
+
+.action-buttons .btn.action-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    color: #495057;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    transition: all 0.2s ease;
+}
+
+.action-buttons .btn.action-btn:hover {
+    background-color: #e9ecef;
+    color: #2a2f3e;
+}
+
+/* Empty state customizado */
+.empty-state-icon {
+    background-color: rgba(42, 47, 62, 0.1);
+    color: #2a2f3e;
+}
+
+.empty-state .btn-primary {
+    background-color: #2a2f3e;
+    border-color: #2a2f3e;
+    padding: 0.5rem 1rem;
+}
+
+.empty-state .btn-primary:hover {
+    background-color: #22262f;
+    border-color: #22262f;
+}

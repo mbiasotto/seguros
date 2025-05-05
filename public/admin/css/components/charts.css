@@ -1,0 +1,53 @@
+/*
+ * Charts Component
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+.chart-container {
+    position: relative;
+    height: 400px;
+    width: 100%;
+    margin-bottom: var(--spacing-lg);
+}
+
+.chart-card {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-lg);
+}
+
+.chart-card .card-title {
+    margin-bottom: var(--spacing-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.chart-legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.chart-legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .chart-container {
+        height: 300px;
+    }
+}
