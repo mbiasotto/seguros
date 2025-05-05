@@ -1,0 +1,24 @@
+/* Estilos específicos para formulários de Establishment (create/edit) */
+
+/* Estilos para a tabela de QR codes (se aplicável aqui) */
+.table-sm td {
+    padding: 0.4rem 0.5rem;
+}
+
+.qr-code-item:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Estilos de paginação podem ficar em um CSS global ou de componentes */
+.pagination-container .page-link {
+    padding: 0.25rem 0.5rem;
+    font-size: var(--font-size-sm);
+}
+
+/* Estilos de filtros podem ficar em um CSS global ou de componentes */
+.filter-container {
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+}

@@ -1,0 +1,127 @@
+/**
+ * Cards Component
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+/* Card base */
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border-radius: 0.5rem;
+}
+
+.card.border-0 {
+    border: 0;
+}
+
+.card.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card.shadow {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Cabeçalho do card */
+.card-header {
+    padding: 1rem;
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-header:first-child {
+    border-radius: calc(0.5rem - 1px) calc(0.5rem - 1px) 0 0;
+}
+
+.card-header.bg-light {
+    background-color: #f8f9fa;
+}
+
+.card-header.bg-white {
+    background-color: #fff;
+}
+
+/* Corpo do card */
+.card-body {
+    flex: 1 1 auto;
+    padding: 1rem;
+}
+
+.card-body.p-0 {
+    padding: 0;
+}
+
+.card-body.py-4 {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.card-body.p-4 {
+    padding: 1.5rem;
+}
+
+/* Footer do card */
+.card-footer {
+    padding: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-footer:last-child {
+    border-radius: 0 0 calc(0.5rem - 1px) calc(0.5rem - 1px);
+}
+
+/* Título do card */
+.card-title {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.card-subtitle {
+    margin-top: -0.25rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+/* Cards adjacentes com espaçamento */
+.card + .card {
+    margin-top: 1.5rem;
+}
+
+/* Grupo de cards */
+.card-group {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 576px) {
+    .card-group {
+        flex-flow: row wrap;
+    }
+
+    .card-group > .card {
+        flex: 1 0 0%;
+        margin-bottom: 0;
+    }
+
+    .card-group > .card + .card {
+        margin-left: 0;
+        border-left: 0;
+    }
+
+    .card-group > .card:first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .card-group > .card:last-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+}
