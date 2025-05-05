@@ -9,12 +9,9 @@
 
 @section('content')
 <div class="container-fluid px-0">
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <h1 class="h3 mb-0">Documentos dos Estabelecimentos</h1>
-            </div>
-        </div>
+    <div class="page-header">
+        <h1 class="page-title">Documentos dos Estabelecimentos</h1>
+        <div><!-- Espaço para botões, caso necessário no futuro --></div>
     </div>
 
     <div class="card border-0 shadow-sm mb-4">
@@ -86,7 +83,7 @@
                                     </td>
                                     <td>
                                         <div class="action-buttons">
-                                            <a href="{{ route('admin.documents.show', $document) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Visualizar">
+                                            <a href="{{ route('admin.establishments.documents.show', $document) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Visualizar">
                                                 <i class="fas fa-eye"></i>
                                             </a>
 
@@ -115,7 +112,7 @@
                                             <button
                                                 type="button"
                                                 class="btn action-btn"
-                                                data-delete-url="{{ route('admin.documents.destroy', $document) }}"
+                                                data-delete-url="{{ route('admin.establishments.documents.destroy', $document) }}"
                                                 data-delete-title="Excluir Documento"
                                                 data-delete-message="Tem certeza que deseja excluir este documento?"
                                                 data-delete-confirm="Sim, Excluir"

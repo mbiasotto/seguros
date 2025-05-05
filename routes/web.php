@@ -92,6 +92,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/{onboarding}/view', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'viewDocument'])->name('view');
             Route::post('/{onboarding}/approve', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'approve'])->name('approve');
             Route::post('/{onboarding}/reject', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'reject'])->name('reject');
+            Route::delete('/{onboarding}', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'destroy'])->name('destroy');
         });
 
         // Establishment Management Routes

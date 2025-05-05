@@ -3,8 +3,8 @@
 @section('title', 'Estabelecimentos')
 
 @section('content')
-<div class="data-list-header">
-    <h1 class="h3 mb-0">Estabelecimentos</h1>
+<div class="page-header">
+    <h1 class="page-title">Estabelecimentos</h1>
     <a href="{{ route('admin.establishments.create') }}" class="btn btn-primary d-flex align-items-center gap-2">
         <i class="fas fa-plus"></i>
         <span>Novo</span>

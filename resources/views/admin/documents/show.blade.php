@@ -27,17 +27,9 @@
 
 @section('content')
 <div class="container-fluid px-0">
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <h1 class="h3 mb-0">Detalhes do Documento</h1>
-                <div>
-                    <a href="{{ route('admin.establishments.documents.pending') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center">
-                        <i class="fas fa-arrow-left me-2"></i> Voltar para Documentos Pendentes
-                    </a>
-                </div>
-            </div>
-        </div>
+    <div class="page-header">
+        <h1 class="page-title">Detalhes do Documento</h1>
+        @include('admin.components.back-button', ['route' => route('admin.establishments.documents.pending')])
     </div>
 
     <div class="row">

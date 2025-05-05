@@ -2,22 +2,12 @@
 
 @section('title', 'Editar Estabelecimento')
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
-<link rel="stylesheet" href="{{ asset('admin/css/pages/establishments/form.css') }}">
-@endpush
 
 @section('content')
 <div class="container-fluid px-0">
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <h1 class="h3 mb-0">Editar Estabelecimento</h1>
-                <a href="{{ route('admin.establishments.index') }}" class="btn btn-outline-secondary font-medium">
-                    <i class="fas fa-arrow-left me-2"></i> Voltar para a lista
-                </a>
-            </div>
-        </div>
+    <div class="page-header">
+        <h1 class="page-title">Editar Estabelecimento</h1>
+        @include('admin.components.back-button', ['route' => route('admin.establishments.index')])
     </div>
 
     <div class="row">
@@ -254,21 +244,8 @@
 </div>
 
 @push('scripts')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 <script>
-    // Desabilitar a inicialização automática de máscaras do form-handlers.js
-    window.skipDefaultMasks = true;
-
     $(document).ready(function(){
-        // Aplicar máscaras diretamente pelos IDs
-        $('#cnpj').mask('00.000.000/0000-00');
-        $('#telefone').mask('(00) 00000-0000');
-        $('#cep').mask('00000-000');
-
-        // Verificar se as máscaras foram aplicadas
-        console.log('Máscaras aplicadas aos campos');
-
         // Preenchimento automático de CEP
         $('#cep').blur(function(){
             const cep = $(this).val().replace(/\D/g, '');

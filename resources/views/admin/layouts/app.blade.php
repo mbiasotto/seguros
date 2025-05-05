@@ -46,6 +46,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
+    <!-- Script de máscaras centralizado -->
+    <script src="{{ asset('js/input-masks.js') }}"></script>
+
     <!-- Script admin principal -->
     <script src="{{ asset('admin/admin.js') }}"></script>
     <script src="{{ asset('admin/js/modal.js') }}"></script>

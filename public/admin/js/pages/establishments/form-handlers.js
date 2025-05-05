@@ -1,42 +1,11 @@
 /**
  * Form Handlers para Establishments
- * Lida com máscaras e consulta de CEP
+ * Lida com consulta de CEP
  */
 
 $(document).ready(function() {
-    // Verifica se deve pular a inicialização automática de máscaras
-    if (!window.skipDefaultMasks) {
-        // Inicializa as máscaras (requer jQuery Mask Plugin)
-        initFormMasks();
-    }
-
     // Inicializa a consulta de CEP
     initCepLookup();
-
-    /**
-     * Inicializa máscaras para os campos do formulário
-     */
-    function initFormMasks() {
-        if (typeof $.fn.mask !== 'undefined') {
-            $('.cnpj-mask').mask('00.000.000/0000-00');
-            $('.cep-mask').mask('00000-000');
-
-            // Máscara dinâmica para telefone
-            const phoneBehavior = function(val) {
-                return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
-            };
-
-            const phoneOptions = {
-                onKeyPress: function(val, e, field, options) {
-                    field.mask(phoneBehavior.apply({}, arguments), options);
-                }
-            };
-
-            $('.phone-mask, #telefone').mask(phoneBehavior, phoneOptions);
-        } else {
-            console.warn('jQuery Mask Plugin não está disponível. As máscaras não serão aplicadas.');
-        }
-    }
 
     /**
      * Inicializa a consulta de CEP

@@ -3,8 +3,8 @@
 @section('title', 'Administradores')
 
 @section('content')
-<div class="data-list-header">
-    <h1 class="h3 mb-0">Administradores</h1>
+<div class="page-header">
+    <h1 class="page-title">Administradores</h1>
     <a href="{{ route('admin.users.create') }}" class="btn btn-primary d-flex align-items-center gap-2">
         <i class="fas fa-plus"></i>
         <span>Novo</span>
@@ -87,7 +87,7 @@
                                     @if($user->id !== 1 && (Auth::id() === 1 || Auth::id() !== $user->id) && \App\Models\User::count() > 1)
                                         <button
                                             type="button"
-                                            class="btn action-btn text-danger"
+                                            class="btn action-btn"
                                             data-delete-url="{{ route('admin.users.destroy', $user) }}"
                                             data-delete-title="Excluir Administrador"
                                             data-delete-message="Tem certeza que deseja excluir o administrador '{{ $user->name }}'?"

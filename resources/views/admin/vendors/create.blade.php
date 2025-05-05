@@ -1,20 +1,13 @@
 @extends('admin.layouts.app')
 
-@push('styles')
-{{-- <link rel="stylesheet" href="{{ asset('css/data-list.css') }}"> --}} {{-- data-list.css parece ser específico para listagens --}}
-@endpush
+@section('title', 'Novo Vendedor')
+
 
 @section('content')
 <div class="container-fluid px-0">
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <h1 class="h3 mb-0">Novo Vendedor</h1>
-                <a href="{{ route('admin.vendors.index') }}" class="btn btn-outline-secondary">
-                    <i class="fas fa-arrow-left me-2"></i> Voltar para a lista
-                </a>
-            </div>
-        </div>
+    <div class="page-header">
+        <h1 class="page-title">Novo Vendedor</h1>
+        @include('admin.components.back-button', ['route' => route('admin.vendors.index')])
     </div>
 
     <div class="row">

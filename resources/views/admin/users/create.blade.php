@@ -2,21 +2,12 @@
 
 @section('title', 'Novo Administrador')
 
-@push('styles')
-{{-- <link rel="stylesheet" href="{{ asset('css/data-list.css') }}"> --}} {{-- data-list.css parece ser específico para listagens --}}
-@endpush
 
 @section('content')
 <div class="container-fluid px-0">
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <h1 class="h3 mb-0">Novo Administrador</h1>
-                <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary">
-                    <i class="fas fa-arrow-left me-2"></i> Voltar para a lista
-                </a>
-            </div>
-        </div>
+    <div class="page-header">
+        <h1 class="page-title">Novo Administrador</h1>
+        @include('admin.components.back-button', ['route' => route('admin.users.index')])
     </div>
 
     <div class="row">

@@ -2,22 +2,12 @@
 
 @section('title', 'Histórico de Acessos - ' . $user->name)
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
-<link rel="stylesheet" href="{{ asset('css/empty-state.css') }}">
-@endpush
 
 @section('content')
 <div class="container-fluid px-0">
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <h1 class="h3 mb-0">Histórico de Acessos - {{ $user->name }}</h1>
-                <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary">
-                    <i class="fas fa-arrow-left me-2"></i> Voltar para a lista
-                </a>
-            </div>
-        </div>
+    <div class="page-header">
+        <h1 class="page-title">Histórico de Acessos - {{ $user->name }}</h1>
+        @include('admin.components.back-button', ['route' => route('admin.users.index')])
     </div>
 
 @if($accessLogs->isEmpty())

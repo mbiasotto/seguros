@@ -215,3 +215,25 @@ a:hover {
         font-size: 0.85rem !important;
     }
 }
+
+/**
+ * Estilos para títulos de página padronizados
+ */
+.page-title {
+    font-size: 1.5rem !important; /* Tamanho h3 consistente */
+    font-weight: 600 !important; /* Semi-bold */
+    color: #2c3e50 !important; /* Cor escura padrão */
+    margin-bottom: 1.25rem !important; /* Espaçamento inferior consistente */
+    margin-top: 0 !important;
+    font-family: 'Inter', sans-serif !important; /* Garantir fonte consistente */
+    line-height: 1.3 !important;
+}
+
+.page-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 1.5rem !important;
+    padding-bottom: 0.5rem !important;
+    border-bottom: 1px solid #e9ecef !important;
+}

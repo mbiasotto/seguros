@@ -1,20 +1,13 @@
 @extends('admin.layouts.app')
 
-@push('styles')
-{{-- <link rel="stylesheet" href="{{ asset('css/data-list.css') }}"> --}} {{-- data-list.css parece ser específico para listagens --}}
-@endpush
+@section('title', 'Editar Vendedor')
+
 
 @section('content')
 <div class="container-fluid px-0">
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <h1 class="h3 mb-0">Editar Vendedor</h1>
-                <a href="{{ route('admin.vendors.index') }}" class="btn btn-outline-secondary">
-                    <i class="fas fa-arrow-left me-2"></i> Voltar para a lista
-                </a>
-            </div>
-        </div>
+    <div class="page-header">
+        <h1 class="page-title">Editar Vendedor</h1>
+        @include('admin.components.back-button', ['route' => route('admin.vendors.index')])
     </div>
 
     <div class="row">
@@ -161,15 +154,10 @@
 @endsection
 
 @push('scripts')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset('js/utils/form-utils.js') }}"></script>
 <script>
     $(document).ready(function() {
-        // Aplicar máscara de telefone
-        $('#telefone').mask('(00) 00000-0000');
-
         // Gerador de senha
         $('#generatePassword').click(function() {
             const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+';

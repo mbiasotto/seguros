@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use App\Mail\DocumentRejectedMail;
 
 class DocumentApprovalController extends Controller
 {
@@ -146,16 +149,21 @@ class DocumentApprovalController extends Controller
      */
     public function reject(Request $request, EstablishmentOnboarding $onboarding)
     {
-        $validated = $request->validate([
-            'notes' => 'required|string|max:1000',
-        ], [
-            'notes.required' => 'É necessário informar o motivo da rejeição.',
+        $request->validate([
+            'notes' => 'required|string|max:1000'
         ]);
 
-        $onboarding->rejectDocument(Auth::id(), $validated['notes']);
+        $onboarding->update([
+            'document_approved' => false,
+            'document_approved_at' => now(),
+            'document_approved_by' => Auth::id(),
+            'approval_notes' => $request->notes
+        ]);
 
-        return redirect()->route('admin.establishments.documents.index')
-            ->with('success', 'Documento rejeitado com sucesso!');
+        // Notificação removida para simplificar - implementar conforme necessário
+
+        return redirect()->route('admin.establishments.documents.pending')
+                         ->with('success', 'Documento rejeitado com sucesso!');
     }
 
     /**
@@ -217,5 +225,36 @@ class DocumentApprovalController extends Controller
         }
 
         return redirect()->back()->with('error', 'Falha ao fazer upload do documento.');
+    }
+
+    /**
+     * Remove the specified document from storage.
+     *
+     * @param  \App\Models\Onboarding  $onboarding
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(EstablishmentOnboarding $onboarding)
+    {
+        try {
+            // Remove the document file from storage
+            if ($onboarding->document_path && Storage::exists($onboarding->document_path)) {
+                Storage::delete($onboarding->document_path);
+            }
+
+            // Reset document fields
+            $onboarding->update([
+                'document_path' => null,
+                'document_approved' => null,
+                'document_approved_at' => null,
+                'document_approved_by' => null,
+                'approval_notes' => null,
+                'completed_at' => null
+            ]);
+
+            return redirect()->back()->with('success', 'Documento excluído com sucesso.');
+        } catch (\Exception $e) {
+            Log::error('Error deleting document: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Erro ao excluir documento: ' . $e->getMessage());
+        }
     }
 }

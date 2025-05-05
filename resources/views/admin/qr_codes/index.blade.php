@@ -7,8 +7,8 @@
 @endpush
 
 @section('content')
-<div class="data-list-header">
-    <h1 class="h3 mb-0">QR Codes</h1>
+<div class="page-header">
+    <h1 class="page-title">QR Codes</h1>
     <div class="d-flex gap-2">
         <a href="{{ route('admin.qr-codes.statistics.index') }}" class="btn btn-info d-flex align-items-center gap-2">
             <i class="fas fa-chart-line"></i>
@@ -134,19 +134,19 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="{{ route('admin.qr_codes.show', $qrCode) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Visualizar">
+                                    <a href="{{ route('admin.qr-codes.show', $qrCode) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Visualizar">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="{{ route('admin.qr_codes.edit', $qrCode) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Editar">
+                                    <a href="{{ route('admin.qr-codes.edit', $qrCode) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
-                                    <a href="{{ route('admin.qr_codes.pdf', $qrCode) }}" target="_blank" class="btn action-btn" data-bs-toggle="tooltip" title="Baixar PDF">
+                                    <a href="{{ route('admin.qr-codes.pdf', $qrCode) }}" target="_blank" class="btn action-btn" data-bs-toggle="tooltip" title="Baixar PDF">
                                         <i class="fas fa-file-pdf"></i>
                                     </a>
                                     <button
                                         type="button"
                                         class="btn action-btn"
-                                        data-delete-url="{{ route('admin.qr_codes.destroy', $qrCode) }}"
+                                        data-delete-url="{{ route('admin.qr-codes.destroy', $qrCode) }}"
                                         data-delete-title="Excluir QR Code"
                                         data-delete-message="Tem certeza que deseja excluir este QR Code?"
                                         data-delete-confirm="Sim, Excluir"

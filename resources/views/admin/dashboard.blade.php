@@ -9,12 +9,11 @@
 
 @section('content')
 <div class="container-fluid py-4">
-    <div class="row mb-4">
-        <div class="col-12">
-            <h1 class="h3 mb-0">Dashboard</h1>
-            <p class="text-muted">Bem-vindo ao painel administrativo</p>
-        </div>
+    <div class="page-header">
+        <h1 class="page-title">Dashboard</h1>
+        <div><!-- Espaço para botões caso necessário no futuro --></div>
     </div>
+    <p class="text-muted">Bem-vindo ao painel administrativo</p>
 
     <div class="row g-4 mb-4">
         <!-- Total Establishments Card -->

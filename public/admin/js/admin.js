@@ -8,17 +8,18 @@
 // Inicialização do sistema de administração
 const AdminSystem = {
     /**
-     * Inicializa o sistema administrativo
+     * Inicializa o sistema
      */
     init: function() {
-        // Inicializa os componentes básicos
-        this.setupComponents();
+        // Inicializar componentes globais
+        this.initTooltips();
+        this.initSidebarCollapse();
+        this.initMobileMenu();
+        this.initSidebarToggle();
+        this.initAutoAlerts();
 
-        // Inicializa funcionalidades específicas por página, com base na rota atual
-        this.setupPageSpecific();
-
-        // Inicializa funcionalidades comuns em todas as páginas
-        this.setupCommon();
+        // Inicializar módulos específicos baseados na rota atual
+        this.initModuleByRoute();
     },
 
     /**
@@ -73,9 +74,6 @@ const AdminSystem = {
     setupCommon: function() {
         // Inicializa tooltips do Bootstrap
         this.initTooltips();
-
-        // Inicializa máscaras de formulários
-        this.initFormMasks();
 
         // Inicializa alertas automáticos
         this.initAutoAlerts();
@@ -193,28 +191,9 @@ const AdminSystem = {
 
     /**
      * Inicializa máscaras de formulários (requer jQuery Mask Plugin)
+     * @deprecated Use o arquivo input-masks.js centralizado em vez disso
      */
-    initFormMasks: function() {
-        if (typeof $.fn.mask !== 'undefined') {
-            $('.cnpj-mask').mask('00.000.000/0000-00');
-            $('.cpf-mask').mask('000.000.000-00');
-            $('.cep-mask').mask('00000-000');
-            $('.date-mask').mask('00/00/0000');
-
-            // Máscara dinâmica para telefone
-            const phoneBehavior = function(val) {
-                return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
-            };
-
-            const phoneOptions = {
-                onKeyPress: function(val, e, field, options) {
-                    field.mask(phoneBehavior.apply({}, arguments), options);
-                }
-            };
-
-            $('.phone-mask').mask(phoneBehavior, phoneOptions);
-        }
-    },
+    // Método removido em favor do arquivo centralizado de máscaras (js/input-masks.js)
 
     /**
      * Inicializa alertas automáticos com tempo de expiração
