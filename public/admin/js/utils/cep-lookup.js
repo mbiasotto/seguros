@@ -1,6 +1,6 @@
 /**
  * Utilitário para consulta de CEP
- * Segura Essa - Sistema de Gestão de Estabelecimentos
+ * Template - Sistema de Gestão - By mbiasotto.com
  */
 
 // Namespace para as utilidades do sistema

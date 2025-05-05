@@ -1,6 +1,6 @@
 /**
  * Admin JavaScript Principal
- * Segura Essa - Sistema de Gestão de Estabelecimentos
+ * Template - Sistema de Gestão - By mbiasotto.com
  *
  * Este arquivo inicializa todos os componentes JavaScript necessários para o painel administrativo
  */

@@ -1,6 +1,6 @@
 /**
  * Componente de Modais
- * Segura Essa - Sistema de Gestão de Estabelecimentos
+ * Template - Sistema de Gestão - By mbiasotto.com
  */
 
 // Namespace para os componentes do sistema

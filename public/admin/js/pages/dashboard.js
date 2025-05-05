@@ -1,6 +1,6 @@
 /**
  * Dashboard JavaScript
- * Segura Essa - Sistema de Gestão de Estabelecimentos
+ * Template - Sistema de Gestão - By mbiasotto.com
  */
 
 const AdminDashboard = {

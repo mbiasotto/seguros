@@ -1,6 +1,6 @@
 /**
  * Admin JS Principal
- * Segura Essa - Sistema de Gestão de Estabelecimentos
+ * Template - Sistema de Gestão - By mbiasotto.com
  */
 
 // Importa os scripts principais

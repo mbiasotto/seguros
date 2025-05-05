@@ -1,6 +1,6 @@
 /**
  * Modal JS
- * Segura Essa - Sistema de Gestão de Estabelecimentos
+ * Template - Sistema de Gestão - By mbiasotto.com
  *
  * Este script gerencia a criação e comportamento de modais modernos reutilizáveis em todo o sistema.
  */

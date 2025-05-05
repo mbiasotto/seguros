@@ -1,6 +1,6 @@
 /**
  * Utilidades para formulários - Consulta de CEP
- * Segura Essa - Sistema de Gestão de Estabelecimentos
+ * Template - Sistema de Gestão - By mbiasotto.com
  */
 
 $(document).ready(function() {

@@ -1,6 +1,6 @@
 /**
  * Utilitários para páginas de autenticação
- * Segura Essa - Sistema de Gestão de Estabelecimentos
+ * Template - Sistema de Gestão - By mbiasotto.com
  */
 
 const AuthUtils = {

@@ -1,6 +1,6 @@
 /**
  * Utilitários para gerenciamento de campos de senha
- * Segura Essa - Sistema de Gestão de Estabelecimentos
+ * Template - Sistema de Gestão - By mbiasotto.com
  */
 
 const PasswordUtils = {
