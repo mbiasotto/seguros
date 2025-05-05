@@ -3,41 +3,97 @@
  * Segura Essa - Sistema de Gestão de Estabelecimentos
  */
 
-/* Button Styles */
+/* Estilos base para todos os botões */
+.btn {
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    letter-spacing: 0.01em;
+}
+
+/* Botão primário */
 .btn-primary {
-    background-color: #6c8cce;
-    border-color: #6c8cce;
+    background-color: #5e6278 !important;
+    border-color: #5e6278 !important;
+    color: #fff !important;
 }
 
 .btn-primary:hover {
-    background-color: #5a7dbe;
-    border-color: #5a7dbe;
+    background-color: #4e5266 !important;
+    border-color: #4e5266 !important;
+    box-shadow: 0 2px 6px rgba(94, 98, 120, 0.2) !important;
 }
 
-.btn-outline-info {
-    color: #7bc9e0;
-    border-color: #7bc9e0;
+.btn-primary:active {
+    background-color: #40445a !important;
+    border-color: #40445a !important;
+    box-shadow: none !important;
 }
 
-.btn-outline-info:hover {
-    background-color: #7bc9e0;
-    color: #fff;
+/* Botão secundário */
+.btn-secondary {
+    background-color: #f5f6fa !important;
+    border-color: #e4e6ef !important;
+    color: #5e6278 !important;
 }
 
-.btn-outline-danger {
-    color: #e17a85;
-    border-color: #e17a85;
+.btn-secondary:hover {
+    background-color: #f0f2f5 !important;
+    border-color: #dde0ea !important;
+    color: #3f4254 !important;
 }
 
-.btn-outline-danger:hover {
-    background-color: #e17a85;
-    color: #fff;
+.btn-secondary:active {
+    background-color: #ebedf3 !important;
+    border-color: #d1d5e0 !important;
+    color: #181c32 !important;
 }
 
+/* Botão outline */
+.btn-outline-primary {
+    border-color: #e4e6ef !important;
+    color: #5e6278 !important;
+    background-color: transparent !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: #f5f6fa !important;
+    border-color: #dde0ea !important;
+    color: #3f4254 !important;
+}
+
+.btn-outline-primary.active {
+    background-color: #5e6278 !important;
+    border-color: #5e6278 !important;
+    color: #fff !important;
+}
+
+/* Botão de ação no topo (Novo, Filtrar) */
+.data-list-header .btn {
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Estilos para botões com ícones */
+.btn i {
+    font-size: 0.875rem;
+}
+
+/* Botões de tamanhos diferentes */
 .btn-sm {
     padding: 0.25rem 0.75rem;
-    font-size: 0.875rem;
-    border-radius: 0.2rem;
+    font-size: 0.75rem;
+}
+
+.btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
 }
 
 /* Botões de ação em tabelas e listas */

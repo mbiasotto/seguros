@@ -54,11 +54,12 @@
                     <table class="table table-hover mb-0">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Estabelecimento</th>
-                                <th>Enviado em</th>
-                                <th>Vendor</th>
+                                <th>Tipo</th>
+                                <th>Data de Envio</th>
                                 <th>Status</th>
-                                <th width="200">Ações</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -84,51 +85,46 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <div class="d-flex">
-                                            <a href="{{ route('admin.establishments.documents.view', $document) }}" class="btn btn-sm btn-outline-secondary me-1" target="_blank" title="Visualizar documento">
-                                                <i class="fas fa-file-alt"></i>
-                                            </a>
-                                            <a href="{{ route('admin.establishments.documents.show', $document) }}" class="btn btn-sm btn-primary me-1" title="Detalhes">
+                                        <div class="action-buttons">
+                                            <a href="{{ route('admin.documents.show', $document) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Visualizar">
                                                 <i class="fas fa-eye"></i>
                                             </a>
 
-                                            @if(!$document->document_approved_at)
-                                                <form action="{{ route('admin.establishments.documents.approve', $document) }}" method="POST" class="d-inline me-1">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Tem certeza que deseja aprovar este documento?')" title="Aprovar">
-                                                        <i class="fas fa-check"></i>
-                                                    </button>
-                                                </form>
-                                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal{{ $document->id }}" title="Rejeitar">
-                                                    <i class="fas fa-times"></i>
-                                                </button>
+                                            @if($document->status == 'pending')
+                                            <button
+                                                type="button"
+                                                class="btn action-btn approve-document"
+                                                data-id="{{ $document->id }}"
+                                                data-bs-toggle="tooltip"
+                                                title="Aprovar"
+                                            >
+                                                <i class="fas fa-check"></i>
+                                            </button>
 
-                                                <!-- Modal de Rejeição -->
-                                                <div class="modal fade" id="rejectModal{{ $document->id }}" tabindex="-1" aria-labelledby="rejectModalLabel{{ $document->id }}" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="rejectModalLabel{{ $document->id }}">Rejeitar Documento</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <form action="{{ route('admin.establishments.documents.reject', $document) }}" method="POST">
-                                                                @csrf
-                                                                <div class="modal-body">
-                                                                    <div class="mb-3">
-                                                                        <label for="notes{{ $document->id }}" class="form-label">Motivo da Rejeição <span class="text-danger">*</span></label>
-                                                                        <textarea class="form-control" id="notes{{ $document->id }}" name="notes" rows="3" required></textarea>
-                                                                        <div class="form-text">Informe o motivo da rejeição do documento.</div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                                    <button type="submit" class="btn btn-danger">Rejeitar Documento</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <button
+                                                type="button"
+                                                class="btn action-btn reject-document"
+                                                data-id="{{ $document->id }}"
+                                                data-bs-toggle="tooltip"
+                                                title="Rejeitar"
+                                            >
+                                                <i class="fas fa-times"></i>
+                                            </button>
                                             @endif
+
+                                            <button
+                                                type="button"
+                                                class="btn action-btn"
+                                                data-delete-url="{{ route('admin.documents.destroy', $document) }}"
+                                                data-delete-title="Excluir Documento"
+                                                data-delete-message="Tem certeza que deseja excluir este documento?"
+                                                data-delete-confirm="Sim, Excluir"
+                                                data-delete-cancel="Cancelar"
+                                                data-bs-toggle="tooltip"
+                                                title="Excluir"
+                                            >
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
@@ -152,3 +148,20 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        // Inicializar tooltips do Bootstrap
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl, {
+                boundary: document.body
+            });
+        });
+
+        // Outros scripts existentes
+        // ... existing code ...
+    });
+</script>
+@endpush

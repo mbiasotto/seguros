@@ -1,0 +1,143 @@
+/*
+ * Segura Essa - Módulo de Autenticação
+ * Estilos específicos para o módulo de autenticação (login, registro, recuperação de senha)
+ */
+
+/* Container principal da autenticação */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-light);
+    padding: 2rem 1rem;
+}
+
+/* Card de autenticação */
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    margin: 0 auto;
+}
+
+.auth-card-lg {
+    max-width: 480px;
+}
+
+/* Cabeçalho do card */
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-logo {
+    max-width: 180px;
+    height: auto;
+    margin: 0 auto 1.5rem;
+}
+
+.auth-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 0;
+}
+
+/* Campos do formulário */
+.auth-form .form-group {
+    margin-bottom: 1.25rem;
+}
+
+.auth-form .form-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.auth-form .form-control {
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.auth-form .form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(29, 64, 174, 0.1);
+}
+
+/* Botões de ação */
+.auth-form .btn-primary {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    border-radius: 8px;
+    margin-top: 1rem;
+    transition: var(--transition);
+}
+
+.auth-form .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Links e navegação */
+.auth-links {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.auth-links a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.auth-links a:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+/* Separador */
+.auth-separator {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+}
+
+.auth-separator::before,
+.auth-separator::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.auth-separator span {
+    padding: 0 0.75rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+/* Checkbox de lembrar */
+.auth-remember {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.auth-remember input[type="checkbox"] {
+    margin-right: 0.5rem;
+}

@@ -3,27 +3,7 @@
 @section('title', 'QR Codes')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
-<style>
-    .filter-container {
-        background-color: #f8f9fa;
-        border-radius: var(--border-radius);
-        padding: 1rem;
-        margin-bottom: 1rem;
-    }
-    .filter-container .form-label {
-        font-weight: var(--font-weight-medium);
-        font-size: var(--font-size-sm);
-        color: var(--text-secondary);
-    }
-    .table-container {
-        overflow-x: auto;
-    }
-    .pagination-info {
-        font-size: var(--font-size-sm);
-        color: var(--text-muted);
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('css/seguraessa.css') }}">
 @endpush
 
 @section('content')
@@ -113,7 +93,7 @@
 
 @if($qrCodes->isEmpty())
     <div class="card border-0 shadow-sm">
-        <div class="card-body empty-state text-center py-5">
+        <div class="card-body empty-qr-codes">
             <i class="fas fa-qrcode text-muted fa-3x mb-3"></i>
             <h3 class="font-semibold mt-3">Nenhum QR Code cadastrado</h3>
             <p class="text-muted mb-4">Clique no botão "Novo QR Code" para começar.</p>
@@ -129,11 +109,12 @@
             <table class="table table-sm table-hover align-middle mb-0">
                 <thead>
                     <tr>
-                        <th style="width: 60px;">ID</th>
+                        <th>Código</th>
                         <th>Título</th>
-                        <th style="width: 25%;">Link</th>
-                        <th style="width: 80px;">Status</th>
-                        <th style="width: 120px;">Ações</th>
+                        <th>Estabelecimento</th>
+                        <th>Criado em</th>
+                        <th>Visualizações</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -141,7 +122,7 @@
                         <tr>
                             <td class="text-muted">#{{ $qrCode->id }}</td>
                             <td class="font-medium">{{ $qrCode->title ?: 'Sem título' }}</td>
-                            <td class="text-truncate" style="max-width: 250px;">
+                            <td class="text-truncate">
                                 <small class="text-sm">{{ Str::limit($qrCode->link, 50) }}</small>
                             </td>
                             <td>
@@ -153,26 +134,24 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="{{ route('admin.qr-codes.statistics.show', $qrCode->id) }}" class="btn btn-primary" title="Ver Estatísticas">
-                                        <i class="fas fa-chart-line"></i>
+                                    <a href="{{ route('admin.qr_codes.show', $qrCode) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Visualizar">
+                                        <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="{{ route('admin.qr-codes.show', $qrCode) }}" class="btn btn-info" title="Visualizar QR Code">
-                                        <i class="fas fa-qrcode"></i>
-                                    </a>
-                                    <a href="{{ route('admin.qr-codes.download', $qrCode) }}" class="btn btn-info" title="Baixar QR Code">
-                                        <i class="fas fa-download"></i>
-                                    </a>
-                                    <a href="{{ route('admin.qr-codes.edit', $qrCode) }}" class="btn btn-edit" title="Editar">
+                                    <a href="{{ route('admin.qr_codes.edit', $qrCode) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                    <a href="{{ route('admin.qr_codes.pdf', $qrCode) }}" target="_blank" class="btn action-btn" data-bs-toggle="tooltip" title="Baixar PDF">
+                                        <i class="fas fa-file-pdf"></i>
                                     </a>
                                     <button
                                         type="button"
-                                        class="btn btn-danger"
-                                        data-delete-url="{{ route('admin.qr-codes.destroy', $qrCode) }}"
+                                        class="btn action-btn"
+                                        data-delete-url="{{ route('admin.qr_codes.destroy', $qrCode) }}"
                                         data-delete-title="Excluir QR Code"
                                         data-delete-message="Tem certeza que deseja excluir este QR Code?"
                                         data-delete-confirm="Sim, Excluir"
                                         data-delete-cancel="Cancelar"
+                                        data-bs-toggle="tooltip"
                                         title="Excluir"
                                     >
                                         <i class="fas fa-trash-alt"></i>
@@ -191,3 +170,19 @@
     </div>
 @endif
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        // Inicializar tooltips do Bootstrap
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl, {
+                boundary: document.body
+            });
+        });
+
+        // Outros scripts existentes, se houver
+    });
+</script>
+@endpush

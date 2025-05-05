@@ -1,0 +1,119 @@
+/*
+ * Segura Essa - Módulo de QR Codes
+ * Estilos específicos para o módulo de QR Codes
+ */
+
+/* Container dos QR Codes na listagem */
+.qr-code-container {
+    text-align: center;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.qr-code-container img {
+    max-width: 300px;
+    margin: 0 auto;
+    display: block;
+    box-shadow: var(--shadow-sm);
+    border-radius: 8px;
+}
+
+/* Filtros específicos para QR Codes */
+.filter-container {
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.filter-container .form-label {
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+/* Ajustes para a tabela de QR Codes */
+.table-container {
+    overflow-x: auto;
+}
+
+.pagination-info {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+/* Estilos para impressão de QR Codes */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .qr-code-container, .qr-code-container * {
+        visibility: visible;
+    }
+    .qr-code-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}
+
+/* Estilos específicos para o modal de geração de PDF */
+#pdfRangeModal .modal-dialog {
+    max-width: 500px;
+}
+
+#pdfRangeModal .modal-body {
+    padding: 1.5rem;
+}
+
+#pdfRangeModal .form-label {
+    font-weight: var(--font-weight-medium);
+    margin-bottom: 0.5rem;
+}
+
+/* Página de visualização de QR Code */
+.qr-code-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.qr-code-info .form-label {
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: 0.25rem;
+    color: var(--text-secondary);
+}
+
+.qr-code-info p {
+    margin-bottom: 1rem;
+}
+
+/* Botões específicos para ações com QR Codes */
+.qr-code-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+/* Empty state para QR Codes */
+.empty-qr-codes {
+    text-align: center;
+    padding: 3rem 1.5rem;
+}
+
+.empty-qr-codes i {
+    font-size: 3rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.empty-qr-codes h3 {
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: 0.5rem;
+}
+
+.empty-qr-codes p {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}

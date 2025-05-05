@@ -1,0 +1,256 @@
+/*
+ * Segura Essa - Módulo de Dashboard
+ * Estilos específicos para o módulo de dashboard
+ */
+
+/* Container principal do dashboard */
+.dashboard-container {
+    padding: 1.5rem 0;
+}
+
+/* Header do dashboard */
+.dashboard-header {
+    margin-bottom: 2rem;
+}
+
+.dashboard-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 0;
+}
+
+/* Cards de estatísticas */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    overflow: hidden;
+    position: relative;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.stat-card.primary { border-left: 4px solid var(--primary); }
+.stat-card.success { border-left: 4px solid var(--success); }
+.stat-card.warning { border-left: 4px solid var(--warning); }
+.stat-card.danger { border-left: 4px solid var(--danger); }
+.stat-card.info { border-left: 4px solid var(--info); }
+
+.stat-card .stat-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2.5rem;
+    opacity: 0.15;
+    color: var(--primary);
+}
+
+.stat-card.success .stat-icon { color: var(--success); }
+.stat-card.warning .stat-icon { color: var(--warning); }
+.stat-card.danger .stat-icon { color: var(--danger); }
+.stat-card.info .stat-icon { color: var(--info); }
+
+.stat-card .stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.stat-card .stat-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.stat-card .stat-change {
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.stat-card .positive-change { color: var(--success); }
+.stat-card .negative-change { color: var(--danger); }
+
+/* Seções de conteúdo */
+.dashboard-section {
+    margin-bottom: 2.5rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0;
+}
+
+/* Gráficos */
+.chart-container {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1.5rem;
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.chart-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0;
+}
+
+.chart-controls {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+/* Listas de atividades */
+.activity-list {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.activity-item {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-item:hover {
+    background-color: var(--bg-light);
+}
+
+.activity-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.activity-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--bg-primary-light);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.activity-icon.success { background-color: var(--bg-success-light); color: var(--success); }
+.activity-icon.warning { background-color: var(--bg-warning-light); color: var(--warning); }
+.activity-icon.danger { background-color: var(--bg-danger-light); color: var(--danger); }
+
+.activity-details {
+    flex-grow: 1;
+}
+
+.activity-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.activity-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Filtros do dashboard */
+.dashboard-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-filter {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0.5rem 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.dashboard-filter:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.dashboard-filter.active {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+}

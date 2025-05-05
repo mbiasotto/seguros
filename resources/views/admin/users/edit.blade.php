@@ -3,7 +3,7 @@
 @section('title', 'Editar Administrador')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/data-list.css') }}"> --}} {{-- data-list.css parece ser específico para listagens --}}
 @endpush
 
 @section('content')
@@ -85,8 +85,13 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Nova Senha</label>
-                                    <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror"
-                                           id="password" name="password">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control form-control-lg @error('password') is-invalid @enderror"
+                                               id="password" name="password">
+                                        <button type="button" class="btn btn-secondary" id="generatePassword">
+                                            <i class="fas fa-key me-1"></i> Gerar
+                                        </button>
+                                    </div>
                                     @error('password')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -96,7 +101,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="password_confirmation" class="form-label">Confirmar Nova Senha</label>
-                                    <input type="password" class="form-control form-control-lg"
+                                    <input type="text" class="form-control form-control-lg"
                                            id="password_confirmation" name="password_confirmation">
                                 </div>
                             </div>
@@ -119,3 +124,23 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Gerador de senha
+        $('#generatePassword').click(function() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+';
+            let password = '';
+
+            for (let i = 0; i < 12; i++) {
+                password += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+
+            $('#password').val(password);
+            $('#password_confirmation').val(password);
+        });
+    });
+</script>
+@endpush

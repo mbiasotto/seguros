@@ -1,0 +1,120 @@
+/**
+ * Dashboard CSS Styles
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+/* Cards de estatísticas */
+.stat-card {
+    transition: all 0.3s ease;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    height: 100%;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 18px;
+    background-color: #f5f6fa;
+    color: #5e6278;
+}
+
+/* Usar apenas variações de cinza para os ícones */
+.stat-icon.icon-primary,
+.stat-icon.icon-success,
+.stat-icon.icon-info,
+.stat-icon.icon-warning,
+.stat-icon.icon-danger {
+    color: #5e6278;
+}
+
+/* Alertas de documentos */
+.document-alerts a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.document-alerts .alert {
+    background-color: #fff;
+    border-left: 3px solid #e4e6ef;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+    color: #5e6278;
+}
+
+.document-alerts .alert:hover {
+    transform: translateX(3px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+}
+
+.document-alerts .alert-warning {
+    border-left-color: #e4e6ef;
+    background-color: #f9fafb;
+}
+
+.document-alerts .alert-success {
+    border-left-color: #e4e6ef;
+    background-color: #f9fafb;
+}
+
+.document-alerts .alert-danger {
+    border-left-color: #e4e6ef;
+    background-color: #f9fafb;
+}
+
+/* Container de gráficos */
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* Estilização dos itens de lista */
+.recent-list-item {
+    transition: background-color 0.2s ease;
+    padding: 12px 15px;
+    border-bottom: 1px solid #f1f1f5;
+}
+
+.recent-list-item:hover {
+    background-color: #f9fafb;
+}
+
+.recent-list-item:last-child {
+    border-bottom: none;
+}
+
+/* Botões de chart-type */
+.btn-group .btn-outline-primary {
+    background-color: #fff;
+    border-color: #e4e6ef;
+    color: #5e6278;
+}
+
+.btn-group .btn-outline-primary:hover,
+.btn-group .btn-outline-primary.active {
+    background-color: #f5f6fa;
+    border-color: #e4e6ef;
+    color: #3f4254;
+}
+
+/* Responsividade */
+@media (max-width: 767.98px) {
+    .chart-container {
+        height: 250px;
+    }
+}

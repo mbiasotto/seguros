@@ -2,11 +2,6 @@
 
 @section('title', 'Estabelecimentos')
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
-<link rel="stylesheet" href="{{ asset('css/components/empty-state.css') }}">
-@endpush
-
 @section('content')
 <div class="data-list-header">
     <h1 class="h3 mb-0">Estabelecimentos</h1>
@@ -77,11 +72,11 @@
                 <thead>
                     <tr>
                         <th>Nome</th>
-                        <th>Vendedor</th>
-                        <th>Email</th>
+                        <th>Responsável</th>
+                        <th>Contato</th>
                         <th>Cidade/Estado</th>
                         <th>Status</th>
-                        <th width="120">Ações</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -100,20 +95,18 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="{{ route('admin.establishments.edit', $establishment) }}" class="btn btn-edit" title="Editar">
+                                    <a href="{{ route('admin.establishments.edit', $establishment) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>
-                                    </a>
-                                    <a href="{{ route('admin.establishments.documents.upload.show', $establishment->id) }}" class="btn btn-info" title="Upload Documento">
-                                        <i class="fas fa-upload"></i>
                                     </a>
                                     <button
                                         type="button"
-                                        class="btn btn-danger"
+                                        class="btn action-btn"
                                         data-delete-url="{{ route('admin.establishments.destroy', $establishment) }}"
                                         data-delete-title="Excluir Estabelecimento"
                                         data-delete-message="Tem certeza que deseja excluir o estabelecimento '{{ $establishment->nome }}'?"
                                         data-delete-confirm="Sim, Excluir"
                                         data-delete-cancel="Cancelar"
+                                        data-bs-toggle="tooltip"
                                         title="Excluir"
                                     >
                                         <i class="fas fa-trash-alt"></i>
@@ -134,3 +127,6 @@
     @endif
 @endif
 @endsection
+
+@push('scripts')
+@endpush

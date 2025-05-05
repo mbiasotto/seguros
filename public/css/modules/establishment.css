@@ -1,0 +1,223 @@
+/*
+ * Segura Essa - Módulo de Estabelecimentos
+ * Estilos específicos para o módulo de estabelecimentos
+ */
+
+/* Cards de estabelecimentos */
+.establishment-card {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.establishment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.establishment-card-image {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+}
+
+.establishment-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.establishment-card:hover .establishment-card-image img {
+    transform: scale(1.05);
+}
+
+.establishment-card-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: var(--primary);
+    color: #fff;
+}
+
+.establishment-card-badge.active {
+    background-color: var(--success);
+}
+
+.establishment-card-badge.inactive {
+    background-color: var(--danger);
+}
+
+.establishment-card-body {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.establishment-card-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+.establishment-card-subtitle {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.establishment-card-details {
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+}
+
+.establishment-card-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.establishment-card-item i {
+    color: var(--primary);
+    font-size: 0.9rem;
+    min-width: 1rem;
+    text-align: center;
+}
+
+.establishment-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+}
+
+.establishment-card-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Grid de estabelecimentos */
+.establishments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Detalhes do estabelecimento */
+.establishment-header {
+    margin-bottom: 2rem;
+}
+
+.establishment-image {
+    width: 100%;
+    height: 250px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.establishment-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.establishment-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.establishment-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.establishment-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.establishment-meta-item i {
+    color: var(--primary);
+}
+
+.establishment-description {
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+}
+
+/* Abas de conteúdo */
+.establishment-tabs {
+    margin-bottom: 2rem;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+.nav-item .nav-link {
+    padding: 0.75rem 1.25rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    border: none;
+    border-bottom: 2px solid transparent;
+    transition: var(--transition);
+}
+
+.nav-item .nav-link:hover {
+    color: var(--primary);
+}
+
+.nav-item .nav-link.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+    background-color: transparent;
+}
+
+/* Filtros de estabelecimentos */
+.establishment-filters {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.filter-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.filter-form .form-group {
+    margin-bottom: 1.25rem;
+}
+
+.filter-form .form-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}

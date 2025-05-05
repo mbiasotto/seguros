@@ -2,11 +2,6 @@
 
 @section('title', 'Administradores')
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
-<link rel="stylesheet" href="{{ asset('css/components/empty-state.css') }}">
-@endpush
-
 @section('content')
 <div class="data-list-header">
     <h1 class="h3 mb-0">Administradores</h1>
@@ -63,7 +58,7 @@
                         <th>E-mail</th>
                         <th>Data de Cadastro</th>
                         <th>Último Acesso</th>
-                        <th width="190">Ações</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,23 +76,24 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-edit" title="Editar">
+                                    <a href="{{ route('admin.users.edit', $user) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
 
-                                    <a href="{{ route('admin.users.access-logs', $user) }}" class="btn btn-info" title="Histórico de Acesso">
+                                    <a href="{{ route('admin.users.access-logs', $user) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Histórico de Acesso">
                                         <i class="fas fa-history"></i>
                                     </a>
 
                                     @if($user->id !== 1 && (Auth::id() === 1 || Auth::id() !== $user->id) && \App\Models\User::count() > 1)
                                         <button
                                             type="button"
-                                            class="btn btn-danger"
+                                            class="btn action-btn text-danger"
                                             data-delete-url="{{ route('admin.users.destroy', $user) }}"
                                             data-delete-title="Excluir Administrador"
                                             data-delete-message="Tem certeza que deseja excluir o administrador '{{ $user->name }}'?"
                                             data-delete-confirm="Sim, Excluir"
                                             data-delete-cancel="Cancelar"
+                                            data-bs-toggle="tooltip"
                                             title="Excluir"
                                         >
                                             <i class="fas fa-trash-alt"></i>
@@ -117,3 +113,6 @@
     </div>
 @endif
 @endsection
+
+@push('scripts')
+@endpush

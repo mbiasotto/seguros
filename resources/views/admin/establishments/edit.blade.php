@@ -4,30 +4,10 @@
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/pages/establishments/form.css') }}">
 @endpush
 
 @section('content')
-@push('styles')
-<style>
-    /* Estilos para a tabela de QR codes */
-    .table-sm td {
-        padding: 0.4rem 0.5rem;
-    }
-    .qr-code-item:hover {
-        background-color: rgba(0, 123, 255, 0.05);
-    }
-    .pagination-container .page-link {
-        padding: 0.25rem 0.5rem;
-        font-size: var(--font-size-sm);
-    }
-    .filter-container {
-        background-color: #f8f9fa;
-        border-radius: var(--border-radius);
-        padding: 0.75rem;
-        margin-bottom: 1rem;
-    }
-</style>
-@endpush
 <div class="container-fluid px-0">
     <div class="row mb-4">
         <div class="col-12">
@@ -114,7 +94,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="telefone" class="form-label">Telefone <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg" id="telefone" name="telefone" value="{{ old('telefone', $establishment->telefone) }}" placeholder="(00) 00000-0000" required>
+                                    <input type="text" class="form-control form-control-lg phone-mask" id="telefone" name="telefone" value="{{ old('telefone', $establishment->telefone) }}" placeholder="(00) 00000-0000" required>
                                 </div>
                             </div>
                         </div>
@@ -125,7 +105,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label for="cep" class="form-label">CEP <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg" id="cep" name="cep" value="{{ old('cep', $establishment->cep) }}" placeholder="00000-000" required>
+                                    <input type="text" class="form-control form-control-lg cep-mask" id="cep" name="cep" value="{{ old('cep', $establishment->cep) }}" placeholder="00000-000" required>
                                 </div>
                             </div>
 
@@ -274,105 +254,44 @@
 </div>
 
 @push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const qrcodeSelect = document.getElementById('qrcode-select');
-        const addQrcodeBtn = document.getElementById('add-qrcode-btn');
-        const linkedQrcodesList = document.getElementById('linked-qrcodes-list');
-        const noQrcodesMessage = document.getElementById('no-qrcodes-message');
+    // Desabilitar a inicialização automática de máscaras do form-handlers.js
+    window.skipDefaultMasks = true;
 
-        // Função para adicionar um QR Code à lista de vinculados
-        function addQrCode() {
-            // Verifica se um QR Code foi selecionado
-            if (!qrcodeSelect.value) {
-                return;
+    $(document).ready(function(){
+        // Aplicar máscaras diretamente pelos IDs
+        $('#cnpj').mask('00.000.000/0000-00');
+        $('#telefone').mask('(00) 00000-0000');
+        $('#cep').mask('00000-000');
+
+        // Verificar se as máscaras foram aplicadas
+        console.log('Máscaras aplicadas aos campos');
+
+        // Preenchimento automático de CEP
+        $('#cep').blur(function(){
+            const cep = $(this).val().replace(/\D/g, '');
+            console.log('CEP digitado:', cep);
+
+            if(cep.length === 8){
+                $.getJSON(`https://viacep.com.br/ws/${cep}/json/`, function(data){
+                    console.log('Dados do CEP:', data);
+                    if(!data.erro){
+                        $('#endereco').val(data.logradouro);
+                        $('#cidade').val(data.localidade);
+                        $('#estado').val(data.uf);
+                    }
+                });
             }
-
-            // Remove a mensagem de nenhum QR Code se existir
-            if (noQrcodesMessage) {
-                noQrcodesMessage.remove();
-            }
-
-            // Obtém os dados do QR Code selecionado
-            const qrCodeId = qrcodeSelect.value;
-            const option = qrcodeSelect.options[qrcodeSelect.selectedIndex];
-            const qrCodeTitle = option.dataset.title;
-            const qrCodeDescription = option.dataset.description;
-
-            // Cria o item da lista
-            const li = document.createElement('li');
-            li.className = 'list-group-item d-flex justify-content-between align-items-center';
-            li.id = `linked-qrcode-${qrCodeId}`;
-            li.innerHTML = `
-                <div>
-                    <input type="hidden" name="qr_codes[]" value="${qrCodeId}">
-                    <strong class="font-medium">${qrCodeTitle}</strong>
-                    <small class="text-muted text-sm d-block">${qrCodeDescription}</small>
-                </div>
-                <button type="button" class="btn btn-sm btn-outline-danger remove-qrcode" data-id="${qrCodeId}" data-title="${qrCodeTitle}" data-description="${qrCodeDescription}">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-
-            // Adiciona o item à lista
-            linkedQrcodesList.appendChild(li);
-
-            // Adiciona o evento de remoção ao botão
-            li.querySelector('.remove-qrcode').addEventListener('click', function() {
-                removeQrCode(this.dataset.id, this.dataset.title, this.dataset.description);
-            });
-
-            // Remove a opção do select
-            qrcodeSelect.remove(qrcodeSelect.selectedIndex);
-
-            // Se não houver mais opções, desabilita o select e o botão
-            if (qrcodeSelect.options.length <= 1) {
-                qrcodeSelect.disabled = true;
-                addQrcodeBtn.disabled = true;
-            }
-        }
-
-        // Função para remover um QR Code da lista de vinculados
-        function removeQrCode(id, title, description) {
-            // Remove o item da lista
-            document.getElementById(`linked-qrcode-${id}`).remove();
-
-            // Adiciona a opção de volta ao select
-            const option = document.createElement('option');
-            option.value = id;
-            option.dataset.title = title;
-            option.dataset.description = description;
-            option.textContent = `#${id} - ${title}`;
-            qrcodeSelect.appendChild(option);
-
-            // Habilita o select e o botão
-            qrcodeSelect.disabled = false;
-            addQrcodeBtn.disabled = false;
-
-            // Se não houver mais itens na lista, adiciona a mensagem de nenhum QR Code
-            if (!linkedQrcodesList.querySelector('li:not(#no-qrcodes-message)')) {
-                const li = document.createElement('li');
-                li.className = 'list-group-item text-center py-4';
-                li.id = 'no-qrcodes-message';
-                li.innerHTML = `
-                    <div class="text-muted">
-                        <i class="fas fa-info-circle me-2"></i> Nenhum QR Code vinculado a este estabelecimento.
-                    </div>
-                `;
-                linkedQrcodesList.appendChild(li);
-            }
-        }
-
-        // Adiciona o evento de clique ao botão de adicionar
-        addQrcodeBtn.addEventListener('click', addQrCode);
-
-        // Adiciona o evento de clique aos botões de remover
-        document.querySelectorAll('.remove-qrcode').forEach(button => {
-            button.addEventListener('click', function() {
-                removeQrCode(this.dataset.id, this.dataset.title, this.dataset.description);
-            });
         });
     });
 </script>
+<script src="{{ asset('js/admin/pages/establishments/form-handlers.js') }}"></script>
+<script src="{{ asset('js/admin/pages/establishments/qr-code-manager.js') }}"></script>
 @endpush
+
+<!-- Incluindo modal para confirmação de remoção de QR Code -->
+@include('admin.components.qr-code-remove-modal')
+
 @endsection

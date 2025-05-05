@@ -44,6 +44,41 @@ class DashboardController extends Controller
             $monthlyData[$month] = $total;
         }
 
+        // Prepare chart data for the view
+        $chartData = [
+            'establishments' => array_values($monthlyData),
+            'documents' => [] // We'll add document data later if needed
+        ];
+
+        // Get documents data for the chart
+        $documentsPerMonth = DB::table('establishment_onboardings')
+            ->select(
+                DB::raw('cast(strftime("%m", updated_at) as integer) as month'),
+                DB::raw('cast(strftime("%Y", updated_at) as integer) as year'),
+                DB::raw('COUNT(*) as total')
+            )
+            ->whereNotNull('document_path')
+            ->whereBetween('updated_at', [$startDate, $endDate])
+            ->groupBy('year', 'month')
+            ->orderBy('year')
+            ->orderBy('month')
+            ->get()
+            ->mapWithKeys(function ($item) {
+                return [$item->month => $item->total];
+            })
+            ->toArray();
+
+        // Initialize documents data array with zeros for all months
+        $documentsData = array_fill(1, 12, 0);
+
+        // Fill in actual values where they exist
+        foreach ($documentsPerMonth as $month => $total) {
+            $documentsData[$month] = $total;
+        }
+
+        // Add documents data to chart data
+        $chartData['documents'] = array_values($documentsData);
+
         // Get recent establishments with vendor relationship
         $recentEstablishments = Establishment::with('vendor')
             ->latest()
@@ -54,7 +89,8 @@ class DashboardController extends Controller
             'totalEstablishments',
             'totalVendors',
             'monthlyData',
-            'recentEstablishments'
+            'recentEstablishments',
+            'chartData'
         ));
     }
 }

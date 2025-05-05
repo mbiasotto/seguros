@@ -3,183 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Admin') - {{ config('app.name') }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@yield('title') - Segura Essa</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/admin.main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/components/modern-buttons.css') }}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- CSS principal -->
+    <link rel="stylesheet" href="{{ asset('css/seguraessa.css') }}">
+
+    <!-- Componentes comuns -->
     <link rel="stylesheet" href="{{ asset('css/components/action-buttons.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/components/modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/pages/common/badges.css') }}">
+
+    <!-- Estilos específicos -->
     @stack('styles')
-    <!-- Script para desativar tooltips não desejados -->
-    <script src="{{ asset('js/disable-tooltips.js') }}"></script>
 </head>
 <body>
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="px-4 py-3 mb-4">
-            <h5 class="text-white mb-0">Painel Administrativo</h5>
-        </div>
-        <nav class="nav flex-column">
-            <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                <i class="fas fa-home"></i>
-                <span>Dashboard</span>
-            </a>
-            <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
-                <i class="fas fa-user-shield"></i>
-                <span>Administradores</span>
-            </a>
-            <a href="{{ route('admin.vendors.index') }}" class="nav-link {{ request()->routeIs('admin.vendors*') ? 'active' : '' }}">
-                <i class="fas fa-users"></i>
-                <span>Vendedores</span>
-            </a>
-            <a href="{{ route('admin.establishments.index') }}" class="nav-link {{ request()->routeIs('admin.establishments*') && !request()->routeIs('admin.establishments.documents*') ? 'active' : '' }}">
-                <i class="fas fa-store"></i>
-                <span>Estabelecimentos</span>
-            </a>
-            <a href="{{ route('admin.establishments.documents.pending') }}" class="nav-link {{ request()->routeIs('admin.establishments.documents*') ? 'active' : '' }}">
-                <i class="fas fa-file-alt"></i>
-                <span>Documentos</span>
-            </a>
-            <a href="{{ route('admin.qr-codes.index') }}" class="nav-link {{ request()->routeIs('admin.qr-codes*') ? 'active' : '' }}">
-                <i class="fas fa-qrcode"></i>
-                <span>QR Codes</span>
-            </a>
-        </nav>
-        <a href="/admin/logout" class="btn btn-logout mt-auto">
-            <i class="fas fa-sign-out-alt"></i>Sair
-        </a>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        @include('admin.partials.sidebar')
+
+        <!-- Conteúdo principal -->
+        <main class="main-content p-4 flex-grow-1">
+            <!-- Alertas e mensagens -->
+            @include('admin.partials.alerts')
+
+            <!-- Conteúdo da página -->
+            @yield('content')
+        </main>
     </div>
 
-    <!-- Main Content -->
-    <div class="main-content">
-            <!-- Mobile Toggle Button -->
-            <div class="d-block d-md-none p-3">
-                <button class="btn btn-sm btn-primary" onclick="toggleSidebar()">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-            <!-- Page Content -->
-            <main class="p-4">
-                @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-                    {!! session('success') !!}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
-                </div>
-                @endif
-
-                @if($errors->any())
-                <div class="alert alert-danger mb-4" role="alert">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-exclamation-circle me-2"></i>
-                        <ul class="mb-0">
-                            @foreach($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-                @endif
-
-                @yield('content')
-            </main>
-        </div>
-    </div>
-
-    <!-- Modal de Confirmação de Exclusão -->
-    <div id="deleteConfirmModal" class="modal fade" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalTitle">Excluir Item</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="deleteModalMessage">Tem certeza que deseja excluir este item?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="deleteCancelButton">Cancelar</button>
-                    <form id="deleteModalForm" method="POST" style="display: inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger" id="deleteConfirmButton">Sim, Excluir</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('js/modal.js') }}"></script>
+    <!-- Script global de tooltips -->
     <script>
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('show');
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Procura por todos os botões com atributos data-delete-*
-            const deleteButtons = document.querySelectorAll('[data-delete-url]');
-
-            // Modal de confirmação
-            const deleteModal = document.getElementById('deleteConfirmModal');
-            const deleteModalTitle = document.getElementById('deleteModalTitle');
-            const deleteModalMessage = document.getElementById('deleteModalMessage');
-            const deleteModalForm = document.getElementById('deleteModalForm');
-            const deleteConfirmButton = document.getElementById('deleteConfirmButton');
-            const deleteCancelButton = document.getElementById('deleteCancelButton');
-
-            if (deleteModal && deleteButtons.length > 0) {
-                const bsDeleteModal = new bootstrap.Modal(deleteModal);
-
-                deleteButtons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        // Configura o modal com os dados do botão
-                        const url = this.getAttribute('data-delete-url');
-                        const title = this.getAttribute('data-delete-title') || 'Excluir Item';
-                        const message = this.getAttribute('data-delete-message') || 'Tem certeza que deseja excluir este item?';
-                        const confirmText = this.getAttribute('data-delete-confirm') || 'Sim, Excluir';
-                        const cancelText = this.getAttribute('data-delete-cancel') || 'Cancelar';
-
-                        // Atualiza o modal
-                        deleteModalTitle.textContent = title;
-                        deleteModalMessage.textContent = message;
-                        deleteModalForm.action = url;
-                        deleteConfirmButton.textContent = confirmText;
-                        deleteCancelButton.textContent = cancelText;
-
-                        // Abre o modal
-                        bsDeleteModal.show();
-                    });
+        $(document).ready(function() {
+            // Inicializar todos os tooltips do Bootstrap
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl, {
+                    boundary: document.body
                 });
-            }
+            });
         });
     </script>
+
+    <!-- Scripts específicos -->
     @stack('scripts')
-
-    <!-- jQuery Mask Plugin -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            // Aplica a máscara de CNPJ
-            $('.cnpj-mask').mask('00.000.000/0000-00');
-
-            // Aplica a máscara de telefone (se houver)
-            var phoneMaskBehavior = function (val) {
-                return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
-            },
-            phoneOptions = {
-                onKeyPress: function(val, e, field, options) {
-                    field.mask(phoneMaskBehavior.apply({}, arguments), options);
-                }
-            };
-            $('input[name="telefone"], input[id="telefone"]').mask(phoneMaskBehavior, phoneOptions);
-
-            // Aplica a máscara de CEP (se houver)
-            $('input[name="cep"], input[id="cep"]').mask('00000-000');
-        });
-    </script>
 </body>
 </html>

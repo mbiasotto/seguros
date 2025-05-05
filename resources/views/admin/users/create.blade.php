@@ -3,7 +3,7 @@
 @section('title', 'Novo Administrador')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/data-list.css') }}"> --}} {{-- data-list.css parece ser específico para listagens --}}
 @endpush
 
 @section('content')
@@ -71,7 +71,7 @@
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Senha <span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror"
+                                        <input type="text" class="form-control form-control-lg @error('password') is-invalid @enderror"
                                                id="password" name="password" required>
                                         <button type="button" class="btn btn-outline-secondary" id="generatePassword">
                                             <i class="fas fa-magic me-1"></i> Gerar
@@ -87,7 +87,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="password_confirmation" class="form-label">Confirmar Senha <span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control form-control-lg"
+                                    <input type="text" class="form-control form-control-lg"
                                            id="password_confirmation" name="password_confirmation" required>
                                 </div>
                             </div>
@@ -112,31 +112,5 @@
 @endsection
 
 @push('scripts')
-<script>
-    // Gerador de senha simples
-    document.getElementById('generatePassword').addEventListener('click', function() {
-        // Gera uma senha simples: 3 letras + 3 números
-        const letters = 'abcdefghijklmnopqrstuvwxyz';
-        const numbers = '0123456789';
-
-        let password = '';
-
-        // Adicionar 3 letras aleatórias
-        for (let i = 0; i < 3; i++) {
-            password += letters.charAt(Math.floor(Math.random() * letters.length));
-        }
-
-        // Adicionar 3 números aleatórios
-        for (let i = 0; i < 3; i++) {
-            password += numbers.charAt(Math.floor(Math.random() * numbers.length));
-        }
-
-        // Definir a senha nos campos
-        document.getElementById('password').value = password;
-        document.getElementById('password_confirmation').value = password;
-
-        // Mostrar a senha para o usuário
-        alert('Senha gerada: ' + password);
-    });
-</script>
+<script src="{{ asset('js/admin/utils/password-generator.js') }}"></script>
 @endpush

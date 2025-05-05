@@ -1,0 +1,38 @@
+/*
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ * Arquivo CSS principal - Versão organizada
+ */
+
+/* Importação de estilos base */
+@import 'base/variables.css';  /* Variáveis globais do sistema */
+@import 'base/reset.css';      /* Reset básico de estilos */
+@import 'base/typography.css'; /* Tipografia e estilos de texto */
+@import 'base/layout.css';     /* Layout básico e estrutura */
+
+/* Importação de componentes */
+@import 'components/buttons.css';       /* Estilos de botões padrão */
+@import 'components/modern-buttons.css'; /* Estilos modernos para botões */
+@import 'components/forms.css';         /* Formulários e controles */
+@import 'components/cards.css';         /* Cards e containers */
+@import 'components/tables.css';        /* Tabelas e listas */
+@import 'components/alerts.css';        /* Alertas e notificações */
+@import 'components/modal.css';         /* Modais e diálogos */
+@import 'components/badges.css';        /* Badges e indicadores */
+@import 'components/empty-state.css';   /* Estados vazios */
+@import 'components/data-list.css';     /* Listas de dados */
+@import 'components/charts.css';        /* Gráficos e visualizações */
+
+/* Estilos específicos por módulo */
+@import 'modules/admin.css';      /* Estilos da área administrativa */
+@import 'modules/establishment.css'; /* Estilos para estabelecimentos */
+@import 'modules/qr-codes.css';   /* Estilos específicos para QR codes */
+@import 'modules/auth.css';       /* Estilos de autenticação */
+@import 'modules/dashboard.css';  /* Estilos do dashboard */
+
+/* Utilitários e helpers */
+@import 'utils/helpers.css';     /* Classes utilitárias */
+@import 'utils/animations.css';  /* Animações */
+@import 'utils/responsive.css';  /* Media queries e responsividade */
+
+/* Sobrescreve qualquer estilo específico ou personalizado */
+@import 'custom.css';

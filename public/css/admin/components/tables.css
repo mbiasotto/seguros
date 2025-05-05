@@ -1,0 +1,72 @@
+/**
+ * Tables Component
+ * Segura Essa - Sistema de Gestão de Estabelecimentos
+ */
+
+/* Estilo para tabelas do admin */
+.table {
+    width: 100%;
+    margin-bottom: 0;
+    color: #212529;
+    vertical-align: middle;
+    border-color: #dee2e6;
+}
+
+.table > :not(caption) > * > * {
+    padding: 0.75rem 1rem;
+    border-bottom-width: 1px;
+}
+
+.table th {
+    font-weight: 600;
+    color: #495057;
+    background-color: #f8f9fa;
+    border-bottom-width: 2px;
+    text-transform: none;
+    font-size: 0.875rem;
+    letter-spacing: 0.03em;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Estilos para tabela responsiva */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Estilos para células com badges */
+.table td .badge {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.375rem 0.625rem;
+}
+
+/* Estilo para tabelas com borda completa */
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+/* Estilos para células com ícones */
+.table td .icon-cell {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+/* Layout de ação na tabela */
+.table .action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}

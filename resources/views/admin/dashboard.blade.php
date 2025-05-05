@@ -1,28 +1,10 @@
 @extends('admin.layouts.app')
 
+@section('title', 'Dashboard')
+
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/components/charts.css') }}">
-<style>
-    .stat-card {
-        transition: all 0.3s ease;
-    }
-    .stat-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-    .stat-icon {
-        width: 48px;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 12px;
-        font-size: 20px;
-    }
-    .document-alerts a {
-        text-decoration: none;
-    }
-</style>
+<!-- CSS específico do dashboard -->
+<link rel="stylesheet" href="{{ asset('css/admin/pages/dashboard.css') }}">
 @endpush
 
 @section('content')
@@ -40,8 +22,8 @@
             <div class="card h-100 border-0 shadow-sm stat-card">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
-                        <div class="stat-icon bg-primary bg-opacity-10">
-                            <i class="fas fa-store text-primary"></i>
+                        <div class="stat-icon icon-primary">
+                            <i class="fas fa-store"></i>
                         </div>
                         <div class="ms-3">
                             <h6 class="card-subtitle mb-1 text-muted">Total Estabelecimentos</h6>
@@ -57,8 +39,8 @@
             <div class="card h-100 border-0 shadow-sm stat-card">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
-                        <div class="stat-icon bg-success bg-opacity-10">
-                            <i class="fas fa-users text-success"></i>
+                        <div class="stat-icon icon-success">
+                            <i class="fas fa-users"></i>
                         </div>
                         <div class="ms-3">
                             <h6 class="card-subtitle mb-1 text-muted">Total Vendedores</h6>
@@ -74,8 +56,8 @@
             <div class="card h-100 border-0 shadow-sm stat-card">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
-                        <div class="stat-icon bg-info bg-opacity-10">
-                            <i class="fas fa-qrcode text-info"></i>
+                        <div class="stat-icon icon-info">
+                            <i class="fas fa-qrcode"></i>
                         </div>
                         <div class="ms-3">
                             <h6 class="card-subtitle mb-1 text-muted">QR Codes Ativos</h6>
@@ -92,8 +74,8 @@
                 <div class="card h-100 border-0 shadow-sm stat-card">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
-                            <div class="stat-icon bg-warning bg-opacity-10">
-                                <i class="fas fa-file-alt text-warning"></i>
+                            <div class="stat-icon icon-warning">
+                                <i class="fas fa-file-alt"></i>
                             </div>
                             <div class="ms-3">
                                 <h6 class="card-subtitle mb-1 text-muted">Documentos Pendentes</h6>
@@ -112,13 +94,13 @@
                 <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Cadastros por Mês/Ano</h5>
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-sm btn-outline-primary active">Estabelecimentos</button>
-                        <button type="button" class="btn btn-sm btn-outline-primary">Documentos</button>
+                        <button type="button" class="btn btn-sm btn-outline-primary active" data-chart-type="establishments">Estabelecimentos</button>
+                        <button type="button" class="btn btn-sm btn-outline-primary" data-chart-type="documents">Documentos</button>
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="chart-container" style="height: 300px;">
-                        <canvas id="monthlyChart"></canvas>
+                    <div class="chart-container">
+                        <canvas id="monthlyChart" data-chart="{{ json_encode($chartData) }}"></canvas>
                     </div>
                 </div>
             </div>
@@ -190,7 +172,7 @@
                 <div class="card-body p-0">
                     <div class="list-group list-group-flush">
                         @foreach($recentEstablishments as $establishment)
-                            <div class="list-group-item px-3 py-3">
+                            <div class="list-group-item px-3 py-3 recent-list-item">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <h6 class="mb-1">{{ $establishment->nome }}</h6>
@@ -201,7 +183,7 @@
                                     </div>
                                     <div class="text-end">
                                         <small class="text-muted d-block">{{ $establishment->created_at->format('d/m/Y') }}</small>
-                                        <a href="{{ route('admin.establishments.show', $establishment) }}" class="btn btn-sm btn-outline-secondary mt-1">
+                                        <a href="{{ route('admin.establishments.show', $establishment) }}" class="btn action-btn">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                     </div>
@@ -232,7 +214,7 @@
 
                         @if($recentDocuments->count() > 0)
                             @foreach($recentDocuments as $document)
-                                <div class="list-group-item px-3 py-3">
+                                <div class="list-group-item px-3 py-3 recent-list-item">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <h6 class="mb-1">{{ $document->establishment->nome }}</h6>
@@ -248,7 +230,7 @@
                                         </div>
                                         <div class="text-end">
                                             <small class="text-muted d-block">{{ $document->updated_at->format('d/m/Y') }}</small>
-                                            <a href="{{ route('admin.establishments.documents.show', $document) }}" class="btn btn-sm btn-outline-secondary mt-1">
+                                            <a href="{{ route('admin.establishments.documents.show', $document) }}" class="btn action-btn">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </div>
@@ -256,8 +238,8 @@
                                 </div>
                             @endforeach
                         @else
-                            <div class="list-group-item py-4 text-center">
-                                <p class="mb-0 text-muted">Nenhum documento encontrado</p>
+                            <div class="text-center py-4">
+                                <p class="text-muted mb-0">Nenhum documento encontrado</p>
                             </div>
                         @endif
                     </div>
@@ -266,91 +248,9 @@
         </div>
     </div>
 </div>
+@endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const canvas = document.getElementById('monthlyChart');
-        if (!canvas) {
-            console.error("Elemento 'monthlyChart' não encontrado!");
-            return;
-        }
-
-        const ctx = canvas.getContext('2d');
-        const monthlyData = @json($monthlyData);
-        console.log("monthlyData:", monthlyData);
-
-        const months = [
-            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-            'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-        ];
-
-        // Define o período de Março/2024 até Fevereiro/2025
-        const monthsOrder = [
-            'Março/2024', 'Abril/2024', 'Maio/2024', 'Junho/2024',
-            'Julho/2024', 'Agosto/2024', 'Setembro/2024', 'Outubro/2024',
-            'Novembro/2024', 'Dezembro/2024', 'Janeiro/2025', 'Fevereiro/2025'
-        ];
-
-        // Mapeia os valores mensais para o período específico
-        const monthlyValues = monthsOrder.map(monthYear => {
-            const [month, year] = monthYear.split('/');
-            const monthIndex = months.indexOf(month);
-            return monthlyData[monthIndex + 1] || 0;
-        });
-
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: monthsOrder,
-                datasets: [{
-                    label: 'Estabelecimentos Cadastrados',
-                    data: monthlyValues,
-                    borderColor: '#1D40AE',
-                    backgroundColor: 'rgba(29, 64, 174, 0.1)',
-                    fill: true,
-                    tension: 0.4,
-                    pointBackgroundColor: '#1D40AE',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2,
-                    pointRadius: 4,
-                    pointHoverRadius: 6
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false,
-                        callbacks: {
-                            label: function(context) {
-                                return `${context.dataset.label}: ${context.parsed.y}`;
-                            }
-                        }
-                    }
-                },
-                interaction: {
-                    intersect: false,
-                    mode: 'nearest'
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            stepSize: 1,
-                            precision: 0
-                        }
-                    }
-                }
-            }
-        });
-    });
-</script>
+<!-- Script específico do dashboard -->
+<script src="{{ asset('js/admin/pages/dashboard.js') }}"></script>
 @endpush
-@endsection

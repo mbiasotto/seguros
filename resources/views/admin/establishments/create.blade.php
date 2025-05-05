@@ -3,7 +3,7 @@
 @section('title', 'Novo Estabelecimento')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/pages/establishments/form.css') }}">
 @endpush
 
 @section('content')
@@ -92,7 +92,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="telefone" class="form-label">Telefone <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg" id="telefone" name="telefone" value="{{ old('telefone') }}" placeholder="(00) 00000-0000" required>
+                                    <input type="text" class="form-control form-control-lg phone-mask" id="telefone" name="telefone" value="{{ old('telefone') }}" placeholder="(00) 00000-0000" required>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label for="cep" class="form-label">CEP <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg" id="cep" name="cep" value="{{ old('cep') }}" placeholder="00000-000" required>
+                                    <input type="text" class="form-control form-control-lg cep-mask" id="cep" name="cep" value="{{ old('cep') }}" placeholder="00000-000" required>
                                 </div>
                             </div>
 
@@ -226,183 +226,40 @@
     </div>
 </div>
 
-<!-- Modal de Confirmação para Remover QR Code -->
-<div class="modal fade" id="removeQrCodeModal" tabindex="-1" aria-labelledby="removeQrCodeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title" id="removeQrCodeModalLabel">
-                    <i class="fas fa-exclamation-triangle me-2"></i> Confirmar Remoção
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
-            </div>
-            <div class="modal-body">
-                <p>Você está prestes a desvincular o QR Code <strong id="qrcode-title-to-remove"></strong> deste estabelecimento.</p>
-                <p class="mb-0">Tem certeza que deseja continuar?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    <i class="fas fa-times me-2"></i> Cancelar
-                </button>
-                <button type="button" class="btn btn-danger" id="confirm-remove-qrcode">
-                    <i class="fas fa-unlink me-2"></i> Sim, Desvincular
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- Incluindo modal para confirmação de remoção de QR Code -->
+@include('admin.components.qr-code-remove-modal')
 
 @endsection
 
 @push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const qrcodeSelect = document.getElementById('qrcode-select');
-        const addQrcodeBtn = document.getElementById('add-qrcode-btn');
-        const linkedQrcodesList = document.getElementById('linked-qrcodes-list');
-        const noQrcodesMessage = document.getElementById('no-qrcodes-message');
-        const removeQrCodeModalEl = document.getElementById('removeQrCodeModal');
-        let removeQrCodeModal;
+    // Desabilitar a inicialização automática de máscaras do form-handlers.js
+    window.skipDefaultMasks = true;
 
-        // Verifica se o Bootstrap está disponível
-        if (typeof bootstrap !== 'undefined') {
-            removeQrCodeModal = new bootstrap.Modal(removeQrCodeModalEl);
-        }
+    $(document).ready(function(){
+        // Aplicar máscaras diretamente
+        $('#cnpj').mask('00.000.000/0000-00');
+        $('#telefone').mask('(00) 00000-0000');
+        $('#cep').mask('00000-000');
 
-        const confirmRemoveQrCodeBtn = document.getElementById('confirm-remove-qrcode');
-        const qrcodeTitleToRemove = document.getElementById('qrcode-title-to-remove');
+        // Preenchimento automático de CEP
+        $('#cep').blur(function(){
+            const cep = $(this).val().replace(/\D/g, '');
 
-        // Variáveis para armazenar temporariamente os dados do QR Code a ser removido
-        let qrcodeToRemove = {
-            id: null,
-            title: null,
-            description: null
-        };
-
-        // Função para adicionar um QR Code à lista de vinculados
-        function addQrCode() {
-            // Verifica se um QR Code foi selecionado
-            if (!qrcodeSelect.value) {
-                return;
-            }
-
-            // Remove a mensagem de "nenhum QR Code vinculado" se existir
-            if (noQrcodesMessage) {
-                noQrcodesMessage.remove();
-            }
-
-            const qrcodeId = qrcodeSelect.value;
-            const qrcodeOption = qrcodeSelect.options[qrcodeSelect.selectedIndex];
-            const qrcodeTitle = qrcodeOption.getAttribute('data-title');
-            const qrcodeDescription = qrcodeOption.getAttribute('data-description');
-
-            // Cria o elemento de lista para o QR Code
-            const listItem = document.createElement('li');
-            listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-            listItem.id = `linked-qrcode-${qrcodeId}`;
-
-            // Conteúdo do item
-            listItem.innerHTML = `
-                <div>
-                    <input type="hidden" name="qr_codes[]" value="${qrcodeId}">
-                    <strong>#${qrcodeId} - ${qrcodeTitle}</strong>
-                    <small class="text-muted d-block">${qrcodeDescription}</small>
-                </div>
-                <button type="button" class="btn btn-sm btn-outline-danger remove-qrcode" data-id="${qrcodeId}" data-title="${qrcodeTitle}" data-description="${qrcodeDescription}">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-
-            // Adiciona o item à lista
-            linkedQrcodesList.appendChild(listItem);
-
-            // Remove a opção do select
-            qrcodeSelect.removeChild(qrcodeOption);
-
-            // Limpa a seleção
-            qrcodeSelect.value = '';
-
-            // Adiciona evento para mostrar o modal de confirmação
-            const removeButton = listItem.querySelector('.remove-qrcode');
-            removeButton.addEventListener('click', function() {
-                // Armazena os dados do QR Code a ser removido
-                qrcodeToRemove.id = this.getAttribute('data-id');
-                qrcodeToRemove.title = this.getAttribute('data-title');
-                qrcodeToRemove.description = this.getAttribute('data-description');
-
-                // Atualiza o texto do modal com o título do QR Code
-                qrcodeTitleToRemove.textContent = `#${qrcodeToRemove.id} - ${qrcodeToRemove.title}`;
-
-                // Exibe o modal de confirmação
-                if (removeQrCodeModal) {
-                    removeQrCodeModal.show();
-                } else {
-                    // Fallback se o bootstrap não estiver disponível
-                    if (confirm(`Deseja remover o QR Code #${qrcodeToRemove.id} - ${qrcodeToRemove.title}?`)) {
-                        removeQrCode(qrcodeToRemove.id, qrcodeToRemove.title, qrcodeToRemove.description);
+            if(cep.length === 8){
+                $.getJSON(`https://viacep.com.br/ws/${cep}/json/`, function(data){
+                    if(!data.erro){
+                        $('#endereco').val(data.logradouro);
+                        $('#cidade').val(data.localidade);
+                        $('#estado').val(data.uf);
                     }
-                }
-            });
-        }
-
-        // Função para remover um QR Code da lista de vinculados
-        function removeQrCode(qrcodeId, qrcodeTitle, qrcodeDescription) {
-            // Remove o item da lista
-            const listItem = document.getElementById(`linked-qrcode-${qrcodeId}`);
-            if (listItem) {
-                listItem.remove();
+                });
             }
-
-            // Adiciona a opção de volta ao select
-            const option = document.createElement('option');
-            option.value = qrcodeId;
-            option.setAttribute('data-title', qrcodeTitle);
-            option.setAttribute('data-description', qrcodeDescription);
-            option.textContent = `#${qrcodeId} - ${qrcodeTitle}`;
-            qrcodeSelect.appendChild(option);
-
-            // Se não houver mais QR Codes vinculados, mostra a mensagem
-            if (linkedQrcodesList.children.length === 0) {
-                const noQrcodesItem = document.createElement('li');
-                noQrcodesItem.className = 'list-group-item text-center py-4';
-                noQrcodesItem.id = 'no-qrcodes-message';
-                noQrcodesItem.innerHTML = `
-                    <div class="text-muted">
-                        <i class="fas fa-info-circle me-2"></i> Nenhum QR Code vinculado a este estabelecimento.
-                    </div>
-                `;
-                linkedQrcodesList.appendChild(noQrcodesItem);
-            }
-        }
-
-        // Adiciona evento ao botão de adicionar
-        addQrcodeBtn.addEventListener('click', addQrCode);
-
-        // Adiciona evento ao botão de confirmar remoção no modal
-        if (confirmRemoveQrCodeBtn) {
-            confirmRemoveQrCodeBtn.addEventListener('click', function() {
-                // Remove o QR Code
-                removeQrCode(qrcodeToRemove.id, qrcodeToRemove.title, qrcodeToRemove.description);
-
-                // Fecha o modal
-                if (removeQrCodeModal) {
-                    removeQrCodeModal.hide();
-                }
-
-                // Limpa os dados temporários
-                qrcodeToRemove = {
-                    id: null,
-                    title: null,
-                    description: null
-                };
-            });
-        }
+        });
     });
 </script>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-<script src="{{ asset('js/main.js') }}"></script>
-<script src="{{ asset('js/utils/form-utils.js') }}"></script>
+<script src="{{ asset('js/admin/pages/establishments/form-handlers.js') }}"></script>
+<script src="{{ asset('js/admin/pages/establishments/qr-code-manager.js') }}"></script>
 @endpush

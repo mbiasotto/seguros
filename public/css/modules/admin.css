@@ -1,0 +1,115 @@
+/*
+ * Segura Essa - Módulo Administrativo
+ * Estilos específicos para a área administrativa
+ */
+
+/* Variáveis específicas para o admin */
+:root {
+    --admin-primary: #1D40AE;
+    --admin-secondary: #3B4252;
+}
+
+/* Sidebar administrativa */
+.sidebar .nav-link {
+    font-weight: 400;
+    padding: 0.75rem 1.25rem;
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: var(--transition);
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.sidebar .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-weight: 500;
+}
+
+.sidebar .nav-link i {
+    min-width: 1.25rem;
+    text-align: center;
+}
+
+/* Cabeçalho da marca/logo na sidebar */
+.brand {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Tabelas administrativas */
+.admin-table th {
+    font-weight: 600;
+    color: var(--text-secondary);
+    background-color: var(--bg-light);
+    border-bottom-width: 2px;
+}
+
+/* Cards estatísticos do dashboard */
+.stat-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.stat-card h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+}
+
+.stat-card p {
+    color: var(--text-muted);
+    margin-bottom: 0;
+}
+
+/* Layout do dashboard */
+.admin-dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Header de listagens */
+.data-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.data-list-header h1 {
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Botões de ação */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Ajustes para botões pequenos */
+.btn-sm {
+    margin-bottom: 35px;
+}

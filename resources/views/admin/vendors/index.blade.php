@@ -2,29 +2,6 @@
 
 @section('title', 'Vendedores')
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
-<link rel="stylesheet" href="{{ asset('css/empty-state.css') }}">
-<style>
-    .filter-container {
-        background-color: #f8f9fa;
-        border-radius: 0.25rem;
-        padding: 1rem;
-        margin-bottom: 1rem;
-    }
-    .filter-container .form-label {
-        font-weight: 500;
-    }
-    .table-container {
-        overflow-x: auto;
-    }
-    .pagination-info {
-        font-size: 0.875rem;
-        color: #6c757d;
-    }
-</style>
-@endpush
-
 @section('content')
 <div class="data-list-header">
     <h1 class="h3 mb-0">Vendedores</h1>
@@ -75,13 +52,13 @@
 @if($vendors->isEmpty())
     <div class="card border-0 shadow-sm">
         <div class="card-body empty-state text-center py-5">
-            <div class="empty-state-icon mb-4 bg-light rounded-circle p-4 d-inline-flex justify-content-center align-items-center" style="width: 120px; height: 120px;">
-                <i class="fas fa-users text-primary fa-3x"></i>
+            <div class="empty-state-icon mb-4 rounded-circle p-4 d-inline-flex justify-content-center align-items-center">
+                <i class="fas fa-users fa-3x"></i>
             </div>
             <h3 class="fw-bold mb-3">Nenhum vendedor cadastrado</h3>
             <p class="text-muted mb-4 col-md-8 mx-auto">Você ainda não possui vendedores cadastrados no sistema. Adicione seu primeiro vendedor para começar a gerenciar sua equipe de vendas.</p>
             <div class="mt-4">
-                <a href="{{ route('admin.vendors.create') }}" class="btn btn-primary d-flex align-items-center gap-2 mx-auto" style="width: fit-content;">
+                <a href="{{ route('admin.vendors.create') }}" class="btn btn-primary d-flex align-items-center gap-2 mx-auto" style="width: fit-content;" data-bs-toggle="tooltip" title="Adicionar Vendedor">
                     <i class="fas fa-plus"></i>
                     <span>Novo</span>
                 </a>
@@ -90,7 +67,7 @@
     </div>
 @else
     <div class="card border-0 shadow-sm">
-        <div class="table-responsive">
+        <div class="table-container">
             <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>
@@ -100,7 +77,7 @@
                         <th>Cidade/Estado</th>
                         <th>Status</th>
                         <th>Último Acesso</th>
-                        <th width="160">Ações</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -126,20 +103,21 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="{{ route('admin.vendors.edit', $vendor) }}" class="btn btn-edit" title="Editar">
+                                    <a href="{{ route('admin.vendors.edit', $vendor) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
-                                    <a href="{{ route('admin.vendors.access-logs', $vendor) }}" class="btn btn-info" title="Histórico de Acessos">
+                                    <a href="{{ route('admin.vendors.access-logs', $vendor) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Histórico de Acessos">
                                         <i class="fas fa-history"></i>
                                     </a>
                                     <button
                                         type="button"
-                                        class="btn btn-danger"
+                                        class="btn action-btn"
                                         data-delete-url="{{ route('admin.vendors.destroy', $vendor) }}"
                                         data-delete-title="Excluir Vendedor"
                                         data-delete-message="Tem certeza que deseja excluir o vendedor '{{ $vendor->nome }}'?"
                                         data-delete-confirm="Sim, Excluir"
                                         data-delete-cancel="Cancelar"
+                                        data-bs-toggle="tooltip"
                                         title="Excluir"
                                     >
                                         <i class="fas fa-trash-alt"></i>
@@ -153,10 +131,16 @@
         </div>
     </div>
 
-    @if(isset($vendors->links))
-    <div class="mt-4">
+    @if($vendors instanceof \Illuminate\Pagination\LengthAwarePaginator)
+    <div class="mt-4 d-flex justify-content-between align-items-center">
+        <div class="pagination-info">
+            Mostrando {{ $vendors->firstItem() ?? 0 }} a {{ $vendors->lastItem() ?? 0 }} de {{ $vendors->total() }} resultados
+        </div>
         {{ $vendors->links() }}
     </div>
     @endif
 @endif
 @endsection
+
+@push('scripts')
+@endpush

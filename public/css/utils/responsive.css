@@ -1,0 +1,327 @@
+/*
+ * Segura Essa - Responsividade CSS
+ * Media queries e estilos responsivos para o sistema
+ */
+
+/* Variáveis para breakpoints */
+:root {
+    --bp-sm: 576px;
+    --bp-md: 768px;
+    --bp-lg: 992px;
+    --bp-xl: 1200px;
+    --bp-xxl: 1400px;
+}
+
+/* Mobile First - Dispositivos extra pequenos (< 576px) */
+/* Estilos padrão são mobile-first */
+
+/* Small devices (>= 576px) */
+@media (min-width: 576px) {
+    .hide-sm-up { display: none !important; }
+
+    /* Grid responsivo */
+    .row-cols-sm-2 > * { flex: 0 0 50%; max-width: 50%; }
+    .row-cols-sm-3 > * { flex: 0 0 33.333333%; max-width: 33.333333%; }
+    .row-cols-sm-4 > * { flex: 0 0 25%; max-width: 25%; }
+
+    /* Tamanhos de texto responsivos */
+    h1, .h1 { font-size: 2.25rem; }
+    h2, .h2 { font-size: 1.875rem; }
+
+    /* Ajustes de padding/margin */
+    .container { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+
+/* Medium devices (>= 768px) */
+@media (min-width: 768px) {
+    .hide-md-up { display: none !important; }
+
+    /* Grid responsivo */
+    .row-cols-md-2 > * { flex: 0 0 50%; max-width: 50%; }
+    .row-cols-md-3 > * { flex: 0 0 33.333333%; max-width: 33.333333%; }
+    .row-cols-md-4 > * { flex: 0 0 25%; max-width: 25%; }
+
+    /* Layout de duas colunas */
+    .two-col-layout {
+        display: flex;
+        gap: var(--spacing-lg);
+    }
+
+    .admin-dashboard-stats {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    /* Melhorias para tabelas */
+    .table-responsive-md {
+        overflow-x: visible;
+    }
+
+    /* Regras específicas para garantir que o botão mobile só apareça em dispositivos móveis */
+    .mobile-menu-toggle,
+    .d-md-none,
+    [class*="d-md-none"],
+    .d-block.d-md-none,
+    .d-block.d-lg-none {
+        display: none !important;
+    }
+
+    /* Forçar sempre em telas maiores */
+    .d-md-block {
+        display: block !important;
+    }
+
+    .d-md-flex {
+        display: flex !important;
+    }
+
+    .d-md-inline {
+        display: inline !important;
+    }
+
+    .d-md-inline-block {
+        display: inline-block !important;
+    }
+}
+
+/* Large devices (>= 992px) */
+@media (min-width: 992px) {
+    .hide-lg-up { display: none !important; }
+
+    /* Grid responsivo */
+    .row-cols-lg-3 > * { flex: 0 0 33.333333%; max-width: 33.333333%; }
+    .row-cols-lg-4 > * { flex: 0 0 25%; max-width: 25%; }
+    .row-cols-lg-5 > * { flex: 0 0 20%; max-width: 20%; }
+
+    /* Layout da sidebar */
+    .sidebar {
+        width: 250px;
+        min-height: 100vh;
+    }
+
+    .main-content {
+        margin-left: 250px;
+    }
+
+    .admin-dashboard-stats {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+}
+
+/* X-Large devices (>= 1200px) */
+@media (min-width: 1200px) {
+    .hide-xl-up { display: none !important; }
+
+    /* Grid responsivo */
+    .row-cols-xl-4 > * { flex: 0 0 25%; max-width: 25%; }
+    .row-cols-xl-5 > * { flex: 0 0 20%; max-width: 20%; }
+    .row-cols-xl-6 > * { flex: 0 0 16.666667%; max-width: 16.666667%; }
+
+    /* Containers mais largos */
+    .container-xl {
+        max-width: 1140px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .admin-dashboard-stats {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* XX-Large devices (>= 1400px) */
+@media (min-width: 1400px) {
+    .hide-xxl-up { display: none !important; }
+
+    .container-xxl {
+        max-width: 1320px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* Queries de max-width para esconder elementos em telas menores */
+@media (max-width: 1199.98px) {
+    .hide-xl-down { display: none !important; }
+}
+
+@media (max-width: 991.98px) {
+    .hide-lg-down { display: none !important; }
+
+    /* Ajustes para telas menores */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        height: 100%;
+        z-index: 1040;
+        transition: var(--transition);
+    }
+
+    .sidebar.show {
+        left: 0;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    /* Headers móveis */
+    .data-list-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .data-list-header .d-flex {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    /* Ajuste para as margens e paddings em dispositivos móveis */
+    .container-fluid {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+    .row {
+        margin-left: -10px !important;
+        margin-right: -10px !important;
+    }
+
+    .col, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6,
+    .col-7, .col-8, .col-9, .col-10, .col-11, .col-12,
+    .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6,
+    .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12,
+    .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6,
+    .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    /* Ajuste para o header no mobile */
+    h1, .h1 {
+        font-size: 1.75rem !important;
+    }
+
+    h2, .h2 {
+        font-size: 1.5rem !important;
+    }
+
+    .card-header {
+        padding: 0.75rem 1rem !important;
+    }
+
+    /* Ajustes para o Dashboard no mobile */
+    .stat-card .card-title {
+        font-size: 1.5rem !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .hide-md-down { display: none !important; }
+
+    /* Ajustes para formulários */
+    .form-row {
+        flex-direction: column;
+    }
+
+    /* Tabelas responsivas */
+    .table-responsive-md {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    /* Ajustes de botões e ações */
+    .action-buttons {
+        flex-wrap: wrap;
+    }
+
+    /* Regras para dispositivos mobile */
+    .mobile-menu-toggle {
+        display: block !important;
+        position: fixed !important;
+        top: 0.75rem !important;
+        left: 0.75rem !important;
+        z-index: 1030 !important;
+    }
+
+    .mobile-menu-toggle .btn {
+        width: 40px !important;
+        height: 40px !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    /* Ajustes para o conteúdo principal quando o menu está visível */
+    .sidebar.show + .main-content {
+        margin-top: 3.5rem !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .hide-sm-down { display: none !important; }
+
+    /* Ajustes para mobile */
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    h1, .h1 { font-size: 1.875rem; }
+    h2, .h2 { font-size: 1.5rem; }
+
+    /* Esconder colunas não essenciais em tabelas */
+    .table-sm-simplified th:not(:first-child):not(:last-child):not(:nth-child(2)),
+    .table-sm-simplified td:not(:first-child):not(:last-child):not(:nth-child(2)) {
+        display: none;
+    }
+
+    /* QR Codes em telas pequenas */
+    .qr-code-container img {
+        max-width: 100%;
+    }
+}
+
+/* Modo impressão */
+@media print {
+    .no-print { display: none !important; }
+
+    body {
+        background-color: white !important;
+        font-size: 12pt;
+    }
+
+    .container, .container-fluid, .container-lg, .container-md,
+    .container-sm, .container-xl, .container-xxl {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+    }
+
+    a[href]:after {
+        content: none !important;
+    }
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .chart-container {
+        height: 250px !important;
+    }
+}
+
+/* Dispositivos grandes */
+@media (min-width: 992px) {
+    .main-content {
+        margin-left: 250px !important;
+    }
+}
