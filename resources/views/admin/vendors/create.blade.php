@@ -30,7 +30,7 @@
                             </div>
                         @endif
 
-                        <div class="row g-4">
+                        <div class="row mb-4">
                             <!-- Informações Pessoais -->
                             <div class="col-12">
                                 <h5 class="fw-bold text-lg border-bottom pb-2 mb-4">Informações Pessoais</h5>

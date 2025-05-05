@@ -14,7 +14,7 @@
 <!-- Filtros -->
 <div class="filter-container shadow-sm">
     <form action="{{ route('admin.establishments.index') }}" method="GET" class="row g-3">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <label for="search" class="form-label">Buscar</label>
             <input type="text" class="form-control" id="search" name="search" placeholder="Nome, email ou cidade..." value="{{ request('search') }}">
         </div>
@@ -43,7 +43,7 @@
                 <option value="cidade" {{ request('order_by') == 'cidade' ? 'selected' : '' }}>Cidade</option>
             </select>
         </div>
-        <div class="col-12 col-md-1 d-flex align-items-end">
+        <div class="col-md-2 d-flex align-items-end">
             <button type="submit" class="btn btn-primary w-100">Filtrar</button>
         </div>
     </form>
