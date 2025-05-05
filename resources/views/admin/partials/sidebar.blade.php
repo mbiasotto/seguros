@@ -1,7 +1,6 @@
 <div class="sidebar" id="sidebar">
     <div class="brand">
-        <i class="fas fa-shield-alt"></i>
-        <span>Segura Essa</span>
+        <img src="{{ asset('admin/img/logo-white.png') }}" alt="Logo" class="sidebar-logo">
     </div>
     <nav class="nav flex-column">
         <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">

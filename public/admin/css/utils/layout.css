@@ -30,7 +30,7 @@
     background: linear-gradient(180deg, #1D40AE 0%, #2A48A7 100%);
     min-height: 100vh;
     height: 100%;
-    padding-top: 2rem;
+    padding-top: .3rem;
     transition: transform 0.3s ease;
     width: 250px;
     position: fixed;
