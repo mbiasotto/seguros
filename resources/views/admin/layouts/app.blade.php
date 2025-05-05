@@ -27,7 +27,20 @@
     @stack('styles')
 </head>
 <body>
+    <!-- Header Mobile -->
+    <header class="mobile-header d-md-none">
+        <div class="mobile-header-container">
+            <img src="{{ asset('admin/img/logo-white.png') }}" alt="Logo" class="mobile-logo">
+            <button class="btn mobile-toggle-btn" type="button">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
     <div class="d-flex">
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
         <!-- Sidebar -->
         @include('admin.partials.sidebar')
 

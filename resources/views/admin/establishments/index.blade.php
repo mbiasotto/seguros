@@ -43,7 +43,7 @@
                 <option value="cidade" {{ request('order_by') == 'cidade' ? 'selected' : '' }}>Cidade</option>
             </select>
         </div>
-        <div class="col-md-1 d-flex align-items-end">
+        <div class="col-12 col-md-1 d-flex align-items-end">
             <button type="submit" class="btn btn-primary w-100">Filtrar</button>
         </div>
     </form>
@@ -66,14 +66,14 @@
         </div>
     </div>
 @else
-    <div class="card border-0 shadow-sm">
+    <div class="card border-0 shadow-sm mobile-table-container">
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Responsável</th>
-                        <th>Contato</th>
+                        <th>NOME</th>
+                        <th>RESPONSÁVEL</th>
+                        <th>CONTATO</th>
                         <th>Cidade/Estado</th>
                         <th>Status</th>
                         <th>Ações</th>

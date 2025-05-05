@@ -33,10 +33,3 @@
         <span>Sair</span>
     </a>
 </div>
-
-<!-- Botão para menu mobile -->
-<div class="mobile-menu-toggle d-md-none">
-    <button class="btn btn-light shadow-sm" type="button" onclick="document.getElementById('sidebar').classList.toggle('show')">
-        <i class="fas fa-bars"></i>
-    </button>
-</div>
