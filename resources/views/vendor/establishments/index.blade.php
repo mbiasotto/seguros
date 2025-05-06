@@ -106,9 +106,6 @@
                                     <a href="{{ route('vendor.establishments.edit', $establishment) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
-                                    <a href="{{ route('vendor.establishments.documents.upload.show', $establishment->id) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Upload Documento">
-                                        <i class="fas fa-upload"></i>
-                                    </a>
                                     <button
                                         type="button"
                                         class="btn action-btn" {{-- Add action-btn class --}}

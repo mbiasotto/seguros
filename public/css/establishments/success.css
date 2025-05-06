@@ -101,12 +101,12 @@ body {
 }
 
 .step.completed .step-circle {
-    background-color: #198754;
+    background-color: var(--admin-primary);
     color: #fff;
 }
 
 .step.completed .step-title {
-    color: #198754;
+    color: var(--admin-primary);
 }
 
 /* Success Icon */
@@ -117,7 +117,7 @@ body {
 
 .success-icon i {
     font-size: 6rem;
-    color: #198754;
+    color: var(--admin-primary);
     animation: pulse 2s infinite;
 }
 
