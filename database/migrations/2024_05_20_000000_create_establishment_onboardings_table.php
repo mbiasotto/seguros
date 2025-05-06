@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('ip_address')->nullable();
             $table->boolean('completed')->default(false);
             $table->timestamp('completed_at')->nullable();
-            $table->timestamp('expires_at');
+            $table->timestamp('expires_at')->nullable();
             $table->timestamps();
         });
     }
