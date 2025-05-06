@@ -193,7 +193,7 @@
                 <tr>
                 <td style="padding: 35px 30px; text-align: center; background: linear-gradient(135deg, #1e5799 0%, #2989d8 50%, #207cca 100%); color: white;">
                 <![endif]-->
-                <img src="{{ asset('img/logo.png') }}" alt="SeguraEssa.app Logo" width="200" height="auto" style="max-width: 200px; margin-bottom: 20px;">
+                <img src="{{ asset('admin/img/logo-white.png') }}" alt="SeguraEssa.app Logo" width="200" height="auto" style="max-width: 200px; margin-bottom: 20px;">
                 <h1>Bem-vindo ao Painel Administrativo</h1>
                 <p>Sua central de controle SeguraEssa.app</p>
                 <!--[if mso]>

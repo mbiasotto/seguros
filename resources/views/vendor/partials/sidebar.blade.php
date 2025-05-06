@@ -8,13 +8,13 @@
             <i class="fas fa-home"></i>
             <span>Dashboard</span>
         </a>
-        <a href="{{ route('vendor.profile') }}" class="nav-link {{ request()->routeIs('vendor.profile') ? 'active' : '' }}">
-            <i class="fas fa-user"></i>
-            <span>Meu Perfil</span>
-        </a>
         <a href="{{ route('vendor.establishments.index') }}" class="nav-link {{ request()->routeIs('vendor.establishments*') && !request()->routeIs('vendor.establishments.documents*') ? 'active' : '' }}">
             <i class="fas fa-store"></i>
             <span>Estabelecimentos</span>
+        </a>
+        <a href="{{ route('vendor.profile') }}" class="nav-link {{ request()->routeIs('vendor.profile') ? 'active' : '' }}">
+            <i class="fas fa-user"></i>
+            <span>Meu Perfil</span>
         </a>
         {{-- <a href="{{ route('vendor.establishments.documents') }}" class="nav-link {{ request()->routeIs('vendor.establishments.documents*') ? 'active' : '' }}">
             <i class="fas fa-file-alt"></i>

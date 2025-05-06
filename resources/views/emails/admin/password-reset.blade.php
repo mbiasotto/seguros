@@ -167,7 +167,7 @@
                             <h1>Redefinição de Senha</h1>
                         </div>
                         <div class="email-body">
-                            <div class="app-logo">SeguraEssa.app</div>
+                            <div class="app-logo"><img src="{{ asset('admin/img/logo.png') }}" alt="SeguraEssa.app Logo" width="200" height="auto" style="max-width: 200px; margin-bottom: 20px;"></div>
 
                             <div class="greeting">Olá!</div>
 

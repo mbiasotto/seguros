@@ -246,7 +246,7 @@
                 <tr>
                 <td style="padding: 35px 30px; text-align: center; background: linear-gradient(135deg, #1e5799 0%, #2989d8 50%, #207cca 100%); color: white;">
                 <![endif]-->
-                <img src="{{ asset('img/logo.png') }}" alt="SeguraEssa.app Logo" width="200" height="auto" style="max-width: 200px; margin-bottom: 20px;">
+                <img src="{{ asset('admin/img/logo-white.png') }}" alt="SeguraEssa.app Logo" width="200" height="auto" style="max-width: 200px; margin-bottom: 20px;">
                 <h1>Bem-vindo ao SeguraEssa.app!</h1>
                 <p>Sua plataforma de parceria e crescimento</p>
                 <!--[if mso]>
@@ -361,7 +361,7 @@
                     <![endif]-->
                     <div class="step">
                         <div class="step-number">5</div>
-                        <div class="step-content">Comece a cadastrar estabelecimentos parceiros e acompanhe suas comissões</div>
+                        <div class="step-content">Comece a cadastrar estabelecimentos parceiros</div>
                     </div>
                     <!--[if mso]>
                     </td>
