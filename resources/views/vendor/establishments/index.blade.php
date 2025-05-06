@@ -3,14 +3,16 @@
 @section('title', 'Estabelecimentos')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
-<link rel="stylesheet" href="{{ asset('css/components/empty-state.css') }}">
+{{-- Remove specific CSS, rely on admin/admin.css --}}
+{{-- <link rel="stylesheet" href="{{ asset('css/data-list.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('css/components/empty-state.css') }}"> --}}
 @endpush
 
 @section('content')
-<div class="data-list-header">
-    <h1 class="h3 mb-0">Meus Estabelecimentos</h1>
-    <a href="{{ route('vendor.establishments.create') }}" class="btn btn-primary d-flex align-items-center justify-content-center gap-2">
+{{-- Use admin page header structure --}}
+<div class="page-header">
+    <h1 class="page-title">Meus Estabelecimentos</h1>
+    <a href="{{ route('vendor.establishments.create') }}" class="btn btn-primary d-flex align-items-center gap-2">
         <i class="fas fa-plus"></i>
         <span>Novo</span>
     </a>
@@ -49,12 +51,13 @@
             </select>
         </div>
         <div class="col-md-1 d-flex align-items-end">
-            <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center w-100">Filtrar</button>
+            <button type="submit" class="btn btn-primary w-100">Filtrar</button>
         </div>
     </form>
 </div>
 
 @if($establishments->isEmpty())
+    {{-- Use admin empty state structure --}}
     <div class="card border-0 shadow-sm">
         <div class="card-body empty-state text-center py-5">
             <div class="empty-state-icon mb-4 bg-light rounded-circle p-4 d-inline-flex justify-content-center align-items-center" style="width: 120px; height: 120px;">
@@ -63,7 +66,7 @@
             <h3 class="fw-bold mb-3">Nenhum estabelecimento cadastrado</h3>
             <p class="text-muted mb-4 col-md-8 mx-auto">Você ainda não possui estabelecimentos cadastrados no sistema. Adicione seu primeiro estabelecimento para começar a gerenciar seus negócios.</p>
             <div class="mt-4">
-                <a href="{{ route('vendor.establishments.create') }}" class="btn btn-primary d-flex align-items-center justify-content-center gap-2 mx-auto" style="width: fit-content;">
+                <a href="{{ route('vendor.establishments.create') }}" class="btn btn-primary d-flex align-items-center gap-2 mx-auto btn-auto">
                     <i class="fas fa-plus"></i>
                     <span>Adicionar Estabelecimento</span>
                 </a>
@@ -71,6 +74,7 @@
         </div>
     </div>
 @else
+    {{-- Use admin table structure --}}
     <div class="card border-0 shadow-sm">
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
@@ -98,20 +102,22 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="{{ route('vendor.establishments.edit', $establishment) }}" class="btn btn-edit" title="Editar">
+                                    {{-- Add action-btn class and tooltips --}}
+                                    <a href="{{ route('vendor.establishments.edit', $establishment) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
-                                    <a href="{{ route('vendor.establishments.documents.upload.show', $establishment->id) }}" class="btn btn-info" title="Upload Documento">
+                                    <a href="{{ route('vendor.establishments.documents.upload.show', $establishment->id) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Upload Documento">
                                         <i class="fas fa-upload"></i>
                                     </a>
                                     <button
                                         type="button"
-                                        class="btn btn-danger"
+                                        class="btn action-btn" {{-- Add action-btn class --}}
                                         data-delete-url="{{ route('vendor.establishments.destroy', $establishment) }}"
                                         data-delete-title="Excluir Estabelecimento"
                                         data-delete-message="Tem certeza que deseja excluir o estabelecimento '{{ $establishment->nome }}'?"
                                         data-delete-confirm="Sim, Excluir"
                                         data-delete-cancel="Cancelar"
+                                        data-bs-toggle="tooltip" {{-- Add tooltip --}}
                                         title="Excluir"
                                     >
                                         <i class="fas fa-trash-alt"></i>

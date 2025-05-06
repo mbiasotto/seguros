@@ -148,7 +148,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="image" class="form-label">Imagem de Capa</label>
+                                    <label for="image" class="form-label">Imagem</label>
                                     <input type="file" class="form-control" id="image" name="image" accept="image/*">
                                     <div class="form-text text-sm">Opcional. Imagem principal para o estabelecimento.</div>
                                 </div>

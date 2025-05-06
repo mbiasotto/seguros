@@ -7,8 +7,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/vendor.main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/components/auth.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/css/components/auth.css') }}">
+    <link rel="icon" href="{{ asset('admin/img/favicon.png') }}" type="image/png">
 </head>
 <body>
     <div class="auth-container">
@@ -21,7 +22,7 @@
         <div class="auth-form-container">
             <div class="auth-form-wrapper">
                 <div class="auth-logo">
-                    <h1>Segura Essa</h1>
+                    <img src="{{ asset('admin/img/logo.png') }}" alt="Logo" class="img-fluid logo-img">
                 </div>
 
                 <div class="auth-header">
@@ -37,6 +38,11 @@
                         </div>
                     </div>
                 @endif
+
+                @php
+                    use Illuminate\Support\Facades\Cookie;
+                    $cookieEmail = Cookie::get('vendor_remembered_email');
+                @endphp
 
                 @if($errors->any())
                     <div class="alert alert-danger">
@@ -59,7 +65,7 @@
                             <span class="input-group-text border-end-0">
                                 <i class="fas fa-envelope"></i>
                             </span>
-                            <input type="email" class="form-control border-start-0" id="email" name="email" value="{{ old('email', $rememberedEmail ?? '') }}" placeholder="seu-email@exemplo.com" required autofocus>
+                            <input type="email" class="form-control border-start-0" id="email" name="email" value="{{ old('email', $rememberedEmail ?? $cookieEmail ?? '') }}" placeholder="seu-email@exemplo.com" required autofocus>
                         </div>
                     </div>
 
@@ -82,7 +88,7 @@
 
                     <div class="mb-4">
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="remember" name="remember" value="1" {{ old('remember') || Cookie::get('vendor_remembered_email') ? 'checked' : '' }}>
+                            <input type="checkbox" class="form-check-input" id="remember" name="remember" value="1" {{ old('remember') || $cookieEmail ? 'checked' : '' }}>
                             <label class="form-check-label" for="remember">Lembrar-me</label>
                         </div>
                     </div>
