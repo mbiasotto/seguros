@@ -3,8 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="color-scheme" content="light">
+    <meta name="supported-color-schemes" content="light">
     <title>Bem-vindo ao SeguraEssa.app</title>
-    <style>
+    <style type="text/css">
         /* Reset de estilos para clientes de email */
         body, html {
             margin: 0;
@@ -58,7 +61,7 @@
         .header {
             text-align: center;
             padding: 35px 30px;
-            background: linear-gradient(135deg, #1e5799 0%, #2989d8 50%, #207cca 100%);
+            background: linear-gradient(135deg, #1D40AE 0%, #2A48A7 50%, #1735A8 100%); /* Esquema de cores do admin */
             color: white;
         }
 
@@ -87,7 +90,7 @@
         }
 
         h2 {
-            color: #1e5799;
+            color: #1D40AE; /* Cor primária do admin */
             font-size: 22px;
             margin: 0 0 20px;
             font-weight: 600;
@@ -101,11 +104,11 @@
 
         /* Credenciais */
         .credentials {
-            background-color: #f0f7ff;
+            background-color: rgba(29, 64, 174, 0.1); /* Cor primária com transparência */
             padding: 25px;
             border-radius: 10px;
             margin: 30px 0;
-            border-left: 5px solid #3498db;
+            border-left: 5px solid #1D40AE; /* Cor primária do admin */
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
@@ -125,13 +128,14 @@
             background-color: #f9f9f9;
             padding: 18px 20px;
             border-radius: 10px;
-            transition: all 0.3s ease;
         }
 
-        .step:hover {
-            background-color: #f0f7ff;
-            transform: translateX(5px);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        @media not all and (min-width: 0) {
+            .step:hover {
+                background-color: #f0f7ff;
+                transform: translateX(5px);
+                box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            }
         }
 
         .step-number {
@@ -162,7 +166,8 @@
 
         .button {
             display: inline-block;
-            background: linear-gradient(to right, #1e5799 0%, #2989d8 100%);
+            background-color: #1D40AE;
+            background: linear-gradient(to right, #1D40AE 0%, #2A48A7 100%); /* Cores do admin */
             color: white !important;
             text-decoration: none;
             padding: 16px 30px;
@@ -170,12 +175,12 @@
             font-weight: 600;
             font-size: 16px;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(46, 134, 222, 0.35);
+            box-shadow: 0 4px 12px rgba(29, 64, 174, 0.35); /* Cor primária do admin */
             mso-padding-alt: 16px 30px;
         }
 
         .button:hover {
-            background: linear-gradient(to right, #166ab8 0%, #1a7bc5 100%);
+            background: linear-gradient(to right, #1735A8 0%, #1D40AE 100%); /* Tons mais escuros */
         }
 
         /* Rodapé */
@@ -228,12 +233,27 @@
     </style>
 </head>
 <body>
+    <!--[if mso]>
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tr>
+    <td align="center">
+    <![endif]-->
     <div class="email-wrapper">
         <div class="email-container">
             <div class="header">
-                <img src="{{ asset('img/logo.png') }}" alt="SeguraEssa.app Logo">
+                <!--[if mso]>
+                <table role="presentation" width="100%">
+                <tr>
+                <td style="padding: 35px 30px; text-align: center; background: linear-gradient(135deg, #1e5799 0%, #2989d8 50%, #207cca 100%); color: white;">
+                <![endif]-->
+                <img src="{{ asset('img/logo.png') }}" alt="SeguraEssa.app Logo" width="200" height="auto" style="max-width: 200px; margin-bottom: 20px;">
                 <h1>Bem-vindo ao SeguraEssa.app!</h1>
                 <p>Complete seu cadastro de estabelecimento parceiro</p>
+                <!--[if mso]>
+                </td>
+                </tr>
+                </table>
+                <![endif]-->
             </div>
 
             <div class="content">
@@ -241,21 +261,70 @@
 
                 <p>É com grande satisfação que damos as boas-vindas ao seu estabelecimento como novo parceiro do SeguraEssa.app! Estamos muito felizes em tê-lo conosco.</p>
 
-                <p>Para completar seu cadastro, precisamos que você realize algumas etapas importantes:</p>
+                <p>Para completar seu cadastro, precisamos que você realize algumas etapas simples:</p>
 
                 <div class="steps">
+                    <!--[if mso]>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <![endif]-->
+
+                    <!--[if mso]>
+                    <tr>
+                    <td style="padding: 18px 20px; background-color: #f9f9f9; border-radius: 10px; margin-bottom: 25px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                    <td style="width: 32px; vertical-align: top;">
+                    <![endif]-->
                     <div class="step">
                         <div class="step-number">1</div>
                         <div class="step-content">Acesse o link seguro abaixo para completar seu cadastro</div>
                     </div>
+                    <!--[if mso]>
+                    </td>
+                    </tr>
+                    </table>
+                    </td>
+                    </tr>
+                    <![endif]-->
+
+                    <!--[if mso]>
+                    <tr>
+                    <td style="padding: 18px 20px; background-color: #f9f9f9; border-radius: 10px; margin-bottom: 25px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                    <td style="width: 32px; vertical-align: top;">
+                    <![endif]-->
                     <div class="step">
                         <div class="step-number">2</div>
-                        <div class="step-content">Faça o upload do documento solicitado (CNPJ ou documento de identificação)</div>
+                        <div class="step-content">Assista ao vídeo de apresentação para conhecer melhor o SeguraEssa</div>
                     </div>
+                    <!--[if mso]>
+                    </td>
+                    </tr>
+                    </table>
+                    </td>
+                    </tr>
+                    <![endif]-->
+
+                    <!--[if mso]>
+                    <tr>
+                    <td style="padding: 18px 20px; background-color: #f9f9f9; border-radius: 10px; margin-bottom: 25px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                    <td style="width: 32px; vertical-align: top;">
+                    <![endif]-->
                     <div class="step">
                         <div class="step-number">3</div>
                         <div class="step-content">Leia e aceite os termos do contrato de parceria</div>
                     </div>
+                    <!--[if mso]>
+                    </td>
+                    </tr>
+                    </table>
+                    </td>
+                    </tr>
+                    </table>
+                    <![endif]-->
                 </div>
 
                 <p>O link abaixo é exclusivo para seu estabelecimento e expirará em 7 dias. Por favor, complete o processo o quanto antes:</p>
@@ -266,8 +335,19 @@
 
                 <p>Se você tiver qualquer dúvida ou precisar de suporte, nossa equipe estará sempre disponível para ajudar. Basta responder a este e-mail ou entrar em contato através do nosso canal de suporte.</p>
 
+                <p>Na página de cadastro, você encontrará um vídeo especial de apresentação que preparamos para que você conheça melhor o SeguraEssa e todos os benefícios que nossa parceria pode trazer para seu estabelecimento.</p>
+
                 <div class="button-container">
+                    <!--[if mso]>
+                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ route('establishment.onboarding', ['token' => $onboarding->token]) }}" style="height:50px;v-text-anchor:middle;width:200px;" arcsize="10%" stroke="f" fillcolor="#1e5799">
+                    <w:anchorlock/>
+                    <center>
+                    <![endif]-->
                     <a href="{{ route('establishment.onboarding', ['token' => $onboarding->token]) }}" class="button">Completar Meu Cadastro</a>
+                    <!--[if mso]>
+                    </center>
+                    </v:roundrect>
+                    <![endif]-->
                 </div>
             </div>
 
@@ -278,5 +358,10 @@
             </div>
         </div>
     </div>
+    <!--[if mso]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
 </body>
 </html>

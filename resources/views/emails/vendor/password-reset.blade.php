@@ -3,8 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="color-scheme" content="light">
+    <meta name="supported-color-schemes" content="light">
     <title>Redefinição de Senha - SeguraEssa.app</title>
-    <style>
+    <style type="text/css">
         /* Reset de estilos para clientes de email */
         body, html {
             margin: 0;
@@ -55,7 +58,8 @@
         }
 
         .email-header {
-            background-color: #6366F1;
+            background-color: #1D40AE;
+            background: linear-gradient(135deg, #1D40AE 0%, #2A48A7 50%, #1735A8 100%); /* Esquema de cores do admin */
             padding: 30px 40px;
             text-align: center;
         }
@@ -96,15 +100,18 @@
 
         .cta-button {
             display: inline-block;
-            background-color: #6366F1;
+            background-color: #1D40AE;
+            background: linear-gradient(to right, #1D40AE 0%, #2A48A7 100%); /* Cores do admin */
             color: #ffffff !important;
             text-decoration: none;
             padding: 12px 30px;
-            border-radius: 4px;
+            border-radius: 8px;
             font-weight: 600;
             margin: 25px 0;
             text-align: center;
             font-size: 16px;
+            box-shadow: 0 4px 12px rgba(29, 64, 174, 0.35); /* Cor primária do admin */
+            mso-padding-alt: 12px 30px;
         }
 
         .help-text {
@@ -117,7 +124,7 @@
 
         .link-fallback {
             word-break: break-all;
-            color: #6366F1;
+            color: #1D40AE;
             font-size: 14px;
             margin-top: 10px;
         }
@@ -146,8 +153,13 @@
     </style>
 </head>
 <body>
+    <!--[if mso]>
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tr>
+    <td align="center">
+    <![endif]-->
     <div class="email-wrapper">
-        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" role="presentation">
             <tr>
                 <td align="center">
                     <div class="email-container">
@@ -164,7 +176,16 @@
                             </div>
 
                             <div style="text-align: center;">
+                                <!--[if mso]>
+                                <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ $resetUrl }}" style="height:45px;v-text-anchor:middle;width:180px;" arcsize="10%" stroke="f" fillcolor="#1D40AE">
+                                <w:anchorlock/>
+                                <center>
+                                <![endif]-->
                                 <a href="{{ $resetUrl }}" class="cta-button">Redefinir Senha</a>
+                                <!--[if mso]>
+                                </center>
+                                </v:roundrect>
+                                <![endif]-->
                             </div>
 
                             <div class="message">
@@ -189,5 +210,10 @@
             </tr>
         </table>
     </div>
+    <!--[if mso]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
 </body>
 </html>
