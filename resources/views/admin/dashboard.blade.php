@@ -8,7 +8,7 @@
 @endpush
 
 @section('content')
-<div class="container-fluid py-4">
+
     <div class="page-header">
         <h1 class="page-title">Dashboard</h1>
         <div><!-- Espaço para botões caso necessário no futuro --></div>
@@ -59,8 +59,8 @@
                             <i class="fas fa-qrcode"></i>
                         </div>
                         <div class="ms-3">
-                            <h6 class="card-subtitle mb-1 text-muted">QR Codes Ativos</h6>
-                            <h2 class="card-title mb-0">{{ \App\Models\QrCode::where('active', true)->count() }}</h2>
+                            <h6 class="card-subtitle mb-1 text-muted">Total de Acessos QR Code</h6>
+                            <h2 class="card-title mb-0">{{ \App\Models\QrCodeAccessLog::count() }}</h2>
                         </div>
                     </div>
                 </div>
@@ -88,73 +88,28 @@
     </div>
 
     <div class="row g-4 mb-4">
-        <div class="col-12 col-xl-8">
+        <div class="col-12 col-xl-6">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Cadastros por Mês/Ano</h5>
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-sm btn-outline-primary active" data-chart-type="establishments">Estabelecimentos</button>
-                        <button type="button" class="btn btn-sm btn-outline-primary" data-chart-type="documents">Documentos</button>
-                    </div>
+                    <h5 class="mb-0">Cadastros de Estabelecimentos por Mês/Ano</h5>
                 </div>
                 <div class="card-body">
                     <div class="chart-container">
-                        <canvas id="monthlyChart" data-chart="{{ json_encode($chartData) }}"></canvas>
+                        <canvas id="monthlyChart" data-chart="{{ json_encode($chartData['establishments'] ?? $chartData) }}"></canvas>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-12 col-xl-4">
+        <div class="col-12 col-xl-6">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-white py-3">
-                    <h5 class="mb-0">Status dos Documentos</h5>
+                    <h5 class="mb-0">Acessos QR Code por Mês/Ano</h5>
                 </div>
-                <div class="card-body document-alerts">
-                    <a href="{{ route('admin.establishments.documents.pending') }}">
-                        <div class="alert alert-warning d-flex align-items-center">
-                            <div class="me-3">
-                                <i class="fas fa-clock fa-2x"></i>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h6 class="mb-0 fw-bold">Pendentes</h6>
-                                <p class="mb-0">
-                                    {{ \App\Models\EstablishmentOnboarding::whereNotNull('document_path')->where('document_approved', false)->whereNull('document_approved_at')->count() }} documento(s) aguardando aprovação
-                                </p>
-                            </div>
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </a>
-
-                    <a href="{{ route('admin.establishments.documents.approved') }}">
-                        <div class="alert alert-success d-flex align-items-center">
-                            <div class="me-3">
-                                <i class="fas fa-check-circle fa-2x"></i>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h6 class="mb-0 fw-bold">Aprovados</h6>
-                                <p class="mb-0">
-                                    {{ \App\Models\EstablishmentOnboarding::whereNotNull('document_path')->where('document_approved', true)->count() }} documento(s) aprovados
-                                </p>
-                            </div>
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </a>
-
-                    <a href="{{ route('admin.establishments.documents.rejected') }}">
-                        <div class="alert alert-danger d-flex align-items-center">
-                            <div class="me-3">
-                                <i class="fas fa-times-circle fa-2x"></i>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h6 class="mb-0 fw-bold">Rejeitados</h6>
-                                <p class="mb-0">
-                                    {{ \App\Models\EstablishmentOnboarding::whereNotNull('document_path')->where('document_approved', false)->whereNotNull('document_approved_at')->count() }} documento(s) rejeitados
-                                </p>
-                            </div>
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </a>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="qrLogsChart" data-chart="{{ json_encode($qrLogsChartData ?? []) }}"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -246,7 +201,7 @@
             </div>
         </div>
     </div>
-</div>
+
 @endsection
 
 @push('scripts')

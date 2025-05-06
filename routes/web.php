@@ -36,6 +36,7 @@ Route::match(['get', 'post'], '/vendor/logout', [VendorAuthController::class, 'l
 
 // QR Code Redirect Route
 Route::get('/qr-code/{id}', [QrCodeRedirectController::class, 'redirect'])->name('qr-code.redirect');
+Route::get('/code/{id}', [QrCodeRedirectController::class, 'redirect'])->name('qr-code.redirect');
 
 // Site Routes
 Route::get('/', [\App\Http\Controllers\SiteController::class, 'index'])->name('site.index');

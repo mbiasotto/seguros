@@ -179,3 +179,124 @@ $(document).ready(function() {
         AdminDashboard.init();
     }
 });
+
+// Dashboard JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar Chart.js para o gráfico de estabelecimentos
+    initMonthlyChart();
+
+    // Inicializar Chart.js para o gráfico de logs de QR Code
+    initQrLogsChart();
+});
+
+function initMonthlyChart() {
+    const monthlyChartElement = document.getElementById('monthlyChart');
+
+    if (!monthlyChartElement) return;
+
+    // Extrair dados do atributo data-chart
+    const chartData = JSON.parse(monthlyChartElement.dataset.chart || '[]');
+
+    // Gerar rótulos de meses (últimos 12 meses, de forma retroativa)
+    const labels = getMonthLabels();
+
+    // Configurações do gráfico
+    const monthlyChart = new Chart(monthlyChartElement, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Estabelecimentos',
+                data: chartData,
+                borderColor: 'rgba(59, 113, 202, 1)',
+                backgroundColor: 'rgba(59, 113, 202, 0.2)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: 'rgba(59, 113, 202, 1)'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                }
+            }
+        }
+    });
+}
+
+function initQrLogsChart() {
+    const qrLogsChartElement = document.getElementById('qrLogsChart');
+
+    if (!qrLogsChartElement) return;
+
+    // Extrair dados do atributo data-chart
+    const chartData = JSON.parse(qrLogsChartElement.dataset.chart || '[]');
+
+    // Gerar rótulos de meses (últimos 12 meses, de forma retroativa)
+    const labels = getMonthLabels();
+
+    // Configurações do gráfico
+    const qrLogsChart = new Chart(qrLogsChartElement, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Acessos QR Code',
+                data: chartData,
+                borderColor: 'rgba(46, 184, 92, 1)',
+                backgroundColor: 'rgba(46, 184, 92, 0.2)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: 'rgba(46, 184, 92, 1)'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                }
+            }
+        }
+    });
+}
+
+function getMonthLabels() {
+    const months = [];
+    const monthNames = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+
+    // Data inicial - Março de 2024
+    const startDate = new Date(2024, 2, 1); // Mês é 0-indexed, então 2 = março
+
+    for (let i = 0; i < 12; i++) {
+        const month = new Date(startDate);
+        month.setMonth(startDate.getMonth() + i);
+        const monthIndex = month.getMonth();
+        const year = month.getFullYear().toString().slice(-2); // "24" para 2024
+        months.push(`${monthNames[monthIndex]}/${year}`);
+    }
+
+    return months;
+}

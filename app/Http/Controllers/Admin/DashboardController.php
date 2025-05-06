@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Establishment;
 use App\Models\Vendor;
+use App\Models\QrCodeAccessLog;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -79,6 +80,33 @@ class DashboardController extends Controller
         // Add documents data to chart data
         $chartData['documents'] = array_values($documentsData);
 
+        // Get QR Code logs data for chart
+        $qrLogsPerMonth = QrCodeAccessLog::select(
+            DB::raw('cast(strftime("%m", created_at) as integer) as month'),
+            DB::raw('cast(strftime("%Y", created_at) as integer) as year'),
+            DB::raw('COUNT(*) as total')
+        )
+        ->whereBetween('created_at', [$startDate, $endDate])
+        ->groupBy('year', 'month')
+        ->orderBy('year')
+        ->orderBy('month')
+        ->get()
+        ->mapWithKeys(function ($item) {
+            return [$item->month => $item->total];
+        })
+        ->toArray();
+
+        // Initialize QR logs data array with zeros for all months
+        $qrLogsData = array_fill(1, 12, 0);
+
+        // Fill in actual values where they exist
+        foreach ($qrLogsPerMonth as $month => $total) {
+            $qrLogsData[$month] = $total;
+        }
+
+        // Prepare QR logs chart data for the view
+        $qrLogsChartData = array_values($qrLogsData);
+
         // Get recent establishments with vendor relationship
         $recentEstablishments = Establishment::with('vendor')
             ->latest()
@@ -90,7 +118,8 @@ class DashboardController extends Controller
             'totalVendors',
             'monthlyData',
             'recentEstablishments',
-            'chartData'
+            'chartData',
+            'qrLogsChartData'
         ));
     }
 }
