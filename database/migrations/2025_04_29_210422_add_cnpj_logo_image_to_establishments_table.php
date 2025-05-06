@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('establishments', function (Blueprint $table) {
-            $table->string('cnpj')->nullable()->after('name');
+            $table->string('cnpj')->nullable()->after('nome');
             $table->string('logo')->nullable()->after('status');
             $table->string('image')->nullable()->after('logo');
         });
