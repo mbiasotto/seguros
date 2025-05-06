@@ -34,7 +34,7 @@ class QrCodeStatisticsController extends Controller
 
         // Acessos por dia nos últimos 30 dias
         $dailyStats = QrCodeAccessLog::select(
-                DB::raw("strftime('%Y-%m-%d', created_at) as date"),
+                DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d') as date"),
                 DB::raw('COUNT(*) as total')
             )
             ->where('created_at', '>=', Carbon::now()->subDays(30))
@@ -72,7 +72,7 @@ class QrCodeStatisticsController extends Controller
         // Acessos por dia
         $dailyStats = $qrCode->accessLogs()
             ->select(
-                DB::raw("strftime('%Y-%m-%d', created_at) as date"),
+                DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d') as date"),
                 DB::raw('COUNT(*) as total')
             )
             ->where('created_at', '>=', Carbon::now()->subDays(30))
@@ -83,7 +83,7 @@ class QrCodeStatisticsController extends Controller
         // Acessos por hora do dia
         $hourlyStats = $qrCode->accessLogs()
             ->select(
-                DB::raw("strftime('%H', created_at) as hour"),
+                DB::raw("DATE_FORMAT(created_at, '%H') as hour"),
                 DB::raw('COUNT(*) as total')
             )
             ->where('created_at', '>=', Carbon::now()->subDays(30))

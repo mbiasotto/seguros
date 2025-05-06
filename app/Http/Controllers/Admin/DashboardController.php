@@ -23,8 +23,8 @@ class DashboardController extends Controller
 
         // Get establishments registered per month for the specified date range
         $establishmentsPerMonth = Establishment::select(
-            DB::raw('cast(strftime("%m", created_at) as integer) as month'),
-            DB::raw('cast(strftime("%Y", created_at) as integer) as year'),
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTH(created_at) as month'),
             DB::raw('COUNT(*) as total')
         )
         ->whereBetween('created_at', [$startDate, $endDate])
@@ -33,16 +33,24 @@ class DashboardController extends Controller
         ->orderBy('month')
         ->get()
         ->mapWithKeys(function ($item) {
-            return [$item->month => $item->total];
+            return [sprintf('%04d-%02d', $item->year, $item->month) => ['year' => $item->year, 'month' => $item->month, 'total' => $item->total]];
         })
         ->toArray();
 
-        // Initialize monthly data array with zeros for all months
-        $monthlyData = array_fill(1, 12, 0);
+        // Initialize monthly data array with zeros for all months in the range
+        $monthlyData = [];
+        $currentDate = $startDate->copy();
+        while ($currentDate->lessThanOrEqualTo($endDate)) {
+            $monthlyData[$currentDate->format('Y-m')] = 0;
+            $currentDate->addMonthNoOverflow();
+        }
 
         // Fill in actual values where they exist
-        foreach ($establishmentsPerMonth as $month => $total) {
-            $monthlyData[$month] = $total;
+        foreach ($establishmentsPerMonth as $key => $data) {
+            $yearMonth = sprintf('%04d-%02d', $data['year'], $data['month']);
+            if (isset($monthlyData[$yearMonth])) {
+                $monthlyData[$yearMonth] = $data['total'];
+            }
         }
 
         // Prepare chart data for the view
@@ -54,8 +62,8 @@ class DashboardController extends Controller
         // Get documents data for the chart
         $documentsPerMonth = DB::table('establishment_onboardings')
             ->select(
-                DB::raw('cast(strftime("%m", updated_at) as integer) as month'),
-                DB::raw('cast(strftime("%Y", updated_at) as integer) as year'),
+                DB::raw('YEAR(updated_at) as year'),
+                DB::raw('MONTH(updated_at) as month'),
                 DB::raw('COUNT(*) as total')
             )
             ->whereNotNull('document_path')
@@ -65,25 +73,34 @@ class DashboardController extends Controller
             ->orderBy('month')
             ->get()
             ->mapWithKeys(function ($item) {
-                return [$item->month => $item->total];
+                return [sprintf('%04d-%02d', $item->year, $item->month) => ['year' => $item->year, 'month' => $item->month, 'total' => $item->total]];
             })
             ->toArray();
 
-        // Initialize documents data array with zeros for all months
-        $documentsData = array_fill(1, 12, 0);
+        // Initialize documents data array with zeros for all months in the range
+        $documentsData = [];
+        $currentDate = $startDate->copy();
+        while ($currentDate->lessThanOrEqualTo($endDate)) {
+            $documentsData[$currentDate->format('Y-m')] = 0;
+            $currentDate->addMonthNoOverflow();
+        }
 
         // Fill in actual values where they exist
-        foreach ($documentsPerMonth as $month => $total) {
-            $documentsData[$month] = $total;
+        foreach ($documentsPerMonth as $key => $data) {
+            $yearMonth = sprintf('%04d-%02d', $data['year'], $data['month']);
+            if (isset($documentsData[$yearMonth])) {
+                $documentsData[$yearMonth] = $data['total'];
+            }
         }
 
         // Add documents data to chart data
+        // Ensure the order matches the initialized array keys
         $chartData['documents'] = array_values($documentsData);
 
         // Get QR Code logs data for chart
         $qrLogsPerMonth = QrCodeAccessLog::select(
-            DB::raw('cast(strftime("%m", created_at) as integer) as month'),
-            DB::raw('cast(strftime("%Y", created_at) as integer) as year'),
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTH(created_at) as month'),
             DB::raw('COUNT(*) as total')
         )
         ->whereBetween('created_at', [$startDate, $endDate])
@@ -92,19 +109,28 @@ class DashboardController extends Controller
         ->orderBy('month')
         ->get()
         ->mapWithKeys(function ($item) {
-            return [$item->month => $item->total];
+            return [sprintf('%04d-%02d', $item->year, $item->month) => ['year' => $item->year, 'month' => $item->month, 'total' => $item->total]];
         })
         ->toArray();
 
-        // Initialize QR logs data array with zeros for all months
-        $qrLogsData = array_fill(1, 12, 0);
+        // Initialize QR logs data array with zeros for all months in the range
+        $qrLogsData = [];
+        $currentDate = $startDate->copy();
+        while ($currentDate->lessThanOrEqualTo($endDate)) {
+            $qrLogsData[$currentDate->format('Y-m')] = 0;
+            $currentDate->addMonthNoOverflow();
+        }
 
         // Fill in actual values where they exist
-        foreach ($qrLogsPerMonth as $month => $total) {
-            $qrLogsData[$month] = $total;
+        foreach ($qrLogsPerMonth as $key => $data) {
+            $yearMonth = sprintf('%04d-%02d', $data['year'], $data['month']);
+            if (isset($qrLogsData[$yearMonth])) {
+                $qrLogsData[$yearMonth] = $data['total'];
+            }
         }
 
         // Prepare QR logs chart data for the view
+        // Ensure the order matches the initialized array keys
         $qrLogsChartData = array_values($qrLogsData);
 
         // Get recent establishments with vendor relationship

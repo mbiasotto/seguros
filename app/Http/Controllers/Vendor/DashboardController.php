@@ -29,8 +29,8 @@ class DashboardController extends Controller
 
         // Obter estabelecimentos registrados por mês para o intervalo de datas especificado
         $establishmentsPerMonth = Establishment::select(
-            DB::raw('cast(strftime("%m", created_at) as integer) as month'),
-            DB::raw('cast(strftime("%Y", created_at) as integer) as year'),
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTH(created_at) as month'),
             DB::raw('COUNT(*) as total')
         )
         ->where('vendor_id', $vendor->id)
@@ -40,16 +40,25 @@ class DashboardController extends Controller
         ->orderBy('month')
         ->get()
         ->mapWithKeys(function ($item) {
-            return [$item->month => $item->total];
+            // Ajuste para criar uma chave única ano-mês
+            return [sprintf('%04d-%02d', $item->year, $item->month) => ['year' => $item->year, 'month' => $item->month, 'total' => $item->total]];
         })
         ->toArray();
 
-        // Inicializar array de dados mensais com zeros para todos os meses
-        $monthlyData = array_fill(1, 12, 0);
+        // Inicializar array de dados mensais com zeros para todos os meses no intervalo
+        $monthlyData = [];
+        $currentDate = $startDate->copy();
+        while ($currentDate->lessThanOrEqualTo($endDate)) {
+            $monthlyData[$currentDate->format('Y-m')] = 0;
+            $currentDate->addMonthNoOverflow();
+        }
 
         // Preencher com valores reais onde existirem
-        foreach ($establishmentsPerMonth as $month => $total) {
-            $monthlyData[$month] = $total;
+        foreach ($establishmentsPerMonth as $key => $data) {
+            $yearMonth = sprintf('%04d-%02d', $data['year'], $data['month']);
+            if (isset($monthlyData[$yearMonth])) {
+                $monthlyData[$yearMonth] = $data['total'];
+            }
         }
 
         // Obter estabelecimentos recentes do vendedor
@@ -59,6 +68,7 @@ class DashboardController extends Controller
             ->get();
 
         return view('vendor.dashboard', compact(
+            'vendor',
             'totalEstablishments',
             'activeEstablishments',
             'monthlyData',
