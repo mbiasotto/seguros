@@ -28,7 +28,7 @@ class QrCodePdfController extends Controller
         $endId = $validated['end'] ?? null;
 
         // Directory where QR codes are stored
-        $qrCodesDir = public_path('qr_codes');
+        $qrCodesDir = public_path('assets/qr_codes');
 
         // Get all QR code files
         $allQrCodeFiles = File::files($qrCodesDir);

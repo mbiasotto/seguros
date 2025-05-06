@@ -68,7 +68,7 @@
                         @endphp
                         <td>
                             <div class="qr-item">
-                                <img src="{{ public_path('qr_codes/' . $file->getFilename()) }}" alt="QR Code {{ $id }}">
+                                <img src="{{ public_path('assets/qr_codes/' . $file->getFilename()) }}" alt="QR Code {{ $id }}">
                             </div>
                         </td>
                     @endfor

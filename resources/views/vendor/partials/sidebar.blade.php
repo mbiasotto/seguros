@@ -1,7 +1,7 @@
 <div class="sidebar" id="sidebar">
     <div class="brand">
         {{-- TODO: Use vendor-specific logo if available --}}
-        <img src="{{ asset('admin/img/logo-white.png') }}" alt="Logo" class="sidebar-logo">
+        <img src="{{ asset('assets/admin/img/logo-white.png') }}" alt="Logo" class="sidebar-logo">
     </div>
     <nav class="nav flex-column">
         <a href="{{ route('vendor.dashboard') }}" class="nav-link {{ request()->routeIs('vendor.dashboard') ? 'active' : '' }}">

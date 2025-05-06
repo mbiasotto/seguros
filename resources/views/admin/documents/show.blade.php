@@ -3,7 +3,7 @@
 @section('title', 'Detalhes do Documento')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/data-list.css') }}">
 <style>
     .document-preview {
         max-height: 600px;

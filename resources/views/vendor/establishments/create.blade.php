@@ -249,7 +249,7 @@
     });
 </script>
 {{-- Use admin QR code manager script (already included in previous edit, just ensuring it stays) --}}
-<script src="{{ asset('admin/js/pages/establishments/qr-code-manager.js') }}"></script>
+<script src="{{ asset('assets/admin/js/pages/establishments/qr-code-manager.js') }}"></script>
 {{-- Removed the embedded QR code management script block --}}
 @endpush
 @endsection

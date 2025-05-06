@@ -264,8 +264,8 @@
         });
     });
 </script>
-<script src="{{ asset('admin/js/pages/establishments/form-handlers.js') }}"></script>
-<script src="{{ asset('admin/js/pages/establishments/qr-code-manager.js') }}"></script>
+<script src="{{ asset('assets/admin/js/pages/establishments/form-handlers.js') }}"></script>
+<script src="{{ asset('assets/admin/js/pages/establishments/qr-code-manager.js') }}"></script>
 @endpush
 
 <!-- Incluindo modal para confirmação de remoção de QR Code -->

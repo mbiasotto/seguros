@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title') - Sistema de Gestão</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('admin/img/favicon.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('assets/admin/img/favicon.png') }}" type="image/png">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +22,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- CSS Admin Principal -->
-    <link rel="stylesheet" href="{{ asset('admin/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/admin.css') }}">
 
     <!-- Estilos específicos -->
     @stack('styles')
@@ -30,7 +31,7 @@
     <!-- Header Mobile -->
     <header class="mobile-header d-md-none">
         <div class="mobile-header-container">
-            <img src="{{ asset('admin/img/logo-white.png') }}" alt="Logo" class="mobile-logo">
+            <img src="{{ asset('assets/admin/img/logo-white.png') }}" alt="Logo" class="mobile-logo">
             <button class="btn mobile-toggle-btn" type="button">
                 <i class="fas fa-bars"></i>
             </button>
@@ -60,12 +61,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
     <!-- Script de máscaras centralizado -->
-    <script src="{{ asset('js/input-masks.js') }}"></script>
+    <script src="{{ asset('assets/js/input-masks.js') }}"></script>
 
     <!-- Script admin principal -->
-    <script src="{{ asset('admin/admin.js') }}"></script>
-    <script src="{{ asset('admin/js/modal.js') }}"></script>
-    <script src="{{ asset('admin/js/form-utils.js') }}"></script>
+    <script src="{{ asset('assets/admin/admin.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/modal.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/form-utils.js') }}"></script>
 
     <!-- Script global de tooltips -->
     <script>

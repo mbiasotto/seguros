@@ -241,6 +241,6 @@
         });
     });
 </script>
-<script src="{{ asset('admin/js/pages/establishments/form-handlers.js') }}"></script>
-<script src="{{ asset('admin/js/pages/establishments/qr-code-manager.js') }}"></script>
+<script src="{{ asset('assets/admin/js/pages/establishments/form-handlers.js') }}"></script>
+<script src="{{ asset('assets/admin/js/pages/establishments/qr-code-manager.js') }}"></script>
 @endpush

@@ -17,14 +17,6 @@ use App\Http\Controllers\ProfileController;
 // Rotas de Autenticação Diretas (fora dos grupos de prefixo)
 // ======================================================================
 
-// Rota direta para /admin (sem barra no final)
-Route::get('/admin', function () {
-    if (Auth::guard('web')->check()) {
-        return redirect()->route('admin.dashboard');
-    }
-    return redirect()->route('admin.login');
-});
-
 // Rotas de login diretas - devem estar antes de outras rotas
 Route::get('/admin/login', function () {
     // Only check admin auth for admin login
@@ -48,7 +40,7 @@ Route::match(['get', 'post'], '/vendor/logout', [VendorAuthController::class, 'l
 
 // QR Code Redirect Route
 Route::get('/qr-code/{id}', [QrCodeRedirectController::class, 'redirect'])->name('qr-code.redirect');
-Route::get('/code/{id}', [QrCodeRedirectController::class, 'redirect'])->name('qr-code.redirect');
+Route::get('/code/{id}', [QrCodeRedirectController::class, 'redirect'])->name('code.redirect');
 
 // Site Routes
 Route::get('/', [\App\Http\Controllers\SiteController::class, 'index'])->name('site.index');
@@ -66,14 +58,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
     // Rotas de autenticação para admin
-    Route::get('/login', function() {
+    Route::get('login', function() {
         // Only check admin auth for admin login
         if (Auth::guard('web')->check()) {
             return redirect()->route('admin.dashboard');
         }
         return app()->make(LoginController::class)->showLoginForm();
     })->name('login');
-    Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+    Route::post('login', [LoginController::class, 'login'])->name('login.submit');
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 

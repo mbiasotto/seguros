@@ -142,7 +142,7 @@ class QrCodeController extends Controller
         $qrCodeImage = QrCodeGenerator::format('png')
             ->size(300)
             ->errorCorrection('H')
-            ->merge(public_path('img/logo.png'), 0.3, true)
+            ->merge(public_path('assets/imgs/logo.png'), 0.3, true)
             ->generate($qrCode->qr_code_url);
 
         // Create a larger image to accommodate the QR code and the ID text below the logo
@@ -192,7 +192,7 @@ class QrCodeController extends Controller
     public function generateBatch(int $startId, int $endId)
     {
         // Diretório onde os QR codes serão salvos
-        $outputDir = public_path('qr_codes'); // Usar public_path
+        $outputDir = public_path('assets/qr_codes'); // Usar public_path
 
         // Criar o diretório se não existir
         if (!File::isDirectory($outputDir)) {
@@ -218,7 +218,7 @@ class QrCodeController extends Controller
 
         for ($id = $startId; $id <= $endId; $id++) {
             // URL para o QR code
-            $url = rtrim($baseUrl, '/') . '/qr-code/' . $id;
+            $url = rtrim($baseUrl, '/') . '/assets/qr-code/' . $id;
 
             // Nome do arquivo
             $filename = $outputDir . '/qr_code_' . $id . '.png';

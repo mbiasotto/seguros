@@ -3,8 +3,8 @@
 @section('title', 'Documentos Pendentes')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
-<link rel="stylesheet" href="{{ asset('css/empty-state.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/data-list.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/empty-state.css') }}">
 @endpush
 
 @section('content')

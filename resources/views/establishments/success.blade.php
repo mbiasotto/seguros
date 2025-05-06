@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro Concluído - SeguraEssa.app</title>
-    <link rel="icon" href="{{ asset('admin/img/favicon.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('assets/admin/img/favicon.png') }}" type="image/png">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +23,7 @@
 <body>
     <div class="success-container">
         <div class="header">
-            <img src="{{ asset('admin/img/logo-white.png') }}" alt="SeguraEssa.app Logo">
+            <img src="{{ asset('assets/admin/img/logo-white.png') }}" alt="SeguraEssa.app Logo">
             <h1>Cadastro Concluído com Sucesso!</h1>
         </div>
 

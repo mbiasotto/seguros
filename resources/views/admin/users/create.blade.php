@@ -103,5 +103,5 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('admin/js/utils/password-generator.js') }}"></script>
+<script src="{{ asset('assets/admin/js/utils/password-generator.js') }}"></script>
 @endpush
