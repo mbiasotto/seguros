@@ -13,7 +13,19 @@ use App\Http\Controllers\QrCodeRedirectController;
 use App\Http\Controllers\QrCodeStatisticsController;
 use App\Http\Controllers\ProfileController;
 
-// Direct access to login routes when authenticated - must be before other routes
+// ======================================================================
+// Rotas de Autenticação Diretas (fora dos grupos de prefixo)
+// ======================================================================
+
+// Rota direta para /admin (sem barra no final)
+Route::get('/admin', function () {
+    if (Auth::guard('web')->check()) {
+        return redirect()->route('admin.dashboard');
+    }
+    return redirect()->route('admin.login');
+});
+
+// Rotas de login diretas - devem estar antes de outras rotas
 Route::get('/admin/login', function () {
     // Only check admin auth for admin login
     if (Auth::guard('web')->check()) {
