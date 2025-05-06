@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('establishments', function (Blueprint $table) {
             $table->string('cnpj')->nullable()->after('nome');
-            $table->string('logo')->nullable()->after('status');
+            $table->string('logo')->nullable()->after('ativo');
             $table->string('image')->nullable()->after('logo');
         });
     }
