@@ -31,22 +31,7 @@
         </div>
     </div>
 
-    <!-- Active Establishments Card -->
-    <div class="col-12 col-md-6 col-xl-3">
-        <div class="card h-100 border-0 shadow-sm stat-card">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="stat-icon icon-success">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="ms-3">
-                        <h6 class="card-subtitle mb-1 text-muted">Estabelecimentos Ativos</h6>
-                        <h2 class="card-title mb-0">{{ $activeEstablishments }}</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Active Establishments Card Removed -->
 
     <!-- Total QR Code Accesses Card (New) -->
     <div class="col-12 col-md-6 col-xl-3">
@@ -66,9 +51,9 @@
     </div>
 </div>
 
-<div class="row g-4 mb-4"> {/* Added mb-4 for spacing like in admin dashboard */}
+<div class="row g-4 mb-4">
     <!-- Monthly Registrations Chart -->
-    <div class="col-12 col-xl-6"> {/* Changed to col-xl-6 to make space for QR chart */}
+    <div class="col-12 col-xl-6">
         <div class="card border-0 shadow-sm">
             <div class="card-header bg-white py-3">
                 <h5 class="mb-0">Cadastros por Mês/Ano</h5>
@@ -90,7 +75,6 @@
             </div>
             <div class="card-body">
                 <div class="chart-container">
-                    {{-- This chart will also use the data from #monthlyChart's data-chart attribute in JS --}}
                     <canvas id="qrLogsChart" data-chart="{{ json_encode($chartData ?? ['establishments' => [], 'qr_logs' => []]) }}"></canvas>
                 </div>
             </div>
@@ -100,7 +84,7 @@
 
 <div class="row g-4">
     <!-- Recent Establishments -->
-    <div class="col-12"> {/* Changed to full width if charts are side-by-side above */}
+    <div class="col-12">
         <div class="card border-0 shadow-sm">
             <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Estabelecimentos Recentes</h5>

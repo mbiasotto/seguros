@@ -18,13 +18,12 @@ class DashboardController extends Controller
 
         // Total counts for the vendor
         $totalEstablishments = Establishment::where('vendor_id', $vendorId)->count();
-        $activeEstablishments = Establishment::where('vendor_id', $vendorId)
-            ->where('ativo', true)
-            ->count();
+        // $activeEstablishments logic removed
 
         // Total QR Code Accesses for the vendor's establishments
-        $totalQrCodeAccesses = QrCodeAccessLog::join('qr_codes', 'qr_code_access_logs.qr_code_id', '=', 'qr_codes.id')
-            ->join('establishments', 'qr_codes.establishment_id', '=', 'establishments.id')
+        $totalQrCodeAccesses = DB::table('qr_code_access_logs')
+            ->join('establishment_qr_code', 'qr_code_access_logs.qr_code_id', '=', 'establishment_qr_code.qr_code_id')
+            ->join('establishments', 'establishment_qr_code.establishment_id', '=', 'establishments.id')
             ->where('establishments.vendor_id', $vendorId)
             ->count();
 
@@ -53,13 +52,10 @@ class DashboardController extends Controller
             )
             ->whereBetween($dateColumn, [$startDate, $endDate]);
 
-            if ($isQrLog) {
-                // For QR logs, dateColumn is on qr_code_access_logs table
-                 $query->groupBy(DB::raw($driverName === 'sqlite' ? "strftime('%Y-%m', {$dateColumn})" : "year, month"));
-            } else {
-                // For establishments, dateColumn is on establishments table
-                $query->groupBy(DB::raw($driverName === 'sqlite' ? "strftime('%Y-%m', {$dateColumn})" : "year, month"));
-            }
+            // Simplified groupBy logic, as it's the same for both cases
+            // The specific $dateColumn (e.g., 'establishments.created_at' or 'qr_code_access_logs.created_at')
+            // is correctly passed into the strftime or used with YEAR()/MONTH()
+            $query->groupBy(DB::raw($driverName === 'sqlite' ? "strftime('%Y-%m', {$dateColumn})" : "year, month"));
 
             $results = $query->orderBy('year')
                             ->orderBy('month')
@@ -84,8 +80,8 @@ class DashboardController extends Controller
 
         // Get QR Code logs data for chart for the vendor
         $qrLogsBaseQuery = DB::table('qr_code_access_logs')
-            ->join('qr_codes', 'qr_code_access_logs.qr_code_id', '=', 'qr_codes.id')
-            ->join('establishments', 'qr_codes.establishment_id', '=', 'establishments.id')
+            ->join('establishment_qr_code', 'qr_code_access_logs.qr_code_id', '=', 'establishment_qr_code.qr_code_id')
+            ->join('establishments', 'establishment_qr_code.establishment_id', '=', 'establishments.id')
             ->where('establishments.vendor_id', $vendorId);
         $qrLogsChartData = $fetchMonthlyData($qrLogsBaseQuery, 'qr_code_access_logs.created_at', true);
 
@@ -104,9 +100,9 @@ class DashboardController extends Controller
         return view('vendor.dashboard', compact(
             'vendor',
             'totalEstablishments',
-            'activeEstablishments',
-            'totalQrCodeAccesses', // Added
-            'chartData',           // Changed from monthlyData
+            // 'activeEstablishments', // Removed
+            'totalQrCodeAccesses',
+            'chartData',
             'recentEstablishments'
         ));
     }
