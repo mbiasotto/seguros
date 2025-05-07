@@ -17,121 +17,67 @@ class DashboardController extends Controller
         $totalEstablishments = Establishment::count();
         $totalVendors = Vendor::count();
 
-        // Define the date range (March 2024 to February 2025)
-        $startDate = Carbon::create(2024, 3, 1);
-        $endDate = Carbon::create(2025, 2, 28);
+        // Define the dynamic date range: current month and 12 preceding months
+        $endDate = Carbon::now()->endOfMonth();
+        $startDate = Carbon::now()->subMonths(12)->startOfMonth(); // Go back 12 full months, then to start of that month
 
-        // Get establishments registered per month for the specified date range
-        $establishmentsPerMonth = Establishment::select(
-            DB::raw('YEAR(created_at) as year'),
-            DB::raw('MONTH(created_at) as month'),
-            DB::raw('COUNT(*) as total')
-        )
-        ->whereBetween('created_at', [$startDate, $endDate])
-        ->groupBy('year', 'month')
-        ->orderBy('year')
-        ->orderBy('month')
-        ->get()
-        ->mapWithKeys(function ($item) {
-            return [sprintf('%04d-%02d', $item->year, $item->month) => ['year' => $item->year, 'month' => $item->month, 'total' => $item->total]];
-        })
-        ->toArray();
+        // Helper function to fetch and process monthly data
+        $fetchMonthlyData = function ($query, $dateColumn = 'created_at') use ($startDate, $endDate) {
+            $driverName = DB::connection()->getDriverName();
+            $yearExpression = null;
+            $monthExpression = null;
 
-        // Initialize monthly data array with zeros for all months in the range
-        $monthlyData = [];
-        $currentDate = $startDate->copy();
-        while ($currentDate->lessThanOrEqualTo($endDate)) {
-            $monthlyData[$currentDate->format('Y-m')] = 0;
-            $currentDate->addMonthNoOverflow();
-        }
-
-        // Fill in actual values where they exist
-        foreach ($establishmentsPerMonth as $key => $data) {
-            $yearMonth = sprintf('%04d-%02d', $data['year'], $data['month']);
-            if (isset($monthlyData[$yearMonth])) {
-                $monthlyData[$yearMonth] = $data['total'];
+            if ($driverName === 'sqlite') {
+                $yearExpression = DB::raw("strftime('%Y', {$dateColumn}) as year");
+                $monthExpression = DB::raw("strftime('%m', {$dateColumn}) as month");
+            } else { // Default to MySQL syntax (YEAR(), MONTH())
+                $yearExpression = DB::raw("YEAR({$dateColumn}) as year");
+                $monthExpression = DB::raw("MONTH({$dateColumn}) as month");
             }
-        }
 
-        // Prepare chart data for the view
-        $chartData = [
-            'establishments' => array_values($monthlyData),
-            'documents' => [] // We'll add document data later if needed
-        ];
-
-        // Get documents data for the chart
-        $documentsPerMonth = DB::table('establishment_onboardings')
-            ->select(
-                DB::raw('YEAR(updated_at) as year'),
-                DB::raw('MONTH(updated_at) as month'),
+            $results = $query->select(
+                $yearExpression,
+                $monthExpression,
                 DB::raw('COUNT(*) as total')
             )
-            ->whereNotNull('document_path')
-            ->whereBetween('updated_at', [$startDate, $endDate])
-            ->groupBy('year', 'month')
+            ->whereBetween($dateColumn, [$startDate, $endDate])
+            ->groupBy(DB::raw($driverName === 'sqlite' ? "strftime('%Y-%m', {$dateColumn})" : "year, month")) // Group by aliased year and month for MySQL too
             ->orderBy('year')
             ->orderBy('month')
             ->get()
-            ->mapWithKeys(function ($item) {
-                return [sprintf('%04d-%02d', $item->year, $item->month) => ['year' => $item->year, 'month' => $item->month, 'total' => $item->total]];
-            })
-            ->toArray();
+            ->keyBy(function ($item) {
+                // Ensure year and month are treated as strings for consistent key generation
+                return sprintf('%04s-%02s', (string)$item->year, (string)$item->month);
+            });
 
-        // Initialize documents data array with zeros for all months in the range
-        $documentsData = [];
-        $currentDate = $startDate->copy();
-        while ($currentDate->lessThanOrEqualTo($endDate)) {
-            $documentsData[$currentDate->format('Y-m')] = 0;
-            $currentDate->addMonthNoOverflow();
-        }
-
-        // Fill in actual values where they exist
-        foreach ($documentsPerMonth as $key => $data) {
-            $yearMonth = sprintf('%04d-%02d', $data['year'], $data['month']);
-            if (isset($documentsData[$yearMonth])) {
-                $documentsData[$yearMonth] = $data['total'];
+            $monthlyData = [];
+            $currentPeriod = $startDate->copy();
+            while ($currentPeriod->lessThanOrEqualTo($endDate)) {
+                $key = $currentPeriod->format('Y-m'); // Format as YYYY-MM
+                $monthlyData[$key] = $results->has($key) ? $results->get($key)->total : 0;
+                $currentPeriod->addMonthNoOverflow();
             }
-        }
+            return array_values($monthlyData);
+        };
 
-        // Add documents data to chart data
-        // Ensure the order matches the initialized array keys
-        $chartData['documents'] = array_values($documentsData);
+        // Get establishments registered per month
+        $establishmentsQuery = Establishment::query();
+        $establishmentsChartData = $fetchMonthlyData($establishmentsQuery, 'created_at');
+
+        // Get documents data for the chart
+        $documentsQuery = DB::table('establishment_onboardings')->whereNotNull('document_path');
+        $documentsChartData = $fetchMonthlyData($documentsQuery, 'updated_at');
 
         // Get QR Code logs data for chart
-        $qrLogsPerMonth = QrCodeAccessLog::select(
-            DB::raw('YEAR(created_at) as year'),
-            DB::raw('MONTH(created_at) as month'),
-            DB::raw('COUNT(*) as total')
-        )
-        ->whereBetween('created_at', [$startDate, $endDate])
-        ->groupBy('year', 'month')
-        ->orderBy('year')
-        ->orderBy('month')
-        ->get()
-        ->mapWithKeys(function ($item) {
-            return [sprintf('%04d-%02d', $item->year, $item->month) => ['year' => $item->year, 'month' => $item->month, 'total' => $item->total]];
-        })
-        ->toArray();
+        $qrLogsQuery = QrCodeAccessLog::query();
+        $qrLogsChartData = $fetchMonthlyData($qrLogsQuery, 'created_at');
 
-        // Initialize QR logs data array with zeros for all months in the range
-        $qrLogsData = [];
-        $currentDate = $startDate->copy();
-        while ($currentDate->lessThanOrEqualTo($endDate)) {
-            $qrLogsData[$currentDate->format('Y-m')] = 0;
-            $currentDate->addMonthNoOverflow();
-        }
-
-        // Fill in actual values where they exist
-        foreach ($qrLogsPerMonth as $key => $data) {
-            $yearMonth = sprintf('%04d-%02d', $data['year'], $data['month']);
-            if (isset($qrLogsData[$yearMonth])) {
-                $qrLogsData[$yearMonth] = $data['total'];
-            }
-        }
-
-        // Prepare QR logs chart data for the view
-        // Ensure the order matches the initialized array keys
-        $qrLogsChartData = array_values($qrLogsData);
+        // Prepare chart data for the view
+        $chartData = [
+            'establishments' => $establishmentsChartData,
+            'documents' => $documentsChartData,
+            'qr_logs' => $qrLogsChartData, // Added qr_logs here
+        ];
 
         // Get recent establishments with vendor relationship
         $recentEstablishments = Establishment::with('vendor')
@@ -142,10 +88,10 @@ class DashboardController extends Controller
         return view('admin.dashboard', compact(
             'totalEstablishments',
             'totalVendors',
-            'monthlyData',
+            // 'monthlyData', // This is now part of $chartData['establishments']
             'recentEstablishments',
-            'chartData',
-            'qrLogsChartData'
+            'chartData' // Pass the consolidated chartData
+            // 'qrLogsChartData' // This is now part of $chartData['qr_logs']
         ));
     }
 }

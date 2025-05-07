@@ -95,7 +95,7 @@
                 </div>
                 <div class="card-body">
                     <div class="chart-container">
-                        <canvas id="monthlyChart" data-chart="{{ json_encode($chartData['establishments'] ?? $chartData) }}"></canvas>
+                        <canvas id="monthlyChart" data-chart="{{ json_encode($chartData ?? ['establishments' => [], 'documents' => [], 'qr_logs' => []]) }}"></canvas>
                     </div>
                 </div>
             </div>
@@ -108,7 +108,8 @@
                 </div>
                 <div class="card-body">
                     <div class="chart-container">
-                        <canvas id="qrLogsChart" data-chart="{{ json_encode($qrLogsChartData ?? []) }}"></canvas>
+                        {{-- The qrLogsChart will also use the main chartData from monthlyChart for its data source in JS --}}
+                        <canvas id="qrLogsChart" data-chart="{{ json_encode($chartData ?? ['establishments' => [], 'documents' => [], 'qr_logs' => []]) }}"></canvas>
                     </div>
                 </div>
             </div>
@@ -184,7 +185,7 @@
                                         </div>
                                         <div class="text-end">
                                             <small class="text-muted d-block">{{ $document->updated_at->format('d/m/Y') }}</small>
-                                            <a href="{{ route('admin.establishments.documents.edit', $document) }}" class="btn action-btn">
+                                            <a href="{{ route('admin.establishments.edit', $document) }}" class="btn action-btn">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </div>

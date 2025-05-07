@@ -12,6 +12,7 @@ const AdminDashboard = {
         this.initCharts();
 
         // Inicializa a troca de tabs (Estabelecimento/Documentos)
+        // This might need adjustment if the tab switching is only for the first chart
         this.setupTabSwitching();
     },
 
@@ -19,38 +20,36 @@ const AdminDashboard = {
      * Inicializa os gráficos do dashboard
      */
     initCharts: function() {
-        // Verifica se o Canvas existe e se Chart.js está disponível
+        const labels = this.getMonthLabels();
+
+        // Monthly Establishments/Documents Chart
         const $monthlyChartCanvas = $('#monthlyChart');
-
         if ($monthlyChartCanvas.length && typeof Chart !== 'undefined') {
-            // Obtém os dados do atributo data-chart do elemento canvas
             const chartData = $monthlyChartCanvas.data('chart') || {};
+            this.chartData = chartData; // Store for tab switching
 
-            // Rótulos dos meses
-            const labels = this.getMonthLabels();
-
-            const data = {
-                labels: labels,
-                datasets: [
-                    {
-                        label: 'Estabelecimentos',
-                        data: chartData.establishments || this.generateRandomData(labels.length),
-                        borderColor: '#1D40AE',
-                        backgroundColor: 'rgba(29, 64, 174, 0.1)',
-                        tension: 0.4,
-                        fill: true
-                    }
-                ]
-            };
-
-            const config = {
+            const monthlyConfig = {
                 type: 'line',
-                data: data,
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Estabelecimentos',
+                            data: chartData.establishments || this.generateRandomData(labels.length),
+                            borderColor: '#1D40AE',
+                            backgroundColor: 'rgba(29, 64, 174, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            display: false
+                            display: true, // Keep legend for clarity with tabs
+                            position: 'top'
                         },
                         tooltip: {
                             mode: 'index',
@@ -59,31 +58,66 @@ const AdminDashboard = {
                     },
                     scales: {
                         x: {
-                            grid: {
-                                display: true,
-                                drawBorder: false
-                            }
+                            grid: { display: true, drawBorder: false }
                         },
                         y: {
                             beginAtZero: true,
-                            grid: {
-                                display: true,
-                                drawBorder: false
-                            },
-                            ticks: {
-                                stepSize: 1,
-                                precision: 0
-                            }
+                            grid: { display: true, drawBorder: false },
+                            ticks: { stepSize: 1, precision: 0 }
                         }
                     }
                 }
             };
+            this.monthlyChart = new Chart($monthlyChartCanvas[0], monthlyConfig);
+        }
 
-            // Cria o gráfico
-            this.monthlyChart = new Chart($monthlyChartCanvas[0], config);
+        // QR Code Logs Chart
+        const $qrLogsChartCanvas = $('#qrLogsChart');
+        if ($qrLogsChartCanvas.length && typeof Chart !== 'undefined') {
+            // Assuming qr_logs data is passed within the same main chartData object from the controller
+            const qrLogsData = ($monthlyChartCanvas.data('chart') || {}).qr_logs || this.generateRandomData(labels.length);
 
-            // Armazena os dados do gráfico para uso posterior
-            this.chartData = chartData;
+            const qrLogsConfig = {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Acessos QR Code',
+                            data: qrLogsData,
+                            borderColor: 'rgba(46, 184, 92, 1)', // Green color
+                            backgroundColor: 'rgba(46, 184, 92, 0.2)',
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: true, drawBorder: false }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: { display: true, drawBorder: false },
+                            ticks: { stepSize: 1, precision: 0 }
+                        }
+                    }
+                }
+            };
+            this.qrLogsChart = new Chart($qrLogsChartCanvas[0], qrLogsConfig);
         }
     },
 
@@ -180,123 +214,6 @@ $(document).ready(function() {
     }
 });
 
-// Dashboard JavaScript
-document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar Chart.js para o gráfico de estabelecimentos
-    initMonthlyChart();
-
-    // Inicializar Chart.js para o gráfico de logs de QR Code
-    initQrLogsChart();
-});
-
-function initMonthlyChart() {
-    const monthlyChartElement = document.getElementById('monthlyChart');
-
-    if (!monthlyChartElement) return;
-
-    // Extrair dados do atributo data-chart
-    const chartData = JSON.parse(monthlyChartElement.dataset.chart || '[]');
-
-    // Gerar rótulos de meses (últimos 12 meses, de forma retroativa)
-    const labels = getMonthLabels();
-
-    // Configurações do gráfico
-    const monthlyChart = new Chart(monthlyChartElement, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Estabelecimentos',
-                data: chartData,
-                borderColor: 'rgba(59, 113, 202, 1)',
-                backgroundColor: 'rgba(59, 113, 202, 0.2)',
-                tension: 0.4,
-                fill: true,
-                pointBackgroundColor: 'rgba(59, 113, 202, 1)'
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        precision: 0
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top'
-                }
-            }
-        }
-    });
-}
-
-function initQrLogsChart() {
-    const qrLogsChartElement = document.getElementById('qrLogsChart');
-
-    if (!qrLogsChartElement) return;
-
-    // Extrair dados do atributo data-chart
-    const chartData = JSON.parse(qrLogsChartElement.dataset.chart || '[]');
-
-    // Gerar rótulos de meses (últimos 12 meses, de forma retroativa)
-    const labels = getMonthLabels();
-
-    // Configurações do gráfico
-    const qrLogsChart = new Chart(qrLogsChartElement, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Acessos QR Code',
-                data: chartData,
-                borderColor: 'rgba(46, 184, 92, 1)',
-                backgroundColor: 'rgba(46, 184, 92, 0.2)',
-                tension: 0.4,
-                fill: true,
-                pointBackgroundColor: 'rgba(46, 184, 92, 1)'
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        precision: 0
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top'
-                }
-            }
-        }
-    });
-}
-
-function getMonthLabels() {
-    const months = [];
-    const monthNames = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-
-    // Data inicial - Março de 2024
-    const startDate = new Date(2024, 2, 1); // Mês é 0-indexed, então 2 = março
-
-    for (let i = 0; i < 12; i++) {
-        const month = new Date(startDate);
-        month.setMonth(startDate.getMonth() + i);
-        const monthIndex = month.getMonth();
-        const year = month.getFullYear().toString().slice(-2); // "24" para 2024
-        months.push(`${monthNames[monthIndex]}/${year}`);
-    }
-
-    return months;
-}
+// Removed redundant global functions: initMonthlyChart, initQrLogsChart, and getMonthLabels
+// All chart initialization is now handled by AdminDashboard.initCharts()
+// The AdminDashboard.getMonthLabels() method is used for generating month labels.
