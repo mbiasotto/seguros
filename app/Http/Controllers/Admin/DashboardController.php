@@ -17,9 +17,9 @@ class DashboardController extends Controller
         $totalEstablishments = Establishment::count();
         $totalVendors = Vendor::count();
 
-        // Define the dynamic date range: current month and 12 preceding months
+        // Define the dynamic date range: current month and 11 preceding months (total 12 months)
         $endDate = Carbon::now()->endOfMonth();
-        $startDate = Carbon::now()->subMonths(12)->startOfMonth(); // Go back 12 full months, then to start of that month
+        $startDate = Carbon::now()->subMonths(11)->startOfMonth(); // Current month + 11 previous months
 
         // Helper function to fetch and process monthly data
         $fetchMonthlyData = function ($query, $dateColumn = 'created_at') use ($startDate, $endDate) {
