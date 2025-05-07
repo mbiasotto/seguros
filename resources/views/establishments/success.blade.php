@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/establishments/success.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/establishments/success.css') }}">
 </head>
 <body>
     <div class="success-container">
@@ -67,9 +67,5 @@
             <p>&copy; {{ date('Y') }} SeguraEssa.app - Todos os direitos reservados</p>
         </div>
     </div>
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 </html>
