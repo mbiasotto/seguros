@@ -4,8 +4,8 @@
 
 @push('styles')
 {{-- Remove specific CSS, rely on admin/admin.css --}}
-{{-- <link rel="stylesheet" href="{{ asset('css/data-list.css') }}"> --}}
-{{-- <link rel="stylesheet" href="{{ asset('css/components/empty-state.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('assets/css/data-list.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('assets/css/components/empty-state.css') }}"> --}}
 @endpush
 
 @section('content')

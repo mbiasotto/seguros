@@ -137,7 +137,7 @@
                                     </div>
                                     <div class="text-end">
                                         <small class="text-muted d-block">{{ $establishment->created_at->format('d/m/Y') }}</small>
-                                        <a href="{{ route('admin.establishments.show', $establishment) }}" class="btn action-btn">
+                                        <a href="{{ route('admin.establishments.edit', $establishment) }}" class="btn action-btn">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                     </div>
@@ -184,7 +184,7 @@
                                         </div>
                                         <div class="text-end">
                                             <small class="text-muted d-block">{{ $document->updated_at->format('d/m/Y') }}</small>
-                                            <a href="{{ route('admin.establishments.documents.show', $document) }}" class="btn action-btn">
+                                            <a href="{{ route('admin.establishments.documents.edit', $document) }}" class="btn action-btn">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </div>

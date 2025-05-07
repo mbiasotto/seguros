@@ -3,7 +3,7 @@
 @section('title', 'Estatísticas de QR Codes')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/data-list.css') }}">
 <style>
     .stats-card {
         border-radius: var(--border-radius);

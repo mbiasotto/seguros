@@ -3,7 +3,7 @@
 @section('title', 'Editar QR Code')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/data-list.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/data-list.css') }}">
 @endpush
 
 @section('content')

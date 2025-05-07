@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('css/establishments/success.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/establishments/success.css') }}">
 </head>
 <body>
     <div class="success-container">

@@ -3,7 +3,7 @@
 @section('title', 'Visualizar QR Code')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/seguraessa.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/seguraessa.css') }}">
 @endpush
 
 @section('content')
