@@ -73,8 +73,8 @@
                     <tr>
                         <th>NOME</th>
                         <th>RESPONSÁVEL</th>
-                        <th>CONTATO</th>
                         <th>Cidade/Estado</th>
+                        <th>Data</th>
                         <th>Status</th>
                         <th>Ações</th>
                     </tr>
@@ -84,8 +84,8 @@
                         <tr>
                             <td class="fw-medium">{{ $establishment->nome }}</td>
                             <td>{{ $establishment->vendor->nome }}</td>
-                            <td>{{ $establishment->email }}</td>
                             <td>{{ $establishment->cidade }}/{{ $establishment->estado }}</td>
+                            <td>{{ $establishment->created_at->format('d/m/Y') }}</td>
                             <td>
                                 @if($establishment->ativo)
                                     <span class="badge bg-success">Ativo</span>

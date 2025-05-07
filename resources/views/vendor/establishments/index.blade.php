@@ -82,7 +82,7 @@
                     <tr>
                         <th>Nome</th>
                         <th>Cidade/Estado</th>
-                        <th>Telefone</th>
+                        <th>Data</th>
                         <th>Status</th>
                         <th width="120">Ações</th>
                     </tr>
@@ -92,7 +92,7 @@
                         <tr>
                             <td class="fw-medium">{{ $establishment->nome }}</td>
                             <td>{{ $establishment->cidade }}/{{ $establishment->estado }}</td>
-                            <td>{{ $establishment->telefone }}</td>
+                            <td>{{ $establishment->created_at->format('d/m/Y') }}</td>
                             <td>
                                 @if($establishment->ativo)
                                     <span class="badge bg-success">Ativo</span>

@@ -56,7 +56,7 @@
                     <tr>
                         <th>Nome</th>
                         <th>E-mail</th>
-                        <th>Data de Cadastro</th>
+                        <th>Data</th>
                         <th>Último Acesso</th>
                         <th>Ações</th>
                     </tr>
@@ -66,7 +66,7 @@
                         <tr>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->created_at->format('d/m/Y H:i') }}</td>
+                            <td>{{ $user->created_at->format('d/m/Y') }}</td>
                             <td>
                                 @if($user->lastAccess())
                                     {{ $user->lastAccess()->created_at->format('d/m/Y H:i') }}

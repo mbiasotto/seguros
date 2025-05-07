@@ -72,11 +72,11 @@
                 <thead>
                     <tr>
                         <th>Nome</th>
-                        <th>Email</th>
                         <th>Telefone</th>
                         <th>Cidade/Estado</th>
-                        <th>Status</th>
+                        <th>Data</th>
                         <th>Último Acesso</th>
+                        <th>Status</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -84,21 +84,21 @@
                     @foreach($vendors as $vendor)
                         <tr>
                             <td>{{ $vendor->nome }}</td>
-                            <td>{{ $vendor->email }}</td>
                             <td>{{ $vendor->telefone }}</td>
                             <td>{{ $vendor->cidade }}/{{ $vendor->estado }}</td>
-                            <td>
-                                @if($vendor->ativo)
-                                    <span class="badge bg-success">Ativo</span>
-                                @else
-                                    <span class="badge bg-danger">Inativo</span>
-                                @endif
-                            </td>
+                            <td>{{ $vendor->created_at->format('d/m/Y') }}</td>
                             <td>
                                 @if($vendor->lastAccess())
                                     {{ $vendor->lastAccess()->created_at->format('d/m/Y H:i') }}
                                 @else
                                     <span class="text-muted">Nunca acessou</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if($vendor->ativo)
+                                    <span class="badge bg-success">Ativo</span>
+                                @else
+                                    <span class="badge bg-danger">Inativo</span>
                                 @endif
                             </td>
                             <td>
