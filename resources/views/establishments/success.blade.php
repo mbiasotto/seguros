@@ -50,16 +50,6 @@
             <h2>Parabéns, {{ $establishment->nome }}!</h2>
             <p class="lead">Seu cadastro foi concluído com sucesso. Agradecemos por se tornar um parceiro do SeguraEssa.app!</p>
 
-            <div class="next-steps">
-                <h3><i class="fas fa-clipboard-list me-2"></i> Próximos Passos</h3>
-                <ul>
-                    <li>Nossa equipe irá analisar a documentação enviada em até 48 horas úteis.</li>
-                    <li>Você receberá um e-mail de confirmação quando a análise for concluída.</li>
-                    <li>Após a aprovação, seu estabelecimento estará pronto para começar a utilizar nossos serviços.</li>
-                    <li>Em caso de dúvidas, entre em contato com nosso suporte pelo e-mail: <strong>suporte@seguraessa.app</strong></li>
-                </ul>
-            </div>
-
             <a href="{{ route('site.index') }}" class="btn btn-primary">Voltar para a Página Inicial</a>
         </div>
 
