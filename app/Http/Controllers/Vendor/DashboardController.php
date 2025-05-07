@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
 use App\Models\Establishment;
+use App\Models\QrCodeAccessLog; // Added
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -12,57 +13,90 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Obter o vendedor autenticado
         $vendor = Auth::guard('vendor')->user();
+        $vendorId = $vendor->id;
 
-        // Contar estabelecimentos do vendedor
-        $totalEstablishments = Establishment::where('vendor_id', $vendor->id)->count();
-
-        // Contar estabelecimentos ativos do vendedor
-        $activeEstablishments = Establishment::where('vendor_id', $vendor->id)
+        // Total counts for the vendor
+        $totalEstablishments = Establishment::where('vendor_id', $vendorId)->count();
+        $activeEstablishments = Establishment::where('vendor_id', $vendorId)
             ->where('ativo', true)
             ->count();
 
-        // Define o intervalo de datas (Março 2024 a Fevereiro 2025)
-        $startDate = Carbon::create(2024, 3, 1);
-        $endDate = Carbon::create(2025, 2, 28);
+        // Total QR Code Accesses for the vendor's establishments
+        $totalQrCodeAccesses = QrCodeAccessLog::join('qr_codes', 'qr_code_access_logs.qr_code_id', '=', 'qr_codes.id')
+            ->join('establishments', 'qr_codes.establishment_id', '=', 'establishments.id')
+            ->where('establishments.vendor_id', $vendorId)
+            ->count();
 
-        // Obter estabelecimentos registrados por mês para o intervalo de datas especificado
-        $establishmentsPerMonth = Establishment::select(
-            DB::raw('YEAR(created_at) as year'),
-            DB::raw('MONTH(created_at) as month'),
-            DB::raw('COUNT(*) as total')
-        )
-        ->where('vendor_id', $vendor->id)
-        ->whereBetween('created_at', [$startDate, $endDate])
-        ->groupBy('year', 'month')
-        ->orderBy('year')
-        ->orderBy('month')
-        ->get()
-        ->mapWithKeys(function ($item) {
-            // Ajuste para criar uma chave única ano-mês
-            return [sprintf('%04d-%02d', $item->year, $item->month) => ['year' => $item->year, 'month' => $item->month, 'total' => $item->total]];
-        })
-        ->toArray();
+        // Define the dynamic date range: current month and 11 preceding months (total 12 months)
+        $endDate = Carbon::now()->endOfMonth();
+        $startDate = Carbon::now()->subMonths(11)->startOfMonth();
 
-        // Inicializar array de dados mensais com zeros para todos os meses no intervalo
-        $monthlyData = [];
-        $currentDate = $startDate->copy();
-        while ($currentDate->lessThanOrEqualTo($endDate)) {
-            $monthlyData[$currentDate->format('Y-m')] = 0;
-            $currentDate->addMonthNoOverflow();
-        }
+        // Helper function to fetch and process monthly data
+        $fetchMonthlyData = function ($baseQuery, $dateColumn = 'created_at', $isQrLog = false) use ($startDate, $endDate, $vendorId) {
+            $driverName = DB::connection()->getDriverName();
+            $yearExpression = null;
+            $monthExpression = null;
 
-        // Preencher com valores reais onde existirem
-        foreach ($establishmentsPerMonth as $key => $data) {
-            $yearMonth = sprintf('%04d-%02d', $data['year'], $data['month']);
-            if (isset($monthlyData[$yearMonth])) {
-                $monthlyData[$yearMonth] = $data['total'];
+            if ($driverName === 'sqlite') {
+                $yearExpression = DB::raw("strftime('%Y', {$dateColumn}) as year");
+                $monthExpression = DB::raw("strftime('%m', {$dateColumn}) as month");
+            } else { // Default to MySQL syntax (YEAR(), MONTH())
+                $yearExpression = DB::raw("YEAR({$dateColumn}) as year");
+                $monthExpression = DB::raw("MONTH({$dateColumn}) as month");
             }
-        }
 
-        // Obter estabelecimentos recentes do vendedor
-        $recentEstablishments = Establishment::where('vendor_id', $vendor->id)
+            $query = $baseQuery->select(
+                $yearExpression,
+                $monthExpression,
+                DB::raw('COUNT(*) as total')
+            )
+            ->whereBetween($dateColumn, [$startDate, $endDate]);
+
+            if ($isQrLog) {
+                // For QR logs, dateColumn is on qr_code_access_logs table
+                 $query->groupBy(DB::raw($driverName === 'sqlite' ? "strftime('%Y-%m', {$dateColumn})" : "year, month"));
+            } else {
+                // For establishments, dateColumn is on establishments table
+                $query->groupBy(DB::raw($driverName === 'sqlite' ? "strftime('%Y-%m', {$dateColumn})" : "year, month"));
+            }
+
+            $results = $query->orderBy('year')
+                            ->orderBy('month')
+                            ->get()
+                            ->keyBy(function ($item) {
+                                return sprintf('%04s-%02s', (string)$item->year, (string)$item->month);
+                            });
+
+            $monthlyDataArr = [];
+            $currentPeriod = $startDate->copy();
+            while ($currentPeriod->lessThanOrEqualTo($endDate)) {
+                $key = $currentPeriod->format('Y-m');
+                $monthlyDataArr[$key] = $results->has($key) ? $results->get($key)->total : 0;
+                $currentPeriod->addMonthNoOverflow();
+            }
+            return array_values($monthlyDataArr);
+        };
+
+        // Get establishments registered per month for the vendor
+        $establishmentsBaseQuery = Establishment::where('vendor_id', $vendorId);
+        $establishmentsChartData = $fetchMonthlyData($establishmentsBaseQuery, 'establishments.created_at');
+
+        // Get QR Code logs data for chart for the vendor
+        $qrLogsBaseQuery = DB::table('qr_code_access_logs')
+            ->join('qr_codes', 'qr_code_access_logs.qr_code_id', '=', 'qr_codes.id')
+            ->join('establishments', 'qr_codes.establishment_id', '=', 'establishments.id')
+            ->where('establishments.vendor_id', $vendorId);
+        $qrLogsChartData = $fetchMonthlyData($qrLogsBaseQuery, 'qr_code_access_logs.created_at', true);
+
+        // Prepare chart data for the view
+        $chartData = [
+            'establishments' => $establishmentsChartData,
+            'qr_logs' => $qrLogsChartData,
+        ];
+
+        // Get recent establishments for the vendor
+        $recentEstablishments = Establishment::where('vendor_id', $vendorId)
             ->latest()
             ->take(5)
             ->get();
@@ -71,7 +105,8 @@ class DashboardController extends Controller
             'vendor',
             'totalEstablishments',
             'activeEstablishments',
-            'monthlyData',
+            'totalQrCodeAccesses', // Added
+            'chartData',           // Changed from monthlyData
             'recentEstablishments'
         ));
     }

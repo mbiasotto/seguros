@@ -47,25 +47,60 @@
             </div>
         </div>
     </div>
+
+    <!-- Total QR Code Accesses Card (New) -->
+    <div class="col-12 col-md-6 col-xl-3">
+        <div class="card h-100 border-0 shadow-sm stat-card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="stat-icon icon-info">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="card-subtitle mb-1 text-muted">Total Acessos QR Code</h6>
+                        <h2 class="card-title mb-0">{{ $totalQrCodeAccesses }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="row g-4">
+<div class="row g-4 mb-4"> {/* Added mb-4 for spacing like in admin dashboard */}
     <!-- Monthly Registrations Chart -->
-    <div class="col-12 col-xl-8">
+    <div class="col-12 col-xl-6"> {/* Changed to col-xl-6 to make space for QR chart */}
         <div class="card border-0 shadow-sm">
             <div class="card-header bg-white py-3">
                 <h5 class="mb-0">Cadastros por Mês/Ano</h5>
             </div>
             <div class="card-body">
                 <div class="chart-container">
-                    <canvas id="monthlyChart" data-chart="{{ json_encode($monthlyData) }}"></canvas>
+                    {{-- Pass the full chartData; JS will pick establishments and qr_logs --}}
+                    <canvas id="monthlyChart" data-chart="{{ json_encode($chartData ?? ['establishments' => [], 'qr_logs' => []]) }}"></canvas>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- QR Code Access Chart (New) -->
+    <div class="col-12 col-xl-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0">Acessos QR Code por Mês/Ano</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    {{-- This chart will also use the data from #monthlyChart's data-chart attribute in JS --}}
+                    <canvas id="qrLogsChart" data-chart="{{ json_encode($chartData ?? ['establishments' => [], 'qr_logs' => []]) }}"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
     <!-- Recent Establishments -->
-    <div class="col-12 col-xl-4">
+    <div class="col-12"> {/* Changed to full width if charts are side-by-side above */}
         <div class="card border-0 shadow-sm">
             <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Estabelecimentos Recentes</h5>
