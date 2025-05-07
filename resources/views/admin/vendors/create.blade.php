@@ -91,7 +91,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="telefone" class="form-label">Telefone <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg @error('telefone') is-invalid @enderror"
+                                    <input type="text" class="form-control phone-mask form-control-lg @error('telefone') is-invalid @enderror"
                                            id="telefone" name="telefone" value="{{ old('telefone') }}"
                                            placeholder="(00) 00000-0000" required>
                                     @error('telefone')

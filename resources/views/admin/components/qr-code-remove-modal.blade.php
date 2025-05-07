@@ -16,7 +16,8 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     <i class="fas fa-times me-2"></i> Cancelar
                 </button>
-                <button type="button" class="btn btn-danger" id="confirm-remove-qrcode">
+                {{-- Correcting ID to match JS setup --}}
+                <button type="button" class="btn btn-danger" id="confirmRemoveQrCodeBtn">
                     <i class="fas fa-unlink me-2"></i> Sim, Desvincular
                 </button>
             </div>

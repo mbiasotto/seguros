@@ -11,6 +11,7 @@ class Establishment extends Model
 {
     protected $fillable = [
         'vendor_id',
+        'category_id',
         'nome',
         'endereco',
         'numero',
@@ -36,6 +37,14 @@ class Establishment extends Model
     public function vendor(): BelongsTo
     {
         return $this->belongsTo(Vendor::class);
+    }
+
+    /**
+     * Relacionamento com a categoria
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 
     /**

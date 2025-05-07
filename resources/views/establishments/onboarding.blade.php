@@ -92,7 +92,7 @@
                         <p>1.2. O Cessionário se compromete a utilizar o espaço cedido exclusivamente para fins de divulgação, sendo vedada a realização de qualquer outra atividade, como a venda direta ou a prestação de serviços no local.</p>
 
                         <h5>Cláusula 2ª – Retribuição</h5>
-                        <p>2.1. A retribuição pela cessão do espaço será baseada nas indicações de clientes e nos contratos gerados, efetivados e que estejm com parcelas e/ou mensalidades pagas em seus respectivos vencimentos conforme regras do produto e /ou servico contratato.</p>
+                        <p>2.1. A retribuição pela cessão do espaço será baseada nas indicações de clientes e nos contratos gerados, efetivados e que estejam com parcelas e/ou mensalidades pagas em seus respectivos vencimentos conforme regras do produto e /ou servico contratato.</p>
                         <p>2.2. O controle da divulgação e acesso aos produtos, serão por meio do QR code e links para acesso eletrônico.</p>
                         <p>2.3. O QR code e links serão exclusivo do Cedente, não podendo o mesmo utiilizar ou ceder para outra empresa.</p>
                         <p>2.4. A retribuição será paga ao Cedente mensalmente, conforme tabela do ANEXO I deste termo;</p>

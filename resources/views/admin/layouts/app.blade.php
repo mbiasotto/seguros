@@ -61,7 +61,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
     <!-- Script de máscaras centralizado -->
-    <script src="{{ asset('assets/js/input-masks.js') }}"></script>
+    <script src="{{ asset('assets/js/utils/input-masks.js') }}"></script> {{-- Corrected Path --}}
+    <script src="{{ asset('assets/js/utils/cep-lookup.js') }}"></script> {{-- Added CEP lookup --}}
 
     <!-- Script admin principal -->
     <script src="{{ asset('assets/admin/admin.js') }}"></script>

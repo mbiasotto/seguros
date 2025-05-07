@@ -2,7 +2,6 @@
 
 @section('title', 'Novo Estabelecimento')
 
-
 @section('content')
 <div class="container-fluid px-0">
     <div class="page-header">
@@ -30,8 +29,9 @@
                             </div>
                         @endif
 
+                        {{-- Form fields remain the same --}}
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <div class="mb-4">
                                     <label for="vendor_id" class="form-label">Vendedor Responsável <span class="text-danger">*</span></label>
                                     <select class="form-select form-select-lg" id="vendor_id" name="vendor_id" required>
@@ -43,6 +43,21 @@
                                         @endforeach
                                     </select>
                                     <div class="form-text text-sm">Selecione o vendedor responsável por este estabelecimento</div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="mb-4">
+                                    <label for="category_id" class="form-label">Categoria <span class="text-danger">*</span></label>
+                                    <select class="form-select form-select-lg" id="category_id" name="category_id" required>
+                                        <option value="">Selecione uma categoria</option>
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                                {{ $category->nome }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="form-text text-sm">Selecione a categoria do estabelecimento</div>
                                 </div>
                             </div>
 
@@ -157,50 +172,7 @@
 
                         <h2 class="font-semibold text-lg border-bottom pb-2 mb-4">QR Codes</h2>
 
-                        <div class="row mb-4">
-                            <div class="col-12">
-                                <div class="mb-3">
-                                    <label class="form-label">Selecione os QR Codes para este estabelecimento</label>
-
-                                    <!-- Seleção de QR Codes disponíveis -->
-                                    <div class="row mb-4">
-                                        <div class="col-md-8">
-                                            <select class="form-select" id="qrcode-select">
-                                                <option value="">Selecione um QR Code disponível</option>
-                                                @foreach($qrCodes as $qrCode)
-                                                    @if($qrCode->isAvailableFor())
-                                                        <option value="{{ $qrCode->id }}" data-title="{{ $qrCode->title ?: 'QR Code #' . $qrCode->id }}" data-description="{{ $qrCode->description ?: $qrCode->link }}">
-                                                            #{{ $qrCode->id }} - {{ $qrCode->title ?: 'QR Code #' . $qrCode->id }}
-                                                        </option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <button type="button" class="btn btn-primary w-100 font-medium" id="add-qrcode-btn">
-                                                <i class="fas fa-plus me-2"></i> Adicionar QR Code
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <!-- Lista de QR Codes vinculados -->
-                                    <div class="card border-0 shadow-sm">
-                                        <div class="card-header bg-light">
-                                            <h6 class="font-medium mb-0">QR Codes vinculados a este estabelecimento</h6>
-                                        </div>
-                                        <div class="card-body p-0">
-                                            <ul class="list-group list-group-flush" id="linked-qrcodes-list">
-                                                <li class="list-group-item text-center py-4" id="no-qrcodes-message">
-                                                    <div class="text-muted">
-                                                        <i class="fas fa-info-circle me-2"></i> Nenhum QR Code vinculado a este estabelecimento.
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <x-qr-code-manager :qrCodes="$qrCodes" />
 
                         <div class="d-flex justify-content-end mt-4">
                             <a href="{{ route('admin.establishments.index') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center me-2">
@@ -217,30 +189,14 @@
     </div>
 </div>
 
-<!-- Incluindo modal para confirmação de remoção de QR Code -->
-@include('admin.components.qr-code-remove-modal')
-
-@endsection
+{{-- Incluindo o modal de remoção --}}
+<x-qr-code-remove-modal />
 
 @push('scripts')
-<script>
-    $(document).ready(function(){
-        // Preenchimento automático de CEP
-        $('#cep').blur(function(){
-            const cep = $(this).val().replace(/\D/g, '');
-
-            if(cep.length === 8){
-                $.getJSON(`https://viacep.com.br/ws/${cep}/json/`, function(data){
-                    if(!data.erro){
-                        $('#endereco').val(data.logradouro);
-                        $('#cidade').val(data.localidade);
-                        $('#estado').val(data.uf);
-                    }
-                });
-            }
-        });
-    });
-</script>
-<script src="{{ asset('assets/admin/js/pages/establishments/form-handlers.js') }}"></script>
-<script src="{{ asset('assets/admin/js/pages/establishments/qr-code-manager.js') }}"></script>
+{{-- Utility Scripts --}}
+<script src="{{ asset('assets/js/utils/input-masks.js') }}"></script>
+<script src="{{ asset('assets/js/utils/cep-lookup.js') }}"></script>
+<script src="{{ asset('assets/js/components/qr-code-manager.js') }}"></script>
 @endpush
+
+@endsection

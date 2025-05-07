@@ -14,17 +14,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create admin user
-        User::create([
-            'name' => 'Administrador',
-            'email' => 'admin@admin.com',
-            'password' => Hash::make('123456'),
-        ]);
+        // Create admin user if not exists
+        User::firstOrCreate(
+            ['email' => 'admin@admin.com'],
+            [
+                'name' => 'Administrador',
+                'password' => Hash::make('123456'),
+            ]
+        );
 
         $this->call([
             EstadoSeeder::class,
-            EstablishmentSeeder::class,
+            CategorySeeder::class,
             QrCodeSeeder::class,
+            EstablishmentSeeder::class,
         ]);
 
         // Create sample vendors

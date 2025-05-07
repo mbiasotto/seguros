@@ -43,12 +43,14 @@ class EstadoSeeder extends Seeder
         ];
 
         foreach ($estados as $estado) {
-            DB::table('estados')->insert([
-                'sigla' => $estado['sigla'],
-                'nome' => $estado['nome'],
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            DB::table('estados')->updateOrInsert(
+                ['sigla' => $estado['sigla']],
+                [
+                    'nome' => $estado['nome'],
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]
+            );
         }
     }
 }

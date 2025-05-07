@@ -19,6 +19,10 @@
             <i class="fas fa-store"></i>
             <span>Estabelecimentos</span>
         </a>
+        <a href="{{ route('admin.categories.index') }}" class="nav-link {{ request()->routeIs('admin.categories*') ? 'active' : '' }}">
+            <i class="fas fa-tags"></i>
+            <span>Categorias</span>
+        </a>
         <a href="{{ route('admin.establishments.documents.pending') }}" class="nav-link {{ request()->routeIs('admin.establishments.documents*') ? 'active' : '' }}">
             <i class="fas fa-file-alt"></i>
             <span>Documentos</span>

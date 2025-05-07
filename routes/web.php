@@ -5,8 +5,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VendorAuthController;
-use App\Http\Controllers\EstablishmentController;
-use App\Http\Controllers\Admin\AdminEstablishmentController;
+// use App\Http\Controllers\EstablishmentController; // Comentado pois o de Vendor foi criado
+use App\Http\Controllers\Vendor\EstablishmentController as VendorEstablishmentController;
+use App\Http\Controllers\Admin\EstablishmentController as AdminAreaEstablishmentController; // Controller correto para Admin Establishments
 use App\Http\Controllers\Admin\QrCodeController;
 use App\Http\Controllers\Admin\QrCodePdfController;
 use App\Http\Controllers\QrCodeRedirectController;
@@ -101,13 +102,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
 
         // Establishment Management Routes
-        Route::resource('establishments', AdminEstablishmentController::class);
+        Route::resource('establishments', AdminAreaEstablishmentController::class);
 
         // Rotas para Upload de Documento do Estabelecimento (Admin)
         Route::get('establishments/{establishment}/documents/upload', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'showUploadForm'])
             ->name('establishments.documents.upload.show');
         Route::post('establishments/{establishment}/documents/upload', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'handleUpload'])
             ->name('establishments.documents.upload.store');
+
+        // Category Management Routes
+        Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
 
         // QR Code Management Routes
         Route::resource('qr-codes', QrCodeController::class)->except([
@@ -164,8 +168,8 @@ Route::prefix('vendor')->name('vendor.')->group(function () {
         Route::get('profile', [VendorAuthController::class, 'profile'])->name('profile');
         Route::put('profile', [VendorAuthController::class, 'updateProfile'])->name('profile.update');
 
-        // Establishment Management Routes
-        Route::resource('establishments', EstablishmentController::class);
+        // Establishment Management Routes for Vendor
+        Route::resource('establishments', VendorEstablishmentController::class);
 
         // Establishment Documents Routes
         Route::prefix('establishments/documents')->name('establishments.documents')->group(function () {

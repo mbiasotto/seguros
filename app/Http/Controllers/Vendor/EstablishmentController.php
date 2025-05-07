@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Establishment;
-use App\Models\Vendor;
 use App\Models\QrCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class EstablishmentController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Establishment::with(['vendor', 'category']);
+        $vendor = Auth::guard('vendor')->user();
+        $query = Establishment::where('vendor_id', $vendor->id)->with(['category']);
 
         // Filtros
         if ($request->filled('search')) {
@@ -24,10 +25,6 @@ class EstablishmentController extends Controller
                   ->orWhere('email', 'like', "%{$search}%")
                   ->orWhere('cidade', 'like', "%{$search}%");
             });
-        }
-
-        if ($request->filled('vendor_id')) {
-            $query->where('vendor_id', $request->vendor_id);
         }
 
         if ($request->filled('category_id')) {
@@ -50,24 +47,24 @@ class EstablishmentController extends Controller
         $query->orderBy($orderBy, $orderDirection);
 
         $establishments = $query->paginate(10)->withQueryString();
-        $vendors = Vendor::orderBy('nome')->get();
-        $categories = \App\Models\Category::orderBy('nome')->get();
+        $categories = Category::orderBy('nome')->get();
 
-        return view('admin.establishments.index', compact('establishments', 'vendors', 'categories'));
+        // TODO: Create this view
+        return view('vendor.establishments.index', compact('establishments', 'categories'));
     }
 
     public function create()
     {
-        $vendors = Vendor::where('ativo', true)->get();
         $categories = Category::orderBy('nome')->get();
-        $qrCodes = QrCode::orderBy('id')->get(); // Buscar todos os QR Codes
-        return view('admin.establishments.create', compact('vendors', 'categories', 'qrCodes'));
+        $qrCodes = QrCode::orderBy('id')->get(); // Assuming vendors can assign QR codes too
+        // TODO: Create this view
+        return view('vendor.establishments.create', compact('categories', 'qrCodes'));
     }
 
     public function store(Request $request)
     {
+        $vendor = Auth::guard('vendor')->user();
         $validated = $request->validate([
-            'vendor_id' => 'required|exists:vendors,id',
             'category_id' => 'required|exists:categories,id',
             'nome' => 'required|string|max:255',
             'cnpj' => 'nullable|string|max:18',
@@ -88,6 +85,7 @@ class EstablishmentController extends Controller
         }
 
         $validated['ativo'] = $request->has('ativo');
+        $validated['vendor_id'] = $vendor->id; // Assign current vendor
 
         $fileData = [];
         if ($request->hasFile('logo')) {
@@ -129,22 +127,33 @@ class EstablishmentController extends Controller
             $establishment->qrCodes()->sync($request->qr_codes);
         }
 
-        return redirect()->route('admin.establishments.index')
+        return redirect()->route('vendor.establishments.index') // TODO: Define this route
             ->with('success', 'Estabelecimento criado com sucesso!');
     }
 
     public function edit(Establishment $establishment)
     {
-        $vendors = Vendor::where('ativo', true)->get();
+        $vendor = Auth::guard('vendor')->user();
+        // Ensure the establishment belongs to the authenticated vendor
+        if ($establishment->vendor_id !== $vendor->id) {
+            abort(403, 'Acesso não autorizado.');
+        }
+
         $categories = Category::orderBy('nome')->get();
-        $qrCodes = QrCode::orderBy('id')->get(); // Buscar todos os QR Codes
-        return view('admin.establishments.edit', compact('establishment', 'vendors', 'categories', 'qrCodes'));
+        $qrCodes = QrCode::orderBy('id')->get();
+        // TODO: Create this view
+        return view('vendor.establishments.edit', compact('establishment', 'categories', 'qrCodes'));
     }
 
     public function update(Request $request, Establishment $establishment)
     {
+        $vendor = Auth::guard('vendor')->user();
+        // Ensure the establishment belongs to the authenticated vendor
+        if ($establishment->vendor_id !== $vendor->id) {
+            abort(403, 'Acesso não autorizado.');
+        }
+
         $validated = $request->validate([
-            'vendor_id' => 'required|exists:vendors,id',
             'category_id' => 'required|exists:categories,id',
             'nome' => 'required|string|max:255',
             'cnpj' => 'nullable|string|max:18',
@@ -167,6 +176,7 @@ class EstablishmentController extends Controller
         }
 
         $validated['ativo'] = $request->has('ativo');
+        // vendor_id does not change on update
 
         if ($request->hasFile('logo')) {
             if ($establishment->logo) {
@@ -180,7 +190,7 @@ class EstablishmentController extends Controller
             );
             $validated['logo'] = $path;
         } else {
-            unset($validated['logo']);
+            unset($validated['logo']); // Ensure logo is not nulled if not provided and no new file uploaded
         }
 
         if ($request->hasFile('image')) {
@@ -195,7 +205,7 @@ class EstablishmentController extends Controller
             );
             $validated['image'] = $path;
         } else {
-            unset($validated['image']);
+            unset($validated['image']); // Ensure image is not nulled if not provided
         }
 
         $establishment->update($validated);
@@ -206,15 +216,28 @@ class EstablishmentController extends Controller
             $establishment->qrCodes()->detach();
         }
 
-        return redirect()->route('admin.establishments.index')
+        return redirect()->route('vendor.establishments.index') // TODO: Define this route
             ->with('success', 'Estabelecimento atualizado com sucesso!');
     }
 
     public function destroy(Establishment $establishment)
     {
+        $vendor = Auth::guard('vendor')->user();
+        // Ensure the establishment belongs to the authenticated vendor
+        if ($establishment->vendor_id !== $vendor->id) {
+            abort(403, 'Acesso não autorizado.');
+        }
+
+        if ($establishment->logo) {
+            Storage::disk('public')->delete($establishment->logo);
+        }
+        if ($establishment->image) {
+            Storage::disk('public')->delete($establishment->image);
+        }
+        $establishment->qrCodes()->detach();
         $establishment->delete();
 
-        return redirect()->route('admin.establishments.index')
+        return redirect()->route('vendor.establishments.index') // TODO: Define this route
             ->with('success', 'Estabelecimento excluído com sucesso!');
     }
 }

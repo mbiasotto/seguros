@@ -14,16 +14,25 @@
 <!-- Filtros -->
 <div class="filter-container shadow-sm">
     <form action="{{ route('admin.establishments.index') }}" method="GET" class="row g-3">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label for="search" class="form-label">Buscar</label>
             <input type="text" class="form-control" id="search" name="search" placeholder="Nome, email ou cidade..." value="{{ request('search') }}">
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label for="vendor_id" class="form-label">Vendedor</label>
             <select class="form-select" id="vendor_id" name="vendor_id">
                 <option value="">Todos os vendedores</option>
                 @foreach($vendors as $vendor)
                     <option value="{{ $vendor->id }}" {{ request('vendor_id') == $vendor->id ? 'selected' : '' }}>{{ $vendor->nome }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label for="category_id" class="form-label">Categoria</label>
+            <select class="form-select" id="category_id" name="category_id">
+                <option value="">Todas as categorias</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>{{ $category->nome }}</option>
                 @endforeach
             </select>
         </div>
@@ -41,6 +50,7 @@
                 <option value="id" {{ request('order_by') == 'id' || !request('order_by') ? 'selected' : '' }}>ID</option>
                 <option value="nome" {{ request('order_by') == 'nome' ? 'selected' : '' }}>Nome</option>
                 <option value="cidade" {{ request('order_by') == 'cidade' ? 'selected' : '' }}>Cidade</option>
+                <option value="created_at" {{ request('order_by') == 'created_at' ? 'selected' : '' }}>Data de cadastro</option>
             </select>
         </div>
         <div class="col-md-2 d-flex align-items-end">
@@ -73,6 +83,7 @@
                     <tr>
                         <th>NOME</th>
                         <th>RESPONSÁVEL</th>
+                        <th>CATEGORIA</th>
                         <th>Cidade/Estado</th>
                         <th>Data</th>
                         <th>Status</th>
@@ -84,6 +95,7 @@
                         <tr>
                             <td class="fw-medium">{{ $establishment->nome }}</td>
                             <td>{{ $establishment->vendor->nome }}</td>
+                            <td>{{ $establishment->category->nome ?? 'Sem categoria' }}</td>
                             <td>{{ $establishment->cidade }}/{{ $establishment->estado }}</td>
                             <td>{{ $establishment->created_at->format('d/m/Y') }}</td>
                             <td>

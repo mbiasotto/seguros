@@ -37,7 +37,10 @@ class EstablishmentSeeder extends Seeder
         ];
 
         foreach ($vendors as $vendorData) {
-            Vendor::create($vendorData);
+            Vendor::firstOrCreate(
+                ['email' => $vendorData['email']],
+                $vendorData
+            );
         }
 
         // Create establishments and associate with vendors
@@ -49,8 +52,10 @@ class EstablishmentSeeder extends Seeder
                 'estado' => 'SP',
                 'cep' => '01305-100',
                 'telefone' => '(11) 3456-7890',
+                'email' => 'restaurante@example.com',
                 'ativo' => true,
-                'vendor_id' => 1
+                'vendor_id' => 1,
+                'category_id' => 1
             ],
             [
                 'nome' => 'Padaria Pão Dourado',
@@ -59,8 +64,10 @@ class EstablishmentSeeder extends Seeder
                 'estado' => 'SP',
                 'cep' => '01310-100',
                 'telefone' => '(11) 3456-7891',
+                'email' => 'padaria@example.com',
                 'ativo' => true,
-                'vendor_id' => 1
+                'vendor_id' => 1,
+                'category_id' => 2
             ],
             [
                 'nome' => 'Mercado São José',
@@ -69,8 +76,10 @@ class EstablishmentSeeder extends Seeder
                 'estado' => 'SP',
                 'cep' => '05422-000',
                 'telefone' => '(11) 3456-7892',
+                'email' => 'mercado@example.com',
                 'ativo' => true,
-                'vendor_id' => 2
+                'vendor_id' => 2,
+                'category_id' => 3
             ],
             [
                 'nome' => 'Farmácia Saúde Total',
@@ -79,8 +88,10 @@ class EstablishmentSeeder extends Seeder
                 'estado' => 'SP',
                 'cep' => '05402-000',
                 'telefone' => '(11) 3456-7893',
+                'email' => 'farmacia@example.com',
                 'ativo' => true,
-                'vendor_id' => 2
+                'vendor_id' => 2,
+                'category_id' => 4
             ],
             [
                 'nome' => 'Lanchonete Sabor & Cia',
@@ -89,13 +100,18 @@ class EstablishmentSeeder extends Seeder
                 'estado' => 'SP',
                 'cep' => '01426-001',
                 'telefone' => '(11) 3456-7894',
+                'email' => 'lanchonete@example.com',
                 'ativo' => true,
-                'vendor_id' => 3
+                'vendor_id' => 3,
+                'category_id' => 5
             ]
         ];
 
         foreach ($establishments as $establishmentData) {
-            Establishment::create($establishmentData);
+            Establishment::firstOrCreate(
+                ['nome' => $establishmentData['nome'], 'vendor_id' => $establishmentData['vendor_id']],
+                $establishmentData
+            );
         }
     }
 }

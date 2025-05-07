@@ -48,35 +48,17 @@
         <!-- Conteúdo principal -->
         <main class="main-content p-4 flex-grow-1">
             <!-- Alertas e mensagens -->
-            @include('admin.partials.alerts')
+            @include('admin.partials.alerts') {{-- Reverting to use admin alerts as vendor one doesn't exist --}}
 
             <!-- Conteúdo da página -->
             @yield('content')
         </main>
     </div>
 
-    <!-- Modal de Confirmação de Exclusão (Keep the vendor-specific modal for now) -->
-    <div id="deleteConfirmModal" class="modal fade" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalTitle">Excluir Item</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="deleteModalMessage">Tem certeza que deseja excluir este item?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="deleteCancelButton">Cancelar</button>
-                    <form id="deleteModalForm" method="POST" style="display: inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger" id="deleteConfirmButton">Sim, Excluir</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    {{-- Use the shared admin component modal for consistency --}}
+    @include('admin.components.delete-modal') {{-- Correct path confirmed --}}
+    @include('admin.components.qr-code-remove-modal') {{-- Include QR code modal as well --}}
+
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -84,12 +66,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
     <!-- Script de máscaras centralizado -->
-    <script src="{{ asset('js/input-masks.js') }}"></script>
+    <script src="{{ asset('assets/js/utils/input-masks.js') }}"></script> {{-- Corrected Path --}}
+    <script src="{{ asset('assets/js/utils/cep-lookup.js') }}"></script> {{-- Added CEP lookup --}}
 
-    <!-- Script admin principal -->
+    <!-- Script admin principal (assuming vendor uses similar base JS) -->
     <script src="{{ asset('assets/admin/admin.js') }}"></script>
-    {{-- <script src="{{ asset('assets/admin/js/modal.js') }}"></script> --}}
-    <script src="{{ asset('js/modal.js') }}"></script>
+    {{-- Use admin modal JS unless a specific vendor one exists --}}
+    <script src="{{ asset('assets/admin/js/modal.js') }}"></script>
     <script src="{{ asset('assets/admin/js/form-utils.js') }}"></script>
 
     <!-- Script global de tooltips -->
@@ -103,34 +86,8 @@
                 });
             });
 
-            // Script specific for vendor delete modal
-            const deleteButtons = document.querySelectorAll('[data-delete-url]');
-            const deleteModal = document.getElementById('deleteConfirmModal');
-            const deleteModalTitle = document.getElementById('deleteModalTitle');
-            const deleteModalMessage = document.getElementById('deleteModalMessage');
-            const deleteModalForm = document.getElementById('deleteModalForm');
-            const deleteConfirmButton = document.getElementById('deleteConfirmButton');
-            const deleteCancelButton = document.getElementById('deleteCancelButton');
-
-            if (deleteModal && deleteButtons.length > 0) {
-                const bsDeleteModal = new bootstrap.Modal(deleteModal);
-                deleteButtons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        const url = this.getAttribute('data-delete-url');
-                        const title = this.getAttribute('data-delete-title') || 'Excluir Item';
-                        const message = this.getAttribute('data-delete-message') || 'Tem certeza que deseja excluir este item?';
-                        const confirmText = this.getAttribute('data-delete-confirm') || 'Sim, Excluir';
-                        const cancelText = this.getAttribute('data-delete-cancel') || 'Cancelar';
-
-                        deleteModalTitle.textContent = title;
-                        deleteModalMessage.textContent = message;
-                        deleteModalForm.action = url;
-                        deleteConfirmButton.textContent = confirmText;
-                        deleteCancelButton.textContent = cancelText;
-                        bsDeleteModal.show();
-                    });
-                });
-            }
+            // Delete modal logic is likely handled globally by modal.js included earlier
+            // Ensure modal.js correctly targets '#deleteConfirmModal' from the included component
         });
     </script>
 
