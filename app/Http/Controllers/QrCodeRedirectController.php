@@ -28,7 +28,7 @@ class QrCodeRedirectController extends Controller
         $this->logAccess($request, $qrCode);
 
         // WhatsApp number
-        $phoneNumber = "5515998260188";
+        $phoneNumber = "5515996605233";//"5515998260188";
 
         // Pre-defined message with the QR code ID as discount code
         $message = "Olá! Gostaria de fazer uma cotação de seguro e aproveitar meu desconto exclusivo. Meu código promocional é #{$id}. Poderia me ajudar?";
