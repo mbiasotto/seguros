@@ -15,7 +15,14 @@ class FakeApiController extends Controller
     public function __construct()
     {
         // Não aplicar nenhum middleware para manter a API simples
-        // Apenas garantir que as respostas sejam sempre JSON
+        // Garantir que as respostas sejam sempre JSON e que a API aceite dados JSON
+        $this->middleware(function ($request, $next) {
+            // Força o Content-Type para application/json
+            $request->headers->set('Accept', 'application/json');
+            $request->headers->set('Content-Type', 'application/json');
+
+            return $next($request);
+        });
     }
     /**
      * Verifica se um cliente existe pelo número de telefone
@@ -25,11 +32,11 @@ class FakeApiController extends Controller
      */
     public function verificarCliente(Request $request): JsonResponse
     {
-        // Verificação do método HTTP
-        if ($request->method() !== 'POST') {
+        // Permitir tanto requisições GET quanto POST para facilitar testes
+        if (!in_array($request->method(), ['GET', 'POST'])) {
             return response()->json([
                 'status' => 'error',
-                'mensagem' => 'Método não permitido. Esta rota só aceita requisições POST.',
+                'mensagem' => 'Método não permitido. Esta rota só aceita requisições GET ou POST.',
                 'codigo' => 405
             ], 405);
         }
@@ -39,7 +46,8 @@ class FakeApiController extends Controller
             'telefone' => 'required|string|min:10|max:15',
         ]);
 
-        $telefone = $request->input('telefone');
+        // Obtém o telefone do corpo da requisição JSON ou de parâmetros de formulário
+        $telefone = $request->json('telefone') ?? $request->input('telefone');
 
         // Simulação de verificação - alguns números são considerados cadastrados
         $clienteExiste = in_array($telefone, [
@@ -79,11 +87,11 @@ class FakeApiController extends Controller
      */
     public function cadastrarCliente(Request $request): JsonResponse
     {
-        // Verificação do método HTTP
-        if ($request->method() !== 'POST') {
+        // Permitir tanto requisições GET quanto POST para facilitar testes
+        if (!in_array($request->method(), ['GET', 'POST'])) {
             return response()->json([
                 'status' => 'error',
-                'mensagem' => 'Método não permitido. Esta rota só aceita requisições POST.',
+                'mensagem' => 'Método não permitido. Esta rota só aceita requisições GET ou POST.',
                 'codigo' => 405
             ], 405);
         }
@@ -97,17 +105,24 @@ class FakeApiController extends Controller
             'endereco' => 'nullable|string|max:255',
         ]);
 
+        // Obtém os dados do cliente do corpo da requisição JSON ou de parâmetros de formulário
+        $nome = $request->json('nome') ?? $request->input('nome');
+        $telefone = $request->json('telefone') ?? $request->input('telefone');
+        $email = $request->json('email') ?? $request->input('email');
+        $cpf = $request->json('cpf') ?? $request->input('cpf');
+        $endereco = $request->json('endereco') ?? $request->input('endereco');
+
         // Simulação de cadastro bem-sucedido
         return response()->json([
             'status' => 'success',
             'mensagem' => 'Cliente cadastrado com sucesso',
             'cliente' => [
                 'id' => rand(1000, 9999),
-                'nome' => $request->input('nome'),
-                'telefone' => $request->input('telefone'),
-                'email' => $request->input('email'),
-                'cpf' => $request->input('cpf'),
-                'endereco' => $request->input('endereco'),
+                'nome' => $nome,
+                'telefone' => $telefone,
+                'email' => $email,
+                'cpf' => $cpf,
+                'endereco' => $endereco,
                 'data_cadastro' => now()->format('Y-m-d H:i:s'),
             ]
         ], 201);
@@ -120,11 +135,11 @@ class FakeApiController extends Controller
      */
     public function listarClientes(Request $request): JsonResponse
     {
-        // Verificação do método HTTP - para este endpoint, vamos permitir apenas GET
-        if ($request->method() !== 'GET') {
+        // Permitir tanto requisições GET quanto POST para facilitar testes
+        if (!in_array($request->method(), ['GET', 'POST'])) {
             return response()->json([
                 'status' => 'error',
-                'mensagem' => 'Método não permitido. Esta rota só aceita requisições GET.',
+                'mensagem' => 'Método não permitido. Esta rota só aceita requisições GET ou POST.',
                 'codigo' => 405
             ], 405);
         }
