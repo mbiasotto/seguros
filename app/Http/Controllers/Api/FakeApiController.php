@@ -99,19 +99,19 @@ class FakeApiController extends Controller
 
         // Validação dos dados do cliente
         $request->validate([
-            'nome' => 'required|string|max:255',
+            //'nome' => 'required|string|max:255',
             'telefone' => 'required|string|min:10|max:15',
-            'email' => 'required|email|max:255',
-            'cpf' => 'nullable|string|max:14',
-            'endereco' => 'nullable|string|max:255',
+            // 'email' => 'required|email|max:255',
+            // 'cpf' => 'nullable|string|max:14',
+            // 'endereco' => 'nullable|string|max:255',
         ]);
 
         // Obtém os dados do cliente do corpo da requisição JSON ou de parâmetros de formulário
-        $nome = $request->json('nome') ?? $request->input('nome');
+        //$nome = $request->json('nome') ?? $request->input('nome');
         $telefone = $request->json('telefone') ?? $request->input('telefone');
-        $email = $request->json('email') ?? $request->input('email');
-        $cpf = $request->json('cpf') ?? $request->input('cpf');
-        $endereco = $request->json('endereco') ?? $request->input('endereco');
+        // $email = $request->json('email') ?? $request->input('email');
+        // $cpf = $request->json('cpf') ?? $request->input('cpf');
+        // $endereco = $request->json('endereco') ?? $request->input('endereco');
 
         // Simulação de cadastro bem-sucedido
         return response()->json([
@@ -119,11 +119,11 @@ class FakeApiController extends Controller
             'mensagem' => 'Cliente cadastrado com sucesso',
             'cliente' => [
                 'id' => rand(1000, 9999),
-                'nome' => $nome,
+                //'nome' => $nome,
                 'telefone' => $telefone,
-                'email' => $email,
-                'cpf' => $cpf,
-                'endereco' => $endereco,
+                // 'email' => $email,
+                // 'cpf' => $cpf,
+                // 'endereco' => $endereco,
                 'data_cadastro' => now()->format('Y-m-d H:i:s'),
             ]
         ], 201);
