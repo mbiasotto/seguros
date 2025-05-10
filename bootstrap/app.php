@@ -17,6 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
             }
             return route('admin.login');
         });
+
+        $middleware->validateCsrfTokens(except: [
+            'api/*', // Exclude all API routes from CSRF protection
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
