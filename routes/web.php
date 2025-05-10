@@ -52,7 +52,7 @@ Route::get('/vendedor', [\App\Http\Controllers\SiteController::class, 'vendedor'
 Route::prefix('api/fake')->name('api.fake.')->group(function () {
     Route::match(['get', 'post'], '/verificar-cliente', [\App\Http\Controllers\Api\FakeApiController::class, 'verificarCliente'])->name('verificar-cliente');
     Route::match(['get', 'post'], '/cadastrar-cliente', [\App\Http\Controllers\Api\FakeApiController::class, 'cadastrarCliente'])->name('cadastrar-cliente');
-    Route::get('/listar-clientes', [\App\Http\Controllers\Api\FakeApiController::class, 'listarClientes'])->name('listar-clientes');
+    Route::match(['get', 'post'], '/listar-clientes', [\App\Http\Controllers\Api\FakeApiController::class, 'listarClientes'])->name('listar-clientes');
 });
 
 // Admin Routes
