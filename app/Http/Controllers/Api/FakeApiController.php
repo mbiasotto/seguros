@@ -5,9 +5,28 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Route;
 
 class FakeApiController extends Controller
 {
+    /**
+     * Construtor que garante que este controlador não seja afetado pelo middleware de autenticação
+     */
+    public function __construct()
+    {
+        // Não aplicar middleware de autenticação neste controlador
+        $this->middleware(function ($request, $next) {
+            // Forçar que todas as respostas sejam JSON
+            $request->headers->set('Accept', 'application/json');
+
+            // Se a requisição não espera JSON, forçar que espere
+            if (!$request->expectsJson()) {
+                $request->headers->set('X-Requested-With', 'XMLHttpRequest');
+            }
+
+            return $next($request);
+        });
+    }
     /**
      * Verifica se um cliente existe pelo número de telefone
      *

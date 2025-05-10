@@ -48,10 +48,10 @@ Route::get('/', [\App\Http\Controllers\SiteController::class, 'index'])->name('s
 Route::get('/parceiro', [\App\Http\Controllers\SiteController::class, 'parceiro'])->name('site.parceiro');
 Route::get('/vendedor', [\App\Http\Controllers\SiteController::class, 'vendedor'])->name('site.vendedor');
 
-// Rotas da API Fake para testes
+// Rotas da API Fake para testes - sem middleware de autenticação e sempre retornando JSON
 Route::prefix('api/fake')->name('api.fake.')->group(function () {
-    Route::post('/verificar-cliente', [\App\Http\Controllers\Api\FakeApiController::class, 'verificarCliente'])->name('verificar-cliente');
-    Route::post('/cadastrar-cliente', [\App\Http\Controllers\Api\FakeApiController::class, 'cadastrarCliente'])->name('cadastrar-cliente');
+    Route::match(['get', 'post'], '/verificar-cliente', [\App\Http\Controllers\Api\FakeApiController::class, 'verificarCliente'])->name('verificar-cliente');
+    Route::match(['get', 'post'], '/cadastrar-cliente', [\App\Http\Controllers\Api\FakeApiController::class, 'cadastrarCliente'])->name('cadastrar-cliente');
     Route::get('/listar-clientes', [\App\Http\Controllers\Api\FakeApiController::class, 'listarClientes'])->name('listar-clientes');
 });
 
