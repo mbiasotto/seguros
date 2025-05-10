@@ -10,22 +10,12 @@ use Illuminate\Support\Facades\Route;
 class FakeApiController extends Controller
 {
     /**
-     * Construtor que garante que este controlador não seja afetado pelo middleware de autenticação
+     * Construtor simplificado para API fake
      */
     public function __construct()
     {
-        // Não aplicar middleware de autenticação neste controlador
-        $this->middleware(function ($request, $next) {
-            // Forçar que todas as respostas sejam JSON
-            $request->headers->set('Accept', 'application/json');
-
-            // Se a requisição não espera JSON, forçar que espere
-            if (!$request->expectsJson()) {
-                $request->headers->set('X-Requested-With', 'XMLHttpRequest');
-            }
-
-            return $next($request);
-        });
+        // Não aplicar nenhum middleware para manter a API simples
+        // Apenas garantir que as respostas sejam sempre JSON
     }
     /**
      * Verifica se um cliente existe pelo número de telefone
@@ -35,6 +25,15 @@ class FakeApiController extends Controller
      */
     public function verificarCliente(Request $request): JsonResponse
     {
+        // Verificação do método HTTP
+        if ($request->method() !== 'POST') {
+            return response()->json([
+                'status' => 'error',
+                'mensagem' => 'Método não permitido. Esta rota só aceita requisições POST.',
+                'codigo' => 405
+            ], 405);
+        }
+
         // Validação do número de telefone
         $request->validate([
             'telefone' => 'required|string|min:10|max:15',
@@ -80,6 +79,15 @@ class FakeApiController extends Controller
      */
     public function cadastrarCliente(Request $request): JsonResponse
     {
+        // Verificação do método HTTP
+        if ($request->method() !== 'POST') {
+            return response()->json([
+                'status' => 'error',
+                'mensagem' => 'Método não permitido. Esta rota só aceita requisições POST.',
+                'codigo' => 405
+            ], 405);
+        }
+
         // Validação dos dados do cliente
         $request->validate([
             'nome' => 'required|string|max:255',
@@ -110,8 +118,17 @@ class FakeApiController extends Controller
      *
      * @return JsonResponse
      */
-    public function listarClientes(): JsonResponse
+    public function listarClientes(Request $request): JsonResponse
     {
+        // Verificação do método HTTP - para este endpoint, vamos permitir apenas GET
+        if ($request->method() !== 'GET') {
+            return response()->json([
+                'status' => 'error',
+                'mensagem' => 'Método não permitido. Esta rota só aceita requisições GET.',
+                'codigo' => 405
+            ], 405);
+        }
+
         // Simulação de lista de clientes
         $clientes = [
             [
