@@ -17,9 +17,10 @@ class FakeApiController extends Controller
         // Não aplicar nenhum middleware para manter a API simples
         // Garantir que as respostas sejam sempre JSON e que a API aceite dados JSON
         $this->middleware(function ($request, $next) {
-            // Força o Content-Type para application/json
+            // Garante que a API responda com JSON
             $request->headers->set('Accept', 'application/json');
-            $request->headers->set('Content-Type', 'application/json');
+            // Não força mais o Content-Type da requisição para application/json
+            // permitindo que o cliente envie dados de formulário (x-www-form-urlencoded)
 
             return $next($request);
         });
