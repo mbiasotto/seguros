@@ -144,7 +144,7 @@
                                 <div class="mb-3">
                                     <label for="logo" class="form-label">Logo</label>
                                     <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
-                                    <div class="form-text text-sm mb-2">Opcional. Envie um novo arquivo para substituir o atual.</div>
+                                    <div class="form-text text-sm mb-2">Tamanho máximo do arquivo: 15MB. Envie um novo arquivo para substituir o atual.</div>
                                     @if($establishment->logo)
                                         <a href="{{ Storage::url($establishment->logo) }}" target="_blank" class="btn btn-sm btn-outline-info">
                                             <i class="fas fa-eye me-1"></i> Ver Logo Atual
@@ -156,7 +156,7 @@
                                 <div class="mb-3">
                                     <label for="image" class="form-label">Imagem</label>
                                     <input type="file" class="form-control" id="image" name="image" accept="image/*">
-                                    <div class="form-text text-sm mb-2">Opcional. Envie um novo arquivo para substituir o atual.</div>
+                                    <div class="form-text text-sm mb-2">Tamanho máximo do arquivo: 15MB. Envie um novo arquivo para substituir o atual.</div>
                                      @if($establishment->image)
                                         <a href="{{ Storage::url($establishment->image) }}" target="_blank" class="btn btn-sm btn-outline-info">
                                             <i class="fas fa-eye me-1"></i> Ver Imagem Atual

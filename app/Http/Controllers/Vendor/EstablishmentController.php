@@ -75,8 +75,8 @@ class EstablishmentController extends Controller
             'telefone' => 'required|string|max:20',
             'email' => 'required|email|max:255|unique:establishments,email',
             'ativo' => 'boolean',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:15360',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:15360',
             'qr_codes' => 'array',
             'qr_codes.*' => 'exists:qr_codes,id'
         ]);
@@ -165,8 +165,8 @@ class EstablishmentController extends Controller
             'telefone' => 'required|string|max:20',
             'email' => 'required|email|max:255|unique:establishments,email,' . $establishment->id,
             'ativo' => 'boolean',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:15360',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:15360',
             'qr_codes' => 'array',
             'qr_codes.*' => 'exists:qr_codes,id'
         ]);

@@ -143,14 +143,14 @@
                                 <div class="mb-3">
                                     <label for="logo" class="form-label">Logo</label>
                                     <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
-                                    <div class="form-text text-sm">Opcional. Recomendado: Fundo transparente, formato PNG ou SVG.</div>
+                                    <div class="form-text text-sm">Tamanho máximo do arquivo: 15MB. Recomendado: Fundo transparente, formato PNG ou SVG.</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="image" class="form-label">Imagem</label>
                                     <input type="file" class="form-control" id="image" name="image" accept="image/*">
-                                    <div class="form-text text-sm">Opcional. Imagem principal para o estabelecimento.</div>
+                                    <div class="form-text text-sm">Tamanho máximo do arquivo: 15MB. Imagem principal para o estabelecimento.</div>
                                 </div>
                             </div>
                         </div>
