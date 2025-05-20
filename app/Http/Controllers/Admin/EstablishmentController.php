@@ -49,7 +49,7 @@ class EstablishmentController extends Controller
 
         $query->orderBy($orderBy, $orderDirection);
 
-        $establishments = $query->paginate(config('project.per_page'))->withQueryString();
+        $establishments = $query->paginate(config('project.per_page'));
         $vendors = Vendor::orderBy('nome')->get();
         $categories = \App\Models\Category::orderBy('nome')->get();
 
@@ -80,7 +80,9 @@ class EstablishmentController extends Controller
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:15360',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:15360',
             'qr_codes' => 'array',
-            'qr_codes.*' => 'exists:qr_codes,id'
+            'qr_codes.*' => 'exists:qr_codes,id',
+            'qr_notes' => 'array',
+            'qr_notes.*' => 'nullable|string|max:500',
         ]);
 
         if (isset($validated['cnpj'])) {
@@ -126,7 +128,17 @@ class EstablishmentController extends Controller
         }
 
         if ($request->has('qr_codes')) {
-            $establishment->qrCodes()->sync($request->qr_codes);
+            $qrCodes = $request->qr_codes;
+            $qrNotes = $request->qr_notes ?? [];
+
+            $syncData = [];
+            foreach ($qrCodes as $qrCodeId) {
+                $syncData[$qrCodeId] = [
+                    'notes' => $qrNotes[$qrCodeId] ?? null
+                ];
+            }
+
+            $establishment->qrCodes()->sync($syncData);
         }
 
         return redirect()->route('admin.establishments.index')
@@ -157,7 +169,9 @@ class EstablishmentController extends Controller
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:15360',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:15360',
             'qr_codes' => 'array',
-            'qr_codes.*' => 'exists:qr_codes,id'
+            'qr_codes.*' => 'exists:qr_codes,id',
+            'qr_notes' => 'array',
+            'qr_notes.*' => 'nullable|string|max:500',
         ]);
 
         if (isset($validated['cnpj'])) {
@@ -201,7 +215,17 @@ class EstablishmentController extends Controller
         $establishment->update($validated);
 
         if ($request->has('qr_codes')) {
-            $establishment->qrCodes()->sync($request->qr_codes);
+            $qrCodes = $request->qr_codes;
+            $qrNotes = $request->qr_notes ?? [];
+
+            $syncData = [];
+            foreach ($qrCodes as $qrCodeId) {
+                $syncData[$qrCodeId] = [
+                    'notes' => $qrNotes[$qrCodeId] ?? null
+                ];
+            }
+
+            $establishment->qrCodes()->sync($syncData);
         } else {
             $establishment->qrCodes()->detach();
         }

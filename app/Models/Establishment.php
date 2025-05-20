@@ -60,6 +60,8 @@ class Establishment extends Model
      */
     public function qrCodes(): BelongsToMany
     {
-        return $this->belongsToMany(QrCode::class, 'establishment_qr_code');
+        return $this->belongsToMany(QrCode::class, 'establishment_qr_code')
+                    ->withPivot('notes')
+                    ->withTimestamps();
     }
 }

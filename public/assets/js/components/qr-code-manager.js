@@ -16,21 +16,53 @@ $(document).ready(function() {
     // Função para criar o item da lista de QR Code
     function createQrCodeListItem(qrCode) {
         return `
-            <li class="list-group-item d-flex justify-content-between align-items-center" id="linked-qrcode-${qrCode.id}">
-                <div>
-                    <input type="hidden" name="qr_codes[]" value="${qrCode.id}">
-                    <strong class="font-medium">QR Code #${qrCode.id}</strong>
-                    <small class="text-muted text-sm d-block"></small>
+            <li class="list-group-item" id="linked-qrcode-${qrCode.id}">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div>
+                        <input type="hidden" name="qr_codes[]" value="${qrCode.id}">
+                        <strong class="font-medium">QR Code #${qrCode.id}</strong>
+                        <small class="text-muted text-sm d-block"></small>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-danger remove-qrcode"
+                            data-id="${qrCode.id}"
+                            data-title="QR Code #${qrCode.id}"
+                            data-description="${qrCode.description}">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
-                <button type="button" class="btn btn-sm btn-outline-danger remove-qrcode"
-                        data-id="${qrCode.id}"
-                        data-title="QR Code #${qrCode.id}"
-                        data-description="${qrCode.description}">
-                    <i class="fas fa-times"></i>
-                </button>
+                <div class="form-floating">
+                    <textarea class="form-control" name="qr_notes[${qrCode.id}]" id="qr-notes-${qrCode.id}" style="height: 80px" placeholder="Anotações sobre este QR Code">${qrCode.notes || ''}</textarea>
+                    <label for="qr-notes-${qrCode.id}">Anotações</label>
+                </div>
             </li>
         `;
     }
+
+    // Filtrar QR Codes
+    $('#qrcode-search').on('input', function() {
+        const searchTerm = $(this).val().toLowerCase();
+
+        // Redefinir o select
+        const select = $('#qrcode-select');
+        select.empty();
+        select.append('<option value="">Selecione um QR Code disponível</option>');
+
+        // Filtrar e adicionar opções baseadas na busca
+        qrCodeData.allQrCodes.forEach(qrCode => {
+            // Verifica se o QR Code já está vinculado ao estabelecimento
+            const isLinked = $('#linked-qrcodes-list').find(`input[value="${qrCode.id}"]`).length > 0;
+
+            // Se não estiver vinculado e corresponder ao termo de busca
+            if (!isLinked && qrCode.title.toLowerCase().includes(searchTerm)) {
+                const option = new Option(qrCode.title, qrCode.id);
+                $(option).data({
+                    title: qrCode.title,
+                    description: qrCode.description
+                });
+                select.append(option);
+            }
+        });
+    });
 
     // Adicionar QR Code
     $('#add-qrcode-btn').on('click', function() {
@@ -45,7 +77,8 @@ $(document).ready(function() {
         const qrCode = {
             id: qrCodeId,
             title: `QR Code #${qrCodeId}`,
-            description: selectedOption.data('description')
+            description: selectedOption.data('description'),
+            notes: ''
         };
 
         // Adiciona o QR Code à lista

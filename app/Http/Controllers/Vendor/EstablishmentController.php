@@ -116,20 +116,30 @@ class EstablishmentController extends BaseController
             'ativo' => 'boolean',
             'category_id' => 'required|exists:categories,id',
             'qr_codes' => 'nullable|array',
-            'qr_codes.*' => 'exists:qr_codes,id'
+            'qr_codes.*' => 'exists:qr_codes,id',
+            'qr_notes' => 'nullable|array',
+            'qr_notes.*' => 'nullable|string|max:500',
         ]);
 
         $qrCodes = $request->input('qr_codes', []);
+        $qrNotes = $request->input('qr_notes', []);
 
-        // Remove qr_codes do array de dados validados antes de criar o estabelecimento
-        unset($validated['qr_codes']);
+        // Remove qr_codes e qr_notes do array de dados validados antes de criar o estabelecimento
+        unset($validated['qr_codes'], $validated['qr_notes']);
 
         $validated['vendor_id'] = Auth::guard('vendor')->id();
         $establishment = Establishment::create($validated);
 
-        // Vincula os QR codes selecionados ao estabelecimento
+        // Vincula os QR codes selecionados ao estabelecimento com suas anotações
         if (!empty($qrCodes)) {
-            $establishment->qrCodes()->attach($qrCodes);
+            $syncData = [];
+            foreach ($qrCodes as $qrCodeId) {
+                $syncData[$qrCodeId] = [
+                    'notes' => $qrNotes[$qrCodeId] ?? null
+                ];
+            }
+
+            $establishment->qrCodes()->sync($syncData);
         }
 
         // Cria o registro de onboarding para o estabelecimento
@@ -181,18 +191,32 @@ class EstablishmentController extends BaseController
             'ativo' => 'boolean',
             'category_id' => 'required|exists:categories,id',
             'qr_codes' => 'nullable|array',
-            'qr_codes.*' => 'exists:qr_codes,id'
+            'qr_codes.*' => 'exists:qr_codes,id',
+            'qr_notes' => 'nullable|array',
+            'qr_notes.*' => 'nullable|string|max:500',
         ]);
 
         $qrCodes = $request->input('qr_codes', []);
+        $qrNotes = $request->input('qr_notes', []);
 
-        // Remove qr_codes do array de dados validados antes de atualizar o estabelecimento
-        unset($validated['qr_codes']);
+        // Remove qr_codes e qr_notes do array de dados validados antes de atualizar o estabelecimento
+        unset($validated['qr_codes'], $validated['qr_notes']);
 
         $establishment->update($validated);
 
-        // Sincroniza os QR codes selecionados com o estabelecimento
-        $establishment->qrCodes()->sync($qrCodes);
+        // Sincroniza os QR codes selecionados com o estabelecimento e suas anotações
+        if (!empty($qrCodes)) {
+            $syncData = [];
+            foreach ($qrCodes as $qrCodeId) {
+                $syncData[$qrCodeId] = [
+                    'notes' => $qrNotes[$qrCodeId] ?? null
+                ];
+            }
+
+            $establishment->qrCodes()->sync($syncData);
+        } else {
+            $establishment->qrCodes()->detach();
+        }
 
         return redirect()->route('vendor.establishments.index')
             ->with('success', 'Estabelecimento atualizado com sucesso!');

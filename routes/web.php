@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Vendor\VendorAuthController;
 // use App\Http\Controllers\EstablishmentController; // Comentado pois o de Vendor foi criado
 use App\Http\Controllers\Vendor\EstablishmentController as VendorEstablishmentController;
-use App\Http\Controllers\Admin\EstablishmentController as AdminAreaEstablishmentController; // Controller correto para Admin Establishments
+use App\Http\Controllers\Admin\EstablishmentController;
 use App\Http\Controllers\Admin\QrCodeController;
 use App\Http\Controllers\Admin\QrCodePdfController;
 use App\Http\Controllers\QrCodeRedirectController;
@@ -109,7 +109,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
 
         // Establishment Management Routes
-        Route::resource('establishments', AdminAreaEstablishmentController::class);
+        Route::resource('establishments', EstablishmentController::class);
 
         // Rotas para Upload de Documento do Estabelecimento (Admin)
         Route::get('establishments/{establishment}/documents/upload', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'showUploadForm'])
