@@ -42,7 +42,7 @@ class AdminEstablishmentController extends Controller
         $orderDir = $request->order_dir ?? 'asc';
         $query->orderBy($orderBy, $orderDir);
 
-        $establishments = $query->paginate(10);
+        $establishments = $query->paginate(config('project.per_page'));
         $vendors = Vendor::where('ativo', true)->orderBy('nome')->get();
 
         return view('admin.establishments.index', compact('establishments', 'vendors'));
@@ -97,7 +97,7 @@ class AdminEstablishmentController extends Controller
             ->orWhereHas('establishments', function($query) use ($establishment) {
                 $query->where('establishments.id', $establishment->id);
             })
-            ->paginate(20); // Paginação com 20 itens por página
+            ->paginate(config('project.per_page')); // Paginação com 20 itens por página
 
         return view('admin.establishments.edit', compact('establishment', 'vendors', 'qrCodes'));
     }

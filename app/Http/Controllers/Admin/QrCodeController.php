@@ -43,7 +43,7 @@ class QrCodeController extends Controller
         $query->orderBy($orderBy, $orderDir);
 
         // Aumentando para 25 itens por página para melhor visualização
-        $qrCodes = $query->paginate(25)->withQueryString();
+        $qrCodes = $query->paginate(config('project.per_page'))->withQueryString();
         return view('admin.qr_codes.index', compact('qrCodes'));
     }
 

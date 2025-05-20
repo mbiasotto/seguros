@@ -46,7 +46,7 @@ class DocumentApprovalController extends Controller
         }
 
         $allDocuments = $query->orderBy('completed_at', 'desc')
-            ->paginate(10)
+            ->paginate(config('project.per_page'))
             ->withQueryString();
 
         return view('admin.documents.index', compact('allDocuments'));
@@ -62,7 +62,7 @@ class DocumentApprovalController extends Controller
             ->whereNull('document_approved_at')
             ->with('establishment.vendor')
             ->orderBy('completed_at', 'asc')
-            ->paginate(10);
+            ->paginate(config('project.per_page'));
 
         return view('admin.documents.pending', compact('pendingDocuments'));
     }
@@ -77,7 +77,7 @@ class DocumentApprovalController extends Controller
             ->whereNotNull('document_path')
             ->with(['establishment.vendor', 'approvedByUser'])
             ->orderByDesc('document_approved_at')
-            ->paginate(10);
+            ->paginate(config('project.per_page'));
 
         return view('admin.documents.approved', compact('approvedDocuments'));
     }
@@ -92,7 +92,7 @@ class DocumentApprovalController extends Controller
             ->whereNotNull('document_path')
             ->with(['establishment.vendor', 'approvedByUser'])
             ->orderByDesc('document_approved_at')
-            ->paginate(10);
+            ->paginate(config('project.per_page'));
 
         return view('admin.documents.rejected', compact('rejectedDocuments'));
     }

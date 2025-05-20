@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Vendor;
 use App\Services\Email\EmailServiceInterface;
@@ -79,7 +79,7 @@ class VendorController extends BaseController
         $orderDir = $request->order_dir ?? 'asc';
         $query->orderBy($orderBy, $orderDir);
 
-        $vendors = $query->paginate(10);
+        $vendors = $query->paginate(config('project.per_page'));
 
         // Buscar estados únicos para o filtro
         $estados = Vendor::select('estado')->distinct()->whereNotNull('estado')->pluck('estado');
@@ -161,7 +161,7 @@ class VendorController extends BaseController
      */
     public function accessLogs(Vendor $vendor)
     {
-        $accessLogs = $vendor->accessLogs()->orderBy('created_at', 'desc')->paginate(15);
+        $accessLogs = $vendor->accessLogs()->orderBy('created_at', 'desc')->paginate(config('project.per_page'));
         return view('admin.vendors.access-logs', compact('vendor', 'accessLogs'));
     }
 }

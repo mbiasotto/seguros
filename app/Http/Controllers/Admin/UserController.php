@@ -32,7 +32,7 @@ class UserController extends Controller
         $orderBy = $request->order_by ?? 'name';
         $query->orderBy($orderBy, 'asc');
 
-        $users = $query->paginate(10);
+        $users = $query->paginate(config('project.per_page'));
 
         return view('admin.users.index', compact('users'));
     }
@@ -166,7 +166,7 @@ class UserController extends Controller
      */
     public function accessLogs(User $user)
     {
-        $accessLogs = $user->accessLogs()->orderBy('created_at', 'desc')->paginate(15);
+        $accessLogs = $user->accessLogs()->orderBy('created_at', 'desc')->paginate(config('project.per_page'));
         return view('admin.users.access-logs', compact('user', 'accessLogs'));
     }
 }

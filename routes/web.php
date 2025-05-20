@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\VendorController;
-use App\Http\Controllers\VendorAuthController;
+use App\Http\Controllers\Admin\VendorController;
+use App\Http\Controllers\Vendor\VendorAuthController;
 // use App\Http\Controllers\EstablishmentController; // Comentado pois o de Vendor foi criado
 use App\Http\Controllers\Vendor\EstablishmentController as VendorEstablishmentController;
 use App\Http\Controllers\Admin\EstablishmentController as AdminAreaEstablishmentController; // Controller correto para Admin Establishments

@@ -2,244 +2,243 @@
 
 namespace App\Http\Controllers\Vendor;
 
-use App\Http\Controllers\Controller;
+use App\Mail\EstablishmentWelcome;
 use App\Models\Category;
 use App\Models\Establishment;
+use App\Models\EstablishmentOnboarding;
 use App\Models\QrCode;
+use App\Services\Email\EmailServiceInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Routing\Controller as BaseController;
 
-class EstablishmentController extends Controller
+class EstablishmentController extends BaseController
 {
+    use AuthorizesRequests, ValidatesRequests;
+
+    /**
+     * Serviço de e-mail
+     */
+    private EmailServiceInterface $emailService;
+
+    public function __construct(EmailServiceInterface $emailService)
+    {
+        $this->middleware('auth:vendor');
+        $this->emailService = $emailService;
+    }
+
     public function index(Request $request)
     {
-        $vendor = Auth::guard('vendor')->user();
-        $query = Establishment::where('vendor_id', $vendor->id)->with(['category']);
+        $query = Auth::guard('vendor')->user()->establishments();
 
-        // Filtros
-        if ($request->filled('search')) {
+        // Filtro por status (ativo/inativo)
+        if ($request->has('status')) {
+            if ($request->status === 'active') {
+                $query->where('ativo', true);
+            } elseif ($request->status === 'inactive') {
+                $query->where('ativo', false);
+            }
+        }
+
+        // Busca por nome, cidade ou telefone
+        if ($request->has('search') && !empty($request->search)) {
             $search = $request->search;
             $query->where(function($q) use ($search) {
                 $q->where('nome', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%")
-                  ->orWhere('cidade', 'like', "%{$search}%");
+                  ->orWhere('cidade', 'like', "%{$search}%")
+                  ->orWhere('telefone', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
             });
         }
 
-        if ($request->filled('category_id')) {
-            $query->where('category_id', $request->category_id);
-        }
-
-        if ($request->filled('status')) {
-            $status = $request->status === 'active';
-            $query->where('ativo', $status);
+        // Filtragem por estado
+        if ($request->has('estado') && !empty($request->estado)) {
+            $query->where('estado', $request->estado);
         }
 
         // Ordenação
-        $orderBy = $request->order_by ?? 'id';
-        $orderDirection = 'asc';
+        $orderBy = $request->order_by ?? 'nome';
+        $orderDir = $request->order_dir ?? 'asc';
+        $query->orderBy($orderBy, $orderDir);
 
-        if ($orderBy === 'created_at') {
-            $orderDirection = 'desc';
-        }
+        $establishments = $query->paginate(config('project.per_page'));
 
-        $query->orderBy($orderBy, $orderDirection);
+        // Buscar estados únicos para o filtro
+        $estados = Auth::guard('vendor')->user()->establishments()
+            ->select('estado')
+            ->distinct()
+            ->whereNotNull('estado')
+            ->pluck('estado');
 
-        $establishments = $query->paginate(10)->withQueryString();
+        // Buscar categorias
         $categories = Category::orderBy('nome')->get();
 
-        // TODO: Create this view
-        return view('vendor.establishments.index', compact('establishments', 'categories'));
+        return view('vendor.establishments.index', compact('establishments', 'estados', 'categories'));
     }
 
     public function create()
     {
+        // Busca todos os QR codes ativos que não estão vinculados a nenhum estabelecimento
+        // ou que estão vinculados a estabelecimentos deste vendor
+        $vendorId = Auth::guard('vendor')->id();
+
+        $qrCodes = QrCode::where('active', true)
+            ->where(function($query) use ($vendorId) {
+                $query->whereDoesntHave('establishments')
+                    ->orWhereHas('establishments', function($q) use ($vendorId) {
+                        $q->where('vendor_id', $vendorId);
+                    });
+            })
+            ->get();
+
+        // Buscar categorias
         $categories = Category::orderBy('nome')->get();
-        $qrCodes = QrCode::orderBy('id')->get(); // Assuming vendors can assign QR codes too
-        // TODO: Create this view
-        return view('vendor.establishments.create', compact('categories', 'qrCodes'));
+
+        return view('vendor.establishments.create', compact('qrCodes', 'categories'));
     }
 
     public function store(Request $request)
     {
-        $vendor = Auth::guard('vendor')->user();
         $validated = $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'nome' => 'required|string|max:255',
-            'cnpj' => 'nullable|string|max:18',
-            'endereco' => 'required|string|max:255',
-            'cep' => 'required|string|max:9',
-            'cidade' => 'required|string|max:100',
-            'estado' => 'required|string|size:2',
-            'telefone' => 'required|string|max:20',
-            'email' => 'required|email|max:255|unique:establishments,email',
+            'nome' => 'required|max:255',
+            'endereco' => 'required|max:255',
+            'numero' => 'nullable|string|max:20',
+            'cidade' => 'required|max:255',
+            'estado' => 'required|size:2',
+            'cep' => 'required|max:9',
+            'telefone' => 'required',
+            'email' => 'required|email|max:255',
+            'descricao' => 'nullable',
             'ativo' => 'boolean',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:15360',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:15360',
-            'qr_codes' => 'array',
+            'category_id' => 'required|exists:categories,id',
+            'qr_codes' => 'nullable|array',
             'qr_codes.*' => 'exists:qr_codes,id'
         ]);
 
-        if (isset($validated['cnpj'])) {
-            $validated['cnpj'] = preg_replace('/[^0-9]/', '', $validated['cnpj']);
-        }
+        $qrCodes = $request->input('qr_codes', []);
 
-        $validated['ativo'] = $request->has('ativo');
-        $validated['vendor_id'] = $vendor->id; // Assign current vendor
+        // Remove qr_codes do array de dados validados antes de criar o estabelecimento
+        unset($validated['qr_codes']);
 
-        $fileData = [];
-        if ($request->hasFile('logo')) {
-            $fileData['logo'] = $request->file('logo');
-            unset($validated['logo']);
-        }
-        if ($request->hasFile('image')) {
-            $fileData['image'] = $request->file('image');
-            unset($validated['image']);
-        }
-
+        $validated['vendor_id'] = Auth::guard('vendor')->id();
         $establishment = Establishment::create($validated);
 
-        if (isset($fileData['logo'])) {
-            $filename = "{$establishment->id}_" . now()->format('YmdHis') . '.' . $fileData['logo']->getClientOriginalExtension();
-            $path = $fileData['logo']->storeAs(
-                'establishments/logos',
-                $filename,
-                'public'
-            );
-            $establishment->logo = $path;
+        // Vincula os QR codes selecionados ao estabelecimento
+        if (!empty($qrCodes)) {
+            $establishment->qrCodes()->attach($qrCodes);
         }
 
-        if (isset($fileData['image'])) {
-            $filename = "{$establishment->id}_" . now()->format('YmdHis') . '.' . $fileData['image']->getClientOriginalExtension();
-            $path = $fileData['image']->storeAs(
-                'establishments/images',
-                $filename,
-                'public'
-            );
-            $establishment->image = $path;
-        }
+        // Cria o registro de onboarding para o estabelecimento
+        $this->createOnboardingAndSendEmail($establishment);
 
-        if (!empty($fileData)) {
-            $establishment->save();
-        }
-
-        if ($request->has('qr_codes')) {
-            $establishment->qrCodes()->sync($request->qr_codes);
-        }
-
-        return redirect()->route('vendor.establishments.index') // TODO: Define this route
-            ->with('success', 'Estabelecimento criado com sucesso!');
+        return redirect()->route('vendor.establishments.index')
+            ->with('success', 'Estabelecimento cadastrado com sucesso! Um e-mail de boas-vindas foi enviado.');
     }
 
     public function edit(Establishment $establishment)
     {
-        $vendor = Auth::guard('vendor')->user();
-        // Ensure the establishment belongs to the authenticated vendor
-        if ($establishment->vendor_id !== $vendor->id) {
-            abort(403, 'Acesso não autorizado.');
-        }
+        // Verifica se o usuário atual tem permissão para editar este estabelecimento
+        $this->authorize('update', $establishment);
 
+        // Busca todos os QR codes ativos ou que já estejam vinculados a este estabelecimento
+        // Implementando paginação para lidar com grande quantidade de QR codes
+        $vendorId = Auth::guard('vendor')->id();
+
+        $qrCodes = QrCode::where('active', true)
+            ->where(function($query) use ($establishment, $vendorId) {
+                $query->whereDoesntHave('establishments')
+                    ->orWhereHas('establishments', function($q) use ($establishment, $vendorId) {
+                        $q->where('establishments.id', $establishment->id)
+                          ->orWhere('vendor_id', $vendorId);
+                    });
+            })
+            ->paginate(config('project.per_page')); // Paginação com 20 itens por página
+
+        // Buscar categorias
         $categories = Category::orderBy('nome')->get();
-        $qrCodes = QrCode::orderBy('id')->get();
-        // TODO: Create this view
-        return view('vendor.establishments.edit', compact('establishment', 'categories', 'qrCodes'));
+
+        return view('vendor.establishments.edit', compact('establishment', 'qrCodes', 'categories'));
     }
 
     public function update(Request $request, Establishment $establishment)
     {
-        $vendor = Auth::guard('vendor')->user();
-        // Ensure the establishment belongs to the authenticated vendor
-        if ($establishment->vendor_id !== $vendor->id) {
-            abort(403, 'Acesso não autorizado.');
-        }
+        $this->authorize('update', $establishment);
 
         $validated = $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'nome' => 'required|string|max:255',
-            'cnpj' => 'nullable|string|max:18',
-            'endereco' => 'required|string|max:255',
-            'cep' => 'required|string|max:9',
-            'cidade' => 'required|string|max:100',
-            'estado' => 'required|string|size:2',
-            'telefone' => 'required|string|max:20',
-            'email' => 'required|email|max:255|unique:establishments,email,' . $establishment->id,
+            'nome' => 'required|max:255',
+            'endereco' => 'required|max:255',
+            'numero' => 'nullable|string|max:20',
+            'cidade' => 'required|max:255',
+            'estado' => 'required|size:2',
+            'cep' => 'required|max:9',
+            'telefone' => 'required',
+            'email' => 'required|email|max:255',
+            'descricao' => 'nullable',
             'ativo' => 'boolean',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:15360',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:15360',
-            'qr_codes' => 'array',
+            'category_id' => 'required|exists:categories,id',
+            'qr_codes' => 'nullable|array',
             'qr_codes.*' => 'exists:qr_codes,id'
         ]);
 
-        if (isset($validated['cnpj'])) {
-            $validated['cnpj'] = preg_replace('/[^0-9]/', '', $validated['cnpj']);
-        } else {
-            $validated['cnpj'] = null;
-        }
+        $qrCodes = $request->input('qr_codes', []);
 
-        $validated['ativo'] = $request->has('ativo');
-        // vendor_id does not change on update
-
-        if ($request->hasFile('logo')) {
-            if ($establishment->logo) {
-                Storage::disk('public')->delete($establishment->logo);
-            }
-            $filename = "{$establishment->id}_" . now()->format('YmdHis') . '.' . $request->file('logo')->getClientOriginalExtension();
-            $path = $request->file('logo')->storeAs(
-                'establishments/logos',
-                $filename,
-                'public'
-            );
-            $validated['logo'] = $path;
-        } else {
-            unset($validated['logo']); // Ensure logo is not nulled if not provided and no new file uploaded
-        }
-
-        if ($request->hasFile('image')) {
-            if ($establishment->image) {
-                Storage::disk('public')->delete($establishment->image);
-            }
-            $filename = "{$establishment->id}_" . now()->format('YmdHis') . '.' . $request->file('image')->getClientOriginalExtension();
-            $path = $request->file('image')->storeAs(
-                'establishments/images',
-                $filename,
-                'public'
-            );
-            $validated['image'] = $path;
-        } else {
-            unset($validated['image']); // Ensure image is not nulled if not provided
-        }
+        // Remove qr_codes do array de dados validados antes de atualizar o estabelecimento
+        unset($validated['qr_codes']);
 
         $establishment->update($validated);
 
-        if ($request->has('qr_codes')) {
-            $establishment->qrCodes()->sync($request->qr_codes);
-        } else {
-            $establishment->qrCodes()->detach();
-        }
+        // Sincroniza os QR codes selecionados com o estabelecimento
+        $establishment->qrCodes()->sync($qrCodes);
 
-        return redirect()->route('vendor.establishments.index') // TODO: Define this route
+        return redirect()->route('vendor.establishments.index')
             ->with('success', 'Estabelecimento atualizado com sucesso!');
     }
 
     public function destroy(Establishment $establishment)
     {
-        $vendor = Auth::guard('vendor')->user();
-        // Ensure the establishment belongs to the authenticated vendor
-        if ($establishment->vendor_id !== $vendor->id) {
-            abort(403, 'Acesso não autorizado.');
-        }
-
-        if ($establishment->logo) {
-            Storage::disk('public')->delete($establishment->logo);
-        }
-        if ($establishment->image) {
-            Storage::disk('public')->delete($establishment->image);
-        }
-        $establishment->qrCodes()->detach();
+        $this->authorize('delete', $establishment);
         $establishment->delete();
+        return redirect()->route('vendor.establishments.index')
+            ->with('success', 'Estabelecimento removido com sucesso!');
+    }
 
-        return redirect()->route('vendor.establishments.index') // TODO: Define this route
-            ->with('success', 'Estabelecimento excluído com sucesso!');
+    public function show(Establishment $establishment)
+    {
+        $this->authorize('view', $establishment);
+        return view('vendor.establishments.show', compact('establishment'));
+    }
+
+    /**
+     * Cria o registro de onboarding e envia o e-mail de boas-vindas para o estabelecimento
+     */
+    private function createOnboardingAndSendEmail(Establishment $establishment): void
+    {
+        try {
+            // Cria o registro de onboarding
+            $onboarding = EstablishmentOnboarding::create([
+                'establishment_id' => $establishment->id,
+                'token' => EstablishmentOnboarding::generateUniqueToken(),
+                'expires_at' => now()->addDays(7) // Token válido por 7 dias
+            ]);
+
+            // Envia o e-mail de boas-vindas
+            if ($establishment->email) {
+                // Usando o serviço de e-mail
+                $this->emailService->sendTemplate(
+                    $establishment->email,
+                    $establishment->nome,
+                    'Bem-vindo ao SeguraEssa.app - Complete seu cadastro',
+                    'emails.establishment-welcome',
+                    ['establishment' => $establishment, 'onboarding' => $onboarding]
+                );
+            }
+        } catch (\Exception $e) {
+            // Registra o erro, mas não interrompe o fluxo
+            // Não vamos registrar o log aqui para evitar erros
+        }
     }
 }

@@ -41,7 +41,7 @@ class EstablishmentDocumentController extends BaseController
         ->whereNotNull('document_path') // Garante que há um path
         ->with(['establishment', 'approvedByUser'])
         ->orderByDesc('completed_at')
-        ->paginate(10);
+        ->paginate(config('project.per_page'));
 
         return view('vendor.establishments.documents.index', compact('documents'));
     }
@@ -101,7 +101,7 @@ class EstablishmentDocumentController extends BaseController
         ->whereNull('document_approved_at')
         ->with('establishment')
         ->orderBy('completed_at')
-        ->paginate(10);
+        ->paginate(config('project.per_page'));
 
         return view('vendor.establishments.documents.pending', compact('pendingDocuments'));
     }
@@ -121,7 +121,7 @@ class EstablishmentDocumentController extends BaseController
         ->whereNotNull('document_approved_at')
         ->with(['establishment', 'approvedByUser'])
         ->orderByDesc('document_approved_at')
-        ->paginate(10);
+        ->paginate(config('project.per_page'));
 
         return view('vendor.establishments.documents.approved', compact('approvedDocuments'));
     }
@@ -141,7 +141,7 @@ class EstablishmentDocumentController extends BaseController
         ->whereNotNull('document_approved_at')
         ->with(['establishment', 'approvedByUser'])
         ->orderByDesc('document_approved_at')
-        ->paginate(10);
+        ->paginate(config('project.per_page'));
 
         return view('vendor.establishments.documents.rejected', compact('rejectedDocuments'));
     }

@@ -32,7 +32,7 @@ class CategoryController extends Controller
 
         $query->orderBy($orderBy, $orderDirection);
 
-        $categories = $query->paginate(15)->withQueryString();
+        $categories = $query->paginate(config('project.per_page'))->withQueryString();
 
         return view('admin.categories.index', compact('categories'));
     }

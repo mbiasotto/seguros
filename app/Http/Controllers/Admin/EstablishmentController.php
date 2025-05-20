@@ -49,7 +49,7 @@ class EstablishmentController extends Controller
 
         $query->orderBy($orderBy, $orderDirection);
 
-        $establishments = $query->paginate(10)->withQueryString();
+        $establishments = $query->paginate(config('project.per_page'))->withQueryString();
         $vendors = Vendor::orderBy('nome')->get();
         $categories = \App\Models\Category::orderBy('nome')->get();
 
