@@ -76,14 +76,12 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="{{ route('admin.users.edit', $user) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Editar">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </a>
-
                                     <a href="{{ route('admin.users.access-logs', $user) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Histórico de Acesso">
                                         <i class="fas fa-history"></i>
                                     </a>
-
+                                    <a href="{{ route('admin.users.edit', $user) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Editar">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
                                     @if($user->id !== 1 && (Auth::id() === 1 || Auth::id() !== $user->id) && \App\Models\User::count() > 1)
                                         <button
                                             type="button"
@@ -108,9 +106,8 @@
         </div>
     </div>
 
-    <div class="mt-4">
-        {{ $users->links() }}
-    </div>
+    <x-pagination :paginator="$users" />
+
 @endif
 @endsection
 

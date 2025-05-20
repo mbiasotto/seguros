@@ -24,6 +24,9 @@
     <!-- CSS Admin Principal -->
     <link rel="stylesheet" href="{{ asset('assets/admin/admin.css') }}">
 
+    <!-- CSS de componentes -->
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/components/pagination.css') }}">
+
     <!-- Estilos específicos -->
     @stack('styles')
 </head>

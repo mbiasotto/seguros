@@ -121,11 +121,8 @@
         </div>
     </div>
 
-    @if(isset($establishments->links))
-    <div class="mt-4">
-        {{ $establishments->links() }}
-    </div>
-    @endif
+    <x-pagination :paginator="$establishments" />
+
 @endif
 @endsection
 

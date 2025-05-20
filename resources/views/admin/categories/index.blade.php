@@ -117,8 +117,7 @@
         </div>
     </div>
 
-    <div class="mt-4">
-        {{ $categories->links() }}
-    </div>
+     <x-pagination :paginator="$categories" />
+
 @endif
 @endsection

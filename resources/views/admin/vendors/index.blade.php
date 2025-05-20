@@ -103,11 +103,11 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="{{ route('admin.vendors.edit', $vendor) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Editar">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </a>
                                     <a href="{{ route('admin.vendors.access-logs', $vendor) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Histórico de Acessos">
                                         <i class="fas fa-history"></i>
+                                    </a>
+                                    <a href="{{ route('admin.vendors.edit', $vendor) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Editar">
+                                        <i class="fas fa-pencil-alt"></i>
                                     </a>
                                     <button
                                         type="button"
@@ -131,14 +131,8 @@
         </div>
     </div>
 
-    @if($vendors instanceof \Illuminate\Pagination\LengthAwarePaginator)
-    <div class="mt-4 d-flex justify-content-between align-items-center">
-        <div class="pagination-info">
-            Mostrando {{ $vendors->firstItem() ?? 0 }} a {{ $vendors->lastItem() ?? 0 }} de {{ $vendors->total() }} resultados
-        </div>
-        {{ $vendors->links() }}
-    </div>
-    @endif
+    <x-pagination :paginator="$vendors" />
+
 @endif
 @endsection
 

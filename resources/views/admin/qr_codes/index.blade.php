@@ -133,6 +133,9 @@
                                 @endif
                             </td>
                             <td>
+                                {{ $qrCode->accessLogs->count() }}
+                            </td>
+                            <td>
                                 <div class="action-buttons">
                                     <a href="{{ route('admin.qr-codes.show', $qrCode) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Visualizar">
                                         <i class="fas fa-eye"></i>
@@ -165,9 +168,8 @@
         </div>
     </div>
 
-    <div class="mt-4">
-        {{ $qrCodes->links() }}
-    </div>
+    <x-pagination :paginator="$qrCodes" />
+
 @endif
 @endsection
 
