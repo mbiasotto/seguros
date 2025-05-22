@@ -60,17 +60,44 @@
                         <h2 class="font-semibold text-lg border-bottom pb-2 mb-4">Informações Principais</h2>
 
                         <div class="row mb-4">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="tipo_documento" class="form-label">Tipo de Pessoa <span class="text-danger">*</span></label>
+                                    <div class="d-flex mt-2">
+                                        <div class="form-check me-4">
+                                            <input class="form-check-input" type="radio" name="tipo_documento" id="tipo_pj" value="pj" {{ old('tipo_documento', $establishment->tipo_documento ?? 'pj') == 'pj' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="tipo_pj">
+                                                Pessoa Jurídica
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="tipo_documento" id="tipo_pf" value="pf" {{ old('tipo_documento', $establishment->tipo_documento ?? 'pj') == 'pf' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="tipo_pf">
+                                                Pessoa Física
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="nome" class="form-label">Nome do Estabelecimento <span class="text-danger">*</span></label>
+                                    <label for="nome" class="form-label">Nome <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg" id="nome" name="nome" value="{{ old('nome', $establishment->nome) }}" required>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                            <div class="col-md-6 documento-pj" {{ old('tipo_documento', $establishment->tipo_documento ?? 'pj') == 'pf' ? 'style=display:none' : '' }}>
                                 <div class="mb-3">
-                                    <label for="cnpj" class="form-label">CNPJ</label>
-                                    <input type="text" class="form-control form-control-lg cnpj-mask" id="cnpj" name="cnpj" value="{{ old('cnpj', $establishment->cnpj) }}" placeholder="00.000.000/0000-00">
-                                    <div class="form-text text-sm">Opcional</div>
+                                    <label for="cnpj" class="form-label">CNPJ <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control form-control-lg cnpj-mask" id="cnpj" name="cnpj" value="{{ old('cnpj', $establishment->cnpj) }}" placeholder="00.000.000/0000-00" {{ old('tipo_documento', $establishment->tipo_documento ?? 'pj') == 'pj' ? 'required' : '' }}>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 documento-pf" {{ old('tipo_documento', $establishment->tipo_documento ?? 'pj') == 'pj' ? 'style=display:none' : '' }}>
+                                <div class="mb-3">
+                                    <label for="cpf" class="form-label">CPF <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control form-control-lg cpf-mask" id="cpf" name="cpf" value="{{ old('cpf', $establishment->cpf) }}" placeholder="000.000.000-00" {{ old('tipo_documento', $establishment->tipo_documento ?? 'pj') == 'pf' ? 'required' : '' }}>
                                 </div>
                             </div>
 
@@ -193,6 +220,40 @@
 <script src="{{ asset('assets/js/utils/input-masks.js') }}"></script>
 <script src="{{ asset('assets/js/utils/cep-lookup.js') }}"></script>
 <script src="{{ asset('assets/js/components/qr-code-manager.js') }}"></script>
+
+<script>
+    // Código para alternar entre CNPJ e CPF
+    document.addEventListener('DOMContentLoaded', function() {
+        const tipoPjRadio = document.getElementById('tipo_pj');
+        const tipoPfRadio = document.getElementById('tipo_pf');
+        const documentoPj = document.querySelector('.documento-pj');
+        const documentoPf = document.querySelector('.documento-pf');
+        const cnpjInput = document.getElementById('cnpj');
+        const cpfInput = document.getElementById('cpf');
+
+        // Função para alternar a visibilidade dos campos
+        function toggleDocumentoFields() {
+            if (tipoPjRadio.checked) {
+                documentoPj.style.display = 'block';
+                documentoPf.style.display = 'none';
+                cnpjInput.required = true;
+                cpfInput.required = false;
+            } else {
+                documentoPj.style.display = 'none';
+                documentoPf.style.display = 'block';
+                cnpjInput.required = false;
+                cpfInput.required = true;
+            }
+        }
+
+        // Adiciona listeners para os radios
+        tipoPjRadio.addEventListener('change', toggleDocumentoFields);
+        tipoPfRadio.addEventListener('change', toggleDocumentoFields);
+
+        // Inicializa
+        toggleDocumentoFields();
+    });
+</script>
 @endpush
 
 @endsection

@@ -18,13 +18,21 @@
             <label for="search" class="form-label">Buscar</label>
             <input type="text" class="form-control" id="search" name="search" placeholder="Nome, email ou cidade..." value="{{ request('search') }}">
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label for="category_id" class="form-label">Categoria</label>
             <select class="form-select" id="category_id" name="category_id">
                 <option value="">Todas as categorias</option>
                 @foreach($categories as $category)
                     <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>{{ $category->nome }}</option>
                 @endforeach
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label for="tipo_documento" class="form-label">Tipo de Pessoa</label>
+            <select class="form-select" id="tipo_documento" name="tipo_documento">
+                <option value="">Todos</option>
+                <option value="pj" {{ request('tipo_documento') == 'pj' ? 'selected' : '' }}>Pessoa Jurídica</option>
+                <option value="pf" {{ request('tipo_documento') == 'pf' ? 'selected' : '' }}>Pessoa Física</option>
             </select>
         </div>
         <div class="col-md-2">
@@ -44,7 +52,7 @@
                 <option value="created_at" {{ request('order_by') == 'created_at' ? 'selected' : '' }}>Data de cadastro</option>
             </select>
         </div>
-        <div class="col-md-2 d-flex align-items-end">
+        <div class="col-md-1 d-flex align-items-end">
             <button type="submit" class="btn btn-primary w-100">Filtrar</button>
         </div>
     </form>
@@ -74,6 +82,7 @@
                     <tr>
                         <th>NOME</th>
                         <th>CATEGORIA</th>
+                        <th>Tipo</th>
                         <th>Cidade/Estado</th>
                         <th>Data</th>
                         <th>Status</th>
@@ -85,6 +94,13 @@
                         <tr>
                             <td class="fw-medium">{{ $establishment->nome }}</td>
                             <td>{{ $establishment->category->nome ?? 'Sem categoria' }}</td>
+                            <td>
+                                @if($establishment->tipo_documento == 'pf')
+                                    <span class="badge bg-info">Pessoa Física</span>
+                                @else
+                                    <span class="badge bg-secondary">Pessoa Jurídica</span>
+                                @endif
+                            </td>
                             <td>{{ $establishment->cidade }}/{{ $establishment->estado }}</td>
                             <td>{{ $establishment->created_at->format('d/m/Y') }}</td>
                             <td>
@@ -96,6 +112,16 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
+                                    @if($establishment->onboarding)
+                                    <a href="{{ route('establishment.onboarding', ['token' => $establishment->onboarding->token]) }}" target="_blank" class="btn action-btn" data-bs-toggle="tooltip" title="Link do Termo">
+                                        <i class="fas fa-file-contract"></i>
+                                    </a>
+                                    @if(!$establishment->onboarding->contract_accepted)
+                                    <a href="{{ route('vendor.establishments.resend-term-email', $establishment) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Reenviar Email do Termo">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    @endif
+                                    @endif
                                     <a href="{{ route('vendor.establishments.edit', $establishment) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>

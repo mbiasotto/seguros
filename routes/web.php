@@ -110,6 +110,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Establishment Management Routes
         Route::resource('establishments', EstablishmentController::class);
+        Route::get('establishments/{establishment}/resend-term-email', [\App\Http\Controllers\Admin\EstablishmentController::class, 'resendTermEmail'])
+            ->name('establishments.resend-term-email');
 
         // Rotas para Upload de Documento do Estabelecimento (Admin)
         Route::get('establishments/{establishment}/documents/upload', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'showUploadForm'])
@@ -177,6 +179,8 @@ Route::prefix('vendor')->name('vendor.')->group(function () {
 
         // Establishment Management Routes for Vendor
         Route::resource('establishments', VendorEstablishmentController::class);
+        Route::get('establishments/{establishment}/resend-term-email', [VendorEstablishmentController::class, 'resendTermEmail'])
+            ->name('establishments.resend-term-email');
 
         // Establishment Documents Routes
         Route::prefix('establishments/documents')->name('establishments.documents')->group(function () {

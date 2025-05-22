@@ -14,7 +14,7 @@
         <div class="col-12">
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4">
-                    <form action="{{ route('admin.establishments.update', $establishment) }}" method="POST" class="needs-validation" novalidate>
+                    <form action="{{ route('admin.establishments.update', $establishment) }}" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                         @csrf
                         @method('PUT')
 
@@ -39,7 +39,7 @@
                                     <select class="form-select form-select-lg" id="vendor_id" name="vendor_id" required>
                                         <option value="">Selecione um vendedor</option>
                                         @foreach($vendors as $vendor)
-                                            <option value="{{ $vendor->id }}" {{ old('vendor_id', $establishment->vendor_id) == $vendor->id ? 'selected' : '' }}>
+                                            <option value="{{ $vendor->id }}" {{ (old('vendor_id', $establishment->vendor_id) == $vendor->id) ? 'selected' : '' }}>
                                                 {{ $vendor->nome }}
                                             </option>
                                         @endforeach
@@ -54,7 +54,7 @@
                                     <select class="form-select form-select-lg" id="category_id" name="category_id" required>
                                         <option value="">Selecione uma categoria</option>
                                         @foreach($categories as $category)
-                                            <option value="{{ $category->id }}" {{ old('category_id', $establishment->category_id) == $category->id ? 'selected' : '' }}>
+                                            <option value="{{ $category->id }}" {{ (old('category_id', $establishment->category_id) == $category->id) ? 'selected' : '' }}>
                                                 {{ $category->nome }}
                                             </option>
                                         @endforeach
@@ -76,17 +76,44 @@
                         <h2 class="font-semibold text-lg border-bottom pb-2 mb-4">Informações Principais</h2>
 
                         <div class="row mb-4">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="tipo_documento" class="form-label">Tipo de Pessoa <span class="text-danger">*</span></label>
+                                    <div class="d-flex mt-2">
+                                        <div class="form-check me-4">
+                                            <input class="form-check-input" type="radio" name="tipo_documento" id="tipo_pj" value="pj" {{ old('tipo_documento', $establishment->tipo_documento ?? 'pj') == 'pj' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="tipo_pj">
+                                                Pessoa Jurídica
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="tipo_documento" id="tipo_pf" value="pf" {{ old('tipo_documento', $establishment->tipo_documento ?? 'pj') == 'pf' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="tipo_pf">
+                                                Pessoa Física
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="nome" class="form-label">Nome do Estabelecimento <span class="text-danger">*</span></label>
+                                    <label for="nome" class="form-label">Nome <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg" id="nome" name="nome" value="{{ old('nome', $establishment->nome) }}" required>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                            <div class="col-md-6 documento-pj" {{ old('tipo_documento', $establishment->tipo_documento ?? 'pj') == 'pf' ? 'style=display:none' : '' }}>
                                 <div class="mb-3">
-                                    <label for="cnpj" class="form-label">CNPJ</label>
-                                    <input type="text" class="form-control form-control-lg cnpj-mask" id="cnpj" name="cnpj" value="{{ old('cnpj', $establishment->cnpj) }}" placeholder="00.000.000/0000-00">
-                                    <div class="form-text text-sm">Opcional</div>
+                                    <label for="cnpj" class="form-label">CNPJ <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control form-control-lg cnpj-mask" id="cnpj" name="cnpj" value="{{ old('cnpj', $establishment->cnpj) }}" placeholder="00.000.000/0000-00" {{ old('tipo_documento', $establishment->tipo_documento ?? 'pj') == 'pj' ? 'required' : '' }}>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 documento-pf" {{ old('tipo_documento', $establishment->tipo_documento ?? 'pj') == 'pj' ? 'style=display:none' : '' }}>
+                                <div class="mb-3">
+                                    <label for="cpf" class="form-label">CPF <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control form-control-lg cpf-mask" id="cpf" name="cpf" value="{{ old('cpf', $establishment->cpf) }}" placeholder="000.000.000-00" {{ old('tipo_documento', $establishment->tipo_documento ?? 'pj') == 'pf' ? 'required' : '' }}>
                                 </div>
                             </div>
 
@@ -139,16 +166,12 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="estado" class="form-label">Estado <span class="text-danger">*</span></label>
-                                    <select class="form-select form-select-lg @error('estado') is-invalid @enderror"
-                                           id="estado" name="estado" required>
+                                    <select class="form-select form-select-lg" id="estado" name="estado" required>
                                         <option value="">Selecione o estado</option>
                                         @foreach(\App\Models\Estado::orderBy('nome')->get() as $estado)
                                             <option value="{{ $estado->sigla }}" {{ old('estado', $establishment->estado) == $estado->sigla ? 'selected' : '' }}>{{ $estado->nome }}</option>
                                         @endforeach
                                     </select>
-                                    @error('estado')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -160,30 +183,36 @@
                                 <div class="mb-3">
                                     <label for="logo" class="form-label">Logo</label>
                                     <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
-                                    <div class="form-text text-sm mb-2">Tamanho máximo do arquivo: 15MB. Envie um novo arquivo para substituir o atual.</div>
-                                    @if($establishment->logo)
-                                        <a href="{{ Storage::url($establishment->logo) }}" target="_blank" class="btn btn-sm btn-outline-info">
-                                            <i class="fas fa-eye me-1"></i> Ver Logo Atual
-                                        </a>
+                                    <div class="form-text text-sm">Tamanho máximo do arquivo: 15MB. Recomendado: Fundo transparente, formato PNG ou SVG.</div>
+                                    @if ($establishment->logo)
+                                        <div class="mt-2">
+                                            <label>Logo atual:</label>
+                                            <div class="mt-1">
+                                                <img src="{{ asset('storage/' . $establishment->logo) }}" alt="Logo atual" class="img-thumbnail" style="max-height: 100px;">
+                                            </div>
+                                        </div>
                                     @endif
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="image" class="form-label">Imagem</label>
+                                    <label for="image" class="form-label">Imagem Principal</label>
                                     <input type="file" class="form-control" id="image" name="image" accept="image/*">
-                                    <div class="form-text text-sm mb-2">Tamanho máximo do arquivo: 15MB. Envie um novo arquivo para substituir o atual.</div>
-                                     @if($establishment->image)
-                                        <a href="{{ Storage::url($establishment->image) }}" target="_blank" class="btn btn-sm btn-outline-info">
-                                            <i class="fas fa-eye me-1"></i> Ver Imagem Atual
-                                        </a>
+                                    <div class="form-text text-sm">Tamanho máximo do arquivo: 15MB. Imagem principal do estabelecimento.</div>
+                                    @if ($establishment->image)
+                                        <div class="mt-2">
+                                            <label>Imagem atual:</label>
+                                            <div class="mt-1">
+                                                <img src="{{ asset('storage/' . $establishment->image) }}" alt="Imagem atual" class="img-thumbnail" style="max-height: 100px;">
+                                            </div>
+                                        </div>
                                     @endif
                                 </div>
                             </div>
                         </div>
 
                         {{-- Substituindo a seção de QR Codes pelo componente --}}
-                        <x-qr-code-manager :qrCodes="$qrCodes" :establishment="$establishment" />
+                        <x-qr-code-manager :qrCodes="$qrCodes" :selectedQrCodes="$establishment->qrCodes" />
 
                         <div class="d-flex justify-content-end mt-4">
                             <a href="{{ route('admin.establishments.index') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center me-2">
@@ -208,6 +237,40 @@
 <script src="{{ asset('assets/js/utils/input-masks.js') }}"></script>
 <script src="{{ asset('assets/js/utils/cep-lookup.js') }}"></script>
 <script src="{{ asset('assets/js/components/qr-code-manager.js') }}"></script>
+
+<script>
+    // Código para alternar entre CNPJ e CPF
+    document.addEventListener('DOMContentLoaded', function() {
+        const tipoPjRadio = document.getElementById('tipo_pj');
+        const tipoPfRadio = document.getElementById('tipo_pf');
+        const documentoPj = document.querySelector('.documento-pj');
+        const documentoPf = document.querySelector('.documento-pf');
+        const cnpjInput = document.getElementById('cnpj');
+        const cpfInput = document.getElementById('cpf');
+
+        // Função para alternar a visibilidade dos campos
+        function toggleDocumentoFields() {
+            if (tipoPjRadio.checked) {
+                documentoPj.style.display = 'block';
+                documentoPf.style.display = 'none';
+                cnpjInput.required = true;
+                cpfInput.required = false;
+            } else {
+                documentoPj.style.display = 'none';
+                documentoPf.style.display = 'block';
+                cnpjInput.required = false;
+                cpfInput.required = true;
+            }
+        }
+
+        // Adiciona listeners para os radios
+        tipoPjRadio.addEventListener('change', toggleDocumentoFields);
+        tipoPfRadio.addEventListener('change', toggleDocumentoFields);
+
+        // Inicializa
+        toggleDocumentoFields();
+    });
+</script>
 @endpush
 
 @endsection

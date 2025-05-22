@@ -32,14 +32,11 @@ class EstablishmentOnboardingController extends BaseController
 
         // Verifica se o onboarding já foi concluído
         if ($onboarding->isCompleted()) {
-            return redirect()->route('site.index')
-                ->with('info', 'Seu cadastro já foi concluído. Obrigado!');
-        }
-
-        // Verifica se o onboarding expirou
-        if ($onboarding->isExpired()) {
-            return redirect()->route('site.index')
-                ->with('error', 'Este link expirou. Entre em contato com o suporte.');
+            // Em vez de redirecionar, vamos exibir uma página informativa
+            return view('establishments.already-completed', [
+                'establishment' => $onboarding->establishment,
+                'onboarding' => $onboarding
+            ]);
         }
 
         // Retorna a view com os dados do onboarding
@@ -67,14 +64,11 @@ class EstablishmentOnboardingController extends BaseController
 
         // Verifica se o onboarding já foi concluído
         if ($onboarding->isCompleted()) {
-            return redirect()->route('site.index')
-                ->with('info', 'Seu cadastro já foi concluído. Obrigado!');
-        }
-
-        // Verifica se o onboarding expirou
-        if ($onboarding->isExpired()) {
-            return redirect()->route('site.index')
-                ->with('error', 'Este link expirou. Entre em contato com o suporte.');
+            // Em vez de redirecionar, vamos exibir a página informativa
+            return view('establishments.already-completed', [
+                'establishment' => $onboarding->establishment,
+                'onboarding' => $onboarding
+            ]);
         }
 
         // Valida os dados do formulário

@@ -37,6 +37,14 @@
             </select>
         </div>
         <div class="col-md-2">
+            <label for="tipo_documento" class="form-label">Tipo de Pessoa</label>
+            <select class="form-select" id="tipo_documento" name="tipo_documento">
+                <option value="">Todos</option>
+                <option value="pj" {{ request('tipo_documento') == 'pj' ? 'selected' : '' }}>Pessoa Jurídica</option>
+                <option value="pf" {{ request('tipo_documento') == 'pf' ? 'selected' : '' }}>Pessoa Física</option>
+            </select>
+        </div>
+        <div class="col-md-2">
             <label for="status" class="form-label">Status</label>
             <select class="form-select" id="status" name="status">
                 <option value="" {{ request('status') == '' ? 'selected' : '' }}>Todos</option>
@@ -84,6 +92,7 @@
                         <th>NOME</th>
                         <th>RESPONSÁVEL</th>
                         <th>CATEGORIA</th>
+                        <th>Tipo</th>
                         <th>Cidade/Estado</th>
                         <th>Data</th>
                         <th>Status</th>
@@ -96,6 +105,13 @@
                             <td class="fw-medium">{{ $establishment->nome }}</td>
                             <td>{{ $establishment->vendor->nome }}</td>
                             <td>{{ $establishment->category->nome ?? 'Sem categoria' }}</td>
+                            <td>
+                                @if($establishment->tipo_documento == 'pf')
+                                    <span class="badge bg-info">Pessoa Física</span>
+                                @else
+                                    <span class="badge bg-secondary">Pessoa Jurídica</span>
+                                @endif
+                            </td>
                             <td>{{ $establishment->cidade }}/{{ $establishment->estado }}</td>
                             <td>{{ $establishment->created_at->format('d/m/Y') }}</td>
                             <td>
@@ -107,6 +123,16 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
+                                    @if($establishment->onboarding)
+                                    <a href="{{ route('establishment.onboarding', ['token' => $establishment->onboarding->token]) }}" target="_blank" class="btn action-btn" data-bs-toggle="tooltip" title="Link do Termo">
+                                        <i class="fas fa-file-contract"></i>
+                                    </a>
+                                    @if(!$establishment->onboarding->contract_accepted)
+                                    <a href="{{ route('admin.establishments.resend-term-email', $establishment) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Reenviar Email do Termo">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    @endif
+                                    @endif
                                     <a href="{{ route('admin.establishments.edit', $establishment) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>

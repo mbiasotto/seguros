@@ -24,6 +24,8 @@ class Establishment extends Model
         'ativo',
         'name',
         'cnpj',
+        'cpf',
+        'tipo_documento',
         'description',
         'address',
         'logo',

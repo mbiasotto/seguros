@@ -9,6 +9,8 @@ use App\Models\Vendor;
 use App\Models\QrCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class EstablishmentController extends Controller
 {
@@ -37,6 +39,10 @@ class EstablishmentController extends Controller
         if ($request->filled('status')) {
             $status = $request->status === 'active';
             $query->where('ativo', $status);
+        }
+
+        if ($request->filled('tipo_documento')) {
+            $query->where('tipo_documento', $request->tipo_documento);
         }
 
         // Ordenação
@@ -70,7 +76,9 @@ class EstablishmentController extends Controller
             'vendor_id' => 'required|exists:vendors,id',
             'category_id' => 'required|exists:categories,id',
             'nome' => 'required|string|max:255',
-            'cnpj' => 'nullable|string|max:18',
+            'tipo_documento' => 'required|in:pj,pf',
+            'cnpj' => 'nullable|required_if:tipo_documento,pj|string|max:18',
+            'cpf' => 'nullable|required_if:tipo_documento,pf|string|max:14',
             'endereco' => 'required|string|max:255',
             'cidade' => 'required|string|max:100',
             'estado' => 'required|string|size:2',
@@ -87,6 +95,10 @@ class EstablishmentController extends Controller
 
         if (isset($validated['cnpj'])) {
             $validated['cnpj'] = preg_replace('/[^0-9]/', '', $validated['cnpj']);
+        }
+
+        if (isset($validated['cpf'])) {
+            $validated['cpf'] = preg_replace('/[^0-9]/', '', $validated['cpf']);
         }
 
         $validated['ativo'] = $request->has('ativo');
@@ -159,7 +171,9 @@ class EstablishmentController extends Controller
             'vendor_id' => 'required|exists:vendors,id',
             'category_id' => 'required|exists:categories,id',
             'nome' => 'required|string|max:255',
-            'cnpj' => 'nullable|string|max:18',
+            'tipo_documento' => 'required|in:pj,pf',
+            'cnpj' => 'nullable|required_if:tipo_documento,pj|string|max:18',
+            'cpf' => 'nullable|required_if:tipo_documento,pf|string|max:14',
             'endereco' => 'required|string|max:255',
             'cidade' => 'required|string|max:100',
             'estado' => 'required|string|size:2',
@@ -178,6 +192,12 @@ class EstablishmentController extends Controller
             $validated['cnpj'] = preg_replace('/[^0-9]/', '', $validated['cnpj']);
         } else {
             $validated['cnpj'] = null;
+        }
+
+        if (isset($validated['cpf'])) {
+            $validated['cpf'] = preg_replace('/[^0-9]/', '', $validated['cpf']);
+        } else {
+            $validated['cpf'] = null;
         }
 
         $validated['ativo'] = $request->has('ativo');
@@ -240,5 +260,43 @@ class EstablishmentController extends Controller
 
         return redirect()->route('admin.establishments.index')
             ->with('success', 'Estabelecimento excluído com sucesso!');
+    }
+
+    /**
+     * Reenvia o e-mail de boas-vindas com o link do termo para o estabelecimento
+     */
+    public function resendTermEmail(Establishment $establishment)
+    {
+        try {
+            // Verifica se já existe um onboarding para este estabelecimento
+            $onboarding = $establishment->onboarding;
+
+            // Se não existir ou o contrato já foi aceito, precisamos validar
+            if (!$onboarding) {
+                // Cria um novo onboarding, já que não existe
+                $onboarding = \App\Models\EstablishmentOnboarding::create([
+                    'establishment_id' => $establishment->id,
+                    'token' => \Illuminate\Support\Str::random(64),
+                ]);
+            } elseif ($onboarding->contract_accepted) {
+                // Se o contrato já foi aceito, informa que não é necessário reenviar
+                return redirect()->route('admin.establishments.index')
+                    ->with('info', 'Este estabelecimento já aceitou os termos do contrato. Não é necessário reenviar o e-mail.');
+            }
+
+            // Envia e-mail com o link para o formulário de onboarding
+            Mail::to($establishment->email)
+                ->send(new \App\Mail\EstablishmentWelcome($establishment, $onboarding));
+
+            return redirect()->route('admin.establishments.index')
+                ->with('success', 'E-mail de boas-vindas reenviado com sucesso para ' . $establishment->nome);
+        } catch (\Exception $e) {
+            Log::error('Erro ao reenviar e-mail de boas-vindas: ' . $e->getMessage(), [
+                'establishment_id' => $establishment->id
+            ]);
+
+            return redirect()->route('admin.establishments.index')
+                ->with('error', 'Erro ao reenviar o e-mail. Por favor, tente novamente.');
+        }
     }
 }

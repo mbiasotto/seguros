@@ -67,7 +67,6 @@
             <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Nome</th>
                         <th>Estabelecimentos</th>
                         <th>Ações</th>
@@ -76,7 +75,6 @@
                 <tbody>
                     @foreach($categories as $category)
                         <tr>
-                            <td>{{ $category->id }}</td>
                             <td>{{ $category->nome }}</td>
                             <td>{{ $category->establishments->count() }}</td>
                             <td>

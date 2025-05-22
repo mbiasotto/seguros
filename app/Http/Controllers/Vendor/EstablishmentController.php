@@ -60,6 +60,11 @@ class EstablishmentController extends BaseController
             $query->where('estado', $request->estado);
         }
 
+        // Filtragem por tipo de documento
+        if ($request->has('tipo_documento') && !empty($request->tipo_documento)) {
+            $query->where('tipo_documento', $request->tipo_documento);
+        }
+
         // Ordenação
         $orderBy = $request->order_by ?? 'nome';
         $orderDir = $request->order_dir ?? 'asc';
@@ -105,6 +110,9 @@ class EstablishmentController extends BaseController
     {
         $validated = $request->validate([
             'nome' => 'required|max:255',
+            'tipo_documento' => 'required|in:pj,pf',
+            'cnpj' => 'nullable|required_if:tipo_documento,pj|string|max:18',
+            'cpf' => 'nullable|required_if:tipo_documento,pf|string|max:14',
             'endereco' => 'required|max:255',
             'numero' => 'nullable|string|max:20',
             'cidade' => 'required|max:255',
@@ -126,6 +134,15 @@ class EstablishmentController extends BaseController
 
         // Remove qr_codes e qr_notes do array de dados validados antes de criar o estabelecimento
         unset($validated['qr_codes'], $validated['qr_notes']);
+
+        // Limpar caracteres não numéricos do CPF/CNPJ
+        if (isset($validated['cnpj'])) {
+            $validated['cnpj'] = preg_replace('/[^0-9]/', '', $validated['cnpj']);
+        }
+
+        if (isset($validated['cpf'])) {
+            $validated['cpf'] = preg_replace('/[^0-9]/', '', $validated['cpf']);
+        }
 
         $validated['vendor_id'] = Auth::guard('vendor')->id();
         $establishment = Establishment::create($validated);
@@ -180,6 +197,9 @@ class EstablishmentController extends BaseController
 
         $validated = $request->validate([
             'nome' => 'required|max:255',
+            'tipo_documento' => 'required|in:pj,pf',
+            'cnpj' => 'nullable|required_if:tipo_documento,pj|string|max:18',
+            'cpf' => 'nullable|required_if:tipo_documento,pf|string|max:14',
             'endereco' => 'required|max:255',
             'numero' => 'nullable|string|max:20',
             'cidade' => 'required|max:255',
@@ -199,12 +219,25 @@ class EstablishmentController extends BaseController
         $qrCodes = $request->input('qr_codes', []);
         $qrNotes = $request->input('qr_notes', []);
 
-        // Remove qr_codes e qr_notes do array de dados validados antes de atualizar o estabelecimento
+        // Remove qr_codes e qr_notes do array
         unset($validated['qr_codes'], $validated['qr_notes']);
+
+        // Limpar caracteres não numéricos do CPF/CNPJ
+        if (isset($validated['cnpj'])) {
+            $validated['cnpj'] = preg_replace('/[^0-9]/', '', $validated['cnpj']);
+        } else {
+            $validated['cnpj'] = null;
+        }
+
+        if (isset($validated['cpf'])) {
+            $validated['cpf'] = preg_replace('/[^0-9]/', '', $validated['cpf']);
+        } else {
+            $validated['cpf'] = null;
+        }
 
         $establishment->update($validated);
 
-        // Sincroniza os QR codes selecionados com o estabelecimento e suas anotações
+        // Atualizar QR codes
         if (!empty($qrCodes)) {
             $syncData = [];
             foreach ($qrCodes as $qrCodeId) {
@@ -212,7 +245,6 @@ class EstablishmentController extends BaseController
                     'notes' => $qrNotes[$qrCodeId] ?? null
                 ];
             }
-
             $establishment->qrCodes()->sync($syncData);
         } else {
             $establishment->qrCodes()->detach();
@@ -226,14 +258,62 @@ class EstablishmentController extends BaseController
     {
         $this->authorize('delete', $establishment);
         $establishment->delete();
+
         return redirect()->route('vendor.establishments.index')
-            ->with('success', 'Estabelecimento removido com sucesso!');
+            ->with('success', 'Estabelecimento excluído com sucesso!');
     }
 
     public function show(Establishment $establishment)
     {
         $this->authorize('view', $establishment);
+        $establishment->load(['category', 'qrCodes']);
+
         return view('vendor.establishments.show', compact('establishment'));
+    }
+
+    /**
+     * Reenvia o e-mail de boas-vindas com o link do termo para o estabelecimento
+     */
+    public function resendTermEmail(Establishment $establishment)
+    {
+        $this->authorize('update', $establishment);
+
+        try {
+            // Verifica se já existe um onboarding para este estabelecimento
+            $onboarding = $establishment->onboarding;
+
+            // Se não existir ou o contrato já foi aceito, precisamos validar
+            if (!$onboarding) {
+                // Cria um novo onboarding, já que não existe
+                $onboarding = EstablishmentOnboarding::create([
+                    'establishment_id' => $establishment->id,
+                    'token' => \Illuminate\Support\Str::random(64),
+                ]);
+            } elseif ($onboarding->contract_accepted) {
+                // Se o contrato já foi aceito, informa que não é necessário reenviar
+                return redirect()->route('vendor.establishments.index')
+                    ->with('info', 'Este estabelecimento já aceitou os termos do contrato. Não é necessário reenviar o e-mail.');
+            }
+
+            // Envia e-mail com o link para o formulário de onboarding
+            $this->emailService->sendTemplate(
+                $establishment->email,
+                $establishment->nome,
+                'Bem-vindo ao SeguraEssa.app - Complete seu cadastro',
+                'emails.establishment-welcome',
+                ['establishment' => $establishment, 'onboarding' => $onboarding]
+            );
+
+            return redirect()->route('vendor.establishments.index')
+                ->with('success', 'E-mail de boas-vindas reenviado com sucesso para ' . $establishment->nome);
+        } catch (\Exception $e) {
+            Log::error('Erro ao reenviar e-mail de boas-vindas: ' . $e->getMessage(), [
+                'establishment_id' => $establishment->id
+            ]);
+
+            return redirect()->route('vendor.establishments.index')
+                ->with('error', 'Erro ao reenviar o e-mail. Por favor, tente novamente.');
+        }
     }
 
     /**
@@ -242,27 +322,25 @@ class EstablishmentController extends BaseController
     private function createOnboardingAndSendEmail(Establishment $establishment): void
     {
         try {
-            // Cria o registro de onboarding
+            // Cria token de onboarding (sem data de expiração)
             $onboarding = EstablishmentOnboarding::create([
                 'establishment_id' => $establishment->id,
-                'token' => EstablishmentOnboarding::generateUniqueToken(),
-                'expires_at' => now()->addDays(7) // Token válido por 7 dias
+                'token' => \Illuminate\Support\Str::random(64),
+                // Não definimos mais a data de expiração
             ]);
 
-            // Envia o e-mail de boas-vindas
-            if ($establishment->email) {
-                // Usando o serviço de e-mail
-                $this->emailService->sendTemplate(
-                    $establishment->email,
-                    $establishment->nome,
-                    'Bem-vindo ao SeguraEssa.app - Complete seu cadastro',
-                    'emails.establishment-welcome',
-                    ['establishment' => $establishment, 'onboarding' => $onboarding]
-                );
-            }
+            // Envia e-mail de boas-vindas com o link para o formulário de onboarding
+            $this->emailService->sendTemplate(
+                $establishment->email,
+                $establishment->nome,
+                'Bem-vindo ao SeguraEssa.app - Complete seu cadastro',
+                'emails.establishment-welcome',
+                ['establishment' => $establishment, 'onboarding' => $onboarding]
+            );
         } catch (\Exception $e) {
-            // Registra o erro, mas não interrompe o fluxo
-            // Não vamos registrar o log aqui para evitar erros
+            Log::error('Erro ao enviar e-mail de boas-vindas: ' . $e->getMessage(), [
+                'establishment_id' => $establishment->id
+            ]);
         }
     }
 }

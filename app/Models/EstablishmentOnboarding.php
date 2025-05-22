@@ -71,6 +71,11 @@ class EstablishmentOnboarding extends Model
      */
     public function isExpired(): bool
     {
+        // Se não houver data de expiração definida, o token não expira
+        if (!$this->expires_at) {
+            return false;
+        }
+
         return now()->gt($this->expires_at);
     }
 

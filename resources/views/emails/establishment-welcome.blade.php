@@ -327,7 +327,7 @@
                     <![endif]-->
                 </div>
 
-                <p>O link abaixo é exclusivo para seu estabelecimento e expirará em 7 dias. Por favor, complete o processo o quanto antes:</p>
+                <p>O link abaixo é exclusivo para seu estabelecimento. Por favor, complete o processo o quanto antes:</p>
 
                 <div class="credentials">
                     <p><strong>🔗 Link de acesso seguro:</strong> <a href="{{ route('establishment.onboarding', ['token' => $onboarding->token]) }}" style="color: #2989d8; text-decoration: underline;">Completar Cadastro</a></p>
