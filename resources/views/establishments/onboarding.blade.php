@@ -76,7 +76,13 @@
 
                         <p><strong>Cessionário:</strong> CÂMARA E GARUTTI CORRETORA E ADMINISTRADORA DE SEGUROS LTDA, pessoa jurídica de direito privado, inscrita no CNPJ sob o nº. 20.641.367/0001-00, com sede na Av. Rudolf Dafferner, 400 – Bloco São Paulo – Sala 415 – Bairro Alato da Boa Vista - Sorocaba/SP CEP 18085-005, neste ato representado na forma de seus atos constitutivos, doravante denominado simplesmente Cessionário.</p>
 
-                        <p><strong>Cedente (Estabelecimento):</strong> {{ $establishment->nome }}, pessoa jurídica de direito privado, inscrita no CNPJ sob o nº. {{ $establishment->cnpj ?? '[Número do CNPJ]' }}, com sede em {{ $establishment->endereco ?? '[endereço completo]' }}, neste ato representado na forma de seus atos constitutivos, doravante denominado simplesmente Cedente.</p>
+                        <p><strong>Cedente (Estabelecimento):</strong> {{ $establishment->nome }},
+                        @if($establishment->tipo_documento == 'pj')
+                            pessoa jurídica de direito privado, inscrita no CNPJ sob o nº. {{ $establishment->cnpj ?? '[Número do CNPJ]' }},
+                        @else
+                            pessoa física, inscrita no CPF sob o nº. {{ $establishment->cpf ?? '[Número do CPF]' }},
+                        @endif
+                        com sede em {{ $establishment->endereco ?? '[endereço completo]' }}, {{ $establishment->cidade ?? '' }}/{{ $establishment->estado ?? '' }}, doravante denominado simplesmente Cedente.</p>
 
                         <p><strong>Considerando que:</strong></p>
                         <ul>

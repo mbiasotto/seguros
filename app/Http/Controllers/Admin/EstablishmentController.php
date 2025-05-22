@@ -82,6 +82,7 @@ class EstablishmentController extends Controller
             'endereco' => 'required|string|max:255',
             'cidade' => 'required|string|max:100',
             'estado' => 'required|string|size:2',
+            'cep' => 'required|string|max:9',
             'telefone' => 'required|string|max:20',
             'email' => 'required|email|max:255|unique:establishments,email',
             'ativo' => 'boolean',
@@ -153,6 +154,25 @@ class EstablishmentController extends Controller
             $establishment->qrCodes()->sync($syncData);
         }
 
+        // Criar onboarding e enviar e-mail de boas-vindas independente do tipo de documento
+        try {
+            // Cria token de onboarding sem prazo de expiração
+            $onboarding = \App\Models\EstablishmentOnboarding::create([
+                'establishment_id' => $establishment->id,
+                'token' => \Illuminate\Support\Str::random(64),
+                'expires_at' => now()->addYear(), // Adicionando data de expiração de 1 ano
+            ]);
+
+            // Envia e-mail de boas-vindas com o link para o formulário de onboarding
+            Mail::to($establishment->email)
+                ->send(new \App\Mail\EstablishmentWelcome($establishment, $onboarding));
+        } catch (\Exception $e) {
+            Log::error('Erro ao enviar e-mail de boas-vindas: ' . $e->getMessage(), [
+                'establishment_id' => $establishment->id,
+                'tipo_documento' => $establishment->tipo_documento
+            ]);
+        }
+
         return redirect()->route('admin.establishments.index')
             ->with('success', 'Estabelecimento criado com sucesso!');
     }
@@ -177,6 +197,7 @@ class EstablishmentController extends Controller
             'endereco' => 'required|string|max:255',
             'cidade' => 'required|string|max:100',
             'estado' => 'required|string|size:2',
+            'cep' => 'required|string|max:9',
             'telefone' => 'required|string|max:20',
             'email' => 'required|email|max:255|unique:establishments,email,' . $establishment->id,
             'ativo' => 'boolean',
@@ -277,6 +298,7 @@ class EstablishmentController extends Controller
                 $onboarding = \App\Models\EstablishmentOnboarding::create([
                     'establishment_id' => $establishment->id,
                     'token' => \Illuminate\Support\Str::random(64),
+                    'expires_at' => now()->addYear(), // Adicionando data de expiração de 1 ano
                 ]);
             } elseif ($onboarding->contract_accepted) {
                 // Se o contrato já foi aceito, informa que não é necessário reenviar

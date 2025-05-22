@@ -123,13 +123,15 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    @if($establishment->onboarding && !$establishment->onboarding->contract_accepted)
-                                    <a href="{{ route('establishment.onboarding', ['token' => $establishment->onboarding->token]) }}" target="_blank" class="btn action-btn" data-bs-toggle="tooltip" title="Link do Termo">
-                                        <i class="fas fa-file-contract"></i>
-                                    </a>
-                                    <a href="{{ route('admin.establishments.resend-term-email', $establishment) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Reenviar Email do Termo">
-                                        <i class="fas fa-envelope"></i>
-                                    </a>
+                                    @if(!($establishment->onboarding && $establishment->onboarding->contract_accepted))
+                                        @if($establishment->onboarding && $establishment->onboarding->token)
+                                        <a href="{{ route('establishment.onboarding', ['token' => $establishment->onboarding->token]) }}" target="_blank" class="btn action-btn" data-bs-toggle="tooltip" title="Link do Termo">
+                                            <i class="fas fa-file-contract"></i>
+                                        </a>
+                                        @endif
+                                        <a href="{{ route('admin.establishments.resend-term-email', $establishment) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Reenviar Email do Termo">
+                                            <i class="fas fa-envelope"></i>
+                                        </a>
                                     @endif
                                     <a href="{{ route('admin.establishments.edit', $establishment) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>

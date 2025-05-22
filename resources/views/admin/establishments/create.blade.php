@@ -224,40 +224,7 @@
 <script src="{{ asset('assets/js/utils/input-masks.js') }}"></script>
 <script src="{{ asset('assets/js/utils/cep-lookup.js') }}"></script>
 <script src="{{ asset('assets/js/components/qr-code-manager.js') }}"></script>
-
-<script>
-    // Código para alternar entre CNPJ e CPF
-    document.addEventListener('DOMContentLoaded', function() {
-        const tipoPjRadio = document.getElementById('tipo_pj');
-        const tipoPfRadio = document.getElementById('tipo_pf');
-        const documentoPj = document.querySelector('.documento-pj');
-        const documentoPf = document.querySelector('.documento-pf');
-        const cnpjInput = document.getElementById('cnpj');
-        const cpfInput = document.getElementById('cpf');
-
-        // Função para alternar a visibilidade dos campos
-        function toggleDocumentoFields() {
-            if (tipoPjRadio.checked) {
-                documentoPj.style.display = 'block';
-                documentoPf.style.display = 'none';
-                cnpjInput.required = true;
-                cpfInput.required = false;
-            } else {
-                documentoPj.style.display = 'none';
-                documentoPf.style.display = 'block';
-                cnpjInput.required = false;
-                cpfInput.required = true;
-            }
-        }
-
-        // Adiciona listeners para os radios
-        tipoPjRadio.addEventListener('change', toggleDocumentoFields);
-        tipoPfRadio.addEventListener('change', toggleDocumentoFields);
-
-        // Inicializa
-        toggleDocumentoFields();
-    });
-</script>
+<script src="{{ asset('assets/js/utils/documento-tipo-toggle.js') }}"></script>
 @endpush
 
 @endsection

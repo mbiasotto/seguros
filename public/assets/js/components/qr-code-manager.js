@@ -3,6 +3,9 @@ $(document).ready(function() {
     const qrCodeData = JSON.parse($('#page-qr-code-data').text());
     let selectedQrCodeToRemove = null;
 
+    // Log para debug
+    console.log('Dados de QR Code carregados:', qrCodeData);
+
     // Função para atualizar a mensagem de "Nenhum QR Code"
     function updateNoQrCodesMessage() {
         const hasQrCodes = $('#linked-qrcodes-list li:not(#no-qrcodes-message)').length > 0;
@@ -38,9 +41,68 @@ $(document).ready(function() {
         `;
     }
 
+    // Inicialização: carregar QR Codes do estabelecimento se necessário
+    function initializeQrCodeList() {
+        // Verificar se precisamos pré-preencher a lista a partir do lado do cliente
+        // (isso pode acontecer se a lista não foi preenchida no servidor)
+        if (qrCodeData.establishmentQrCodes && qrCodeData.establishmentQrCodes.length > 0) {
+            // Se não houver elementos na lista mas temos dados, precisamos adicionar via cliente
+            if ($('#linked-qrcodes-list li:not(#no-qrcodes-message)').length === 0) {
+                console.log('Preenchendo QR Codes do estabelecimento no cliente:', qrCodeData.establishmentQrCodes);
+
+                // Limpar a lista atual
+                $('#linked-qrcodes-list').empty();
+
+                // Adicionar os QR Codes do estabelecimento
+                qrCodeData.establishmentQrCodes.forEach(qrCode => {
+                    const listItem = createQrCodeListItem(qrCode);
+                    $('#linked-qrcodes-list').append(listItem);
+                });
+            }
+        }
+
+        // Atualizar a mensagem de "Nenhum QR Code"
+        updateNoQrCodesMessage();
+
+        // Remover do select os QR Codes que já estão vinculados
+        updateQrCodeSelect();
+    }
+
+    // Atualizar o select de QR Codes disponíveis
+    function updateQrCodeSelect() {
+        // Obter IDs dos QR Codes já vinculados
+        const linkedQrCodeIds = [];
+        $('#linked-qrcodes-list input[name="qr_codes[]"]').each(function() {
+            linkedQrCodeIds.push($(this).val());
+        });
+
+        // Redefinir o select
+        const select = $('#qrcode-select');
+        select.empty();
+        select.append('<option value="">Selecione um QR Code disponível</option>');
+
+        // Adicionar apenas os QR Codes não vinculados
+        qrCodeData.allQrCodes.forEach(qrCode => {
+            if (!linkedQrCodeIds.includes(qrCode.id.toString())) {
+                const option = new Option(`QR Code #${qrCode.id}`, qrCode.id);
+                $(option).data({
+                    title: `QR Code #${qrCode.id}`,
+                    description: qrCode.description
+                });
+                select.append(option);
+            }
+        });
+    }
+
     // Filtrar QR Codes
     $('#qrcode-search').on('input', function() {
         const searchTerm = $(this).val().toLowerCase();
+
+        // Obter IDs dos QR Codes já vinculados
+        const linkedQrCodeIds = [];
+        $('#linked-qrcodes-list input[name="qr_codes[]"]').each(function() {
+            linkedQrCodeIds.push($(this).val());
+        });
 
         // Redefinir o select
         const select = $('#qrcode-select');
@@ -50,13 +112,13 @@ $(document).ready(function() {
         // Filtrar e adicionar opções baseadas na busca
         qrCodeData.allQrCodes.forEach(qrCode => {
             // Verifica se o QR Code já está vinculado ao estabelecimento
-            const isLinked = $('#linked-qrcodes-list').find(`input[value="${qrCode.id}"]`).length > 0;
+            const isLinked = linkedQrCodeIds.includes(qrCode.id.toString());
 
             // Se não estiver vinculado e corresponder ao termo de busca
-            if (!isLinked && qrCode.title.toLowerCase().includes(searchTerm)) {
-                const option = new Option(qrCode.title, qrCode.id);
+            if (!isLinked && `QR Code #${qrCode.id}`.toLowerCase().includes(searchTerm)) {
+                const option = new Option(`QR Code #${qrCode.id}`, qrCode.id);
                 $(option).data({
-                    title: qrCode.title,
+                    title: `QR Code #${qrCode.id}`,
                     description: qrCode.description
                 });
                 select.append(option);
@@ -134,5 +196,5 @@ $(document).ready(function() {
     });
 
     // Inicialização
-    updateNoQrCodesMessage();
+    initializeQrCodeList();
 });

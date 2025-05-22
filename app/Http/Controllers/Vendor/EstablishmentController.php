@@ -288,6 +288,7 @@ class EstablishmentController extends BaseController
                 $onboarding = EstablishmentOnboarding::create([
                     'establishment_id' => $establishment->id,
                     'token' => \Illuminate\Support\Str::random(64),
+                    'expires_at' => now()->addYear(), // Adicionando data de expiração de 1 ano
                 ]);
             } elseif ($onboarding->contract_accepted) {
                 // Se o contrato já foi aceito, informa que não é necessário reenviar
@@ -326,7 +327,7 @@ class EstablishmentController extends BaseController
             $onboarding = EstablishmentOnboarding::create([
                 'establishment_id' => $establishment->id,
                 'token' => \Illuminate\Support\Str::random(64),
-                // Não definimos mais a data de expiração
+                'expires_at' => now()->addYear(), // Adicionando data de expiração de 1 ano
             ]);
 
             // Envia e-mail de boas-vindas com o link para o formulário de onboarding
