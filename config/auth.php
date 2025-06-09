@@ -44,6 +44,10 @@ return [
             'driver' => 'session',
             'provider' => 'vendors',
         ],
+        'establishment' => [
+            'driver' => 'session',
+            'provider' => 'establishments',
+        ],
     ],
 
     /*
@@ -71,6 +75,10 @@ return [
         'vendors' => [
             'driver' => 'eloquent',
             'model' => App\Models\Vendor::class,
+        ],
+        'establishments' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Establishment::class,
         ],
 
         // 'users' => [
@@ -107,6 +115,12 @@ return [
         ],
         'vendors' => [
             'provider' => 'vendors',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'establishments' => [
+            'provider' => 'establishments',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,

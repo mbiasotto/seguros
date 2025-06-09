@@ -13,6 +13,12 @@ use App\Http\Controllers\Admin\QrCodePdfController;
 use App\Http\Controllers\QrCodeRedirectController;
 use App\Http\Controllers\QrCodeStatisticsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Establishment\EstablishmentAuthController;
+use App\Http\Controllers\Establishment\DashboardController as EstablishmentDashboardController;
+use App\Http\Controllers\Establishment\ForgotPasswordController as EstablishmentForgotPasswordController;
+use App\Http\Controllers\Establishment\ResetPasswordController as EstablishmentResetPasswordController;
+use App\Http\Controllers\Establishment\ChangePasswordController as EstablishmentChangePasswordController;
+use App\Http\Controllers\Vendor\ChangePasswordController as VendorChangePasswordController;
 
 // ======================================================================
 // Rotas de Autenticação Diretas (fora dos grupos de prefixo)
@@ -38,6 +44,7 @@ Route::get('/vendor/login', function () {
 // Direct logout routes to avoid CSRF issues
 Route::match(['get', 'post'], '/admin/logout', [LoginController::class, 'logout']);
 Route::match(['get', 'post'], '/vendor/logout', [VendorAuthController::class, 'logout']);
+Route::match(['get', 'post'], '/minhaarea/logout', [EstablishmentAuthController::class, 'logout']);
 
 // QR Code Redirect Route
 Route::get('/qr-code/{id}', [QrCodeRedirectController::class, 'redirect'])->name('qr-code.redirect');
@@ -177,6 +184,10 @@ Route::prefix('vendor')->name('vendor.')->group(function () {
         Route::get('profile', [VendorAuthController::class, 'profile'])->name('profile');
         Route::put('profile', [VendorAuthController::class, 'updateProfile'])->name('profile.update');
 
+        // Change Password Routes
+        Route::get('change-password', [VendorChangePasswordController::class, 'show'])->name('change-password');
+        Route::put('change-password', [VendorChangePasswordController::class, 'update'])->name('change-password.update');
+
         // Establishment Management Routes for Vendor
         Route::resource('establishments', VendorEstablishmentController::class);
         Route::get('establishments/{establishment}/resend-term-email', [VendorEstablishmentController::class, 'resendTermEmail'])
@@ -211,6 +222,46 @@ Route::prefix('establishment')->name('establishment.')->group(function () {
     Route::get('/onboarding/{token}', [\App\Http\Controllers\EstablishmentOnboardingController::class, 'show'])->name('onboarding');
     Route::post('/onboarding/{token}', [\App\Http\Controllers\EstablishmentOnboardingController::class, 'process'])->name('onboarding.process');
     Route::get('/onboarding/{token}/success', [\App\Http\Controllers\EstablishmentOnboardingController::class, 'success'])->name('onboarding.success');
+});
+
+// Establishment Routes (Minha Área)
+Route::prefix('minhaarea')->name('establishment.')->group(function () {
+    // Rota raiz para /minhaarea - redireciona para dashboard se autenticado, ou para login se não
+    Route::get('/', function () {
+        if (Auth::guard('establishment')->check()) {
+            return redirect()->route('establishment.dashboard');
+        }
+        return redirect()->route('establishment.login');
+    });
+
+    // Guest Establishment Routes
+    Route::get('login', function() {
+        if (Auth::guard('establishment')->check()) {
+            return redirect()->route('establishment.dashboard');
+        }
+        return app()->make(EstablishmentAuthController::class)->showLoginForm();
+    })->name('login');
+    Route::post('login', [EstablishmentAuthController::class, 'login'])->name('login.submit');
+
+    Route::match(['get', 'post'], 'logout', [EstablishmentAuthController::class, 'logout'])->name('logout');
+
+    // Password Reset Routes
+    Route::get('password/reset', [EstablishmentForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('password/email', [EstablishmentForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('password/reset/{token}', [EstablishmentResetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('password/reset', [EstablishmentResetPasswordController::class, 'reset'])->name('password.update');
+
+    // Protected Establishment Routes
+    Route::middleware(['auth:establishment'])->group(function () {
+        Route::get('dashboard', [EstablishmentDashboardController::class, 'index'])->name('dashboard');
+
+        Route::get('profile', [EstablishmentAuthController::class, 'profile'])->name('profile');
+        Route::put('profile', [EstablishmentAuthController::class, 'updateProfile'])->name('profile.update');
+
+        // Change Password Routes
+        Route::get('change-password', [EstablishmentChangePasswordController::class, 'show'])->name('change-password');
+        Route::put('change-password', [EstablishmentChangePasswordController::class, 'update'])->name('change-password.update');
+    });
 });
 
 // Fallback route - captura todas as rotas não definidas

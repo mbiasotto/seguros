@@ -16,6 +16,10 @@
             <i class="fas fa-user"></i>
             <span>Meu Perfil</span>
         </a>
+        <a href="{{ route('vendor.change-password') }}" class="nav-link {{ request()->routeIs('vendor.change-password*') ? 'active' : '' }}">
+            <i class="fas fa-lock"></i>
+            <span>Alterar Senha</span>
+        </a>
         {{-- <a href="{{ route('vendor.establishments.documents') }}" class="nav-link {{ request()->routeIs('vendor.establishments.documents*') ? 'active' : '' }}">
             <i class="fas fa-file-alt"></i>
             <span>Documentos</span>

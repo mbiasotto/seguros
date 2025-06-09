@@ -100,30 +100,6 @@
                              <div class="col-md-6"></div>
                         </div>
 
-                        {{-- Use admin section title style --}}
-                        <h2 class="font-semibold text-lg border-bottom pb-2 mb-4">Alterar Senha</h2>
-                        <p class="text-muted text-sm mb-4">Preencha os campos abaixo apenas se desejar alterar sua senha atual.</p>
-
-                        <div class="row mb-4">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Nova Senha</label>
-                                    <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" id="password" name="password" placeholder="••••••••">
-                                    @error('password')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                    <div class="form-text text-sm">Mínimo 8 caracteres.</div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="password_confirmation" class="form-label">Confirmar Nova Senha</label>
-                                    <input type="password" class="form-control form-control-lg" id="password_confirmation" name="password_confirmation" placeholder="••••••••">
-                                </div>
-                            </div>
-                        </div>
-
                         {{-- Use admin action button structure --}}
                         <div class="d-flex justify-content-end mt-4">
                             <a href="{{ route('vendor.dashboard') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center me-2">

@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\EstablishmentOnboarding;
+use App\Mail\EstablishmentAccessCredentials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
@@ -90,16 +95,6 @@ class EstablishmentOnboardingController extends BaseController
                 ->withInput();
         }
 
-        // Processa o upload do documento - Removido
-        // if ($request->hasFile('document') && $request->file('document')->isValid()) {
-        //     $file = $request->file('document');
-        //     $fileName = 'establishment_' . $onboarding->establishment_id . '_' . time() . '.' . $file->getClientOriginalExtension();
-        //     $filePath = $file->storeAs('documents/establishments', $fileName, 'private');
-
-        //     // Atualiza o onboarding com o caminho do documento
-        //     $onboarding->document_path = $filePath;
-        // }
-
         // Coleta dados para validação legal do aceite
         $contractAcceptanceData = [
             'user_ip' => $request->input('user_ip', $request->ip()),
@@ -119,6 +114,32 @@ class EstablishmentOnboardingController extends BaseController
         $onboarding->completed = true;
         $onboarding->completed_at = now();
         $onboarding->save();
+
+        // Gerar senha temporária e configurar dados de acesso para o estabelecimento
+        $establishment = $onboarding->establishment;
+
+        // Só gerar senha se ainda não tiver senha definida
+        if (!$establishment->password) {
+            $temporaryPassword = Str::random(8);
+            $establishment->password = Hash::make($temporaryPassword);
+            $establishment->save();
+
+            // Enviar email de boas-vindas com dados de acesso
+            try {
+                Mail::to($establishment->email)
+                    ->send(new EstablishmentAccessCredentials($establishment, $temporaryPassword));
+
+                Log::info('Email de boas-vindas enviado com sucesso', [
+                    'establishment_id' => $establishment->id,
+                    'email' => $establishment->email
+                ]);
+            } catch (\Exception $e) {
+                Log::error('Erro ao enviar email de boas-vindas: ' . $e->getMessage(), [
+                    'establishment_id' => $establishment->id,
+                    'email' => $establishment->email
+                ]);
+            }
+        }
 
         // Redireciona para a página de sucesso
         return redirect()->route('establishment.onboarding.success', ['token' => $token]);
