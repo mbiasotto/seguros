@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autorizar Compras - Multiplic.cc</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="../assets/css/cliente.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="dashboard.html">
+                <i class="fas fa-credit-card me-2 text-warning"></i>
+                Multiplic.cc
+            </a>
+            
+            <div class="d-flex align-items-center">
+                <a href="dashboard.html" class="btn btn-outline-light">
+                    <i class="fas fa-arrow-left me-2"></i>Voltar
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-4">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1 class="h3 fw-bold text-dark mb-1">Autorizar Compras</h1>
+                <p class="text-muted">Aprove ou recuse suas transações pendentes</p>
+            </div>
+        </div>
+
+        <!-- Pending Authorizations -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-0">
+                        <h6 class="fw-bold mb-0">Compras Pendentes (2)</h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="list-group list-group-flush">
+                            <!-- Authorization Item 1 -->
+                            <div class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6">
+                                        <div class="d-flex align-items-center">
+                                            <div class="transaction-icon bg-primary bg-opacity-10 text-primary me-3">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1 fw-bold">Supermercado Família</h6>
+                                                <small class="text-muted">Hoje, 15:42</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <h5 class="fw-bold text-dark mb-0">R$ 156,80</h5>
+                                        <span class="badge bg-warning text-dark">Pendente</span>
+                                    </div>
+                                    <div class="col-md-3 text-end">
+                                        <button class="btn btn-success me-2" onclick="authorizeTransaction(1)">
+                                            <i class="fas fa-check me-1"></i>Autorizar
+                                        </button>
+                                        <button class="btn btn-danger" onclick="rejectTransaction(1)">
+                                            <i class="fas fa-times me-1"></i>Recusar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Authorization Item 2 -->
+                            <div class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6">
+                                        <div class="d-flex align-items-center">
+                                            <div class="transaction-icon bg-success bg-opacity-10 text-success me-3">
+                                                <i class="fas fa-pills"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1 fw-bold">Farmácia Popular</h6>
+                                                <small class="text-muted">Hoje, 14:15</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <h5 class="fw-bold text-dark mb-0">R$ 67,50</h5>
+                                        <span class="badge bg-warning text-dark">Pendente</span>
+                                    </div>
+                                    <div class="col-md-3 text-end">
+                                        <button class="btn btn-success me-2" onclick="authorizeTransaction(2)">
+                                            <i class="fas fa-check me-1"></i>Autorizar
+                                        </button>
+                                        <button class="btn btn-danger" onclick="rejectTransaction(2)">
+                                            <i class="fas fa-times me-1"></i>Recusar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Authorizations -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-0">
+                        <h6 class="fw-bold mb-0">Autorizações Recentes</h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6">
+                                        <div class="d-flex align-items-center">
+                                            <div class="transaction-icon bg-warning bg-opacity-10 text-warning me-3">
+                                                <i class="fas fa-gas-pump"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1">Posto Shell Centro</h6>
+                                                <small class="text-muted">Ontem, 08:20</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <h6 class="fw-bold text-dark mb-0">R$ 120,00</h6>
+                                        <span class="badge bg-success">Aprovado</span>
+                                    </div>
+                                    <div class="col-md-3 text-end">
+                                        <small class="text-muted">Código: 847291</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Authorization Modal -->
+    <div class="modal fade" id="authorizationModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold">Confirmar Compra</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-shopping-cart text-primary fs-1 mb-3"></i>
+                        <h6 class="fw-bold" id="modalStoreName">Supermercado Família</h6>
+                        <h3 class="fw-bold text-dark" id="modalAmount">R$ 156,80</h3>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label fw-medium">Digite sua senha de 4 dígitos</label>
+                        <input type="password" class="form-control form-control-lg text-center fs-4" id="pinInput" maxlength="4" placeholder="••••">
+                    </div>
+                    
+                    <button type="button" class="btn btn-warning btn-lg w-100 fw-bold" onclick="confirmAuthorization()">
+                        Confirmar Compra
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Authorization Code Modal -->
+    <div class="modal fade" id="codeModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold">Código de Autorização</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle text-success fs-1 mb-3"></i>
+                        <h6 class="text-muted mb-2">Compra autorizada! Informe este código ao estabelecimento:</h6>
+                    </div>
+                    
+                    <div class="authorization-code-display mb-4">
+                        <h1 class="display-3 fw-bold text-dark font-monospace" id="authorizationCode">847291</h1>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center justify-content-center text-warning mb-2">
+                            <i class="fas fa-clock me-2"></i>
+                            <span>Código expira em: <span id="countdown" class="fw-bold">04:59</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-outline-dark" onclick="copyCode()">
+                            <i class="fas fa-copy me-2"></i>Copiar Código
+                        </button>
+                        <button type="button" class="btn btn-success" onclick="sendWhatsApp()">
+                            <i class="fab fa-whatsapp me-2"></i>Enviar por WhatsApp
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../assets/js/cliente-autorizar.js"></script>
+</body>
+</html>

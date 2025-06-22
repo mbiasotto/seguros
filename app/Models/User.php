@@ -6,8 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Notifications\AdminResetPasswordNotification;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 class User extends Authenticatable
 {
@@ -17,7 +16,7 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $fillable = [
         'name',
@@ -28,7 +27,7 @@ class User extends Authenticatable
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -49,29 +48,27 @@ class User extends Authenticatable
     }
 
     /**
-     * Send the password reset notification.
-     *
-     * @param  string  $token
-     * @return void
+     * Usuários criados por este admin
      */
-    public function sendPasswordResetNotification($token)
+    public function usuariosCriados()
     {
-        $this->notify(new AdminResetPasswordNotification($token));
+        return $this->hasMany(Usuario::class, 'criado_por_admin_id');
     }
 
     /**
-     * Relacionamento com os logs de acesso
+     * Estabelecimentos criados por este admin
      */
-    public function accessLogs(): HasMany
+    public function estabelecimentosCriados()
     {
-        return $this->hasMany(UserAccessLog::class);
+        return $this->hasMany(Estabelecimento::class, 'criado_por_admin_id');
     }
 
     /**
-     * Obtém o último log de acesso do administrador
+     * Retorna o último acesso do usuário (placeholder)
      */
     public function lastAccess()
     {
-        return $this->accessLogs()->latest()->first();
+        // Por enquanto retorna null - implementar logs de acesso se necessário
+        return null;
     }
 }

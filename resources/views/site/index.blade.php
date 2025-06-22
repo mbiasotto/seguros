@@ -1,319 +1,481 @@
-@extends('site.layouts.site')
+@extends('layouts.site')
 
-@section('title', 'Câmara & Garutti - Seguros e Financiamentos com até 30% de Desconto')
+@section('title', 'Multiplic.cc - Cartão Pré-Pago Consignado')
 
 @section('content')
-<!-- Hero Section -->
-<section class="hero-section">
-    <div class="tear-effect"></div>
-    <div class="container position-relative">
-        <div class="row align-items-center">
-            <div class="col-lg-6 hero-text" data-aos="fade-right">
-                <h1 class="hero-title mb-3">Seguros e Financiamentos com até 30% de Desconto</h1>
-                <p class="hero-subtitle mb-4">Economize tempo e dinheiro com as melhores condições do mercado</p>
-                <div class="d-flex gap-3">
-                    <a href="#contato" class="btn btn-light btn-lg fw-bold px-4 py-3 rounded-pill shadow-sm">Quero Economizar</a>
-                    <a href="#como-funciona" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill">Como Funciona</a>
-                </div>
-            </div>
-            <div class="col-lg-6 hero-image" data-aos="fade-left">
-                <img src="/img/hero-image.svg" alt="Seguros e Financiamentos" class="img-fluid">
-                <div class="discount-badge">
-                    <span class="discount-text">Até</span>
-                    <span class="discount-value">30%</span>
-                    <span class="discount-text">OFF</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-6 text-white hero-content">
+                    <h1 class="display-3 fw-bold mb-4 hero-title fade-in-on-scroll">
+                        O Único Cartão <span class="text-warning">Pré-Pago Consignado</span> do Brasil
+                    </h1>
+                    <p class="fs-4 mb-5 text-light fade-in-on-scroll">
+                        Sem anuidade. Débito direto na conta de luz. Use na nossa rede credenciada.
+                    </p>
 
-<!-- Services Section -->
-<section class="services-section py-5" id="servicos">
-    <div class="container">
-        <div class="text-center mb-5" data-aos="fade-up">
-            <h2 class="section-title">Nossos Serviços</h2>
-            <p class="section-subtitle">Conheça as soluções que oferecemos com condições exclusivas</p>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="service-card h-100">
-                    <div class="service-icon">
-                        <i class="fas fa-car"></i>
+                    <div class="d-flex flex-column flex-sm-row gap-3 mb-5">
+                        <a href="{{ route('site.cadastro') }}" class="btn btn-warning btn-lg fw-bold text-dark px-4 py-3 hero-btn">
+                            Peça o Seu Agora
+                        </a>
+                        <a href="#" class="btn btn-success btn-lg fw-bold px-4 py-3 hero-btn">
+                            <i class="fab fa-whatsapp me-2"></i>WhatsApp
+                        </a>
                     </div>
-                    <h3 class="service-title">Seguro Auto</h3>
-                    <p class="service-description">Proteção completa para seu veículo com as melhores coberturas e assistência 24h.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check-circle"></i> Cobertura contra roubo e furto</li>
-                        <li><i class="fas fa-check-circle"></i> Assistência 24 horas</li>
-                        <li><i class="fas fa-check-circle"></i> Carro reserva</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="service-card h-100">
-                    <div class="service-icon">
-                        <i class="fas fa-home"></i>
-                    </div>
-                    <h3 class="service-title">Seguro Residencial</h3>
-                    <p class="service-description">Tranquilidade para sua família com proteção completa para sua casa.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check-circle"></i> Cobertura contra incêndio</li>
-                        <li><i class="fas fa-check-circle"></i> Proteção contra danos elétricos</li>
-                        <li><i class="fas fa-check-circle"></i> Assistência 24 horas</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="service-card h-100">
-                    <div class="service-icon">
-                        <i class="fas fa-heartbeat"></i>
-                    </div>
-                    <h3 class="service-title">Seguro Saúde</h3>
-                    <p class="service-description">Cuide da saúde da sua família com planos completos e rede credenciada de qualidade.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check-circle"></i> Ampla rede credenciada</li>
-                        <li><i class="fas fa-check-circle"></i> Cobertura nacional</li>
-                        <li><i class="fas fa-check-circle"></i> Telemedicina</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- How It Works Section -->
-<section class="how-it-works-section py-5" id="como-funciona">
-    <div class="container">
-        <div class="text-center mb-5" data-aos="fade-up">
-            <h2 class="section-title">Como Funciona</h2>
-            <p class="section-subtitle">Processo simples e rápido para você economizar</p>
-        </div>
-        <div class="row">
-            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
-                <div class="step-card text-center">
-                    <div class="step-number">1</div>
-                    <div class="step-icon">
-                        <i class="fas fa-comments"></i>
+                    <div class="partnership-badge p-3 rounded">
+                        <i class="fas fa-shield-alt text-warning me-3 fs-4"></i>
+                        <span class="fw-semibold">Parceria Oficial CPFL</span>
                     </div>
-                    <h3 class="step-title">Entre em Contato</h3>
-                    <p class="step-description">Preencha o formulário ou entre em contato pelo WhatsApp.</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0" data-aos="fade-up" data-aos-delay="200">
-                <div class="step-card text-center">
-                    <div class="step-number">2</div>
-                    <div class="step-icon">
-                        <i class="fas fa-clipboard-list"></i>
-                    </div>
-                    <h3 class="step-title">Análise Personalizada</h3>
-                    <p class="step-description">Nossos consultores analisam seu perfil e necessidades.</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0" data-aos="fade-up" data-aos-delay="300">
-                <div class="step-card text-center">
-                    <div class="step-number">3</div>
-                    <div class="step-icon">
-                        <i class="fas fa-percentage"></i>
-                    </div>
-                    <h3 class="step-title">Melhores Ofertas</h3>
-                    <p class="step-description">Receba propostas com descontos exclusivos.</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
-                <div class="step-card text-center">
-                    <div class="step-number">4</div>
-                    <div class="step-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h3 class="step-title">Contratação Facilitada</h3>
-                    <p class="step-description">Processo simplificado e suporte completo.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- Testimonials Section -->
-<section class="testimonials-section py-5" id="depoimentos">
-    <div class="container">
-        <div class="text-center mb-5" data-aos="fade-up">
-            <h2 class="section-title">O Que Nossos Clientes Dizem</h2>
-            <p class="section-subtitle">Experiências reais de quem já economizou com a gente</p>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="testimonial-card h-100">
-                    <div class="testimonial-content">
-                        <p>"Economizei mais de 30% no seguro do meu carro. O atendimento foi excelente e todo o processo foi muito rápido. Super recomendo!"</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">
-                            <img src="/img/avatar-1.jpg" alt="Cliente" class="img-fluid rounded-circle">
+                    <!-- Estatísticas -->
+                    <div class="row mt-5 stats-section fade-in-on-scroll">
+                        <div class="col-4 text-center">
+                            <div class="fs-3 fw-bold text-warning">1000+</div>
+                            <div class="small text-muted">Parceiros</div>
                         </div>
-                        <div class="testimonial-info">
-                            <h4 class="testimonial-name">Carlos Silva</h4>
-                            <p class="testimonial-role">Cliente Seguro Auto</p>
+                        <div class="col-4 text-center">
+                            <div class="fs-3 fw-bold text-success">98%</div>
+                            <div class="small text-muted">Aprovação</div>
+                        </div>
+                        <div class="col-4 text-center">
+                            <div class="fs-3 fw-bold text-info">5min</div>
+                            <div class="small text-muted">Resposta</div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="testimonial-card h-100">
-                    <div class="testimonial-content">
-                        <p>"Consegui um plano de saúde com cobertura muito melhor do que eu tinha antes e ainda economizei. Os consultores são muito atenciosos e encontraram a melhor opção para minha família."</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">
-                            <img src="/img/avatar-2.jpg" alt="Cliente" class="img-fluid rounded-circle">
-                        </div>
-                        <div class="testimonial-info">
-                            <h4 class="testimonial-name">Ana Oliveira</h4>
-                            <p class="testimonial-role">Cliente Seguro Saúde</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="testimonial-card h-100">
-                    <div class="testimonial-content">
-                        <p>"Fiz o financiamento do meu apartamento com condições muito melhores do que as que encontrei no mercado. O processo foi simples e rápido, sem burocracia."</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">
-                            <img src="/img/avatar-3.jpg" alt="Cliente" class="img-fluid rounded-circle">
-                        </div>
-                        <div class="testimonial-info">
-                            <h4 class="testimonial-name">Roberto Mendes</h4>
-                            <p class="testimonial-role">Cliente Financiamento</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- Partners Section -->
-<section class="partners-section py-5">
-    <div class="container">
-        <div class="text-center mb-5" data-aos="fade-up">
-            <h2 class="section-title">Nossos Parceiros</h2>
-            <p class="section-subtitle">Trabalhamos com as melhores seguradoras e instituições financeiras</p>
-        </div>
-        <div class="row align-items-center justify-content-center">
-            <div class="col-6 col-md-3 col-lg-2 mb-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="partner-logo">
-                    <img src="/img/partner-1.svg" alt="Parceiro" class="img-fluid">
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2 mb-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="partner-logo">
-                    <img src="/img/partner-2.svg" alt="Parceiro" class="img-fluid">
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2 mb-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="partner-logo">
-                    <img src="/img/partner-3.svg" alt="Parceiro" class="img-fluid">
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2 mb-4" data-aos="fade-up" data-aos-delay="400">
-                <div class="partner-logo">
-                    <img src="/img/partner-4.svg" alt="Parceiro" class="img-fluid">
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2 mb-4" data-aos="fade-up" data-aos-delay="500">
-                <div class="partner-logo">
-                    <img src="/img/partner-5.svg" alt="Parceiro" class="img-fluid">
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2 mb-4" data-aos="fade-up" data-aos-delay="600">
-                <div class="partner-logo">
-                    <img src="/img/partner-6.svg" alt="Parceiro" class="img-fluid">
+                <div class="col-lg-6 d-flex justify-content-center">
+                    <div class="credit-card-3d">
+                        <div class="credit-card">
+                            <div class="card-shine"></div>
+                            <div class="card-top-line"></div>
+                            <div class="card-chip"></div>
+                            <div class="card-content">
+                                <div class="d-flex justify-content-between align-items-start mb-4">
+                                    <div class="text-white fw-bold fs-5">Multiplic</div>
+                                    <i class="fas fa-credit-card text-warning fs-4"></i>
+                                </div>
+                                <div class="text-white fs-5 font-monospace mb-3 tracking-wider">•••• •••• •••• 1234</div>
+                                <div class="d-flex justify-content-between text-white small">
+                                    <div>
+                                        <div class="text-muted" style="font-size: 0.7rem;">VÁLIDO ATÉ</div>
+                                        <div>12/28</div>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="text-muted" style="font-size: 0.7rem;">TITULAR</div>
+                                        <div>SEU NOME</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- CTA Section -->
-<section class="cta-section" id="contato">
-    <div class="floating-elements">
-        <div class="floating-element" style="width: 100px; height: 100px; top: 10%; left: 5%;"></div>
-        <div class="floating-element" style="width: 150px; height: 150px; top: 50%; left: 15%;"></div>
-        <div class="floating-element" style="width: 80px; height: 80px; top: 30%; right: 10%;"></div>
-        <div class="floating-element" style="width: 120px; height: 120px; bottom: 20%; right: 5%;"></div>
-    </div>
-    <div class="container position-relative" style="z-index: 2;">
-        <div class="row">
-            <div class="col-lg-6 text-white mb-5 mb-lg-0" data-aos="fade-right">
-                <h2 class="display-4 fw-bold mb-4">Aproveite agora!</h2>
-                <p class="lead mb-4">Preencha o formulário ao lado e um de nossos consultores entrará em contato para oferecer as melhores condições para você.</p>
-                <div class="d-flex align-items-center mb-4">
-                    <div class="me-3">
-                        <i class="fas fa-check-circle fa-2x text-white"></i>
-                    </div>
-                    <div>
-                        <h4 class="mb-0">Atendimento Personalizado</h4>
-                    </div>
+    <!-- Seção Negativado Aceito -->
+    <section class="negativado-section">
+        <div class="container">
+            <div class="text-center">
+                <div class="d-flex align-items-center justify-content-center gap-3 mb-4">
+                    <i class="fas fa-user-check fs-1 text-dark"></i>
+                    <h2 class="mb-0">Mesmo negativado, você é aceito!</h2>
                 </div>
-                <div class="d-flex align-items-center mb-4">
-                    <div class="me-3">
-                        <i class="fas fa-check-circle fa-2x text-white"></i>
-                    </div>
-                    <div>
-                        <h4 class="mb-0">Melhores Condições do Mercado</h4>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center">
-                    <div class="me-3">
-                        <i class="fas fa-check-circle fa-2x text-white"></i>
-                    </div>
-                    <div>
-                        <h4 class="mb-0">Economia Garantida</h4>
-                    </div>
-                </div>
+                <p class="mb-0">
+                    Não importa se seu nome está no SPC ou Serasa. O cartão Multiplic foi criado especialmente para quem
+                    precisa de uma nova oportunidade financeira.
+                </p>
             </div>
-            <div class="col-lg-6" data-aos="fade-left">
-                <div class="contact-form-card">
-                    <h3 class="mb-4 fw-bold">Solicite uma Cotação</h3>
-                    <form id="contactForm">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Nome Completo</label>
-                            <input type="text" class="form-control" id="name" required>
+        </div>
+    </section>
+
+    <!-- O que tem de diferente -->
+    <section class="section-padding bg-light" id="diferenciais">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 mb-4 text-dark">O que tem de diferente</h2>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 border-0 shadow-sm text-center p-4">
+                        <div class="card-icon bg-warning rounded-3 mx-auto mb-4">
+                            <i class="fas fa-mobile-alt text-dark"></i>
                         </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">E-mail</label>
-                            <input type="email" class="form-control" id="email" required>
+                        <h5 class="fw-bold mb-3">Praticidade e facilidade</h5>
+                        <p class="text-muted">Solicite seu cartão online em poucos minutos e sem precisar sair de casa.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 border-0 shadow-sm text-center p-4">
+                        <div class="card-icon bg-warning rounded-3 mx-auto mb-4">
+                            <i class="fas fa-dollar-sign text-dark"></i>
                         </div>
-                        <div class="mb-3">
-                            <label for="phone" class="form-label">Telefone/WhatsApp</label>
-                            <input type="tel" class="form-control" id="phone" required>
+                        <h5 class="fw-bold mb-3">Zero taxas de manutenção</h5>
+                        <p class="text-muted">Você não paga nada para manter nem movimentar o seu cartão.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 border-0 shadow-sm text-center p-4">
+                        <div class="card-icon bg-warning rounded-3 mx-auto mb-4">
+                            <i class="fas fa-users text-dark"></i>
                         </div>
-                        <div class="mb-3">
-                            <label for="service" class="form-label">Serviço de Interesse</label>
-                            <select class="form-select" id="service" required>
-                                <option value="" selected disabled>Selecione uma opção</option>
-                                <option value="seguro-auto">Seguro Auto</option>
-                                <option value="seguro-residencial">Seguro Residencial</option>
-                                <option value="seguro-saude">Seguro Saúde</option>
-                                <option value="seguro-vida">Seguro de Vida</option>
-                                <option value="financiamento">Financiamento</option>
-                                <option value="consorcio">Consórcio</option>
-                                <option value="outros">Outros</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="message" class="form-label">Mensagem (Opcional)</label>
-                            <textarea class="form-control" id="message" rows="3"></textarea>
-                        </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-lg fw-bold">Solicitar Cotação</button>
-                        </div>
-                    </form>
+                        <h5 class="fw-bold mb-3">Rede credenciada exclusiva</h5>
+                        <p class="text-muted">Use em mais de 1.000 estabelecimentos parceiros em todo o Brasil.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    <!-- Benefits Grid -->
+    <section class="py-5 bg-white" id="beneficios">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold mb-4">Por que escolher o Multiplic?</h2>
+                <p class="fs-5 text-muted">Benefícios exclusivos para sua vida financeira</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6 fade-in-on-scroll">
+                    <div class="card h-100 border-0 shadow-sm benefit-card">
+                        <div class="card-top-border bg-warning"></div>
+                        <i class="fas fa-check-circle text-warning fs-1 mb-3"></i>
+                        <h5 class="fw-bold mb-3">Aprovação facilitada</h5>
+                        <p class="text-muted">Processo simplificado de aprovação</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 fade-in-on-scroll">
+                    <div class="card h-100 border-0 shadow-sm benefit-card">
+                        <div class="card-top-border bg-warning"></div>
+                        <i class="fas fa-credit-card text-warning fs-1 mb-3"></i>
+                        <h5 class="fw-bold mb-3">Sem anuidade</h5>
+                        <p class="text-muted">Zero taxas anuais para sempre</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 fade-in-on-scroll">
+                    <div class="card h-100 border-0 shadow-sm benefit-card">
+                        <div class="card-top-border bg-warning"></div>
+                        <i class="fas fa-bolt text-warning fs-1 mb-3"></i>
+                        <h5 class="fw-bold mb-3">Aprovação imediata</h5>
+                        <p class="text-muted">Resposta em até 5 minutos</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 fade-in-on-scroll">
+                    <div class="card h-100 border-0 shadow-sm benefit-card">
+                        <div class="card-top-border bg-warning"></div>
+                        <i class="fas fa-shield-alt text-warning fs-1 mb-3"></i>
+                        <h5 class="fw-bold mb-3">Débito na conta de luz</h5>
+                        <p class="text-muted">Pagamento automático e seguro</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section-padding bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold mb-4 text-dark">Mais de 1.000 benefícios ao seu alcance</h2>
+                <p class="fs-5 text-muted mb-4">
+                    Se precisar de ajuda, aqui você tem atendimento humanizado 24h por dia, 7 dias por semana.
+                </p>
+                <a href="{{ route('site.cadastro') }}" class="btn btn-warning fw-bold text-dark px-4 py-3 mb-5">
+                    Solicitar Cartão
+                </a>
+            </div>
+
+            <!-- Grid melhorado para 5 cards -->
+            <div class="features-grid">
+                <div class="col-lg-2">
+                    <div class="card h-100 border-0 shadow-sm text-center feature-card">
+                        <div class="feature-icon bg-warning mx-auto mb-3">
+                            <i class="fas fa-heart text-dark"></i>
+                        </div>
+                        <h6 class="fw-bold mb-2">Descontos médicos</h6>
+                        <p class="small text-muted mb-3">Consultas e procedimentos com desconto de até 90%</p>
+                        <a href="#" class="small text-warning fw-medium text-decoration-none">Saiba mais →</a>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="card h-100 border-0 shadow-sm text-center feature-card">
+                        <div class="feature-icon bg-warning mx-auto mb-3">
+                            <i class="fas fa-file-alt text-dark"></i>
+                        </div>
+                        <h6 class="fw-bold mb-2">Descontos em exames</h6>
+                        <p class="small text-muted mb-3">Laboratórios e clínicas parceiras com até 50% off</p>
+                        <a href="#" class="small text-warning fw-medium text-decoration-none">Saiba mais →</a>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="card h-100 border-0 shadow-sm text-center feature-card">
+                        <div class="feature-icon bg-warning mx-auto mb-3">
+                            <i class="fas fa-plane text-dark"></i>
+                        </div>
+                        <h6 class="fw-bold mb-2">Passagens aéreas</h6>
+                        <p class="small text-muted mb-3">Viaje mais gastando menos com 60% de desconto</p>
+                        <a href="#" class="small text-warning fw-medium text-decoration-none">Saiba mais →</a>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="card h-100 border-0 shadow-sm text-center feature-card">
+                        <div class="feature-icon bg-warning mx-auto mb-3">
+                            <i class="fas fa-shield-alt text-dark"></i>
+                        </div>
+                        <h6 class="fw-bold mb-2">Seguro hospitalar</h6>
+                        <p class="small text-muted mb-3">Proteção de R$ 50.000 para toda família</p>
+                        <a href="#" class="small text-warning fw-medium text-decoration-none">Saiba mais →</a>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="card h-100 border-0 shadow-sm text-center feature-card">
+                        <div class="feature-icon bg-warning mx-auto mb-3">
+                            <i class="fas fa-chart-line text-dark"></i>
+                        </div>
+                        <h6 class="fw-bold mb-2">Investimentos</h6>
+                        <p class="small text-muted mb-3">Oportunidades de investimento com retorno atrativo</p>
+                        <a href="#" class="small text-warning fw-medium text-decoration-none">Saiba mais →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partner Network Section -->
+    <section class="py-5 bg-white" id="rede">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold mb-4">Nossa rede credenciada</h2>
+                <p class="fs-5 text-muted">Use seu cartão Multiplic em mais de 1.000 estabelecimentos</p>
+            </div>
+
+            <!-- City Selector -->
+            <div class="d-flex flex-wrap justify-content-center gap-2 mb-4" id="citySelector">
+                <button class="btn btn-dark city-btn active" data-city="São Paulo">São Paulo</button>
+                <button class="btn btn-outline-dark city-btn" data-city="Campinas">Campinas</button>
+                <button class="btn btn-outline-dark city-btn" data-city="Ribeirão Preto">Ribeirão Preto</button>
+                <button class="btn btn-outline-dark city-btn" data-city="Sorocaba">Sorocaba</button>
+                <button class="btn btn-outline-dark city-btn" data-city="Santos">Santos</button>
+            </div>
+
+            <!-- Category Filter -->
+            <div class="d-flex flex-wrap justify-content-center gap-2 mb-4" id="categoryFilter">
+                <button class="btn btn-warning category-btn active" data-category="Todos">Todos</button>
+                <button class="btn btn-outline-warning category-btn" data-category="Supermercados">
+                    🛒 Supermercados
+                </button>
+                <button class="btn btn-outline-warning category-btn" data-category="Farmácias">
+                    💊 Farmácias
+                </button>
+                <button class="btn btn-outline-warning category-btn" data-category="Postos">
+                    ⛽ Postos
+                </button>
+                <button class="btn btn-outline-warning category-btn" data-category="Restaurantes">
+                    🍽️ Restaurantes
+                </button>
+                <button class="btn btn-outline-warning category-btn" data-category="Lojas">
+                    🛍️ Lojas
+                </button>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="row justify-content-center mb-5">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-search text-muted"></i>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Buscar estabelecimento..." id="searchInput">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Establishments Grid -->
+            <div class="row g-4 mb-5" id="establishmentsGrid">
+                <!-- Establishments will be populated by JavaScript -->
+            </div>
+
+            <div class="text-center">
+                <button class="btn btn-warning btn-lg fw-bold text-dark">Ver todos os parceiros</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="section-padding bg-light" id="como-funciona">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold mb-4">Como funciona</h2>
+                <p class="fs-5 text-muted">Simples, rápido e seguro</p>
+            </div>
+
+            <div class="steps-container">
+                <div class="row g-5 position-relative">
+                    <div class="step-line d-none d-md-block"></div>
+
+                    <div class="col-md-4 text-center">
+                        <div class="step-circle">1</div>
+                        <div class="step-content">
+                            <h4 class="fw-bold mb-3">Cadastre-se online</h4>
+                            <p class="text-muted">Preencha seus dados em menos de 5 minutos</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="step-circle">2</div>
+                        <div class="step-content">
+                            <h4 class="fw-bold mb-3">Receba seu cartão</h4>
+                            <p class="text-muted">Cartão entregue em sua casa em até 7 dias</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="step-circle">3</div>
+                        <div class="step-content">
+                            <h4 class="fw-bold mb-3">Use na rede credenciada</h4>
+                            <p class="text-muted">Débito automático na sua conta de energia</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6">
+                    <h2 class="mb-4">Ficou alguma dúvida?</h2>
+                    <p class="mb-4">
+                        Encontre respostas para suas principais dúvidas sobre o cartão Multiplic.
+                    </p>
+                    <button class="btn btn-warning fw-bold text-dark px-4 py-3">
+                        Confira perguntas frequentes
+                    </button>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    Como funciona o débito na conta de luz?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    O valor gasto no cartão é debitado automaticamente na sua próxima conta de energia elétrica da CPFL. É prático e seguro.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    Preciso ter renda comprovada?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    O processo de aprovação é facilitado e não exige comprovação de renda tradicional.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    Qual o limite do cartão?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    O limite é definido com base no seu histórico de pagamento da conta de luz. Pode variar de R$ 200 a R$ 2.000.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    Onde posso usar o cartão?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    O cartão Multiplic pode ser usado em toda nossa rede credenciada de mais de 1.000 estabelecimentos parceiros.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    Como recebo o cartão?
+                                </button>
+                            </h2>
+                            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Após a aprovação, seu cartão é enviado pelos Correios para o endereço cadastrado em até 7 dias úteis.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container text-center">
+            <div class="d-flex align-items-center justify-content-center gap-3 mb-4">
+                <i class="fas fa-award fs-2 text-dark"></i>
+                <span class="fs-4 fw-bold text-dark">Aprovação em 5 minutos</span>
+            </div>
+
+            <h2 class="mb-4">
+                Sua nova vida financeira começa <span class="text-decoration-underline">agora</span>
+            </h2>
+            <p class="mb-5">
+                Não deixe o nome sujo te impedir de ter crédito. Com o Multiplic, você tem acesso a mais de 1.000
+                estabelecimentos e benefícios exclusivos.
+            </p>
+
+            <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center mb-5">
+                <a href="{{ route('site.cadastro') }}" class="btn btn-dark btn-lg fw-bold px-5 py-3 cta-btn">
+                    Quero meu cartão agora
+                    <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+                <a href="#" class="btn btn-outline-dark btn-lg fw-bold px-4 py-3">
+                    <i class="fab fa-whatsapp me-2"></i>Falar no WhatsApp
+                </a>
+            </div>
+
+            <div class="d-flex flex-wrap justify-content-center gap-4">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="fas fa-check-circle text-dark"></i>
+                    <span class="text-dark">Sem anuidade</span>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <i class="fas fa-clock text-dark"></i>
+                    <span class="text-dark">Aprovação rápida</span>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <i class="fas fa-shield-alt text-dark"></i>
+                    <span class="text-dark">100% seguro</span>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection
+
+@push('scripts')
+    <!-- Custom JS -->
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+@endpush

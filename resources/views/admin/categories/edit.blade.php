@@ -13,7 +13,7 @@
         <div class="col-12">
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4">
-                    <form action="{{ route('admin.categories.update', $category) }}" method="POST" class="needs-validation" novalidate>
+                    <form action="{{ route('admin.categories.update', $categoria) }}" method="POST" class="needs-validation" novalidate>
                         @csrf
                         @method('PUT')
 
@@ -38,7 +38,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="nome" class="form-label">Nome <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg @error('nome') is-invalid @enderror" id="nome" name="nome" value="{{ old('nome', $category->nome) }}" required>
+                                    <input type="text" class="form-control form-control-lg @error('nome') is-invalid @enderror" id="nome" name="nome" value="{{ old('nome', $categoria->nome) }}" required>
                                     @error('nome')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror

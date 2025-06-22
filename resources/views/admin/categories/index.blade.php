@@ -76,13 +76,13 @@
                     @foreach($categories as $category)
                         <tr>
                             <td>{{ $category->nome }}</td>
-                            <td>{{ $category->establishments->count() }}</td>
+                            <td>{{ $category->estabelecimentos_count }}</td>
                             <td>
                                 <div class="action-buttons">
                                     <a href="{{ route('admin.categories.edit', $category) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
-                                    @if($category->establishments->count() == 0) {{-- Permite excluir apenas se não houver estabelecimentos associados --}}
+                                    @if($category->estabelecimentos_count == 0) {{-- Permite excluir apenas se não houver estabelecimentos associados --}}
                                         <button
                                             type="button"
                                             class="btn action-btn"

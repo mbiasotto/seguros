@@ -40,6 +40,14 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'usuario' => [
+            'driver' => 'session',
+            'provider' => 'usuarios',
+        ],
+        'estabelecimento' => [
+            'driver' => 'session',
+            'provider' => 'estabelecimentos',
+        ],
         'vendor' => [
             'driver' => 'session',
             'provider' => 'vendors',
@@ -71,6 +79,14 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+        'usuarios' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Usuario::class,
+        ],
+        'estabelecimentos' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Estabelecimento::class,
         ],
         'vendors' => [
             'driver' => 'eloquent',
@@ -110,6 +126,18 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'usuarios' => [
+            'provider' => 'usuarios',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'estabelecimentos' => [
+            'provider' => 'estabelecimentos',
+            'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
         ],

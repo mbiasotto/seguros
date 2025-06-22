@@ -21,6 +21,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'api/*', // Exclude all API routes from CSRF protection
         ]);
+
+        // Registrar middlewares customizados
+        $middleware->alias([
+            'usuario.ativo' => \App\Http\Middleware\UsuarioAtivo::class,
+            'estabelecimento.ativo' => \App\Http\Middleware\EstabelecimentoAtivo::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

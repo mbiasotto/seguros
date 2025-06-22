@@ -2,7 +2,6 @@
 
 @section('title', 'Editar Administrador')
 
-
 @section('content')
 <div class="container-fluid px-0">
     <div class="page-header">
@@ -41,7 +40,6 @@
                         @endif
 
                         <div class="row mb-4">
-                            <!-- Informações Pessoais -->
                             <div class="col-12">
                                 <h5 class="fw-bold text-lg border-bottom pb-2 mb-4">Informações do Administrador</h5>
                             </div>
@@ -49,8 +47,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Nome <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg @error('name') is-invalid @enderror"
-                                           id="name" name="name" value="{{ old('name', $user->name) }}" required>
+                                    <input type="text" class="form-control form-control-lg @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $user->name) }}" required>
                                     @error('name')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -60,29 +57,23 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="email" class="form-label">E-mail <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror"
-                                           id="email" name="email" value="{{ old('email', $user->email) }}" required>
+                                    <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $user->email) }}" required>
                                     @error('email')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
 
-                            <div class="col-12">
-                                <h2 class="fw-bold text-lg mb-3 border-top pt-4">Alterar Senha (opcional)</h2>
-                                <p class="text-muted text-sm mb-3">Deixe em branco para manter a senha atual.</p>
-                            </div>
-
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Nova Senha</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control form-control-lg @error('password') is-invalid @enderror"
-                                               id="password" name="password">
-                                        <button type="button" class="btn btn-secondary" id="generatePassword">
-                                            <i class="fas fa-key me-1"></i> Gerar
+                                        <input type="text" class="form-control form-control-lg @error('password') is-invalid @enderror" id="password" name="password">
+                                        <button type="button" class="btn btn-outline-secondary" id="generatePassword">
+                                            <i class="fas fa-magic me-1"></i> Gerar
                                         </button>
                                     </div>
+                                    <small class="form-text text-muted text-sm">Deixe em branco para manter a senha atual. Mínimo de 8 caracteres.</small>
                                     @error('password')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -92,8 +83,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="password_confirmation" class="form-label">Confirmar Nova Senha</label>
-                                    <input type="text" class="form-control form-control-lg"
-                                           id="password_confirmation" name="password_confirmation">
+                                    <input type="text" class="form-control form-control-lg" id="password_confirmation" name="password_confirmation">
                                 </div>
                             </div>
 
@@ -117,21 +107,5 @@
 @endsection
 
 @push('scripts')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Gerador de senha
-        $('#generatePassword').click(function() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+';
-            let password = '';
-
-            for (let i = 0; i < 12; i++) {
-                password += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-
-            $('#password').val(password);
-            $('#password_confirmation').val(password);
-        });
-    });
-</script>
+<script src="{{ asset('assets/admin/js/utils/password-generator.js') }}"></script>
 @endpush

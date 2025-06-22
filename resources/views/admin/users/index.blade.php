@@ -14,9 +14,15 @@
 <!-- Filtros -->
 <div class="filter-container shadow-sm">
     <form action="{{ route('admin.users.index') }}" method="GET" class="row g-3">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <label for="search" class="form-label">Buscar</label>
             <input type="text" class="form-control" id="search" name="search" placeholder="Nome ou email..." value="{{ request('search') }}">
+        </div>
+        <div class="col-md-2">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-select" id="status" name="status">
+                <option value="">Todos</option>
+            </select>
         </div>
         <div class="col-md-3">
             <label for="order_by" class="form-label">Ordenar por</label>
@@ -56,8 +62,8 @@
                     <tr>
                         <th>Nome</th>
                         <th>E-mail</th>
+                        <th>Status</th>
                         <th>Data</th>
-                        <th>Último Acesso</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -66,23 +72,16 @@
                         <tr>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>
+                                <span class="badge bg-success">Ativo</span>
+                            </td>
                             <td>{{ $user->created_at->format('d/m/Y') }}</td>
                             <td>
-                                @if($user->lastAccess())
-                                    {{ $user->lastAccess()->created_at->format('d/m/Y H:i') }}
-                                @else
-                                    <span class="text-muted">Nunca acessou</span>
-                                @endif
-                            </td>
-                            <td>
                                 <div class="action-buttons">
-                                    <a href="{{ route('admin.users.access-logs', $user) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Histórico de Acesso">
-                                        <i class="fas fa-history"></i>
-                                    </a>
                                     <a href="{{ route('admin.users.edit', $user) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
-                                    @if($user->id !== 1 && (Auth::id() === 1 || Auth::id() !== $user->id) && \App\Models\User::count() > 1)
+                                    @if($user->id !== auth()->id())
                                         <button
                                             type="button"
                                             class="btn action-btn"

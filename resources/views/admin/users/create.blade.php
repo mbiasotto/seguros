@@ -2,7 +2,6 @@
 
 @section('title', 'Novo Administrador')
 
-
 @section('content')
 <div class="container-fluid px-0">
     <div class="page-header">
@@ -31,7 +30,6 @@
                         @endif
 
                         <div class="row mb-4">
-                            <!-- Informações Pessoais -->
                             <div class="col-12">
                                 <h5 class="fw-bold text-lg border-bottom pb-2 mb-4">Informações do Administrador</h5>
                             </div>
@@ -39,8 +37,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Nome <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg @error('name') is-invalid @enderror"
-                                           id="name" name="name" value="{{ old('name') }}" required>
+                                    <input type="text" class="form-control form-control-lg @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required>
                                     @error('name')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -50,8 +47,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="email" class="form-label">E-mail <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror"
-                                           id="email" name="email" value="{{ old('email') }}" required>
+                                    <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required>
                                     @error('email')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -62,13 +58,12 @@
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Senha <span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control form-control-lg @error('password') is-invalid @enderror"
-                                               id="password" name="password" required>
+                                        <input type="text" class="form-control form-control-lg @error('password') is-invalid @enderror" id="password" name="password" required>
                                         <button type="button" class="btn btn-outline-secondary" id="generatePassword">
                                             <i class="fas fa-magic me-1"></i> Gerar
                                         </button>
                                     </div>
-                                    <small class="form-text text-muted text-sm">Mínimo de 6 caracteres.</small>
+                                    <small class="form-text text-muted text-sm">Mínimo de 8 caracteres.</small>
                                     @error('password')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -78,8 +73,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="password_confirmation" class="form-label">Confirmar Senha <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg"
-                                           id="password_confirmation" name="password_confirmation" required>
+                                    <input type="text" class="form-control form-control-lg" id="password_confirmation" name="password_confirmation" required>
                                 </div>
                             </div>
 

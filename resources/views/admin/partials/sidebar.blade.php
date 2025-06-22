@@ -7,15 +7,11 @@
             <i class="fas fa-home"></i>
             <span>Dashboard</span>
         </a>
-        <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
-            <i class="fas fa-user-shield"></i>
-            <span>Administradores</span>
-        </a>
-        <a href="{{ route('admin.vendors.index') }}" class="nav-link {{ request()->routeIs('admin.vendors*') ? 'active' : '' }}">
+        <a href="{{ route('admin.clientes.index') }}" class="nav-link {{ request()->routeIs('admin.clientes*') ? 'active' : '' }}">
             <i class="fas fa-users"></i>
-            <span>Vendedores</span>
+            <span>Clientes</span>
         </a>
-        <a href="{{ route('admin.establishments.index') }}" class="nav-link {{ request()->routeIs('admin.establishments*') && !request()->routeIs('admin.establishments.documents*') ? 'active' : '' }}">
+        <a href="{{ route('admin.establishments.index') }}" class="nav-link {{ request()->routeIs('admin.establishments*') ? 'active' : '' }}">
             <i class="fas fa-store"></i>
             <span>Estabelecimentos</span>
         </a>
@@ -23,17 +19,26 @@
             <i class="fas fa-tags"></i>
             <span>Categorias</span>
         </a>
-        <a href="{{ route('admin.establishments.documents.pending') }}" class="nav-link {{ request()->routeIs('admin.establishments.documents*') ? 'active' : '' }}">
-            <i class="fas fa-file-alt"></i>
-            <span>Documentos</span>
+        <a href="{{ route('admin.contratos.index') }}" class="nav-link {{ request()->routeIs('admin.contratos*') ? 'active' : '' }}">
+            <i class="fas fa-file-contract"></i>
+            <span>Contratos</span>
         </a>
-        <a href="{{ route('admin.qr-codes.index') }}" class="nav-link {{ request()->routeIs('admin.qr-codes*') ? 'active' : '' }}">
-            <i class="fas fa-qrcode"></i>
-            <span>QR Codes</span>
+        <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
+            <i class="fas fa-user-shield"></i>
+            <span>Administradores</span>
+        </a>
+        <a href="{{ route('admin.configuracoes.index') }}" class="nav-link {{ request()->routeIs('admin.configuracoes*') ? 'active' : '' }}">
+            <i class="fas fa-cogs"></i>
+            <span>Configurações</span>
         </a>
     </nav>
-    <a href="/admin/logout" class="btn btn-logout mt-auto">
-        <i class="fas fa-sign-out-alt me-2"></i>
-        <span>Sair</span>
-    </a>
+
+    <!-- Logout Form -->
+    <form action="{{ route('admin.logout') }}" method="POST" class="mt-auto">
+        @csrf
+        <button type="submit" class="btn btn-logout">
+            <i class="fas fa-sign-out-alt me-2"></i>
+            <span>Sair</span>
+        </button>
+    </form>
 </div>

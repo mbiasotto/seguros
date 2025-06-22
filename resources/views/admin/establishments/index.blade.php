@@ -19,11 +19,11 @@
             <input type="text" class="form-control" id="search" name="search" placeholder="Nome, email ou cidade..." value="{{ request('search') }}">
         </div>
         <div class="col-md-2">
-            <label for="vendor_id" class="form-label">Vendedor</label>
-            <select class="form-select" id="vendor_id" name="vendor_id">
-                <option value="">Todos os vendedores</option>
-                @foreach($vendors as $vendor)
-                    <option value="{{ $vendor->id }}" {{ request('vendor_id') == $vendor->id ? 'selected' : '' }}>{{ $vendor->nome }}</option>
+            <label for="cliente_id" class="form-label">Cliente</label>
+            <select class="form-select" id="cliente_id" name="cliente_id">
+                <option value="">Todos os clientes</option>
+                @foreach($clientes as $cliente)
+                    <option value="{{ $cliente->id }}" {{ request('cliente_id') == $cliente->id ? 'selected' : '' }}>{{ $cliente->nome }}</option>
                 @endforeach
             </select>
         </div>
@@ -102,20 +102,20 @@
                 <tbody>
                     @foreach($establishments as $establishment)
                         <tr>
-                            <td class="fw-medium">{{ $establishment->nome }}</td>
-                            <td>{{ $establishment->vendor->nome }}</td>
-                            <td>{{ $establishment->category->nome ?? 'Sem categoria' }}</td>
+                            <td class="fw-medium">{{ $establishment->nome_fantasia ?? $establishment->razao_social }}</td>
+                            <td>{{ $establishment->criadoPorAdmin->name ?? 'N/A' }}</td>
+                            <td>{{ $establishment->categoria->nome ?? 'Sem categoria' }}</td>
                             <td>
-                                @if($establishment->tipo_documento == 'pf')
-                                    <span class="badge bg-info">Pessoa Física</span>
-                                @else
+                                @if($establishment->cnpj)
                                     <span class="badge bg-secondary">Pessoa Jurídica</span>
+                                @else
+                                    <span class="badge bg-info">Pessoa Física</span>
                                 @endif
                             </td>
                             <td>{{ $establishment->cidade }}/{{ $establishment->estado }}</td>
                             <td>{{ $establishment->created_at->format('d/m/Y') }}</td>
                             <td>
-                                @if($establishment->ativo)
+                                @if($establishment->status == 'ativo')
                                     <span class="badge bg-success">Ativo</span>
                                 @else
                                     <span class="badge bg-danger">Inativo</span>
@@ -123,16 +123,6 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    @if(!($establishment->onboarding && $establishment->onboarding->contract_accepted))
-                                        @if($establishment->onboarding && $establishment->onboarding->token)
-                                        <a href="{{ route('establishment.onboarding', ['token' => $establishment->onboarding->token]) }}" target="_blank" class="btn action-btn" data-bs-toggle="tooltip" title="Link do Termo">
-                                            <i class="fas fa-file-contract"></i>
-                                        </a>
-                                        @endif
-                                        <a href="{{ route('admin.establishments.resend-term-email', $establishment) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Reenviar Email do Termo">
-                                            <i class="fas fa-envelope"></i>
-                                        </a>
-                                    @endif
                                     <a href="{{ route('admin.establishments.edit', $establishment) }}" class="btn action-btn" data-bs-toggle="tooltip" title="Editar">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
@@ -141,7 +131,7 @@
                                         class="btn action-btn"
                                         data-delete-url="{{ route('admin.establishments.destroy', $establishment) }}"
                                         data-delete-title="Excluir Estabelecimento"
-                                        data-delete-message="Tem certeza que deseja excluir o estabelecimento '{{ $establishment->nome }}'?"
+                                        data-delete-message="Tem certeza que deseja excluir o estabelecimento '{{ $establishment->nome_fantasia ?? $establishment->razao_social }}'?"
                                         data-delete-confirm="Sim, Excluir"
                                         data-delete-cancel="Cancelar"
                                         data-bs-toggle="tooltip"

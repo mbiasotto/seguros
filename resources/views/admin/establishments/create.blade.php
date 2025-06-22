@@ -29,147 +29,181 @@
                             </div>
                         @endif
 
-                        {{-- Form fields remain the same --}}
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="mb-4">
-                                    <label for="vendor_id" class="form-label">Vendedor Responsável <span class="text-danger">*</span></label>
-                                    <select class="form-select form-select-lg" id="vendor_id" name="vendor_id" required>
-                                        <option value="">Selecione um vendedor</option>
-                                        @foreach($vendors as $vendor)
-                                            <option value="{{ $vendor->id }}" {{ old('vendor_id') == $vendor->id ? 'selected' : '' }}>
-                                                {{ $vendor->nome }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <div class="form-text text-sm">Selecione o vendedor responsável por este estabelecimento</div>
-                                </div>
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="fw-bold text-lg border-bottom pb-2 mb-4">Informações do Estabelecimento</h5>
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="mb-4">
-                                    <label for="category_id" class="form-label">Categoria <span class="text-danger">*</span></label>
-                                    <select class="form-select form-select-lg" id="category_id" name="category_id" required>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="categoria_id" class="form-label">Categoria <span class="text-danger">*</span></label>
+                                    <select class="form-select form-select-lg @error('categoria_id') is-invalid @enderror" id="categoria_id" name="categoria_id" required>
                                         <option value="">Selecione uma categoria</option>
                                         @foreach($categories as $category)
-                                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                            <option value="{{ $category->id }}" {{ old('categoria_id') == $category->id ? 'selected' : '' }}>
                                                 {{ $category->nome }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    <div class="form-text text-sm">Selecione a categoria do estabelecimento</div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="mb-4 pt-md-4 mt-md-2">
-                                    <div class="form-check form-switch">
-                                        <input type="checkbox" class="form-check-input" id="ativo" name="ativo" value="1" {{ old('ativo', true) ? 'checked' : '' }} style="width: 3em; height: 1.5em;">
-                                        <label class="form-check-label fs-5 ms-2" for="ativo">Estabelecimento Ativo</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <h2 class="font-semibold text-lg border-bottom pb-2 mb-4">Informações Principais</h2>
-
-                        <div class="row mb-4">
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label for="tipo_documento" class="form-label">Tipo de Pessoa <span class="text-danger">*</span></label>
-                                    <div class="d-flex mt-2">
-                                        <div class="form-check me-4">
-                                            <input class="form-check-input" type="radio" name="tipo_documento" id="tipo_pj" value="pj" {{ old('tipo_documento', 'pj') == 'pj' ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="tipo_pj">
-                                                Pessoa Jurídica
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="tipo_documento" id="tipo_pf" value="pf" {{ old('tipo_documento') == 'pf' ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="tipo_pf">
-                                                Pessoa Física
-                                            </label>
-                                        </div>
-                                    </div>
+                                    @error('categoria_id')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="nome" class="form-label">Nome <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg" id="nome" name="nome" value="{{ old('nome') }}" required>
+                                    <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                                    <select class="form-select form-select-lg @error('status') is-invalid @enderror" id="status" name="status" required>
+                                        <option value="">Selecione o status</option>
+                                        <option value="ativo" {{ old('status', 'ativo') == 'ativo' ? 'selected' : '' }}>Ativo</option>
+                                        <option value="pendente" {{ old('status') == 'pendente' ? 'selected' : '' }}>Pendente</option>
+                                        <option value="bloqueado" {{ old('status') == 'bloqueado' ? 'selected' : '' }}>Bloqueado</option>
+                                    </select>
+                                    @error('status')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 
-                            <div class="col-md-6 documento-pj" {{ old('tipo_documento') == 'pf' ? 'style=display:none' : '' }}>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="razao_social" class="form-label">Razão Social <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control form-control-lg @error('razao_social') is-invalid @enderror" id="razao_social" name="razao_social" value="{{ old('razao_social') }}" required>
+                                    @error('razao_social')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="nome_fantasia" class="form-label">Nome Fantasia</label>
+                                    <input type="text" class="form-control form-control-lg @error('nome_fantasia') is-invalid @enderror" id="nome_fantasia" name="nome_fantasia" value="{{ old('nome_fantasia') }}">
+                                    @error('nome_fantasia')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="cnpj" class="form-label">CNPJ <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg cnpj-mask" id="cnpj" name="cnpj" value="{{ old('cnpj') }}" placeholder="00.000.000/0000-00" {{ old('tipo_documento', 'pj') == 'pj' ? 'required' : '' }}>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 documento-pf" {{ old('tipo_documento', 'pj') == 'pj' ? 'style=display:none' : '' }}>
-                                <div class="mb-3">
-                                    <label for="cpf" class="form-label">CPF <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg cpf-mask" id="cpf" name="cpf" value="{{ old('cpf') }}" placeholder="000.000.000-00" {{ old('tipo_documento') == 'pf' ? 'required' : '' }}>
+                                    <input type="text" class="form-control form-control-lg cnpj-mask @error('cnpj') is-invalid @enderror" id="cnpj" name="cnpj" value="{{ old('cnpj') }}" placeholder="00.000.000/0000-00" required>
+                                    @error('cnpj')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control form-control-lg" id="email" name="email" value="{{ old('email') }}" required>
+                                    <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required>
+                                    @error('email')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="telefone" class="form-label">Telefone <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg phone-mask" id="telefone" name="telefone" value="{{ old('telefone') }}" placeholder="(00) 00000-0000" required>
+                                    <input type="text" class="form-control form-control-lg phone-mask @error('telefone') is-invalid @enderror" id="telefone" name="telefone" value="{{ old('telefone') }}" placeholder="(00) 00000-0000" required>
+                                    @error('telefone')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
 
-                        <h2 class="font-semibold text-lg border-bottom pb-2 mb-4">Endereço</h2>
-
                         <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="fw-bold text-lg border-bottom pb-2 mb-4">Endereço</h5>
+                            </div>
+
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label for="cep" class="form-label">CEP <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg cep-mask" id="cep" name="cep" value="{{ old('cep') }}" placeholder="00000-000" required>
+                                    <input type="text" class="form-control form-control-lg cep-mask @error('cep') is-invalid @enderror" id="cep" name="cep" value="{{ old('cep') }}" placeholder="00000-000" required>
+                                    @error('cep')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-7">
                                 <div class="mb-3">
                                     <label for="endereco" class="form-label">Endereço <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg" id="endereco" name="endereco" value="{{ old('endereco') }}" required>
+                                    <input type="text" class="form-control form-control-lg @error('endereco') is-invalid @enderror" id="endereco" name="endereco" value="{{ old('endereco') }}" required>
+                                    @error('endereco')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-2">
                                 <div class="mb-3">
                                     <label for="numero" class="form-label">Número</label>
-                                    <input type="text" class="form-control form-control-lg" id="numero" name="numero" value="{{ old('numero') }}">
+                                    <input type="text" class="form-control form-control-lg @error('numero') is-invalid @enderror" id="numero" name="numero" value="{{ old('numero') }}">
+                                    @error('numero')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="bairro" class="form-label">Bairro <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control form-control-lg @error('bairro') is-invalid @enderror" id="bairro" name="bairro" value="{{ old('bairro') }}" required>
+                                    @error('bairro')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="cidade" class="form-label">Cidade <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg" id="cidade" name="cidade" value="{{ old('cidade') }}" required>
+                                    <input type="text" class="form-control form-control-lg @error('cidade') is-invalid @enderror" id="cidade" name="cidade" value="{{ old('cidade') }}" required>
+                                    @error('cidade')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="estado" class="form-label">Estado <span class="text-danger">*</span></label>
-                                    <select class="form-select form-select-lg @error('estado') is-invalid @enderror"
-                                           id="estado" name="estado" required>
+                                    <select class="form-select form-select-lg @error('estado') is-invalid @enderror" id="estado" name="estado" required>
                                         <option value="">Selecione o estado</option>
-                                        @foreach(\App\Models\Estado::orderBy('nome')->get() as $estado)
-                                            <option value="{{ $estado->sigla }}" {{ old('estado') == $estado->sigla ? 'selected' : '' }}>{{ $estado->nome }}</option>
-                                        @endforeach
+                                        <option value="AC" {{ old('estado') == 'AC' ? 'selected' : '' }}>Acre</option>
+                                        <option value="AL" {{ old('estado') == 'AL' ? 'selected' : '' }}>Alagoas</option>
+                                        <option value="AP" {{ old('estado') == 'AP' ? 'selected' : '' }}>Amapá</option>
+                                        <option value="AM" {{ old('estado') == 'AM' ? 'selected' : '' }}>Amazonas</option>
+                                        <option value="BA" {{ old('estado') == 'BA' ? 'selected' : '' }}>Bahia</option>
+                                        <option value="CE" {{ old('estado') == 'CE' ? 'selected' : '' }}>Ceará</option>
+                                        <option value="DF" {{ old('estado') == 'DF' ? 'selected' : '' }}>Distrito Federal</option>
+                                        <option value="ES" {{ old('estado') == 'ES' ? 'selected' : '' }}>Espírito Santo</option>
+                                        <option value="GO" {{ old('estado') == 'GO' ? 'selected' : '' }}>Goiás</option>
+                                        <option value="MA" {{ old('estado') == 'MA' ? 'selected' : '' }}>Maranhão</option>
+                                        <option value="MT" {{ old('estado') == 'MT' ? 'selected' : '' }}>Mato Grosso</option>
+                                        <option value="MS" {{ old('estado') == 'MS' ? 'selected' : '' }}>Mato Grosso do Sul</option>
+                                        <option value="MG" {{ old('estado') == 'MG' ? 'selected' : '' }}>Minas Gerais</option>
+                                        <option value="PA" {{ old('estado') == 'PA' ? 'selected' : '' }}>Pará</option>
+                                        <option value="PB" {{ old('estado') == 'PB' ? 'selected' : '' }}>Paraíba</option>
+                                        <option value="PR" {{ old('estado') == 'PR' ? 'selected' : '' }}>Paraná</option>
+                                        <option value="PE" {{ old('estado') == 'PE' ? 'selected' : '' }}>Pernambuco</option>
+                                        <option value="PI" {{ old('estado') == 'PI' ? 'selected' : '' }}>Piauí</option>
+                                        <option value="RJ" {{ old('estado') == 'RJ' ? 'selected' : '' }}>Rio de Janeiro</option>
+                                        <option value="RN" {{ old('estado') == 'RN' ? 'selected' : '' }}>Rio Grande do Norte</option>
+                                        <option value="RS" {{ old('estado') == 'RS' ? 'selected' : '' }}>Rio Grande do Sul</option>
+                                        <option value="RO" {{ old('estado') == 'RO' ? 'selected' : '' }}>Rondônia</option>
+                                        <option value="RR" {{ old('estado') == 'RR' ? 'selected' : '' }}>Roraima</option>
+                                        <option value="SC" {{ old('estado') == 'SC' ? 'selected' : '' }}>Santa Catarina</option>
+                                        <option value="SP" {{ old('estado') == 'SP' ? 'selected' : '' }}>São Paulo</option>
+                                        <option value="SE" {{ old('estado') == 'SE' ? 'selected' : '' }}>Sergipe</option>
+                                        <option value="TO" {{ old('estado') == 'TO' ? 'selected' : '' }}>Tocantins</option>
                                     </select>
                                     @error('estado')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -178,36 +212,15 @@
                             </div>
                         </div>
 
-                        <h2 class="font-semibold text-lg border-bottom pb-2 mb-4">Materiais</h2>
-
-                        <div class="row mb-4">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="logo" class="form-label">Logo</label>
-                                    <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
-                                    <div class="form-text text-sm">Tamanho máximo do arquivo: 15MB. Recomendado: Fundo transparente, formato PNG ou SVG.</div>
-                                </div>
+                        <div class="col-12">
+                            <div class="d-flex justify-content-end mt-4">
+                                <a href="{{ route('admin.establishments.index') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center me-2">
+                                    <i class="fas fa-times me-2"></i> Cancelar
+                                </a>
+                                <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-save me-2"></i> Cadastrar
+                                </button>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="image" class="form-label">Imagem</label>
-                                    <input type="file" class="form-control" id="image" name="image" accept="image/*">
-                                    <div class="form-text text-sm">Tamanho máximo do arquivo: 15MB. Imagem principal para o estabelecimento.</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <h2 class="font-semibold text-lg border-bottom pb-2 mb-4">QR Codes</h2>
-
-                        <x-qr-code-manager :qrCodes="$qrCodes" />
-
-                        <div class="d-flex justify-content-end mt-4">
-                            <a href="{{ route('admin.establishments.index') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center me-2">
-                                <i class="fas fa-times me-2"></i> Cancelar
-                            </a>
-                            <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center">
-                                <i class="fas fa-save me-2"></i> Cadastrar
-                            </button>
                         </div>
                     </form>
                 </div>
@@ -215,16 +228,10 @@
         </div>
     </div>
 </div>
-
-{{-- Incluindo o modal de remoção --}}
-<x-qr-code-remove-modal />
+@endsection
 
 @push('scripts')
 {{-- Utility Scripts --}}
 <script src="{{ asset('assets/js/utils/input-masks.js') }}"></script>
 <script src="{{ asset('assets/js/utils/cep-lookup.js') }}"></script>
-<script src="{{ asset('assets/js/components/qr-code-manager.js') }}"></script>
-<script src="{{ asset('assets/js/utils/documento-tipo-toggle.js') }}"></script>
 @endpush
-
-@endsection

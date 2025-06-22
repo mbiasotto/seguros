@@ -2,133 +2,149 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
-use App\Models\User;
+use Carbon\Carbon;
 
 class EstablishmentOnboarding extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'establishment_id',
         'token',
+        'contract_accepted',
+        'contract_accepted_at',
+        'contract_version',
+        'acceptance_details',
         'document_path',
         'document_approved',
         'document_approved_at',
-        'approved_by_user_id',
+        'document_approved_by',
         'approval_notes',
-        'contract_accepted',
-        'contract_accepted_at',
-        'ip_address',
-        'completed',
-        'completed_at',
-        'expires_at'
+        'user_ip',
+        'user_agent',
+        'completed_at'
     ];
 
     protected $casts = [
         'contract_accepted' => 'boolean',
-        'completed' => 'boolean',
-        'document_approved' => 'boolean',
         'contract_accepted_at' => 'datetime',
-        'completed_at' => 'datetime',
+        'document_approved' => 'boolean',
         'document_approved_at' => 'datetime',
-        'expires_at' => 'datetime'
+        'acceptance_details' => 'json',
+        'completed_at' => 'datetime'
     ];
 
     /**
-     * Relacionamento com o estabelecimento
+     * Relacionamento com estabelecimento
      */
-    public function establishment(): BelongsTo
+    public function establishment()
     {
-        return $this->belongsTo(Establishment::class);
+        return $this->belongsTo(Estabelecimento::class);
     }
 
     /**
-     * Relacionamento com o usuário que aprovou o documento
+     * Relacionamento com o admin que aprovou o documento
      */
-    public function approvedByUser(): BelongsTo
+    public function approvedBy()
     {
-        return $this->belongsTo(User::class, 'approved_by_user_id');
+        return $this->belongsTo(User::class, 'document_approved_by');
     }
 
     /**
-     * Gera um token único para o onboarding
+     * Gerar token único
      */
-    public static function generateUniqueToken(): string
+    public static function generateToken()
     {
-        $token = Str::random(64);
-
-        // Verifica se o token já existe
-        while (self::where('token', $token)->exists()) {
+        do {
             $token = Str::random(64);
-        }
+        } while (self::where('token', $token)->exists());
 
         return $token;
     }
 
     /**
-     * Verifica se o onboarding está expirado
+     * Verificar se o onboarding está completo
      */
-    public function isExpired(): bool
+    public function isCompleted()
     {
-        // Se não houver data de expiração definida, o token não expira
-        if (!$this->expires_at) {
-            return false;
-        }
-
-        return now()->gt($this->expires_at);
+        return $this->contract_accepted &&
+               $this->contract_accepted_at &&
+               (!$this->document_path || ($this->document_approved && $this->document_approved_at));
     }
 
     /**
-     * Verifica se o onboarding está completo
+     * Marcar como aceito
      */
-    public function isCompleted(): bool
-    {
-        return $this->completed;
-    }
-
-    /**
-     * Marca o onboarding como completo
-     */
-    public function markAsCompleted(): void
+    public function markAsAccepted(array $acceptanceDetails = [])
     {
         $this->update([
-            'completed' => true,
-            'completed_at' => now()
+            'contract_accepted' => true,
+            'contract_accepted_at' => Carbon::now(),
+            'acceptance_details' => $acceptanceDetails,
+            'completed_at' => Carbon::now()
         ]);
+
+        return $this;
     }
 
     /**
-     * Verifica se o documento foi aprovado
+     * Aprovar documento
      */
-    public function isDocumentApproved(): bool
-    {
-        return $this->document_approved;
-    }
-
-    /**
-     * Aprova o documento do estabelecimento
-     */
-    public function approveDocument(int $userId, ?string $notes = null): void
+    public function approveDocument($adminId, $notes = null)
     {
         $this->update([
             'document_approved' => true,
-            'document_approved_at' => now(),
-            'approved_by_user_id' => $userId,
+            'document_approved_at' => Carbon::now(),
+            'document_approved_by' => $adminId,
             'approval_notes' => $notes
         ]);
+
+        return $this;
     }
 
     /**
-     * Rejeita o documento do estabelecimento
+     * Rejeitar documento
      */
-    public function rejectDocument(int $userId, ?string $notes = null): void
+    public function rejectDocument($adminId, $notes = null)
     {
         $this->update([
             'document_approved' => false,
-            'document_approved_at' => now(),
-            'approved_by_user_id' => $userId,
+            'document_approved_at' => Carbon::now(),
+            'document_approved_by' => $adminId,
             'approval_notes' => $notes
         ]);
+
+        return $this;
+    }
+
+    /**
+     * Escopo para documentos pendentes
+     */
+    public function scopePendingDocuments($query)
+    {
+        return $query->whereNotNull('document_path')
+                    ->where('document_approved', false)
+                    ->whereNull('document_approved_at');
+    }
+
+    /**
+     * Escopo para onboardings completos
+     */
+    public function scopeCompleted($query)
+    {
+        return $query->where('contract_accepted', true)
+                    ->whereNotNull('contract_accepted_at');
+    }
+
+    /**
+     * Escopo para onboardings pendentes
+     */
+    public function scopePending($query)
+    {
+        return $query->where('contract_accepted', false)
+                    ->orWhereNull('contract_accepted_at');
     }
 }

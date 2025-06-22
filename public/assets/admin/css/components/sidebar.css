@@ -37,19 +37,28 @@
     margin: var(--spacing-md) var(--spacing-lg);
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
+    justify-content: center;
+    gap: 0.75rem;
     color: #fff;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.08);
     border: none;
-    transition: var(--transition);
+    border-radius: 8px;
+    padding: 0.875rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    width: calc(100% - 2rem);
+    transition: all 0.3s ease;
 }
 
 .sidebar .btn-logout:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar .btn-logout i {
-    margin-right: var(--spacing-sm);
+    font-size: 1rem;
 }
 
 /* Mobile responsiveness */

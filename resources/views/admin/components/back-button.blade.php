@@ -3,6 +3,9 @@
     @param string $route Rota para onde o botão deve direcionar
 --}}
 
-<a href="{{ $route }}" class="btn btn-outline-secondary">
-    <i class="fas fa-chevron-left me-2"></i> Voltar
+@props(['route'])
+
+<a href="{{ $route }}" class="btn btn-light d-flex align-items-center">
+    <i class="fas fa-arrow-left me-2"></i>
+    <span>Voltar</span>
 </a>

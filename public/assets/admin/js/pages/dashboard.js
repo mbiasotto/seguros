@@ -71,20 +71,20 @@ const AdminDashboard = {
             this.monthlyChart = new Chart($monthlyChartCanvas[0], monthlyConfig);
         }
 
-        // QR Code Logs Chart
-        const $qrLogsChartCanvas = $('#qrLogsChart');
-        if ($qrLogsChartCanvas.length && typeof Chart !== 'undefined') {
-            // Assuming qr_logs data is passed within the same main chartData object from the controller
-            const qrLogsData = ($monthlyChartCanvas.data('chart') || {}).qr_logs || this.generateRandomData(labels.length);
+        // Users Chart
+        const $usersChartCanvas = $('#usersChart');
+        if ($usersChartCanvas.length && typeof Chart !== 'undefined') {
+            const usersChartData = $usersChartCanvas.data('chart') || {};
+            const usersData = usersChartData.users || this.generateRandomData(labels.length);
 
-            const qrLogsConfig = {
+            const usersConfig = {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [
                         {
-                            label: 'Acessos QR Code',
-                            data: qrLogsData,
+                            label: 'Usuários',
+                            data: usersData,
                             borderColor: 'rgba(46, 184, 92, 1)', // Green color
                             backgroundColor: 'rgba(46, 184, 92, 0.2)',
                             tension: 0.4,
@@ -117,7 +117,7 @@ const AdminDashboard = {
                     }
                 }
             };
-            this.qrLogsChart = new Chart($qrLogsChartCanvas[0], qrLogsConfig);
+            this.usersChart = new Chart($usersChartCanvas[0], usersConfig);
         }
     },
 

@@ -1,281 +1,130 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminUsuarioController;
+use App\Http\Controllers\Admin\AdminEstabelecimentoController;
+use App\Http\Controllers\Admin\AdminCategoriaController;
+use App\Http\Controllers\Admin\AdminClienteController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\ContratoController as AdminContratoController;
+use App\Http\Controllers\Admin\ConfiguracaoController;
+use App\Http\Controllers\Usuario\UsuarioAuthController;
+use App\Http\Controllers\Usuario\UsuarioDashboardController;
+use App\Http\Controllers\Usuario\RecargaController;
+use App\Http\Controllers\Estabelecimento\EstabelecimentoAuthController;
+use App\Http\Controllers\Estabelecimento\EstabelecimentoDashboardController;
+use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Admin\VendorController;
-use App\Http\Controllers\Vendor\VendorAuthController;
-// use App\Http\Controllers\EstablishmentController; // Comentado pois o de Vendor foi criado
-use App\Http\Controllers\Vendor\EstablishmentController as VendorEstablishmentController;
-use App\Http\Controllers\Admin\EstablishmentController;
-use App\Http\Controllers\Admin\QrCodeController;
-use App\Http\Controllers\Admin\QrCodePdfController;
-use App\Http\Controllers\QrCodeRedirectController;
-use App\Http\Controllers\QrCodeStatisticsController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Establishment\EstablishmentAuthController;
-use App\Http\Controllers\Establishment\DashboardController as EstablishmentDashboardController;
-use App\Http\Controllers\Establishment\ForgotPasswordController as EstablishmentForgotPasswordController;
-use App\Http\Controllers\Establishment\ResetPasswordController as EstablishmentResetPasswordController;
-use App\Http\Controllers\Establishment\ChangePasswordController as EstablishmentChangePasswordController;
-use App\Http\Controllers\Vendor\ChangePasswordController as VendorChangePasswordController;
 
-// ======================================================================
-// Rotas de Autenticação Diretas (fora dos grupos de prefixo)
-// ======================================================================
+// Rotas do Site movidas para cima para ter prioridade
+Route::get('/', [SiteController::class, 'index'])->name('site.index');
+Route::get('/cadastro', [SiteController::class, 'cadastro'])->name('site.cadastro');
+Route::post('/cadastro', [SiteController::class, 'cadastroStore'])->name('site.cadastro.store');
+Route::get('/cadastro/sucesso', [SiteController::class, 'cadastroSucesso'])->name('site.cadastro.sucesso');
 
-// Rotas de login diretas - devem estar antes de outras rotas
-Route::get('/admin/login', function () {
-    // Only check admin auth for admin login
-    if (Auth::guard('web')->check()) {
-        return redirect()->route('admin.dashboard');
+// Páginas institucionais
+Route::get('/termos-de-uso', [SiteController::class, 'termosDeUso'])->name('site.termos');
+Route::get('/politica-de-privacidade', [SiteController::class, 'politicaPrivacidade'])->name('site.privacidade');
+Route::get('/contato', [SiteController::class, 'contato'])->name('site.contato');
+Route::post('/contato', [SiteController::class, 'contatoStore'])->name('site.contato.store');
+Route::get('/rede-credenciada', [SiteController::class, 'redeCredenciada'])->name('site.rede');
+Route::get('/central-de-ajuda', [SiteController::class, 'centralAjuda'])->name('site.ajuda');
+Route::get('/suporte', [SiteController::class, 'suporte'])->name('site.suporte');
+
+// Rota removida - dashboard não existe
+
+// Rota raiz /usuario - redirecionamento inteligente
+Route::get('/usuario', function () {
+    if (Auth::guard('usuario')->check()) {
+        return redirect()->route('usuario.dashboard');
     }
-    return app()->make(LoginController::class)->showLoginForm();
+    return redirect()->route('usuario.login');
 });
 
-Route::get('/vendor/login', function () {
-    // Only check vendor auth for vendor login
-    if (Auth::guard('vendor')->check()) {
-        return redirect()->route('vendor.dashboard');
+// Rota raiz /estabelecimento - redirecionamento inteligente
+Route::get('/estabelecimento', function () {
+    if (Auth::guard('estabelecimento')->check()) {
+        return redirect()->route('estabelecimento.dashboard');
     }
-    return app()->make(VendorAuthController::class)->showLoginForm();
+    return redirect()->route('estabelecimento.login');
 });
 
-// Direct logout routes to avoid CSRF issues
-Route::match(['get', 'post'], '/admin/logout', [LoginController::class, 'logout']);
-Route::match(['get', 'post'], '/vendor/logout', [VendorAuthController::class, 'logout']);
-Route::match(['get', 'post'], '/minhaarea/logout', [EstablishmentAuthController::class, 'logout']);
+// Rotas Usuario
+Route::prefix('usuario')->name('usuario.')->group(function () {
+    // Auth routes
+    Route::middleware('guest:usuario')->group(function () {
+        Route::get('login', [UsuarioAuthController::class, 'showLoginForm'])->name('login');
+        Route::post('login', [UsuarioAuthController::class, 'login'])->middleware('throttle:5,1');
+    });
 
-// QR Code Redirect Route
-Route::get('/qr-code/{id}', [QrCodeRedirectController::class, 'redirect'])->name('qr-code.redirect');
-Route::get('/code/{id}', [QrCodeRedirectController::class, 'redirect'])->name('code.redirect');
-
-// Site Routes
-Route::get('/', [\App\Http\Controllers\SiteController::class, 'index'])->name('site.index');
-Route::get('/parceiro', [\App\Http\Controllers\SiteController::class, 'parceiro'])->name('site.parceiro');
-Route::get('/vendedor', [\App\Http\Controllers\SiteController::class, 'vendedor'])->name('site.vendedor');
-
-// Rotas da API Fake para testes - sem middleware de autenticação e sempre retornando JSON
-Route::prefix('api/fake')->name('api.fake.')->group(function () {
-    Route::match(['get', 'post'], '/verificar-cliente', [\App\Http\Controllers\Api\FakeApiController::class, 'verificarCliente'])->name('verificar-cliente');
-    Route::match(['get', 'post'], '/cadastrar-cliente', [\App\Http\Controllers\Api\FakeApiController::class, 'cadastrarCliente'])->name('cadastrar-cliente');
-    Route::match(['get', 'post'], '/listar-clientes', [\App\Http\Controllers\Api\FakeApiController::class, 'listarClientes'])->name('listar-clientes');
+    // Protected routes
+    Route::middleware(['auth:usuario', 'usuario.ativo'])->group(function () {
+        Route::get('dashboard', [UsuarioDashboardController::class, 'index'])->name('dashboard');
+        Route::resource('recargas', RecargaController::class)->only(['index', 'create', 'store']);
+        Route::post('logout', [UsuarioAuthController::class, 'logout'])->name('logout');
+    });
 });
 
-// Admin Routes
+// Rotas Estabelecimento
+Route::prefix('estabelecimento')->name('estabelecimento.')->group(function () {
+    // Auth routes
+    Route::middleware('guest:estabelecimento')->group(function () {
+        Route::get('login', [EstabelecimentoAuthController::class, 'showLoginForm'])->name('login');
+        Route::post('login', [EstabelecimentoAuthController::class, 'login'])->middleware('throttle:5,1');
+    });
+
+    // Protected routes
+    Route::middleware(['auth:estabelecimento', 'estabelecimento.ativo'])->group(function () {
+        Route::get('dashboard', [EstabelecimentoDashboardController::class, 'index'])->name('dashboard');
+        Route::post('logout', [EstabelecimentoAuthController::class, 'logout'])->name('logout');
+    });
+});
+
+// Rotas Admin Auth (fora do middleware auth)
 Route::prefix('admin')->name('admin.')->group(function () {
-    // Rota raiz para /admin - redireciona para dashboard se autenticado, ou para login se não
-    Route::get('/', function () {
-        if (Auth::check()) {
-            return redirect()->route('admin.dashboard');
-        }
-        return redirect()->route('admin.login');
+    // Auth routes - usando guest:web para especificar o guard correto
+    Route::middleware('guest:web')->group(function () {
+        Route::get('login', [AdminAuthController::class, 'showLoginForm'])->name('login');
+        Route::post('login', [AdminAuthController::class, 'login'])->middleware('throttle:5,1');
     });
 
-    // Rotas de autenticação para admin
-    Route::get('login', function() {
-        // Only check admin auth for admin login
-        if (Auth::guard('web')->check()) {
-            return redirect()->route('admin.dashboard');
-        }
-        return app()->make(LoginController::class)->showLoginForm();
-    })->name('login');
-    Route::post('login', [LoginController::class, 'login'])->name('login.submit');
-
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-    // Password Reset Routes
-    Route::get('password/reset', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-    Route::post('password/email', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-    Route::get('password/reset/{token}', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-    Route::post('password/reset', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');
-
-    // Protected Admin Routes
-    Route::middleware(['auth'])->group(function () {
-        Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
-
-        // User Management Routes
-        Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
-        Route::get('users/{user}/access-logs', [\App\Http\Controllers\Admin\UserController::class, 'accessLogs'])->name('users.access-logs');
-
-        // Vendor Management Routes
-        Route::resource('vendors', VendorController::class);
-        Route::get('vendors/{vendor}/access-logs', [VendorController::class, 'accessLogs'])->name('vendors.access-logs');
-
-        // Establishment Documents Routes (Moved Before Resource Route)
-        Route::prefix('establishments/documents')->name('establishments.documents.')->group(function () {
-            Route::get('/', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'index'])->name('index');
-            Route::get('/pending', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'pending'])->name('pending');
-            Route::get('/approved', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'approved'])->name('approved');
-            Route::get('/rejected', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'rejected'])->name('rejected');
-            Route::get('/{onboarding}', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'show'])->name('show');
-            Route::get('/{onboarding}/view', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'viewDocument'])->name('view');
-            Route::post('/{onboarding}/approve', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'approve'])->name('approve');
-            Route::post('/{onboarding}/reject', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'reject'])->name('reject');
-            Route::delete('/{onboarding}', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'destroy'])->name('destroy');
-        });
-
-        // Establishment Management Routes
-        Route::resource('establishments', EstablishmentController::class);
-        Route::get('establishments/{establishment}/resend-term-email', [\App\Http\Controllers\Admin\EstablishmentController::class, 'resendTermEmail'])
-            ->name('establishments.resend-term-email');
-
-        // Rotas para Upload de Documento do Estabelecimento (Admin)
-        Route::get('establishments/{establishment}/documents/upload', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'showUploadForm'])
-            ->name('establishments.documents.upload.show');
-        Route::post('establishments/{establishment}/documents/upload', [\App\Http\Controllers\Admin\DocumentApprovalController::class, 'handleUpload'])
-            ->name('establishments.documents.upload.store');
-
-        // Category Management Routes
-        Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
-
-        // QR Code Management Routes
-        Route::resource('qr-codes', QrCodeController::class)->except([
-            // adicione métodos que não precisam das rotas resource aqui se necessário
-        ]);
-        Route::get('qr-codes/{qrCode}/download', [QrCodeController::class, 'download'])->name('qr-codes.download');
-        Route::get('/qr-codes-pdf', [QrCodePdfController::class, 'generatePdf'])->name('qr-codes.pdf');
-
-        // QR Code Statistics Routes
-        Route::prefix('qr-codes/statistics')->name('qr-codes.statistics.')->group(function () {
-            Route::get('/', [\App\Http\Controllers\QrCodeStatisticsController::class, 'index'])->name('index');
-            Route::get('/{id}', [\App\Http\Controllers\QrCodeStatisticsController::class, 'show'])->name('show');
-        });
-
-        // Rota para gerar QR Codes em lote
-        Route::get('/gerar-qrs/{startId}/{endId}', [QrCodeController::class, 'generateBatch'])
-            ->where(['startId' => '[0-9]+', 'endId' => '[0-9]+'])
-            ->name('qr-codes.generate-batch');
-    });
+    Route::post('logout', [AdminAuthController::class, 'logout'])->name('logout');
 });
 
-// Vendor Routes
-Route::prefix('vendor')->name('vendor.')->group(function () {
-    // Rota raiz para /vendor - redireciona para dashboard se autenticado, ou para login se não
-    Route::get('/', function () {
-        if (Auth::guard('vendor')->check()) {
-            return redirect()->route('vendor.dashboard');
-        }
-        return redirect()->route('vendor.login');
-    });
+// Rotas Admin (com middleware auth)
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    // Dashboard
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [AdminDashboardController::class, 'index']);
 
-    // Guest Vendor Routes
-    Route::get('login', function() {
-        // Only check vendor auth for vendor login
-        if (Auth::guard('vendor')->check()) {
-            return redirect()->route('vendor.dashboard');
-        }
-        return app()->make(VendorAuthController::class)->showLoginForm();
-    })->name('login');
-    Route::post('login', [VendorAuthController::class, 'login'])->name('login.submit');
+    // Usuários Admin - CRUD completo (novo padrão)
+    Route::resource('users', AdminUserController::class);
 
-    Route::match(['get', 'post'], 'logout', [VendorAuthController::class, 'logout'])->name('logout');
+    // Categorias - CRUD completo (novo padrão)
+    Route::resource('categories', AdminCategoriaController::class)->parameters([
+        'categories' => 'categoria'
+    ]);
 
-    // Password Reset Routes
-    Route::get('password/reset', [\App\Http\Controllers\Vendor\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-    Route::post('password/email', [\App\Http\Controllers\Vendor\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-    Route::get('password/reset/{token}', [\App\Http\Controllers\Vendor\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-    Route::post('password/reset', [\App\Http\Controllers\Vendor\ResetPasswordController::class, 'reset'])->name('password.update');
+    // Estabelecimentos - CRUD completo (novo padrão)
+    Route::resource('establishments', AdminEstabelecimentoController::class);
 
-    // Protected Vendor Routes
-    Route::middleware(['auth:vendor'])->group(function () {
-        Route::get('dashboard', [\App\Http\Controllers\Vendor\DashboardController::class, 'index'])->name('dashboard');
+    // Clientes - CRUD completo
+    Route::resource('clientes', AdminClienteController::class);
 
-        Route::get('profile', [VendorAuthController::class, 'profile'])->name('profile');
-        Route::put('profile', [VendorAuthController::class, 'updateProfile'])->name('profile.update');
+    // Contratos - CRUD completo + ações específicas
+    Route::resource('contratos', AdminContratoController::class);
+    Route::get('usuarios/{usuario}/definir-limite', [AdminContratoController::class, 'definirLimite'])->name('usuarios.definir-limite');
+    Route::post('usuarios/{usuario}/salvar-limite', [AdminContratoController::class, 'salvarLimite'])->name('usuarios.salvar-limite');
+    Route::post('contratos/{contrato}/ativar', [AdminContratoController::class, 'ativar'])->name('contratos.ativar');
+    Route::post('contratos/{contrato}/cancelar', [AdminContratoController::class, 'cancelar'])->name('contratos.cancelar');
+    Route::get('contratos/revisao-score', [AdminContratoController::class, 'revisaoScore'])->name('contratos.revisao-score');
 
-        // Change Password Routes
-        Route::get('change-password', [VendorChangePasswordController::class, 'show'])->name('change-password');
-        Route::put('change-password', [VendorChangePasswordController::class, 'update'])->name('change-password.update');
-
-        // Establishment Management Routes for Vendor
-        Route::resource('establishments', VendorEstablishmentController::class);
-        Route::get('establishments/{establishment}/resend-term-email', [VendorEstablishmentController::class, 'resendTermEmail'])
-            ->name('establishments.resend-term-email');
-
-        // Establishment Documents Routes
-        Route::prefix('establishments/documents')->name('establishments.documents')->group(function () {
-            Route::get('/', [\App\Http\Controllers\Vendor\EstablishmentDocumentController::class, 'index'])->name('');
-            Route::get('/pending', [\App\Http\Controllers\Vendor\EstablishmentDocumentController::class, 'pending'])->name('.pending');
-            Route::get('/approved', [\App\Http\Controllers\Vendor\EstablishmentDocumentController::class, 'approved'])->name('.approved');
-            Route::get('/rejected', [\App\Http\Controllers\Vendor\EstablishmentDocumentController::class, 'rejected'])->name('.rejected');
-            Route::get('/{onboarding}', [\App\Http\Controllers\Vendor\EstablishmentDocumentController::class, 'show'])->name('.show');
-            Route::get('/{onboarding}/view', [\App\Http\Controllers\Vendor\EstablishmentDocumentController::class, 'viewDocument'])->name('.view');
-        });
-
-        // Rotas para Upload de Documento do Estabelecimento (Vendor)
-        Route::get('establishments/{establishment}/documents/upload', [\App\Http\Controllers\Vendor\EstablishmentDocumentController::class, 'showUploadForm'])
-            ->name('establishments.documents.upload.show');
-        Route::post('establishments/{establishment}/documents/upload', [\App\Http\Controllers\Vendor\EstablishmentDocumentController::class, 'handleUpload'])
-            ->name('establishments.documents.upload.store');
-    });
+    // Configurações do Sistema
+    Route::get('configuracoes', [ConfiguracaoController::class, 'index'])->name('configuracoes.index');
+    Route::post('configuracoes', [ConfiguracaoController::class, 'store'])->name('configuracoes.store');
+    Route::put('configuracoes/{configuracao}', [ConfiguracaoController::class, 'update'])->name('configuracoes.update');
 });
 
-// Rotas de teste temporárias
-Route::prefix('test')->name('test.')->group(function () {
-    Route::get('/email', [\App\Http\Controllers\TestController::class, 'testEmail'])->name('email');
-    Route::get('/email-template', [\App\Http\Controllers\TestController::class, 'testEmailTemplate'])->name('email-template');
-});
-
-// Rotas de onboarding para estabelecimentos
-Route::prefix('establishment')->name('establishment.')->group(function () {
-    Route::get('/onboarding/{token}', [\App\Http\Controllers\EstablishmentOnboardingController::class, 'show'])->name('onboarding');
-    Route::post('/onboarding/{token}', [\App\Http\Controllers\EstablishmentOnboardingController::class, 'process'])->name('onboarding.process');
-    Route::get('/onboarding/{token}/success', [\App\Http\Controllers\EstablishmentOnboardingController::class, 'success'])->name('onboarding.success');
-});
-
-// Establishment Routes (Minha Área)
-Route::prefix('minhaarea')->name('establishment.')->group(function () {
-    // Rota raiz para /minhaarea - redireciona para dashboard se autenticado, ou para login se não
-    Route::get('/', function () {
-        if (Auth::guard('establishment')->check()) {
-            return redirect()->route('establishment.dashboard');
-        }
-        return redirect()->route('establishment.login');
-    });
-
-    // Guest Establishment Routes
-    Route::get('login', function() {
-        if (Auth::guard('establishment')->check()) {
-            return redirect()->route('establishment.dashboard');
-        }
-        return app()->make(EstablishmentAuthController::class)->showLoginForm();
-    })->name('login');
-    Route::post('login', [EstablishmentAuthController::class, 'login'])->name('login.submit');
-
-    Route::match(['get', 'post'], 'logout', [EstablishmentAuthController::class, 'logout'])->name('logout');
-
-    // Password Reset Routes
-    Route::get('password/reset', [EstablishmentForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-    Route::post('password/email', [EstablishmentForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-    Route::get('password/reset/{token}', [EstablishmentResetPasswordController::class, 'showResetForm'])->name('password.reset');
-    Route::post('password/reset', [EstablishmentResetPasswordController::class, 'reset'])->name('password.update');
-
-    // Protected Establishment Routes
-    Route::middleware(['auth:establishment'])->group(function () {
-        Route::get('dashboard', [EstablishmentDashboardController::class, 'index'])->name('dashboard');
-
-        Route::get('profile', [EstablishmentAuthController::class, 'profile'])->name('profile');
-        Route::put('profile', [EstablishmentAuthController::class, 'updateProfile'])->name('profile.update');
-
-        // Change Password Routes
-        Route::get('change-password', [EstablishmentChangePasswordController::class, 'show'])->name('change-password');
-        Route::put('change-password', [EstablishmentChangePasswordController::class, 'update'])->name('change-password.update');
-    });
-});
-
-// Fallback route - captura todas as rotas não definidas
-Route::fallback(function () {
-    // Check if user is logged in as admin
-    if (Auth::check()) {
-        return redirect()->route('admin.dashboard');
-    }
-
-    // Check if user is logged in as vendor
-    if (Auth::guard('vendor')->check()) {
-        return redirect()->route('vendor.dashboard');
-    }
-
-    // If not authenticated, redirect to site index
-    return redirect()->route('site.index');
-});
+require __DIR__.'/auth.php';

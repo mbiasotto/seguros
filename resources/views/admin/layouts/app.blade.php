@@ -26,6 +26,7 @@
 
     <!-- CSS de componentes -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/components/pagination.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/components/avatar.css') }}">
 
     <!-- Estilos específicos -->
     @stack('styles')
@@ -64,8 +65,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
     <!-- Script de máscaras centralizado -->
-    <script src="{{ asset('assets/js/utils/input-masks.js') }}"></script> {{-- Corrected Path --}}
-    <script src="{{ asset('assets/js/utils/cep-lookup.js') }}"></script> {{-- Added CEP lookup --}}
+    <script src="{{ asset('assets/js/utils/input-masks.js') }}"></script>
+    <script src="{{ asset('assets/js/utils/cep-lookup.js') }}"></script>
 
     <!-- Script admin principal -->
     <script src="{{ asset('assets/admin/admin.js') }}"></script>
@@ -84,6 +85,9 @@
             });
         });
     </script>
+
+    <!-- Modal de confirmação de exclusão -->
+    @include('admin.components.delete-modal')
 
     <!-- Scripts específicos -->
     @stack('scripts')
